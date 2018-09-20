@@ -280,7 +280,8 @@
 
     <dependency>
       <groupId>com.github.pagehelper</groupId>
-      <artifactId>4.1.6</artifactId>
+      <artifactId>pagehelper</artifactId>
+      <version>4.0.0</version>
     </dependency>
 
   </dependencies>

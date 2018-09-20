@@ -52,14 +52,14 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-
+    <!--
     <websocket:handlers>
         <websocket:mapping path="/joinChat" handler="webSocketHandler"/>
         <websocket:handshake-interceptors>
             <bean class="com.robot.websocket.WebSocketHandlerInterceptor"/>
         </websocket:handshake-interceptors>
     </websocket:handlers>
-
+    -->
     <!--事务-->
     <bean id="txManager"
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
