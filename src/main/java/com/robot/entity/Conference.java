@@ -1,0 +1,98 @@
+package com.robot.entity;
+
+import java.time.LocalDateTime;
+
+/**
+ * 会议
+ * @author asce
+ * @date 2018/9/21
+ */
+public class Conference {
+
+    public Integer id;
+    public String coverImg;
+    public String title;
+    public LocalDateTime holdTime;
+    public String address;
+    public String host;
+    public String introduction;
+    public String type;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDateTime getHoldTime() {
+        return holdTime;
+    }
+
+    public void setHoldTime(LocalDateTime holdTime) {
+        this.holdTime = holdTime;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Conference{" +
+                "id=" + id +
+                ", coverImg='" + coverImg + '\'' +
+                ", title='" + title + '\'' +
+                ", holdTime=" + holdTime +
+                ", address='" + address + '\'' +
+                ", host='" + host + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+}
