@@ -196,7 +196,7 @@ public class GsonUtil {
     private static final Map<String, Gson> gsonMap;
 
     static {
-        Map<String, Gson> gm = new HashMap<>(4);
+        Map<String, Gson> gm = new HashMap<String, Gson>(4);
         Gson defaultDateFormatGson = new GsonBuilder().serializeNulls()
                 .setDateFormat(DEFAULT_DATE_FORMAT_PATTERN).create();
 
