@@ -18,19 +18,19 @@ public class Parts {
         this.id = id;
     }
 
-    public String getPartsName() {
+    public String getName() {
         return name;
     }
 
-    public void setPartsName(String partsName) {
-        this.name = partsName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Parts{" +
                 "id=" + id +
-                ", partsName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

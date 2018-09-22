@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.CompanyDao">
+
+    <resultMap id="companyArea" type="com.robot.entity.Area">
+    <result property="name" column="name"/>
+    <result property="areaCount" column="area_count"/>
+    </resultMap>
+
+
+
+    <select id="getCompanyBrand" resultType="com.robot.entity.Company">
+        select * from company;
+    </select>
+
+    <select id="getCompanyArea" resultMap="companyArea">
+        select companyInfo.name, count(companyInfo.name) as area_count from (select * from area inner join company_area on area.id = company_area.area_id) as companyInfo group by companyInfo.name;
+    </select>
+
+    <select id="getSpecifiedBrand" parameterType="java.lang.Integer" resultType="com.robot.entity.Company">
+        select * from company where type = #{specifiedId};
+    </select>
+
+    <select id="getCompanyInfo" parameterType="java.lang.Integer" resultMap="com.robot.entity.Company">
+
+    </select>
+</mapper>

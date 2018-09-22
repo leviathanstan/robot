@@ -18,19 +18,19 @@ public class Robot {
         this.id = id;
     }
 
-    public String getRobotName() {
+    public String getName() {
         return name;
     }
 
-    public void setRobotName(String robotName) {
-        this.name = robotName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Robot{" +
                 "id=" + id +
-                ", robotName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

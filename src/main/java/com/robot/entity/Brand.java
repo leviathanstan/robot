@@ -18,19 +18,19 @@ public class Brand {
         this.id = id;
     }
 
-    public String getBrandName() {
+    public String getName() {
         return name;
     }
 
-    public void setBrandName(String brandName) {
-        this.name = brandName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Brand{" +
                 "id=" + id +
-                ", brandName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

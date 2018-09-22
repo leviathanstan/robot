@@ -9,6 +9,7 @@ public class Industry {
 
     public Integer id;
     public String name;
+    public Integer industryCount;
 
     public Integer getId() {
         return id;
@@ -18,19 +19,28 @@ public class Industry {
         this.id = id;
     }
 
-    public String getIndustryName() {
+    public String getName() {
         return name;
     }
 
-    public void setIndustryName(String industryName) {
-        this.name = industryName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getIndustryCount() {
+        return industryCount;
+    }
+
+    public void setIndustryCount(Integer industryCount) {
+        this.industryCount = industryCount;
     }
 
     @Override
     public String toString() {
         return "Industry{" +
                 "id=" + id +
-                ", industryName='" + name + '\'' +
+                ", name='" + name + '\'' +
+                ", industryCount=" + industryCount +
                 '}';
     }
 }
