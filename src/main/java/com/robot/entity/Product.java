@@ -2,10 +2,9 @@ package com.robot.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
- * 商品
+ * 产品
  * @author asce
  * @date 2018/9/21
  */
@@ -17,15 +16,16 @@ public class Product {
     public String introduction;
     public String coverImg;
     public Company company;
-    public String load;
-    public String axis;
+    public String load;     //负载
+    public String axis;     //轴
+    public String imgs;     //多张图片通过‘;’分割
     public LocalDate effectTime;
     public LocalDateTime lastUpdateTime;
-    public Area area;
+    //用作查询时作pojo使用，无关多对多的关系
     public Industry industry;
     public Brand brand;
     public Parts parts;
-    public List<Robot> robots;
+    public Robot robot;
 
     public Integer getId() {
         return id;
@@ -91,6 +91,14 @@ public class Product {
         this.axis = axis;
     }
 
+    public String getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(String imgs) {
+        this.imgs = imgs;
+    }
+
     public LocalDate getEffectTime() {
         return effectTime;
     }
@@ -105,14 +113,6 @@ public class Product {
 
     public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
-    }
-
-    public Area getArea() {
-        return area;
-    }
-
-    public void setArea(Area area) {
-        this.area = area;
     }
 
     public Industry getIndustry() {
@@ -139,17 +139,17 @@ public class Product {
         this.parts = parts;
     }
 
-    public List<Robot> getRobots() {
-        return robots;
+    public Robot getRobot() {
+        return robot;
     }
 
-    public void setRobots(List<Robot> robots) {
-        this.robots = robots;
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 
     @Override
     public String toString() {
-        return "ProductController{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
@@ -158,13 +158,13 @@ public class Product {
                 ", company=" + company +
                 ", load='" + load + '\'' +
                 ", axis='" + axis + '\'' +
+                ", imgs='" + imgs + '\'' +
                 ", effectTime=" + effectTime +
                 ", lastUpdateTime=" + lastUpdateTime +
-                ", area=" + area +
                 ", industry=" + industry +
                 ", brand=" + brand +
                 ", parts=" + parts +
-                ", robots=" + robots +
+                ", robot=" + robot +
                 '}';
     }
 }

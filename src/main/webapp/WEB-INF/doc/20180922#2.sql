@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2018-09-22 10:25:28
+Date: 2018-09-22 17:44:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,9 +20,9 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `area`;
 CREATE TABLE `area` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`id`)
+`area_id`  int(11) NOT NULL AUTO_INCREMENT ,
+`area_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`area_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -56,9 +56,9 @@ AUTO_INCREMENT=1
 -- ----------------------------
 DROP TABLE IF EXISTS `brand`;
 CREATE TABLE `brand` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`id`)
+`brand_id`  int(11) NOT NULL AUTO_INCREMENT ,
+`brand_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`brand_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -91,7 +91,7 @@ CREATE TABLE `company_area` (
 `company_id`  int(11) NOT NULL ,
 `area_id`  int(11) NOT NULL ,
 FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`area_id`) REFERENCES `area` (`area_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `company_id` (`company_id`) USING BTREE ,
 INDEX `area_id` (`area_id`) USING BTREE 
 )
@@ -108,7 +108,7 @@ CREATE TABLE `company_industry` (
 `company_id`  int(11) NOT NULL ,
 `industry_id`  int(11) NOT NULL ,
 FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`industry_id`) REFERENCES `industry` (`industry_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `company_id` (`company_id`) USING BTREE ,
 INDEX `industry_id` (`industry_id`) USING BTREE 
 )
@@ -124,7 +124,7 @@ DROP TABLE IF EXISTS `company_robot`;
 CREATE TABLE `company_robot` (
 `robot_id`  int(11) NOT NULL ,
 `company_id`  int(11) NOT NULL ,
-FOREIGN KEY (`robot_id`) REFERENCES `robot_category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`robot_id`) REFERENCES `robot_category` (`robot_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `robot_id` (`robot_id`) USING BTREE ,
 INDEX `company_id` (`company_id`) USING BTREE 
@@ -197,9 +197,9 @@ AUTO_INCREMENT=1
 -- ----------------------------
 DROP TABLE IF EXISTS `industry`;
 CREATE TABLE `industry` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`id`)
+`industry_id`  int(11) NOT NULL AUTO_INCREMENT ,
+`industry_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`industry_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -251,9 +251,9 @@ AUTO_INCREMENT=1
 -- ----------------------------
 DROP TABLE IF EXISTS `parts`;
 CREATE TABLE `parts` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`id`)
+`parts_id`  int(11) NOT NULL AUTO_INCREMENT ,
+`parts_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`parts_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -274,6 +274,7 @@ CREATE TABLE `product` (
 `company_id`  int(11) NOT NULL ,
 `load`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '负载' ,
 `axis`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '轴' ,
+`imgs`  varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `effect_time`  date NOT NULL ,
 `last_update_time`  datetime NOT NULL ,
 PRIMARY KEY (`id`),
@@ -313,20 +314,34 @@ AUTO_INCREMENT=1
 DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
 `product_id`  int(11) NOT NULL ,
-`area_id`  int(11) NULL DEFAULT NULL ,
 `industry_id`  int(11) NULL DEFAULT NULL ,
 `brand_id`  int(11) NULL DEFAULT NULL ,
 `parts_id`  int(11) NULL DEFAULT NULL ,
 FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`parts_id`) REFERENCES `parts` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`industry_id`) REFERENCES `industry` (`industry_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`parts_id`) REFERENCES `parts` (`parts_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `product_category_ibfk_1` (`product_id`) USING BTREE ,
-INDEX `product_category_ibfk_2` (`area_id`) USING BTREE ,
 INDEX `product_category_ibfk_3` (`industry_id`) USING BTREE ,
 INDEX `product_category_ibfk_4` (`brand_id`) USING BTREE ,
 INDEX `product_category_ibfk_5` (`parts_id`) USING BTREE 
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+
+;
+
+-- ----------------------------
+-- Table structure for `product_robot`
+-- ----------------------------
+DROP TABLE IF EXISTS `product_robot`;
+CREATE TABLE `product_robot` (
+`product_id`  int(11) NOT NULL ,
+`robot_id`  int(11) NULL DEFAULT NULL ,
+FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`robot_id`) REFERENCES `robot_category` (`robot_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+INDEX `product_id` (`product_id`) USING BTREE ,
+INDEX `robot_id` (`robot_id`) USING BTREE 
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -364,9 +379,9 @@ AUTO_INCREMENT=1
 -- ----------------------------
 DROP TABLE IF EXISTS `robot_category`;
 CREATE TABLE `robot_category` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`id`)
+`robot_id`  int(11) NOT NULL AUTO_INCREMENT ,
+`robot_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`robot_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci

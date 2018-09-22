@@ -8,7 +8,7 @@ package com.robot.entity;
 public class Robot {
 
     public Integer id;
-    public String robotName;
+    public String name;
 
     public Integer getId() {
         return id;
@@ -19,18 +19,18 @@ public class Robot {
     }
 
     public String getRobotName() {
-        return robotName;
+        return name;
     }
 
     public void setRobotName(String robotName) {
-        this.robotName = robotName;
+        this.name = robotName;
     }
 
     @Override
     public String toString() {
         return "Robot{" +
                 "id=" + id +
-                ", robotName='" + robotName + '\'' +
+                ", robotName='" + name + '\'' +
                 '}';
     }
 }

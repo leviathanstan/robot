@@ -8,7 +8,7 @@ package com.robot.entity;
 public class Parts {
 
     public Integer id;
-    public String partsName;
+    public String name;
 
     public Integer getId() {
         return id;
@@ -19,18 +19,18 @@ public class Parts {
     }
 
     public String getPartsName() {
-        return partsName;
+        return name;
     }
 
     public void setPartsName(String partsName) {
-        this.partsName = partsName;
+        this.name = partsName;
     }
 
     @Override
     public String toString() {
         return "Parts{" +
                 "id=" + id +
-                ", partsName='" + partsName + '\'' +
+                ", partsName='" + name + '\'' +
                 '}';
     }
 }

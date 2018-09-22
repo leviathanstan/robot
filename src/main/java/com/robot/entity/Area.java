@@ -8,7 +8,7 @@ package com.robot.entity;
 public class Area {
 
     public Integer id;
-    public String areaName;
+    public String name;
 
     public Integer getId() {
         return id;
@@ -19,18 +19,18 @@ public class Area {
     }
 
     public String getAreaName() {
-        return areaName;
+        return name;
     }
 
     public void setAreaName(String areaName) {
-        this.areaName = areaName;
+        this.name = areaName;
     }
 
     @Override
     public String toString() {
         return "Area{" +
                 "id=" + id +
-                ", areaName='" + areaName + '\'' +
+                ", areaName='" + name + '\'' +
                 '}';
     }
 }

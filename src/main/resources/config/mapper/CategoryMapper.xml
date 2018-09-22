@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.CategoryDao">
+
+    <select id="getArea" resultMap="areaMap">
+        select * from area;
+    </select>
+
+    <select id="getBrand" resultMap="brandMap">
+        select * from brand
+    </select>
+
+    <select id="getRobot" resultMap="robotMap">
+        select * from robot_category
+    </select>
+
+    <select id="getParts" resultMap="partsMap">
+        select * from parts;
+    </select>
+
+    <select id="getIndustry" resultMap="industryMap">
+        select * from industry;
+    </select>
+
+    <resultMap id="areaMap" type="com.robot.entity.Area">
+        <result column="area_id" property="id"/>
+        <result column="area_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="brandMap" type="com.robot.entity.Brand">
+        <result column="brand_id" property="id"/>
+        <result column="brand_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="robotMap" type="com.robot.entity.Robot">
+        <result column="robot_id" property="id"/>
+        <result column="robot_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="partsMap" type="com.robot.entity.Parts">
+        <result column="parts_id" property="id"/>
+        <result column="parts_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="industryMap" type="com.robot.entity.Industry">
+        <result column="industry_id" property="id"/>
+        <result column="industry_name" property="name"/>
+    </resultMap>
+
+</mapper>

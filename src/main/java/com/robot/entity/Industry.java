@@ -8,7 +8,7 @@ package com.robot.entity;
 public class Industry {
 
     public Integer id;
-    public String industryName;
+    public String name;
 
     public Integer getId() {
         return id;
@@ -19,18 +19,18 @@ public class Industry {
     }
 
     public String getIndustryName() {
-        return industryName;
+        return name;
     }
 
     public void setIndustryName(String industryName) {
-        this.industryName = industryName;
+        this.name = industryName;
     }
 
     @Override
     public String toString() {
         return "Industry{" +
                 "id=" + id +
-                ", industryName='" + industryName + '\'' +
+                ", industryName='" + name + '\'' +
                 '}';
     }
 }

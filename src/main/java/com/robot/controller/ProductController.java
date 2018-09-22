@@ -28,10 +28,34 @@ public class ProductController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getProduct", method = RequestMethod.GET)
+    @RequestMapping(value = "/getProductList", method = RequestMethod.POST)
     public String getProduct(Product product,String pageNum){
-        return productService.getProduct(product,pageNum);
+        return productService.getProductList(product,pageNum);
     }
 
+    /**
+     *  获取产品所有分类
+     * @author asce
+     * @date 2018/9/22
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value= "/getCategory", method = RequestMethod.GET)
+    public String getCategory(){
+        return productService.getCategory();
+    }
 
+    /**
+     *  获取产品详细信息
+     * @author asce
+     * @date 2018/9/22
+     * @param id    产品id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value= "/getProductInfo", method = RequestMethod.GET)
+    public String getProduct(String id){
+        return productService.getProductInfo(id);
+    }
 }

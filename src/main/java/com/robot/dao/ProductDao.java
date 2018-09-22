@@ -11,4 +11,5 @@ import java.util.List;
 public interface ProductDao {
 
     List<Product> findProductIf(Product product);
+    Product getProductInfo(int id);
 }
