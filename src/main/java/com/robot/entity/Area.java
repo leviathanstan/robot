@@ -7,9 +7,9 @@ package com.robot.entity;
  */
 public class Area {
 
-    public Integer id;
-    public String name;
-    public Integer areaCount;
+    private Integer id;
+    private String name;
+    private Integer areaCount;
 
     public Integer getId() {
         return id;

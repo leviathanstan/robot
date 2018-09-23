@@ -7,10 +7,10 @@ package com.robot.entity;
  */
 public class Expert {
 
-    public Integer id;
-    public String name;
-    public String introduction;
-    public String faceImg;
+    private Integer id;
+    private String name;
+    private String introduction;
+    private String faceImg;
 
     public Integer getId() {
         return id;

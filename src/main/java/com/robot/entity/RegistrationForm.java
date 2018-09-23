@@ -7,17 +7,17 @@ package com.robot.entity;
  */
 public class RegistrationForm {
 
-    public Integer id;
-    public Conference conference;
-    public String name;
-    public String gender;
-    public String phone;
-    public String wechat;
-    public String email;
-    public String companyName;
-    public String position;
-    public String companyAddress;
-    public String status;
+    private Integer id;
+    private Conference conference;
+    private String name;
+    private String gender;
+    private String phone;
+    private String wechat;
+    private String email;
+    private String companyName;
+    private String position;
+    private String companyAddress;
+    private String status;
 
     public Integer getId() {
         return id;

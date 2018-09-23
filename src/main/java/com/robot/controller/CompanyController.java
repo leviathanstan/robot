@@ -54,8 +54,15 @@ public class CompanyController {
         return companyService.getSpecifiedBrand(specifiedId);
     }
 
+    /**
+     * 获得公司详细信息
+     * @author Ning
+     * @data 2018/9/22
+     * @param companyId
+     * @return java.lang.String
+     */
     @ResponseBody
-    @RequestMapping(value = "/getCompanyInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCompanyInfo/{companyId}", method = RequestMethod.GET)
     public String getCompanyInfo(@PathVariable Integer companyId){
         return companyService.getCompanyInfo(companyId);
     }

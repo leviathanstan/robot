@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
  */
 public class Information {
 
-    public Integer id;
-    public String title;
-    public String content;
-    public String summary;
-    public String source;
-    public String link;
-    public String coverImg;
-    public LocalDateTime releaseTime;
-    public int type;
+    private Integer id;
+    private String title;
+    private String content;
+    private String summary;
+    private String source;
+    private String link;
+    private String coverImg;
+    private LocalDateTime releaseTime;
+    private int type;
 
     public Integer getId() {
         return id;

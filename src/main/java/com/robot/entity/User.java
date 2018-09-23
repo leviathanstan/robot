@@ -7,11 +7,11 @@ package com.robot.entity;
  */
 public class User {
 
-    public Integer id;
-    public String username;
-    public String password;
-    public String phone;
-    public String email;
+    private Integer id;
+    private String username;
+    private String password;
+    private String phone;
+    private String email;
 
     public Integer getId() {
         return id;

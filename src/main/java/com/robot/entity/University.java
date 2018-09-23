@@ -7,9 +7,9 @@ package com.robot.entity;
  */
 public class University {
 
-    public Integer id;
-    public String name;
-    public String introduction;
+    private Integer id;
+    private String name;
+    private String introduction;
 
     public Integer getId() {
         return id;

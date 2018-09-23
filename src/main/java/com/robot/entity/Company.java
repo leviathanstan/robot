@@ -9,13 +9,16 @@ import java.util.List;
  */
 public class Company {
 
-    public Integer id;
-    public String name;
-    public String introduction;
-    public String logo;
-    public List<Robot> robots;
-    public List<Area> areas;
-    public List<Industry> industries;
+    private Integer id;
+    private String name;
+    private String introduction;
+    private String logo;
+    private String website;
+    private String telephone;
+    private String address;
+    private List<Robot> robots;
+    private List<Area> areas;
+    private List<Industry> industries;
 
     public Integer getId() {
         return id;
@@ -73,6 +76,30 @@ public class Company {
         this.industries = industries;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -80,6 +107,9 @@ public class Company {
                 ", name='" + name + '\'' +
                 ", introduction='" + introduction + '\'' +
                 ", logo='" + logo + '\'' +
+                ", website='" + website + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", address='" + address + '\'' +
                 ", robots=" + robots +
                 ", areas=" + areas +
                 ", industries=" + industries +

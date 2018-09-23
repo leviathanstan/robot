@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
  */
 public class Conference {
 
-    public Integer id;
-    public String coverImg;
-    public String title;
-    public LocalDateTime holdTime;
-    public String address;
-    public String host;
-    public String introduction;
-    public String type;
+    private Integer id;
+    private String coverImg;
+    private String title;
+    private LocalDateTime holdTime;
+    private String address;
+    private String host;
+    private String introduction;
+    private String type;
 
     public Integer getId() {
         return id;

@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
  */
 public class Article {
 
-    public Integer id;
-    public String title;
-    public LocalDateTime releaseTime;
-    public String link;
-    public String summary;
-    public String content;
-    public String source;
-    public String type;
+    private Integer id;
+    private String title;
+    private LocalDateTime releaseTime;
+    private String link;
+    private String summary;
+    private String content;
+    private String source;
+    private String type;
 
     public Integer getId() {
         return id;

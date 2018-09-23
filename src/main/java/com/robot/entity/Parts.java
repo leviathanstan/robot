@@ -7,8 +7,8 @@ package com.robot.entity;
  */
 public class Parts {
 
-    public Integer id;
-    public String name;
+    private Integer id;
+    private String name;
 
     public Integer getId() {
         return id;

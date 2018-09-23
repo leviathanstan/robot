@@ -10,22 +10,22 @@ import java.time.LocalDateTime;
  */
 public class Product {
 
-    public Integer id;
-    public String name;
-    public int price;
-    public String introduction;
-    public String coverImg;
-    public Company company;
-    public String load;     //负载
-    public String axis;     //轴
-    public String imgs;     //多张图片通过‘;’分割
-    public LocalDate effectTime;
-    public LocalDateTime lastUpdateTime;
+    private Integer id;
+    private String name;
+    private int price;
+    private String introduction;
+    private String coverImg;
+    private Company company;
+    private String load;     //负载
+    private String axis;     //轴
+    private String imgs;     //多张图片通过‘;’分割
+    private LocalDate effectTime;
+    private LocalDateTime lastUpdateTime;
     //用作查询时作pojo使用，无关多对多的关系
-    public Industry industry;
-    public Brand brand;
-    public Parts parts;
-    public Robot robot;
+    private Industry industry;
+    private Brand brand;
+    private Parts parts;
+    private Robot robot;
 
     public Integer getId() {
         return id;

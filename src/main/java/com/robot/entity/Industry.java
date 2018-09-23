@@ -7,9 +7,9 @@ package com.robot.entity;
  */
 public class Industry {
 
-    public Integer id;
-    public String name;
-    public Integer industryCount;
+    private Integer id;
+    private String name;
+    private Integer industryCount;
 
     public Integer getId() {
         return id;

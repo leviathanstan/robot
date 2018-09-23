@@ -23,7 +23,7 @@
         select * from company where type = #{specifiedId};
     </select>
 
-    <select id="getCompanyInfo" parameterType="java.lang.Integer" resultMap="com.robot.entity.Company">
-
+    <select id="getCompanyInfo" parameterType="java.lang.Integer" resultType="com.robot.entity.Company">
+      select * from company where id = #{companyId};
     </select>
 </mapper>
