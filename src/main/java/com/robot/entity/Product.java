@@ -21,11 +21,7 @@ public class Product {
     private String imgs;     //多张图片通过‘;’分割
     private LocalDate effectTime;
     private LocalDateTime lastUpdateTime;
-    //用作查询时作pojo使用，无关多对多的关系
-    private Industry industry;
-    private Brand brand;
-    private Parts parts;
-    private Robot robot;
+
 
     public Integer getId() {
         return id;
@@ -115,38 +111,6 @@ public class Product {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public Industry getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(Industry industry) {
-        this.industry = industry;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public Parts getParts() {
-        return parts;
-    }
-
-    public void setParts(Parts parts) {
-        this.parts = parts;
-    }
-
-    public Robot getRobot() {
-        return robot;
-    }
-
-    public void setRobot(Robot robot) {
-        this.robot = robot;
-    }
-
     @Override
     public String toString() {
         return "Product{" +
@@ -161,10 +125,6 @@ public class Product {
                 ", imgs='" + imgs + '\'' +
                 ", effectTime=" + effectTime +
                 ", lastUpdateTime=" + lastUpdateTime +
-                ", industry=" + industry +
-                ", brand=" + brand +
-                ", parts=" + parts +
-                ", robot=" + robot +
                 '}';
     }
 }

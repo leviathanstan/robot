@@ -12,41 +12,45 @@
     <resultMap id="brandMap" type="com.robot.entity.Brand">
         <result column="brand_id" property="id"/>
         <result column="brand_name" property="name"/>
+        <result column="count_sum" property="brandCount"/>
     </resultMap>
 
     <resultMap id="robotMap" type="com.robot.entity.Robot">
         <result column="robot_id" property="id"/>
         <result column="robot_name" property="name"/>
+        <result column="count_sum" property="robotCount"/>
     </resultMap>
 
     <resultMap id="partsMap" type="com.robot.entity.Parts">
         <result column="parts_id" property="id"/>
         <result column="parts_name" property="name"/>
+        <result column="count_sum" property="partsCount"/>
     </resultMap>
 
     <resultMap id="industryMap" type="com.robot.entity.Industry">
         <result column="industry_id" property="id"/>
         <result column="industry_name" property="name"/>
+        <result column="count_sum" property="industryCount"/>
     </resultMap>
 
     <select id="getArea" resultMap="areaMap">
         select * from area;
     </select>
 
-    <select id="getBrand" resultMap="brandMap">
-        select * from brand
+    <select id="getProductBrand" resultMap="brandMap">
+        select brand.brand_id,brand_name,count_sum from brand,(select count(brand_id) as count_sum,brand_id from product_category group by brand_id) as pc where brand.brand_id=pc.brand_id;
     </select>
 
-    <select id="getRobot" resultMap="robotMap">
-        select * from robot_category
+    <select id="getProductRobot" resultMap="robotMap">
+        select robot_category.robot_id,robot_name,count_sum from robot_category,(select count(robot_id) as count_sum,robot_id from product_robot group by robot_id) as pr where robot_category.robot_id=pr.robot_id;
     </select>
 
-    <select id="getParts" resultMap="partsMap">
-        select * from parts;
+    <select id="getProductParts" resultMap="partsMap">
+        select parts.parts_id,parts_name,count_sum from parts,(select count(parts_id) as count_sum,parts_id from product_category group by parts_id) as pc where parts.parts_id=pc.parts_id;
     </select>
 
-    <select id="getIndustry" resultMap="industryMap">
-        select * from industry;
+    <select id="getProductIndustry" resultMap="industryMap">
+        select industry.industry_id,industry_name,count_sum from industry,(select count(industry_id) as count_sum,industry_id from product_category group by industry_id) as pc where industry.industry_id=pc.industry_id;
     </select>
 
 

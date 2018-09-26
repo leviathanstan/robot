@@ -9,6 +9,7 @@ public class Robot {
 
     private Integer id;
     private String name;
+    private int robotCount;
 
     public Integer getId() {
         return id;
@@ -26,11 +27,20 @@ public class Robot {
         this.name = name;
     }
 
+    public int getRobotCount() {
+        return robotCount;
+    }
+
+    public void setRobotCount(int robotCount) {
+        this.robotCount = robotCount;
+    }
+
     @Override
     public String toString() {
         return "Robot{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", robotCount=" + robotCount +
                 '}';
     }
 }

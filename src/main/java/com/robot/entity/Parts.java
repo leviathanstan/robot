@@ -9,6 +9,7 @@ public class Parts {
 
     private Integer id;
     private String name;
+    private int PartsCount;
 
     public Integer getId() {
         return id;
@@ -26,11 +27,20 @@ public class Parts {
         this.name = name;
     }
 
+    public int getPartsCount() {
+        return PartsCount;
+    }
+
+    public void setPartsCount(int partsCount) {
+        PartsCount = partsCount;
+    }
+
     @Override
     public String toString() {
         return "Parts{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", PartsCount=" + PartsCount +
                 '}';
     }
 }

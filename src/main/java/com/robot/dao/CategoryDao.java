@@ -13,8 +13,8 @@ import java.util.List;
 public interface CategoryDao {
 
     List<Area> getArea();
-    List<Brand> getBrand();
-    List<Industry> getIndustry();
-    List<Robot> getRobot();
-    List<Parts> getParts();
+    List<Brand> getProductBrand();
+    List<Industry> getProductIndustry();
+    List<Robot> getProductRobot();
+    List<Parts> getProductParts();
 }
