@@ -2,6 +2,7 @@ package com.robot.service;
 
 import com.robot.dao.CompanyDao;
 import com.robot.entity.Area;
+import com.robot.entity.Article;
 import com.robot.entity.Company;
 
 import com.robot.util.GsonUtil;
@@ -40,5 +41,9 @@ public class CompanyService {
 
     public String getCompanyInfo(Integer companyId) {
         return GsonUtil.getSuccessJson((companyDao.getCompanyInfo(companyId)));
+    }
+
+    public String getCompanyNews() {
+        return GsonUtil.getSuccessJson(companyDao.getCompanyNews());
     }
 }

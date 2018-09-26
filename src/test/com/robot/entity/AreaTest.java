@@ -68,4 +68,13 @@ public class AreaTest {
         companyDao.getCompanyArea();
     }
 
+    @Test
+    public void test1231(){
+        long q = 0;
+        for (int i = 0; i < 100000000; i++){
+            q += 1;
+            System.out.println(q);
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.robot.dao;
 
 import com.robot.entity.Area;
+import com.robot.entity.Article;
 import com.robot.entity.Company;
 
 import java.util.ArrayList;
@@ -19,4 +20,6 @@ public interface CompanyDao {
     List<Company> getSpecifiedBrand(int specifiedId);
 
     Company getCompanyInfo(Integer companyId);
+
+    ArrayList<Article> getCompanyNews();
 }

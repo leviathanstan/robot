@@ -19,6 +19,7 @@ public class Article {
     private String source;
     private String type;
 
+
     public Integer getId() {
         return id;
     }
