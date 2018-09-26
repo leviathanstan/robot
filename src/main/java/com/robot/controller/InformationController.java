@@ -1,10 +1,11 @@
 package com.robot.controller;
 
 import com.robot.service.InformationService;
-import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author hua
@@ -24,8 +25,9 @@ public class InformationController {
      * @param id
      * @return
      */
-    @RequestMapping("/getInformationInf")
+    @ResponseBody
+    @RequestMapping(value = "/getInformationInf",method = RequestMethod.GET)
     public String getInformationInf(int id){
-        return GsonUtil.getSuccessJson(informationService.getInformationInfo(id));
+        return informationService.getInformationInfo(id);
     }
 }
