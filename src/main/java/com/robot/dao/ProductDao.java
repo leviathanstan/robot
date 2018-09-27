@@ -3,6 +3,7 @@ package com.robot.dao;
 import com.robot.entity.Product;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author asce
@@ -10,6 +11,6 @@ import java.util.List;
  */
 public interface ProductDao {
 
-    List<Product> findProductIf(Product product);
+    List<Product> findProductIf(Map<String,String> args);
     Product getProductInfo(int id);
 }

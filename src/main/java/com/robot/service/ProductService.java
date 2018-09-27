@@ -32,19 +32,18 @@ public class ProductService {
      * 筛选,查找产品
      * @author asce
      * @date 2018/9/22
-     * @param product
+     * @param args
      * @param pageNumStr
      * @return java.lang.String
      */
-    public String getProductList(Product product,String pageNumStr){
+    public String getProductList(Map<String,String> args,String pageNumStr){
         int pageNum = CommonUtil.formatPageNum(pageNumStr);
         PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
-        List<Product> products = productDao.findProductIf(product);
+        List<Product> products = productDao.findProductIf(args);
         PageInfo<Product> pageInfo = new PageInfo<>(products);
         Map dataMap = new HashMap();
-        dataMap.put("products",products);
         dataMap.put("pageInfo",pageInfo);
-        return GsonUtil.getSuccessJson(dataMap);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class,"company","load","axis","imgs","effectTime","lastUpdateTime","industry","brand","parts","robot"),dataMap);
     }
 
     /**
@@ -57,10 +56,10 @@ public class ProductService {
     public String getCategory(){
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setAreas(categoryDao.getArea());
-        categoryDto.setBrands(categoryDao.getBrand());
-        categoryDto.setIndustries(categoryDao.getIndustry());
-        categoryDto.setParts(categoryDao.getParts());
-        categoryDto.setRobots(categoryDao.getRobot());
+        categoryDto.setBrands(categoryDao.getProductBrand());
+        categoryDto.setIndustries(categoryDao.getProductIndustry());
+        categoryDto.setParts(categoryDao.getProductParts());
+        categoryDto.setRobots(categoryDao.getProductRobot());
         Map dataMap = new HashMap();
         dataMap.put("category", categoryDto);
         return GsonUtil.getSuccessJson(dataMap);
@@ -80,6 +79,6 @@ public class ProductService {
         Product product = productDao.getProductInfo(id);
         Map dataMap = new HashMap();
         dataMap.put("product", product);
-        return GsonUtil.getSuccessJson(dataMap);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class,"industry","brand","parts","robot"),dataMap);
     }
 }

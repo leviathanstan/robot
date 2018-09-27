@@ -4,26 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.ProductDao">
     <!-- 查询、筛选后列表-->
-    <select id="findProductIf" parameterType="com.robot.entity.Product" resultMap="productMap">
+    <select id="findProductIf" parameterType="java.util.Map" resultMap="productMap">
       select id,name,introduction,cover_img from product where 1=1
       <if test="name!=null and name.trim().length>0">
           and locate(#{name},name)>0
       </if>
-      <if test="industry!=null and industry.id!=null">
+      <if test="industryId!=null and industryId.trim().length>0">
           and id in
-                  (select product_id from product_category where industry_id=#{industry.id})
+                  (select product_id from product_category where industry_id=#{industryId})
       </if>
-      <if test="brand!=null and brand.id!=null">
+      <if test="brandId!=null and brandId.trim().length>0">
           and id in
-                  (select product_id from product_category where brand_id=#{brand.id})
+                  (select product_id from product_category where brand_id=#{brandId})
       </if>
-      <if test="parts!=null and parts.id!=null">
+      <if test="partsId!=null and partsId.trim().length>0">
           and id in
-                  (select product_id from product_category where parts_id=#{parts.id})
+                  (select product_id from product_category where parts_id=#{partsId})
       </if>
-      <if test="robot!=null and robot.id!=null">
+      <if test="robotId!=null and robotId.trim().length>0">
           and id in
-                  (select product_id from product_robot where robot_id=#{robot.id})
+                  (select product_id from product_robot where robot_id=#{robotId})
       </if>
     </select>
     <!-- 根据id查询详细信息-->

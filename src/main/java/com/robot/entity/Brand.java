@@ -9,6 +9,7 @@ public class Brand {
 
     private Integer id;
     private String name;
+    private int brandCount;
 
     public Integer getId() {
         return id;
@@ -26,11 +27,20 @@ public class Brand {
         this.name = name;
     }
 
+    public int getBrandCount() {
+        return brandCount;
+    }
+
+    public void setBrandCount(int brandCount) {
+        this.brandCount = brandCount;
+    }
+
     @Override
     public String toString() {
         return "Brand{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", count=" + brandCount +
                 '}';
     }
 }

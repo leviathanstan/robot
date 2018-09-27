@@ -66,4 +66,16 @@ public class CompanyController {
     public String getCompanyInfo(@PathVariable Integer companyId){
         return companyService.getCompanyInfo(companyId);
     }
+
+    /**
+     * 获得企业新闻
+     * @author Ning
+     * @data 2018/9/26
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyNews", method = RequestMethod.GET)
+    public String getCompanyNews(){
+        return companyService.getCompanyNews();
+    }
 }
