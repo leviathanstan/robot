@@ -2,6 +2,8 @@ package com.robot.dao;
 
 import com.robot.entity.Information;
 
+import java.util.ArrayList;
+
 /**
  * @author hua
  * @date 2018/9/24
@@ -9,4 +11,5 @@ import com.robot.entity.Information;
 public interface InformationDao {
 
     Information findInformationInfo(int id);
+    ArrayList<Information> findInformationTop(Integer id);
 }

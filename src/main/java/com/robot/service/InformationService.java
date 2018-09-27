@@ -7,6 +7,8 @@ import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * @author hua
  * @date 2018/9/24
@@ -27,5 +29,17 @@ public class InformationService {
     public String getInformationInfo(int id){
         Information information = informationDao.findInformationInfo(id);
         return GsonUtil.getSuccessJson(information);
+    }
+
+    /**
+     * 获取指定类别的资讯文章的前八条
+     * @author hua
+     * @date 2018/9/27
+     * @param categoryId
+     * @return
+     */
+    public String getInformationTop(Integer categoryId){
+        ArrayList<Information> informations = informationDao.findInformationTop(categoryId);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"content","summary","link","releaseTime"),informations);
     }
 }

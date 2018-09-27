@@ -15,4 +15,8 @@
     <select id="findInformationInfo" resultMap="information">
         select *from information where id = #{id}
     </select>
+    <!--查询指定文章类型的资讯文章的前八条-->
+    <select id="findInformationTop" parameterType="Integer" resultMap="information">
+        select *from information where category_id = #{id} order by release_time desc limit 8
+    </select>
 </mapper>

@@ -30,4 +30,17 @@ public class InformationController {
     public String getInformationInf(int id){
         return informationService.getInformationInfo(id);
     }
+
+    /**
+     * 获取指定类别的资讯文章的前八条
+     * @author hua
+     * @date 2018/9/27
+     * @param categoryId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getInformationTop",method = RequestMethod.GET)
+    public String getInformationTop(Integer categoryId){
+        return informationService.getInformationTop(categoryId);
+    }
 }
