@@ -7,32 +7,23 @@ package com.robot.entity;
  */
 public class RegistrationForm {
 
-    private Integer id;
-    private Conference conference;
+    private Integer conferenceId;
     private String name;
     private String gender;
     private String phone;
-    private String wechat;
+    private String weChat;
     private String email;
     private String companyName;
     private String position;
     private String companyAddress;
     private String status;
 
-    public Integer getId() {
-        return id;
+    public Integer getConferenceId() {
+        return conferenceId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Conference getConference() {
-        return conference;
-    }
-
-    public void setConference(Conference conference) {
-        this.conference = conference;
+    public void setConferenceId(Integer conferenceId) {
+        this.conferenceId = conferenceId;
     }
 
     public String getName() {
@@ -59,12 +50,12 @@ public class RegistrationForm {
         this.phone = phone;
     }
 
-    public String getWechat() {
-        return wechat;
+    public String getWeChat() {
+        return weChat;
     }
 
-    public void setWechat(String wechat) {
-        this.wechat = wechat;
+    public void setWeChat(String weChat) {
+        this.weChat = weChat;
     }
 
     public String getEmail() {
@@ -110,12 +101,11 @@ public class RegistrationForm {
     @Override
     public String toString() {
         return "RegistrationForm{" +
-                "id=" + id +
-                ", conference=" + conference +
+                "conferenceId=" + conferenceId +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", phone='" + phone + '\'' +
-                ", wechat='" + wechat + '\'' +
+                ", weChat='" + weChat + '\'' +
                 ", email='" + email + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", position='" + position + '\'' +
