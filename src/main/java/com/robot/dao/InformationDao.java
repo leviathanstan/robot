@@ -12,4 +12,5 @@ public interface InformationDao {
 
     Information findInformationInfo(int id);
     ArrayList<Information> findInformationTop(Integer id);
+    ArrayList<Information> findInformationByPage(Integer categoryId);
 }

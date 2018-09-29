@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.dao.ExpertDao">
+
+    <resultMap id="expert" type="com.robot.entity.Expert">
+        <id property="id" column="id"/>
+        <result property="faceImg" column="face_img"/>
+        <result property="introduction" column="introduction"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <resultMap id="expertArt" type="com.robot.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="releaseTime" column="release_time"/>
+        <result property="link" column="link"/>
+        <result property="summary" column="summary"/>
+        <result property="content" column="content"/>
+        <result property="source" column="source"/>
+    </resultMap>
+    <select id="findExpertInf" parameterType="Integer" resultMap="expert">
+        select *from expert where id = #{id}
+    </select>
+    <select id="findUniversityInf" parameterType="Integer" resultType="com.robot.entity.University">
+        select *from university where id = #{id}
+    </select>
+    <select id="findExpertArtTop" resultMap="expertArt">
+        select *from expert_article order by release_time desc limit 8
+    </select>
+</mapper>

@@ -10,6 +10,7 @@
         <result property="releaseTime" column="release_time"/>
         <result property="source" column="source"/>
         <result property="summary" column="summary"/>
+        <result property="type" column="category_id"/>
     </resultMap>
     <!--根据文章id查询文章具体信息-->
     <select id="findInformationInfo" resultMap="information">
@@ -18,5 +19,9 @@
     <!--查询指定文章类型的资讯文章的前八条-->
     <select id="findInformationTop" parameterType="Integer" resultMap="information">
         select *from information where category_id = #{id} order by release_time desc limit 8
+    </select>
+    <!--查询指定类型的所有资讯文章-->
+    <select id="findInformationByPage" parameterType="Integer" resultMap="information">
+        select *from information where category_id = #{categoryId} order by release_time desc
     </select>
 </mapper>

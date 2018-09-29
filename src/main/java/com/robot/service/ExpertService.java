@@ -1,11 +1,14 @@
 package com.robot.service;
 
 import com.robot.dao.ExpertDao;
+import com.robot.entity.Article;
 import com.robot.entity.Expert;
 import com.robot.entity.University;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 /**
  * @author hua
@@ -39,5 +42,16 @@ public class ExpertService {
     public String findUniversityInf(Integer id){
         University university = expertDao.findUniversityInf(id);
         return GsonUtil.getSuccessJson(university);
+    }
+
+    /**
+     * 获取专家智点文章前八条
+     * @author hua
+     * @date 2018/9/27
+     * @return
+     */
+    public String findExpertArtTop(){
+        ArrayList<Article> articles = expertDao.findExpertArtTop();
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class,"link","summary","content","source","type"),articles);
     }
 }

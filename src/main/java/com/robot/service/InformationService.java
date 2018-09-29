@@ -1,6 +1,8 @@
 package com.robot.service;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.robot.dao.InformationDao;
 import com.robot.entity.Information;
 import com.robot.util.GsonUtil;
@@ -8,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author hua
@@ -40,6 +45,25 @@ public class InformationService {
      */
     public String getInformationTop(Integer categoryId){
         ArrayList<Information> informations = informationDao.findInformationTop(categoryId);
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"content","summary","link","releaseTime"),informations);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"content","summary","link"),informations);
     }
+
+    /**
+     * 获取指定类型的所有资讯文章(分页)
+     * @author hua
+     * @date 2018/9/27
+     * @param categoryId
+     * @param pageNum
+     * @return
+     */
+    public String getInformationByPage(Integer categoryId,Integer pageNum){
+        PageHelper.startPage(pageNum,12);
+        List<Information> informations = informationDao.findInformationByPage(categoryId);
+        //PageInfo<Information> pageInfo = new PageInfo<>(informations);
+        Map dataMap = new HashMap();
+        dataMap.put("informations",informations);
+        //dataMap.put("pageInfo",pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"summary","source","link","content"),dataMap);
+    }
+
 }

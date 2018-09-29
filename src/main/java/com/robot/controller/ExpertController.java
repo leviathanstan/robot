@@ -43,4 +43,16 @@ public class ExpertController {
     public String findUniversityInf(Integer id){
         return expertService.findUniversityInf(id);
     }
+
+    /**
+     * 获取专家智点文章的前八条
+     * @author hua
+     * @date 2018/9/27
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findExpertArtTop")
+    public String findExpertArtTop(){
+        return expertService.findExpertArtTop();
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 /**
  * @author hua
  * @date 2018/9/24
@@ -39,8 +40,22 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "getInformationTop",method = RequestMethod.GET)
+    @RequestMapping(value = "/getInformationTop",method = RequestMethod.GET)
     public String getInformationTop(Integer categoryId){
         return informationService.getInformationTop(categoryId);
+    }
+
+    /**
+     * 获取分页显示的资讯文章
+     * @author hua
+     * @date 2018/9/28
+     * @param categoryId
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getInformationByPage",method = RequestMethod.POST)
+    public String getInformationByPage(Integer categoryId,Integer pageNum){
+       return informationService.getInformationByPage(categoryId,pageNum);
     }
 }
