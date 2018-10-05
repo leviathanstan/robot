@@ -3,6 +3,7 @@ package com.robot.controller;
 import com.robot.service.ExpertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,8 +27,8 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findExpertInf",method = RequestMethod.GET)
-    public String findExpertInf(Integer id){
+    @RequestMapping(value = "/findExpertInf/{id}",method = RequestMethod.GET)
+    public String findExpertInf(@PathVariable Integer id){
         return expertService.findExpertInf(id);
     }
 
@@ -39,8 +40,8 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findUniversityInf",method = RequestMethod.GET)
-    public String findUniversityInf(Integer id){
+    @RequestMapping(value = "/findUniversityInf/{id}",method = RequestMethod.GET)
+    public String findUniversityInf(@PathVariable Integer id){
         return expertService.findUniversityInf(id);
     }
 
