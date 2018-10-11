@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.robot.dao.AssociationDao;
 import com.robot.entity.RobotNews;
 import com.robot.util.GsonUtil;
+import com.robot.entity.Member;
+import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +42,15 @@ public class AssociationService {
     public String getRobotNewsTop(){
         ArrayList robotNews = associationDao.getRobotNewsTop();
         return GsonUtil.getSuccessJson(robotNews);
+    }
+
+    public String getAssociationMember() {
+        ArrayList<Member> memberArrayList = associationDao.getAssociationMember();
+        return GsonUtil.getSuccessJson(memberArrayList);
+    }
+
+    public String getAllMember() {
+        ArrayList<Member> memberArrayList = associationDao.getAllMember();
+        return GsonUtil.getSuccessJson(memberArrayList);
     }
 }

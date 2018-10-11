@@ -19,4 +19,18 @@
     <select id="getRobotNewsTop" resultMap="robotNews">
         select *from robotnews order by post_date desc limit 9
     </select>
+    <resultMap id="associationMember" type="com.robot.entity.Member">
+       <id property="id" column="id"/>
+        <result property="memberName" column="name"/>
+        <result property="position" column="position"/>
+        <result property="companyId" column="c_id"/>
+    </resultMap>
+
+    <select id="getAssociationMember" resultMap="associationMember">
+        select * from association_member where position in ('轮值会长' ,'常务副会长');
+    </select>
+
+    <select id="getAllMember" resultMap="associationMember">
+        select * from association_member;
+    </select>
 </mapper>

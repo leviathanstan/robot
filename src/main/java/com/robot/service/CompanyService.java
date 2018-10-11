@@ -40,7 +40,12 @@ public class CompanyService {
     }
 
     public String getCompanyInfo(Integer companyId) {
-        return GsonUtil.getSuccessJson((companyDao.getCompanyInfo(companyId)));
+        if(companyDao.findCompanyById(companyId) == 1){
+            return GsonUtil.getSuccessJson((companyDao.getCompanyInfo(companyId)));
+        }else {
+            return GsonUtil.getErrorJson();
+        }
+
     }
 
     public String getCompanyNews() {
