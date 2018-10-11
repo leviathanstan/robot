@@ -4,4 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.AssociationDao">
 
+    <resultMap id="robotNews" type="com.robot.entity.RobotNews">
+        <id column="url_object_id" property="urlId"/>
+        <result column="url" property="url"/>
+        <result column="title" property="title"/>
+        <result column="amount" property="amount"/>
+        <result column="post_date" property="postDate"/>
+        <result column="article" property="content"/>
+    </resultMap>
+
+    <select id="getRobotNewsInf" resultMap="robotNews">
+        select *from robotnews where url_object_id = #{urlId}
+    </select>
+    <select id="getRobotNewsTop" resultMap="robotNews">
+        select *from robotnews order by post_date desc limit 9
+    </select>
 </mapper>
