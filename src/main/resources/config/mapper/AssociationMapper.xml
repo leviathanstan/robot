@@ -4,4 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.AssociationDao">
 
+    <resultMap id="associationMember" type="com.robot.entity.Member">
+       <id property="id" column="id"/>
+        <result property="memberName" column="name"/>
+        <result property="position" column="position"/>
+    </resultMap>
+
+    <select id="getAssociationMember" resultMap="associationMember">
+        select * from association_member;
+    </select>
 </mapper>
