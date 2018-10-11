@@ -1,8 +1,6 @@
 package com.robot.service;
 
-import com.robot.bean.Msg;
 import com.robot.dao.ConferenceDao;
-import com.robot.entity.RegistrationForm;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

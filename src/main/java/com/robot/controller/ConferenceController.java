@@ -1,6 +1,5 @@
 package com.robot.controller;
 
-import com.robot.entity.RegistrationForm;
 import com.robot.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
