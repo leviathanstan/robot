@@ -29,4 +29,17 @@ public class AssociationController {
     public String getAssociationMember(){
         return associationService.getAssociationMember();
     }
+
+    /**
+     * 获得全部协会会员
+     * @author Ning
+     * @data 2018/10/11
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAllMember", method = RequestMethod.GET)
+    public String getAllMember(){
+        return associationService.getAllMember();
+    }
+
 }

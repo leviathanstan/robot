@@ -11,4 +11,6 @@ import java.util.ArrayList;
 public interface AssociationDao {
 
     ArrayList<Member> getAssociationMember();
+
+    ArrayList<Member> getAllMember();
 }

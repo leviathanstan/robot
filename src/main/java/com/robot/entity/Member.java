@@ -9,6 +9,7 @@ public class Member {
     private Integer id;
     private String memberName;
     private String position;
+    private Integer companyId;
 
     public Member() {
     }
@@ -37,12 +38,21 @@ public class Member {
         this.position = position;
     }
 
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
     @Override
     public String toString() {
         return "Member{" +
                 "id=" + id +
                 ", memberName='" + memberName + '\'' +
                 ", position='" + position + '\'' +
+                ", companyId=" + companyId +
                 '}';
     }
 }

@@ -21,4 +21,9 @@ public class AssociationService {
         ArrayList<Member> memberArrayList = associationDao.getAssociationMember();
         return GsonUtil.getSuccessJson(memberArrayList);
     }
+
+    public String getAllMember() {
+        ArrayList<Member> memberArrayList = associationDao.getAllMember();
+        return GsonUtil.getSuccessJson(memberArrayList);
+    }
 }

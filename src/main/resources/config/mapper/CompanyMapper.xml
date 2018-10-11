@@ -30,4 +30,8 @@
     <select id="getCompanyNews" resultType="com.robot.entity.Article">
         select *, release_time as releasetime from company_article order by release_time desc;
     </select>
+
+    <select id="findCompanyById" resultType="java.lang.Integer">
+        select count(id) from company where id = #{companyId};
+    </select>
 </mapper>

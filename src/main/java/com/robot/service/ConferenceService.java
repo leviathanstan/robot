@@ -1,6 +1,8 @@
 package com.robot.service;
 
+import com.robot.bean.Msg;
 import com.robot.dao.ConferenceDao;
+import com.robot.entity.RegistrationForm;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +63,7 @@ public class ConferenceService {
 //            msg.setResult("姓名格式出错");
 //            msg.setMessage(registrationForm);
 //            return GsonUtil.getErrorJson(msg);
-//        }else if(){
+//        }else if("".equals(registrationForm.getGender()) || !("男".equals(registrationForm.getGender()) && "女".equals(registrationForm.getGender())){
 //
 //        }
 //        return null;

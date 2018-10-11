@@ -22,4 +22,6 @@ public interface CompanyDao {
     Company getCompanyInfo(Integer companyId);
 
     ArrayList<Article> getCompanyNews();
+
+    Integer findCompanyById(Integer companyId);
 }
