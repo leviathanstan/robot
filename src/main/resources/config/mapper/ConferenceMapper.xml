@@ -19,4 +19,8 @@
     <select id="getPassMeeting" resultType="com.robot.entity.Conference">
         select *, hold_time as holdTime from conference where type = 1 and hold_time &lt; NOW();
     </select>
+
+    <!--<select id="findEnrollByName" resultType="java.lang.Integer">-->
+        <!--select * from -->
+    <!--</select>-->
 </mapper>

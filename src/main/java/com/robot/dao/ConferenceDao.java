@@ -17,4 +17,6 @@ public interface ConferenceDao {
     ArrayList<Conference> getHoldingMeeting();
 
     ArrayList<Conference> getPassMeeting();
+
+//    Integer findEnrollByName();
 }

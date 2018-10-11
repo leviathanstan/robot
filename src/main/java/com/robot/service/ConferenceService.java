@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.bean.Msg;
 import com.robot.dao.ConferenceDao;
 import com.robot.entity.RegistrationForm;
 import com.robot.util.GsonUtil;
@@ -44,6 +45,27 @@ public class ConferenceService {
     }
 
 //    public String enroll(RegistrationForm registrationForm) {
+//        String usernameRegularExpression = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+//        String phoneRegularExpression = "^[0-9]{0,12}$";
+//        String userWechatRegularExpression = "^[a-zA-Z0-9\u4E00-\u9FA5]{3,10}$";
+//        String userCompanyNameRegularExpression = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+//        String addressRegularExpression = "^[a-zA-Z0-9\u4E00-\u9FA5]{0,20}$";
+//        String userPositionRegularExpression = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+//        String emailRegularExpression = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
+//
+//        Msg msg = new Msg();
+//
+//        if("".equals(registrationForm.getName()) || registrationForm.getName() == null){
+//            msg.setResult("姓名不能为空");
+//            msg.setMessage(registrationForm);
+//            return GsonUtil.getErrorJson(msg);
+//        }else if(!(registrationForm.getName().matches(usernameRegularExpression))){
+//            msg.setResult("姓名格式出错");
+//            msg.setMessage(registrationForm);
+//            return GsonUtil.getErrorJson(msg);
+//        }else if(){
+//
+//        }
 //        return null;
 //    }
 }
