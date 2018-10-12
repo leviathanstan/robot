@@ -12,7 +12,6 @@ import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,9 +40,7 @@ public class ProductService {
         PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
         List<Product> products = productDao.findProductIf(args);
         PageInfo<Product> pageInfo = new PageInfo<>(products);
-        Map dataMap = new HashMap();
-        dataMap.put("pageInfo",pageInfo);
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class,"company","load","axis","imgs","effectTime","lastUpdateTime","industry","brand","parts","robot"),dataMap);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class,"company","load","axis","imgs","effectTime","lastUpdateTime"),pageInfo);
     }
 
     /**
@@ -60,9 +57,7 @@ public class ProductService {
         categoryDto.setIndustries(categoryDao.getProductIndustry());
         categoryDto.setParts(categoryDao.getProductParts());
         categoryDto.setRobots(categoryDao.getProductRobot());
-        Map dataMap = new HashMap();
-        dataMap.put("category", categoryDto);
-        return GsonUtil.getSuccessJson(dataMap);
+        return GsonUtil.getSuccessJson(categoryDto);
     }
 
     /**
@@ -77,8 +72,6 @@ public class ProductService {
             return GsonUtil.getErrorJson();
         int id = Integer.parseInt(idStr);
         Product product = productDao.getProductInfo(id);
-        Map dataMap = new HashMap();
-        dataMap.put("product", product);
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class,"industry","brand","parts","robot"),dataMap);
+        return GsonUtil.getSuccessJson(product);
     }
 }

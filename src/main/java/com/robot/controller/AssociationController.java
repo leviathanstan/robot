@@ -1,13 +1,10 @@
 package com.robot.controller;
 
 import com.robot.service.AssociationService;
-import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Ning
@@ -21,18 +18,6 @@ public class AssociationController {
     private AssociationService associationService;
 
     /**
-     * 获得协会会员
-     * @author Ning
-     * @data 2018/10/11
-     * @return java.lang.String
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getAssociationMember", method = RequestMethod.GET)
-    public String getAssociationMember(){
-        return associationService.getAssociationMember();
-    }
-
-    /**
      * 获得全部协会会员
      * @author Ning
      * @data 2018/10/11
@@ -43,8 +28,6 @@ public class AssociationController {
     public String getAllMember(){
         return associationService.getAllMember();
     }
-
-
 
     /**
      * 获取协会新闻详细信息
@@ -59,15 +42,16 @@ public class AssociationController {
         return associationService.getRobotNewsInf(urlId);
     }
 
-    /**
-     *获取协会新闻最新9条
-     * @author hua
-     * @date 2018/10/11
-     * @return
-     */
+
+    @RequestMapping(value = "/noticeDetail")
+    public String showDetail(String id, ModelMap modelMap) {
+        modelMap.addAttribute("noticeId", id);
+        return "notice_detail";
+    }
+
     @ResponseBody
-    @RequestMapping(value = "/getRobotNewsTop",method = RequestMethod.GET)
-    public String getRobotNewsTop(){
-        return associationService.getRobotNewsTop();
+    @RequestMapping(value = "/getNoticeInfo" ,method = RequestMethod.GET)
+    public String getNoticeInfo(@RequestParam("noticeId") String noticeId){
+        return associationService.getNoticeInfo(noticeId);
     }
 }

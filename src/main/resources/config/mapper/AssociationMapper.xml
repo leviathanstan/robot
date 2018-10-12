@@ -33,4 +33,25 @@
     <select id="getAllMember" resultMap="associationMember">
         select * from association_member;
     </select>
+
+    <resultMap id="noticeMap" type="com.robot.entity.Notice">
+        <id property="id" column=""/>
+        <result property="title" column=""/>
+        <result property="time" column=""/>
+        <result property="content" column=""/>
+        <result property="viewCount" column=""/>
+        <result property="fileStr" column=""/>
+    </resultMap>
+
+    <select id="getNotice" resultMap="noticeMap">
+
+    </select>
+
+    <select id="getNoticeInfo" resultMap="noticeMap">
+
+    </select>
+
+    <select id="findNotice" resultMap="noticeMap">
+
+    </select>
 </mapper>

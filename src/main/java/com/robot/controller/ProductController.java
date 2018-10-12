@@ -1,6 +1,5 @@
 package com.robot.controller;
 
-import com.robot.entity.Product;
 import com.robot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

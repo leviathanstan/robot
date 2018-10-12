@@ -1,6 +1,10 @@
 package com.service;
 
+import com.google.gson.Gson;
+import com.robot.entity.Notice;
+import com.robot.entity.RobotNews;
 import com.robot.service.AssociationService;
+import com.robot.util.GsonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,4 +24,5 @@ public class AssociationServiceTest {
         System.out.println(associationService.getRobotNewsInf("0ab5abb4ead8d66e7239d7410d589499"));
 
     }
+
 }
