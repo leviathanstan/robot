@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @date 2018/10/12
  */
 @Controller
+@RequestMapping(value = "/common")
 public class CommonController {
 
     @Autowired
