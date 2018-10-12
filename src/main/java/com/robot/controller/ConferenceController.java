@@ -1,5 +1,6 @@
 package com.robot.controller;
 
+import com.robot.entity.RegistrationForm;
 import com.robot.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,15 +44,15 @@ public class ConferenceController {
     }
 
 
-//    /**
-//     * 取得报名表信息
-//     * @author Ning
-//     * @data 2018/9/27
-//     * @return java.lang.String
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "/writeForm", method = RequestMethod.POST)
-//    public String writeForm(RegistrationForm registrationForm){
-//            return conferenceService.enroll(registrationForm);
-//    }
+    /**
+     * 取得报名表信息
+     * @author Ning
+     * @data 2018/9/27
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/writeForm", method = RequestMethod.POST)
+    public String writeForm(RegistrationForm registrationForm){
+            return conferenceService.enroll(registrationForm);
+    }
 }

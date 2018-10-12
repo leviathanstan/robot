@@ -1,6 +1,7 @@
 package com.robot.dao;
 
 import com.robot.entity.Conference;
+import com.robot.entity.RegistrationForm;
 
 import java.util.ArrayList;
 
@@ -18,5 +19,7 @@ public interface ConferenceDao {
 
     ArrayList<Conference> getPassMeeting();
 
-//    Integer findEnrollByName();
+    Integer insertToEnroll(RegistrationForm registrationForm);
+
+    Integer findEnrollByName(String enrolment);
 }

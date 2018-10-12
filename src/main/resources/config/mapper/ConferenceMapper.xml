@@ -20,7 +20,11 @@
         select *, hold_time as holdTime from conference where type = 1 and hold_time &lt; NOW();
     </select>
 
-    <!--<select id="findEnrollByName" resultType="java.lang.Integer">-->
-        <!--select * from -->
-    <!--</select>-->
+    <select id="findEnrollByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(id) from registration_form where name = #{enrolment};
+    </select>
+    
+    <insert id="insertToEnroll" parameterType="com.robot.entity.RegistrationForm">
+        insert into registration_form(id, name, gender, phone, wechat, email, company_name, position, company_address, conference_id, status)value(null, #{name}, #{gender}, #{phone}, #{weChat}, #{email}, #{companyName}, #{position}, #{companyAddress}, #{conferenceId}, 0);
+    </insert>
 </mapper>

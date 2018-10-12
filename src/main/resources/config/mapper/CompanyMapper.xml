@@ -34,4 +34,8 @@
     <select id="findCompanyById" resultType="java.lang.Integer">
         select count(id) from company where id = #{companyId};
     </select>
+
+    <select id="getCompanyIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select id from company where name = #{companyName};
+    </select>
 </mapper>
