@@ -54,7 +54,7 @@ public class AssociationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getRobotNewsInf/{urlId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getRobotNewsInf",method = RequestMethod.GET)
     public String getRobotNewsInf(String urlId){
         return associationService.getRobotNewsInf(urlId);
     }
