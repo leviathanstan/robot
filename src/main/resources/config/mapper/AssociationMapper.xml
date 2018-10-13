@@ -14,10 +14,10 @@
     </resultMap>
 
     <select id="getRobotNewsInf" resultMap="robotNews">
-        select *from robotnews where url_object_id = #{urlId}
+        select * from robotnews where url_object_id = #{urlId}
     </select>
     <select id="getRobotNewsTop" resultMap="robotNews">
-        select *from robotnews order by post_date desc limit 9
+        select url_object_id,title,post_date from robotnews order by post_date desc limit 9
     </select>
     <resultMap id="associationMember" type="com.robot.entity.Member">
        <id property="id" column="id"/>
