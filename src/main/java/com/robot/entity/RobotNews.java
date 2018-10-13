@@ -1,6 +1,5 @@
 package com.robot.entity;
 
-import java.time.LocalDateTime;
 
 public class RobotNews {
 
@@ -9,7 +8,7 @@ public class RobotNews {
     private String title;
     private int amount;
     private String content;
-    private LocalDateTime postDate;
+    private String postDate;
 
     public String getUrlId() {
         return urlId;
@@ -51,11 +50,11 @@ public class RobotNews {
         this.content = content;
     }
 
-    public LocalDateTime getPostDate() {
+    public String getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(LocalDateTime postDate) {
+    public void setPostDate(String postDate) {
         this.postDate = postDate;
     }
 

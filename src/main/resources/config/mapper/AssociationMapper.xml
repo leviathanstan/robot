@@ -35,20 +35,20 @@
     </select>
 
     <resultMap id="noticeMap" type="com.robot.entity.Notice">
-        <id property="id" column=""/>
-        <result property="title" column=""/>
-        <result property="time" column=""/>
-        <result property="content" column=""/>
-        <result property="viewCount" column=""/>
-        <result property="fileStr" column=""/>
+        <id property="id" column="notice_id"/>
+        <result property="title" column="title"/>
+        <result property="time" column="post_date"/>
+        <result property="content" column="content"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="fileStr" column="filename"/>
     </resultMap>
 
     <select id="getNotice" resultMap="noticeMap">
-
+      select notice_id,title,post_date from association_notice order by post_date desc limit 9
     </select>
 
-    <select id="getNoticeInfo" resultMap="noticeMap">
-
+    <select id="getNoticeInfo" parameterType="String" resultMap="noticeMap">
+      select * from association_notice where notice_id=#{id}
     </select>
 
     <select id="findNotice" resultMap="noticeMap">
