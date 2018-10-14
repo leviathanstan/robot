@@ -24,11 +24,16 @@ public class AssociationController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getAllMember", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllMember", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getAllMember(){
         return associationService.getAllMember();
     }
 
+    @RequestMapping(value = "/newsDetail")
+    public String showNews(String urlId, ModelMap modelMap) {
+        modelMap.addAttribute("urlId", urlId);
+        return "";
+    }
     /**
      * 获取协会新闻详细信息
      * @author hua
@@ -37,7 +42,7 @@ public class AssociationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getRobotNewsInf",method = RequestMethod.GET)
+    @RequestMapping(value = "/getRobotNewsInf",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getRobotNewsInf(String urlId){
         return associationService.getRobotNewsInf(urlId);
     }
@@ -46,11 +51,11 @@ public class AssociationController {
     @RequestMapping(value = "/noticeDetail")
     public String showDetail(String id, ModelMap modelMap) {
         modelMap.addAttribute("noticeId", id);
-        return "notice_detail";
+        return "";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getNoticeInfo" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/getNoticeInfo" ,method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getNoticeInfo(@RequestParam("noticeId") String noticeId){
         return associationService.getNoticeInfo(noticeId);
     }

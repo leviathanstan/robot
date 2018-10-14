@@ -19,7 +19,7 @@ public class CommonController {
     CommonService commonService;
 
     @ResponseBody
-    @RequestMapping(value = "/getIndex",method = RequestMethod.GET)
+    @RequestMapping(value = "/getIndex",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String getIndex(){
         return commonService.getIndex();
     }
