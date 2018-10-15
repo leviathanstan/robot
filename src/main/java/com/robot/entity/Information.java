@@ -16,7 +16,7 @@ public class Information {
     private String source;
     private String link;
     private String coverImg;
-    private LocalDateTime releaseTime;
+    private String releaseTime;
     private int type;
 
     public Integer getId() {
@@ -75,11 +75,11 @@ public class Information {
         this.coverImg = coverImg;
     }
 
-    public LocalDateTime getReleaseTime() {
+    public String getReleaseTime() {
         return releaseTime;
     }
 
-    public void setReleaseTime(LocalDateTime releaseTime) {
+    public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
     }
 

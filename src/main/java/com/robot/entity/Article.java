@@ -12,7 +12,7 @@ public class Article {
 
     private Integer id;
     private String title;
-    private LocalDateTime releaseTime;
+    private String releaseTime;
     private String link;
     private String summary;
     private String content;
@@ -36,11 +36,11 @@ public class Article {
         this.title = title;
     }
 
-    public LocalDateTime getReleaseTime() {
+    public String getReleaseTime() {
         return releaseTime;
     }
 
-    public void setReleaseTime(LocalDateTime releaseTime) {
+    public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
     }
 
