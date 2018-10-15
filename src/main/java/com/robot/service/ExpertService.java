@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author hua
@@ -53,5 +55,25 @@ public class ExpertService {
     public String findExpertArtTop(){
         ArrayList<Article> articles = expertDao.findExpertArtTop();
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class,"link","summary","content","source","type"),articles);
+    }
+
+    /**
+     * 获取所有专家
+     * @author hua
+     * @date 2018/10/15
+     * @return
+     */
+    public String findAllExpert(){
+        return GsonUtil.getSuccessJson(expertDao.findAllExpert());
+    }
+
+    /**
+     * 获取所有高校
+     * @author hua
+     * @date 2018/10/15
+     * @return
+     */
+    public String findAllUniversity(){
+        return GsonUtil.getSuccessJson(expertDao.findAllUniversity());
     }
 }

@@ -23,6 +23,12 @@
     <select id="findUniversityInf" parameterType="Integer" resultType="com.robot.entity.University">
         select *from university where id = #{id}
     </select>
+    <select id="findAllExpert" resultMap="expert">
+        select *from expert
+    </select>
+    <select id="findAllUniversity" resultType="com.robot.entity.University">
+        select *from university;
+    </select>
     <select id="findExpertArtTop" resultMap="expertArt">
         select *from expert_article order by release_time desc limit 8
     </select>

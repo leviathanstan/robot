@@ -15,4 +15,6 @@ public interface ExpertDao {
      Expert findExpertInf(int id);
      University findUniversityInf(int id);
      ArrayList<Article> findExpertArtTop();
+     ArrayList<Expert> findAllExpert();
+     ArrayList<University> findAllUniversity();
 }

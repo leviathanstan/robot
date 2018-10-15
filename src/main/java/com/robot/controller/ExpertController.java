@@ -56,4 +56,24 @@ public class ExpertController {
     public String findExpertArtTop(){
         return expertService.findExpertArtTop();
     }
+
+    /**
+     * 获取所有专家
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "findAllExpert",method = RequestMethod.GET)
+    public String findAllExpert(){
+        return expertService.findAllExpert();
+    }
+
+    /**
+     * 获取所有高校
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "findAllUniversity",method = RequestMethod.GET)
+    public String findAllUniversity(){
+        return expertService.findAllUniversity();
+    }
 }
