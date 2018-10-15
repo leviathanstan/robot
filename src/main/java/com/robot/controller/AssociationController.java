@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @author Ning
  * @date 2018/10/11
@@ -58,5 +60,17 @@ public class AssociationController {
     @RequestMapping(value = "/getNoticeInfo" ,method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getNoticeInfo(@RequestParam("noticeId") String noticeId){
         return associationService.getNoticeInfo(noticeId);
+    }
+    /**
+     * 搜索公告、more公告
+     * @author asce
+     * @date 2018/10/15
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getNoticeList" ,method = RequestMethod.POST)
+    public String getNoticeList(@RequestParam Map<String,String> args){
+        return associationService.getNotice(args);
     }
 }

@@ -47,34 +47,4 @@ public class AreaTest {
     }
 
 
-    @Test
-    public void test2() {
-        LocalTime start = LocalTime.now();
-        try {
-            //让线程睡眠3s
-            Thread.sleep(3000);
-        } catch (Exception e) {
-        }
-        LocalTime end = LocalTime.now();
-        //获取end和start的时间间隔
-        Duration duration = Duration.between(start, end);
-
-        //可能会输出PT3S或者输出PT3.001S，至于多出来的0.001秒其实就是除去线程睡眠时间执行计算时间间隔那句代码消耗的时间
-        System.out.println(duration);
-    }
-
-    @Test
-    public void test231(){
-        companyDao.getCompanyArea();
-    }
-
-    @Test
-    public void test1231(){
-        long q = 0;
-        for (int i = 0; i < 100000000; i++){
-            q += 1;
-            System.out.println(q);
-        }
-    }
-
 }
