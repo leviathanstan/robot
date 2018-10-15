@@ -31,6 +31,19 @@ public class AssociationController {
         return associationService.getAllMember();
     }
 
+
+    /**
+     * 获得首页协会会员
+     * @author Ning
+     * @data 2018/10/11
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIndexMember", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getIndexMember(){
+        return associationService.getAssociationMember();
+    }
+
     @RequestMapping(value = "/newsDetail")
     public String showNews(String urlId, ModelMap modelMap) {
         modelMap.addAttribute("urlId", urlId);
