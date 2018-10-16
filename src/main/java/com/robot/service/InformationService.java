@@ -43,9 +43,9 @@ public class InformationService {
      * @param categoryId
      * @return
      */
-    public String getInformationTop(Integer categoryId){
+    public ArrayList<Information> getInformationTop(Integer categoryId){
         ArrayList<Information> informations = informationDao.findInformationTop(categoryId);
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"content","summary","link"),informations);
+        return informations;
     }
 
     /**

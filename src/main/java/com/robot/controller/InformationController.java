@@ -1,6 +1,7 @@
 package com.robot.controller;
 
 import com.robot.service.InformationService;
+import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +44,7 @@ public class InformationController {
     @ResponseBody
     @RequestMapping(value = "/getInformationTop/{categoryId}",method = RequestMethod.GET)
     public String getInformationTop(@PathVariable Integer categoryId){
-        return informationService.getInformationTop(categoryId);
+        return GsonUtil.getSuccessJson(informationService.getInformationTop(categoryId));
     }
 
     /**
