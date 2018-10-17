@@ -50,7 +50,6 @@
     <mvc:resources mapping="/doc/**" location="/WEB-INF/doc/" />
     <mvc:resources mapping="/upload/**" location="/WEB-INF/upload/" />
     -->
-    <mvc:resources mapping="/img/**" location="/WEB-INF/img/"/>
-    <mvc:resources mapping="/files/**" location="/WEB-INF/files/"/>
+    <mvc:resources mapping="/vue/static/**" location="/WEB-INF/vue/static/"/>
 
 </beans>

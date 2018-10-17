@@ -18,6 +18,7 @@ public interface AssociationDao {
 
     RobotNews getRobotNewsInf(String urlId);
     ArrayList<RobotNews> getRobotNewsTop();
+    ArrayList<RobotNews> findNews(Map<String,String> args);
 
     ArrayList<Member> getAssociationMember();
 

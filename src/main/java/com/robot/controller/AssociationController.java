@@ -69,8 +69,20 @@ public class AssociationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getNoticeList" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/getNoticeList" ,method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String getNoticeList(@RequestParam Map<String,String> args){
         return associationService.getNotice(args);
+    }
+    /**
+     * 搜索新闻，more新闻
+     * @author asce
+     * @date 2018/10/17
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getNewsList" ,method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String getNewList(@RequestParam Map<String,String> args){
+        return associationService.getNewsList(args);
     }
 }

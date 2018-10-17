@@ -19,6 +19,14 @@
     <select id="getRobotNewsTop" resultMap="robotNews">
         select url_object_id,title,post_date from robotnews order by post_date desc limit 9
     </select>
+
+    <select id="findNews" resultMap="robotNews">
+        select * from robotnews where 1=1
+        <if test="title!=null and title.trim().length()>0">
+            and locate(#{title},title)>0
+        </if>
+    </select>
+
     <resultMap id="associationMember" type="com.robot.entity.Member">
        <id property="id" column="id"/>
         <result property="memberName" column="name"/>

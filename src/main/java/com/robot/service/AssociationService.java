@@ -41,6 +41,21 @@ public class AssociationService {
     }
 
     /**
+     *  搜索新闻
+     * @param args
+     * @return
+     */
+    public String getNewsList(Map<String,String> args){
+        if (args==null)
+            return GsonUtil.getErrorJson();
+        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
+        List<RobotNews> news = associationDao.findNews(args);
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(news);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    /**
      * 获取协会新闻最新九条
      * @return
      */
@@ -85,6 +100,11 @@ public class AssociationService {
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
+    /**
+     * 公告详细信息
+     * @param id
+     * @return
+     */
     public String getNoticeInfo(String id){
         Notice notice = associationDao.getNoticeInfo(id);
         if(notice==null)
