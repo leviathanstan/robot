@@ -11,6 +11,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Hashtable;
+
+import static java.time.temporal.ChronoUnit.SECONDS;
+
 
 @WebAppConfiguration("src/main/resources")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,6 +49,5 @@ public class AreaTest {
         LocalDateTime dateTime = LocalDateTime.of(2016, 10, 23, 8, 20);
         System.out.println(dateTime);
     }
-
 
 }

@@ -56,5 +56,6 @@
       <if test="title!=null and title.trim().length()>0">
         and locate(#{title},title)>0
       </if>
+        order by post_date desc
     </select>
 </mapper>

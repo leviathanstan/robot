@@ -66,22 +66,4 @@ public class InformationService {
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"link","content"),dataMap);
     }
 
-    /**
-     * 获取所有类别的资讯文章的前八条
-     * @author hua
-     * @data 2018/10/5
-     * @return
-     */
-    public String getAllInformationTop(){
-        ArrayList<Information> inf1 = informationDao.findInformationTop(1);
-        ArrayList<Information> inf2= informationDao.findInformationTop(2);
-        ArrayList<Information> inf3 = informationDao.findInformationTop(3);
-        ArrayList<Information> inf4 = informationDao.findInformationTop(4);
-        Map dataMap = new HashMap();
-        dataMap.put("inf1",inf1);
-        dataMap.put("inf2",inf2);
-        dataMap.put("inf3",inf3);
-        dataMap.put("inf4",inf4);
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"link","summary","content"),dataMap);
-    }
 }

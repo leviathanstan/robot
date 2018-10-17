@@ -35,19 +35,6 @@ public class InformationController {
     }
 
     /**
-     * 获取指定类别的资讯文章的前八条
-     * @author hua
-     * @date 2018/9/27
-     * @param categoryId
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getInformationTop/{categoryId}",method = RequestMethod.GET)
-    public String getInformationTop(@PathVariable Integer categoryId){
-        return GsonUtil.getSuccessJson(informationService.getInformationTop(categoryId));
-    }
-
-    /**
      * 获取分页显示的资讯文章
      * @author hua
      * @date 2018/9/28
@@ -61,15 +48,4 @@ public class InformationController {
        return informationService.getInformationByPage(categoryId,pageNum);
     }
 
-    /**
-     * 获取所有类别的资讯文章的前八条
-     * @author hua
-     * @data 2018/10/5
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getAllInformationTop",method = RequestMethod.GET)
-    public String getAllInformationTop(){
-        return informationService.getAllInformationTop();
-    }
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2018-09-22 17:44:23
+Date: 2018-10-16 14:01:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,29 +20,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `area`;
 CREATE TABLE `area` (
-`area_id`  int(11) NOT NULL AUTO_INCREMENT ,
-`area_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`area_id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=1
-
-;
-
--- ----------------------------
--- Table structure for `association_article`
--- ----------------------------
-DROP TABLE IF EXISTS `association_article`;
-CREATE TABLE `association_article` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
-`title`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`release_time`  datetime NOT NULL ,
-`link`  varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`summary`  varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`content`  varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`source`  varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`type`  char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
@@ -52,13 +31,44 @@ AUTO_INCREMENT=1
 ;
 
 -- ----------------------------
+-- Table structure for `association_member`
+-- ----------------------------
+DROP TABLE IF EXISTS `association_member`;
+CREATE TABLE `association_member` (
+`id`  int(11) NOT NULL ,
+`name`  varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+` position`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+
+;
+
+-- ----------------------------
+-- Table structure for `association_notice`
+-- ----------------------------
+DROP TABLE IF EXISTS `association_notice`;
+CREATE TABLE `association_notice` (
+`title`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`notice_id`  int(11) NOT NULL ,
+`content`  mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`post_date`  date NOT NULL ,
+PRIMARY KEY (`notice_id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+
+;
+
+-- ----------------------------
 -- Table structure for `brand`
 -- ----------------------------
 DROP TABLE IF EXISTS `brand`;
 CREATE TABLE `brand` (
-`brand_id`  int(11) NOT NULL AUTO_INCREMENT ,
-`brand_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`brand_id`)
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -91,7 +101,7 @@ CREATE TABLE `company_area` (
 `company_id`  int(11) NOT NULL ,
 `area_id`  int(11) NOT NULL ,
 FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`area_id`) REFERENCES `area` (`area_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `company_id` (`company_id`) USING BTREE ,
 INDEX `area_id` (`area_id`) USING BTREE 
 )
@@ -108,7 +118,7 @@ CREATE TABLE `company_industry` (
 `company_id`  int(11) NOT NULL ,
 `industry_id`  int(11) NOT NULL ,
 FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`industry_id`) REFERENCES `industry` (`industry_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `company_id` (`company_id`) USING BTREE ,
 INDEX `industry_id` (`industry_id`) USING BTREE 
 )
@@ -124,7 +134,7 @@ DROP TABLE IF EXISTS `company_robot`;
 CREATE TABLE `company_robot` (
 `robot_id`  int(11) NOT NULL ,
 `company_id`  int(11) NOT NULL ,
-FOREIGN KEY (`robot_id`) REFERENCES `robot_category` (`robot_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`robot_id`) REFERENCES `robot_category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `robot_id` (`robot_id`) USING BTREE ,
 INDEX `company_id` (`company_id`) USING BTREE 
@@ -168,7 +178,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=2
 
 ;
 
@@ -188,7 +198,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=2
 
 ;
 
@@ -197,9 +207,9 @@ AUTO_INCREMENT=1
 -- ----------------------------
 DROP TABLE IF EXISTS `industry`;
 CREATE TABLE `industry` (
-`industry_id`  int(11) NOT NULL AUTO_INCREMENT ,
-`industry_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`industry_id`)
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -227,7 +237,7 @@ INDEX `information_ibfk_1` (`category_id`) USING BTREE
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=4
 
 ;
 
@@ -242,7 +252,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=5
 
 ;
 
@@ -251,9 +261,9 @@ AUTO_INCREMENT=1
 -- ----------------------------
 DROP TABLE IF EXISTS `parts`;
 CREATE TABLE `parts` (
-`parts_id`  int(11) NOT NULL AUTO_INCREMENT ,
-`parts_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`parts_id`)
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -274,7 +284,6 @@ CREATE TABLE `product` (
 `company_id`  int(11) NOT NULL ,
 `load`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '负载' ,
 `axis`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '轴' ,
-`imgs`  varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `effect_time`  date NOT NULL ,
 `last_update_time`  datetime NOT NULL ,
 PRIMARY KEY (`id`),
@@ -314,34 +323,20 @@ AUTO_INCREMENT=1
 DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
 `product_id`  int(11) NOT NULL ,
+`area_id`  int(11) NULL DEFAULT NULL ,
 `industry_id`  int(11) NULL DEFAULT NULL ,
 `brand_id`  int(11) NULL DEFAULT NULL ,
 `parts_id`  int(11) NULL DEFAULT NULL ,
 FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`industry_id`) REFERENCES `industry` (`industry_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`parts_id`) REFERENCES `parts` (`parts_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`parts_id`) REFERENCES `parts` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 INDEX `product_category_ibfk_1` (`product_id`) USING BTREE ,
+INDEX `product_category_ibfk_2` (`area_id`) USING BTREE ,
 INDEX `product_category_ibfk_3` (`industry_id`) USING BTREE ,
 INDEX `product_category_ibfk_4` (`brand_id`) USING BTREE ,
 INDEX `product_category_ibfk_5` (`parts_id`) USING BTREE 
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-
-;
-
--- ----------------------------
--- Table structure for `product_robot`
--- ----------------------------
-DROP TABLE IF EXISTS `product_robot`;
-CREATE TABLE `product_robot` (
-`product_id`  int(11) NOT NULL ,
-`robot_id`  int(11) NULL DEFAULT NULL ,
-FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`robot_id`) REFERENCES `robot_category` (`robot_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-INDEX `product_id` (`product_id`) USING BTREE ,
-INDEX `robot_id` (`robot_id`) USING BTREE 
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
@@ -379,13 +374,31 @@ AUTO_INCREMENT=1
 -- ----------------------------
 DROP TABLE IF EXISTS `robot_category`;
 CREATE TABLE `robot_category` (
-`robot_id`  int(11) NOT NULL AUTO_INCREMENT ,
-`robot_name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`robot_id`)
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`name`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=1
+
+;
+
+-- ----------------------------
+-- Table structure for `robotnews`
+-- ----------------------------
+DROP TABLE IF EXISTS `robotnews`;
+CREATE TABLE `robotnews` (
+`url`  varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`url_object_id`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`title`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`post_date`  date NULL DEFAULT NULL ,
+`amount`  int(11) NULL DEFAULT NULL ,
+`article`  longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`url_object_id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 ;
 
@@ -422,7 +435,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=2
 
 ;
 
@@ -451,11 +464,6 @@ AUTO_INCREMENT=1
 ALTER TABLE `area` AUTO_INCREMENT=1;
 
 -- ----------------------------
--- Auto increment value for `association_article`
--- ----------------------------
-ALTER TABLE `association_article` AUTO_INCREMENT=1;
-
--- ----------------------------
 -- Auto increment value for `brand`
 -- ----------------------------
 ALTER TABLE `brand` AUTO_INCREMENT=1;
@@ -473,12 +481,12 @@ ALTER TABLE `conference` AUTO_INCREMENT=1;
 -- ----------------------------
 -- Auto increment value for `expert`
 -- ----------------------------
-ALTER TABLE `expert` AUTO_INCREMENT=1;
+ALTER TABLE `expert` AUTO_INCREMENT=2;
 
 -- ----------------------------
 -- Auto increment value for `expert_article`
 -- ----------------------------
-ALTER TABLE `expert_article` AUTO_INCREMENT=1;
+ALTER TABLE `expert_article` AUTO_INCREMENT=2;
 
 -- ----------------------------
 -- Auto increment value for `industry`
@@ -488,12 +496,12 @@ ALTER TABLE `industry` AUTO_INCREMENT=1;
 -- ----------------------------
 -- Auto increment value for `information`
 -- ----------------------------
-ALTER TABLE `information` AUTO_INCREMENT=1;
+ALTER TABLE `information` AUTO_INCREMENT=4;
 
 -- ----------------------------
 -- Auto increment value for `information_category`
 -- ----------------------------
-ALTER TABLE `information_category` AUTO_INCREMENT=1;
+ALTER TABLE `information_category` AUTO_INCREMENT=5;
 
 -- ----------------------------
 -- Auto increment value for `parts`
@@ -528,7 +536,7 @@ ALTER TABLE `technology_article` AUTO_INCREMENT=1;
 -- ----------------------------
 -- Auto increment value for `university`
 -- ----------------------------
-ALTER TABLE `university` AUTO_INCREMENT=1;
+ALTER TABLE `university` AUTO_INCREMENT=2;
 
 -- ----------------------------
 -- Auto increment value for `user`
