@@ -5,7 +5,7 @@
 <mapper namespace="com.robot.dao.AssociationDao">
 
     <resultMap id="robotNews" type="com.robot.entity.RobotNews">
-        <id column="url_object_id" property="urlId"/>
+        <id column="url_object_id" property="id"/>
         <result column="url" property="url"/>
         <result column="title" property="title"/>
         <result column="amount" property="amount"/>
@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="getRobotNewsInf" resultMap="robotNews">
-        select * from robotnews where url_object_id = #{urlId}
+        select * from robotnews where url_object_id = #{id}
     </select>
     <select id="getRobotNewsTop" resultMap="robotNews">
         select url_object_id,title,post_date from robotnews order by post_date desc limit 9
@@ -65,5 +65,10 @@
         and locate(#{title},title)>0
       </if>
         order by post_date desc
+    </select>
+
+    <!--test-->
+    <select id="testNotice" resultMap="noticeMap">
+        select * from association_notice;
     </select>
 </mapper>

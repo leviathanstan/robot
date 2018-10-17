@@ -32,21 +32,21 @@ public class AssociationController {
     }
 
     @RequestMapping(value = "/newsDetail")
-    public String showNews(String urlId, ModelMap modelMap) {
-        modelMap.addAttribute("urlId", urlId);
+    public String showNews(String id, ModelMap modelMap) {
+        modelMap.addAttribute("id", id);
         return "";
     }
     /**
      * 获取协会新闻详细信息
      * @author hua
      * @date 2018/10/11
-     * @param urlId
+     * @param id
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/getRobotNewsInf",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getRobotNewsInf(String urlId){
-        return associationService.getRobotNewsInf(urlId);
+    public String getRobotNewsInf(String id){
+        return associationService.getRobotNewsInf(id);
     }
 
 
@@ -58,8 +58,8 @@ public class AssociationController {
 
     @ResponseBody
     @RequestMapping(value = "/getNoticeInfo" ,method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getNoticeInfo(@RequestParam("noticeId") String noticeId){
-        return associationService.getNoticeInfo(noticeId);
+    public String getNoticeInfo(@RequestParam("id") String id){
+        return associationService.getNoticeInfo(id);
     }
     /**
      * 搜索公告、more公告

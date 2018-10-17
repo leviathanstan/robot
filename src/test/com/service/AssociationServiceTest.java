@@ -1,15 +1,16 @@
 package com.service;
 
-import com.google.gson.Gson;
+import com.robot.dao.AssociationDao;
 import com.robot.entity.Notice;
-import com.robot.entity.RobotNews;
 import com.robot.service.AssociationService;
-import com.robot.util.GsonUtil;
+import org.aspectj.weaver.ast.Not;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.ArrayList;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath*:/config/spring.xml", "classpath*:/config/spring-mvc.xml"})
@@ -17,6 +18,8 @@ public class AssociationServiceTest {
 
     @Autowired
     private AssociationService associationService;
+    @Autowired
+    private AssociationDao associationDao;
 
     @Test
     public void test(){
@@ -24,5 +27,14 @@ public class AssociationServiceTest {
         System.out.println(associationService.getRobotNewsInf("0ab5abb4ead8d66e7239d7410d589499"));
 
     }
-
+    @Test
+    public void replace(){
+        ArrayList<Notice> notices = associationDao.testNotice();
+        for(Notice notice:notices){
+            notice.getContent().replaceAll("src=\\\".+","src=\"static");
+        }
+        for(Notice notice:notices){
+            System.out.println(notice.getContent());
+        }
+    }
 }

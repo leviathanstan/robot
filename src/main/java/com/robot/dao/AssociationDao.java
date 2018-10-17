@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface AssociationDao {
 
-    RobotNews getRobotNewsInf(String urlId);
+    RobotNews getRobotNewsInf(String id);
     ArrayList<RobotNews> getRobotNewsTop();
     ArrayList<RobotNews> findNews(Map<String,String> args);
 
@@ -26,4 +26,6 @@ public interface AssociationDao {
     ArrayList<Notice> getNotice();
     ArrayList<Notice> findNotice(Map<String,String> args);
     Notice getNoticeInfo(String id);
+
+    ArrayList<Notice> testNotice();
 }

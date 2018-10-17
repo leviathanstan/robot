@@ -3,7 +3,7 @@ package com.robot.entity;
 
 public class RobotNews {
 
-    private String urlId;
+    private String id;
     private String url;
     private String title;
     private int amount;
@@ -11,11 +11,11 @@ public class RobotNews {
     private String postDate;
 
     public String getUrlId() {
-        return urlId;
+        return id;
     }
 
     public void setUrlId(String urlId) {
-        this.urlId = urlId;
+        this.id = urlId;
     }
 
     public String getUrl() {
@@ -61,7 +61,7 @@ public class RobotNews {
     @Override
     public String toString() {
         return "RobotNews{" +
-                "urlId='" + urlId + '\'' +
+                "urlId='" + id + '\'' +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", amount=" + amount +
