@@ -26,44 +26,67 @@ public class InformationService {
 
     /**
      * 获取资讯文章的具体内容
-     * @author hua
-     * @date 2018/9/24
+     *
      * @param id
      * @return
+     * @author hua
+     * @date 2018/9/24
      */
-    public String getInformationInfo(int id){
+    public String getInformationInfo(int id) {
         Information information = informationDao.findInformationInfo(id);
         return GsonUtil.getSuccessJson(information);
     }
 
-    /**
-     * 获取指定类别的资讯文章的前八条
-     * @author hua
-     * @date 2018/9/27
-     * @param categoryId
-     * @return
-     */
-    public ArrayList<Information> getInformationTop(Integer categoryId){
-        ArrayList<Information> informations = informationDao.findInformationTop(categoryId);
-        return informations;
-    }
+//    /**
+//     * 获取指定类别的资讯文章的前八条
+//     *
+//     * @param categoryId
+//     * @return
+//     * @author hua
+//     * @date 2018/9/27
+//     */
+//    public ArrayList<Information> getInformationTop(Integer categoryId) {
+//        ArrayList<Information> informations = informationDao.findInformationTop(categoryId);
+//        return informations;
+//    }
+//
+//    /**
+//     * 获取指定类型的所有资讯文章(分页)
+//     *
+//     * @param categoryId
+//     * @param pageNum
+//     * @return
+//     * @author hua
+//     * @date 2018/9/27
+//     */
+//    public String getInformationByPage(Integer categoryId, Integer pageNum) {
+//        PageHelper.startPage(pageNum, 12);
+//        List<Information> informations = informationDao.findInformationByPage(categoryId);
+//        //PageInfo<Information> pageInfo = new PageInfo<>(informations);
+//        Map dataMap = new HashMap();
+//        dataMap.put("informations", informations);
+//        //dataMap.put("pageInfo",pageInfo);
+//        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "content"), dataMap);
+//    }
 
     /**
-     * 获取指定类型的所有资讯文章(分页)
+     * 获取行业动态的前八条
      * @author hua
-     * @date 2018/9/27
-     * @param categoryId
-     * @param pageNum
+     * @date 2018/10/17
      * @return
      */
-    public String getInformationByPage(Integer categoryId,Integer pageNum){
-        PageHelper.startPage(pageNum,12);
-        List<Information> informations = informationDao.findInformationByPage(categoryId);
-        //PageInfo<Information> pageInfo = new PageInfo<>(informations);
+    public ArrayList<Information> getInformation1Top() {
+        ArrayList<Information> informations1 = informationDao.findInformation1Top();
+        return informations1;
+    }
+
+    public String getInformation1ByPage(Integer pageNum){
+        PageHelper.startPage(pageNum, 12);
+        List<Information> informations = informationDao.findInformation1ByPage();
+
         Map dataMap = new HashMap();
-        dataMap.put("informations",informations);
-        //dataMap.put("pageInfo",pageInfo);
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class,"link","content"),dataMap);
-    }
+        dataMap.put("informations", informations);
 
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "content"), dataMap);
+    }
 }
