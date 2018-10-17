@@ -28,18 +28,23 @@
     </select>
 
     <resultMap id="associationMember" type="com.robot.entity.Member">
-       <id property="id" column="id"/>
+       <id property="id" column="member_id"/>
         <result property="memberName" column="name"/>
-        <result property="position" column="position"/>
-        <result property="companyId" column="c_id"/>
+        <result property="positionId" column="position_num"/>
+        <result property="joinTime" column="post_date"/>
+        <result property="introduction" column="introduction"/>
     </resultMap>
 
-    <select id="getAssociationMember" resultMap="associationMember">
-        select * from association_member where position in ('轮值会长' ,'常务副会长');
+    <select id="getMember" resultMap="associationMember">
+        select * from association_members where position_num='1' or position_num='2'
     </select>
 
-    <select id="getAllMember" resultMap="associationMember">
-        select * from association_member;
+    <select id="findMember" resultMap="associationMember">
+        select * from association_members
+    </select>
+
+    <select id="getMemberInfo" resultMap="associationMember" parameterType="String">
+        select * from association_members where member_id=#{id}
     </select>
 
     <resultMap id="noticeMap" type="com.robot.entity.Notice">
@@ -48,7 +53,6 @@
         <result property="time" column="post_date"/>
         <result property="content" column="content"/>
         <result property="viewCount" column="view_count"/>
-        <result property="fileStr" column="filename"/>
     </resultMap>
 
     <select id="getNotice" resultMap="noticeMap">
@@ -65,10 +69,5 @@
         and locate(#{title},title)>0
       </if>
         order by post_date desc
-    </select>
-
-    <!--test-->
-    <select id="testNotice" resultMap="noticeMap">
-        select * from association_notice;
     </select>
 </mapper>

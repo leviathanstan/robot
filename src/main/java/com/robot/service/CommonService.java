@@ -23,7 +23,7 @@ public class CommonService {
     public String getIndex(){
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("news",associationService.getIndexNews());
-        //dataMap.put("members",associationService.getIndexMember());
+        dataMap.put("members",associationService.getIndexMember());
         dataMap.put("notices",associationService.getIndexNotice());
 //        dataMap.put("informations1",informationService.getInformationTop(1));
 //        dataMap.put("informations2",informationService.getInformationTop(2));

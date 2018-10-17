@@ -20,12 +20,12 @@ public interface AssociationDao {
     ArrayList<RobotNews> getRobotNewsTop();
     ArrayList<RobotNews> findNews(Map<String,String> args);
 
-    ArrayList<Member> getAssociationMember();
+    ArrayList<Member> getMember();
+    ArrayList<Member> findMember();
+    Member getMemberInfo(String id);
 
-    ArrayList<Member> getAllMember();
     ArrayList<Notice> getNotice();
     ArrayList<Notice> findNotice(Map<String,String> args);
     Notice getNoticeInfo(String id);
 
-    ArrayList<Notice> testNotice();
 }
