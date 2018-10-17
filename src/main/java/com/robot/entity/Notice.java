@@ -13,8 +13,6 @@ public class Notice {
     String time;
     String content;
     int viewCount;
-    String fileStr;
-    List<String> files;
 
     public String getId() {
         return id;
@@ -56,22 +54,6 @@ public class Notice {
         this.viewCount = viewCount;
     }
 
-    public String getFileStr() {
-        return fileStr;
-    }
-
-    public void setFileStr(String fileStr) {
-        this.fileStr = fileStr;
-    }
-
-    public List<String> getFiles() {
-        return files;
-    }
-
-    public void setFiles(List<String> files) {
-        this.files = files;
-    }
-
     @Override
     public String toString() {
         return "Notice{" +
@@ -80,8 +62,6 @@ public class Notice {
                 ", time='" + time + '\'' +
                 ", content='" + content + '\'' +
                 ", viewCount=" + viewCount +
-                ", fileStr='" + fileStr + '\'' +
-                ", files=" + files +
                 '}';
     }
 }
