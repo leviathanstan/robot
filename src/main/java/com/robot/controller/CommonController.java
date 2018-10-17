@@ -23,4 +23,5 @@ public class CommonController {
     public String getIndex(){
         return commonService.getIndex();
     }
+
 }
