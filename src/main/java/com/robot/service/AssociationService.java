@@ -12,6 +12,7 @@ import com.robot.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -68,12 +69,24 @@ public class AssociationService {
      * @return
      */
     public List<Member> getIndexMember() {
-        return associationDao.getAssociationMember();
+        return associationDao.getMember();
     }
 
-    public String getAllMember() {
-        ArrayList<Member> memberArrayList = associationDao.getAllMember();
-        return GsonUtil.getSuccessJson(memberArrayList);
+    public String getMemberList(Map<String,String> args) {
+        if (args==null)
+            return GsonUtil.getErrorJson();
+        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
+        List<Member> members = associationDao.findMember();
+        PageInfo<Member> pageInfo = new PageInfo<>(members);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    public String getMemberInfo(String id){
+        Member member = associationDao.getMemberInfo(id);
+        if(member==null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(member);
     }
 
     /**

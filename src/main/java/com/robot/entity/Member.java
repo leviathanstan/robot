@@ -8,8 +8,9 @@ package com.robot.entity;
 public class Member {
     private Integer id;
     private String memberName;
-    private String position;
-    private Integer companyId;
+    private Integer positionId;
+    private String joinTime;
+    private String introduction;
 
     public Member() {
     }
@@ -30,20 +31,28 @@ public class Member {
         this.memberName = memberName;
     }
 
-    public String getPosition() {
-        return position;
+    public Integer getPositionId() {
+        return positionId;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setPositionId(Integer positionId) {
+        this.positionId = positionId;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public String getJoinTime() {
+        return joinTime;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setJoinTime(String joinTime) {
+        this.joinTime = joinTime;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     @Override
@@ -51,8 +60,9 @@ public class Member {
         return "Member{" +
                 "id=" + id +
                 ", memberName='" + memberName + '\'' +
-                ", position='" + position + '\'' +
-                ", companyId=" + companyId +
+                ", positionId=" + positionId +
+                ", joinTime='" + joinTime + '\'' +
+                ", introduction='" + introduction + '\'' +
                 '}';
     }
 }

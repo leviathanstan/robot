@@ -20,15 +20,21 @@ public class AssociationController {
     private AssociationService associationService;
 
     /**
-     * 获得全部协会会员
+     * 获得协会会员列表
      * @author Ning
      * @data 2018/10/11
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getAllMember", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getAllMember(){
-        return associationService.getAllMember();
+    @RequestMapping(value = "/getMemberList", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String getAllMember(Map<String,String> args){
+        return associationService.getMemberList(args);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getMemberInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberInfo(String id){
+        return associationService.getMemberInfo(id);
     }
 
     @RequestMapping(value = "/newsDetail")

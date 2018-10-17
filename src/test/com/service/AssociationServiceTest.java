@@ -2,6 +2,7 @@ package com.service;
 
 import com.robot.dao.AssociationDao;
 import com.robot.entity.Notice;
+import com.robot.entity.RobotNews;
 import com.robot.service.AssociationService;
 import org.aspectj.weaver.ast.Not;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath*:/config/spring.xml", "classpath*:/config/spring-mvc.xml"})
@@ -26,15 +28,5 @@ public class AssociationServiceTest {
         //System.out.println(associationService.getRobotNewsTop());
         System.out.println(associationService.getRobotNewsInf("0ab5abb4ead8d66e7239d7410d589499"));
 
-    }
-    @Test
-    public void replace(){
-        ArrayList<Notice> notices = associationDao.testNotice();
-        for(Notice notice:notices){
-            notice.getContent().replaceAll("src=\\\".+","src=\"static");
-        }
-        for(Notice notice:notices){
-            System.out.println(notice.getContent());
-        }
     }
 }
