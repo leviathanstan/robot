@@ -4,10 +4,7 @@ import com.robot.service.InformationService;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -34,18 +31,19 @@ public class InformationController {
         return informationService.getInformationInfo(id);
     }
 
+
+
     /**
-     * 获取分页显示的资讯文章
+     * 获取分页显示的行业动态
      * @author hua
-     * @date 2018/9/28
-     * @param categoryId
+     * @date 2018/10/17
      * @param pageNum
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/getInformationByPage",method = RequestMethod.POST)
-    public String getInformationByPage(Integer categoryId,Integer pageNum){
-       return informationService.getInformationByPage(categoryId,pageNum);
+    public String getInformationByPage(@RequestParam Integer pageNum){
+        return informationService.getInformation1ByPage(pageNum);
     }
 
 }
