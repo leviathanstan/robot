@@ -2,8 +2,12 @@ package com.robot.dao;
 
 import com.robot.entity.Notice;
 import com.robot.entity.RobotNews;
+
 import java.util.ArrayList;
+
 import com.robot.entity.Member;
+
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -23,4 +27,5 @@ public interface AssociationDao {
     ArrayList<Notice> getNotice();
     ArrayList<Notice> findNotice(Map<String,String> args);
     Notice getNoticeInfo(String id);
+
 }

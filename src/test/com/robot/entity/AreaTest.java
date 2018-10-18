@@ -1,6 +1,8 @@
 package com.robot.entity;
 
+import com.robot.dao.AssociationDao;
 import com.robot.dao.CompanyDao;
+import com.robot.service.AssociationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Hashtable;
-
-import static java.time.temporal.ChronoUnit.SECONDS;
 
 
 @WebAppConfiguration("src/main/resources")
@@ -23,9 +20,14 @@ public class AreaTest {
 
     @Autowired
     CompanyDao companyDao;
+    @Autowired
+    AssociationDao associationDao;
+
+    @Autowired
+    AssociationService associationService;
 
     @Test
-    public void test() {
+    public void tesst() {
         // 获取当前日期时间
         LocalDateTime now = LocalDateTime.now();
         System.out.println(now);
@@ -49,5 +51,27 @@ public class AreaTest {
         LocalDateTime dateTime = LocalDateTime.of(2016, 10, 23, 8, 20);
         System.out.println(dateTime);
     }
+
+
+    @Test
+    public void testReplace(){
+
+        String str = "<img src=\"static/img/notice/abc.jpg\"/>";
+        System.out.println(str);
+        System.out.println(str.replaceAll("src=\".","scr=\"/s"));
+    }
+
+//    @Test
+//    public void replaceMember(){
+//        ArrayList<Member> notices = associationDao.testMember();
+//        for (Member notice: notices){
+//            notice.setIntroduction(notice.getIntroduction().replaceAll("src=\"/","src=\"/static/"));
+//            notice.setIntroduction(notice.getIntroduction().replaceAll("href=\"/","href=\"/static/"));
+//        }
+//        for(Member news:notices){
+//            System.out.println(associationDao.updateMember(news));
+//
+//        }
+//    }
 
 }
