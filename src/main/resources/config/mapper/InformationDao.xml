@@ -21,9 +21,9 @@
     <select id="findInformationByPage" parameterType="Integer" resultMap="information">
         select *from information where category_id = #{categoryId} order by release_time desc
     </select>
-    <!--查询行业动态的前八条-->
+    <!--查询行业动态的前十二条-->
     <select id="findInformation1Top" resultMap="information">
-        select *from message_robot order by post_date desc limit 12
+        select item_id,title,post_date from message_robot order by post_date desc limit 12
     </select>
     <!--查询行业动态的所有文章（分页）-->
     <select id="findInformation1ByPage" resultMap="information">

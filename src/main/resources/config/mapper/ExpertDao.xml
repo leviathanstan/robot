@@ -25,14 +25,14 @@
     <select id="findExpertInf" parameterType="Integer" resultMap="expert">
         select *from expert where id = #{id}
     </select>
-    <select id="findUniversityInf" parameterType="Integer" resultType="com.robot.entity.University">
+    <select id="findUniversityInf" parameterType="Integer" resultMap="university">
         select *from school_robot where school_id = #{id}
     </select>
     <select id="findAllExpert" resultMap="expert">
         select *from expert
     </select>
     <select id="findAllUniversity" resultMap="university">
-        select *from school_robot;
+        select school_id,name,post_date from school_robot;
     </select>
     <select id="findExpertArtTop" resultMap="expertArt">
         select *from expert_article order by release_time desc limit 8

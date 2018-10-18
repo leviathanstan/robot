@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,7 +74,7 @@ public class ExpertService {
      * @date 2018/10/15
      * @return
      */
-    public String findAllUniversity(){
-        return GsonUtil.getSuccessJson(expertDao.findAllUniversity());
+    public List<University> findAllUniversity(){
+        return expertDao.findAllUniversity();
     }
 }

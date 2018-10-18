@@ -1,6 +1,7 @@
 package com.robot.controller;
 
 import com.robot.service.ExpertService;
+import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,6 +75,6 @@ public class ExpertController {
     @ResponseBody
     @RequestMapping(value = "findAllUniversity",method = RequestMethod.GET)
     public String findAllUniversity(){
-        return expertService.findAllUniversity();
+        return GsonUtil.getSuccessJson(expertService.findAllUniversity());
     }
 }

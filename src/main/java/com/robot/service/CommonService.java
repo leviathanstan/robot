@@ -20,11 +20,15 @@ public class CommonService {
     @Autowired
     InformationService informationService;
 
+    @Autowired
+    ExpertService expertService;
     public String getIndex(){
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("news",associationService.getIndexNews());
-        dataMap.put("members",associationService.getIndexMember());
-        dataMap.put("notices",associationService.getIndexNotice());
+       // dataMap.put("members",associationService.getIndexMember());
+       // dataMap.put("notices",associationService.getIndexNotice());
+        dataMap.put("information1",informationService.getInformation1Top());
+        dataMap.put("school",expertService.findAllUniversity());
 //        dataMap.put("informations1",informationService.getInformationTop(1));
 //        dataMap.put("informations2",informationService.getInformationTop(2));
 //        dataMap.put("informations3",informationService.getInformationTop(3));
