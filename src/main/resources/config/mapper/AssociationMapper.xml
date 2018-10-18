@@ -17,7 +17,7 @@
         select * from robotnews where url_object_id = #{id}
     </select>
     <select id="getRobotNewsTop" resultMap="robotNews">
-        select url_object_id,title,post_date from robotnews order by post_date desc limit 9
+        select url_object_id,title,post_date from robotnews order by post_date desc limit 13
     </select>
 
     <select id="findNews" resultMap="robotNews">
@@ -56,7 +56,7 @@
     </resultMap>
 
     <select id="getNotice" resultMap="noticeMap">
-      select notice_id,title,post_date from association_notice order by post_date desc limit 9
+      select notice_id,title,post_date from association_notice order by post_date desc limit 13
     </select>
 
     <select id="getNoticeInfo" parameterType="String" resultMap="noticeMap">
@@ -70,4 +70,5 @@
       </if>
         order by post_date desc
     </select>
+
 </mapper>

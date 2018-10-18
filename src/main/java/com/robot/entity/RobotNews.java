@@ -14,7 +14,7 @@ public class RobotNews {
         return id;
     }
 
-    public void setUrlId(String urlId) {
+    public void setId(String urlId) {
         this.id = urlId;
     }
 
