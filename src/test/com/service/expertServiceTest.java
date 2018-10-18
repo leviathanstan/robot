@@ -17,8 +17,9 @@ public class expertServiceTest {
     @Test
     public void test(){
         //System.out.println(expertDao.findExpertInf(1));
-        System.out.println(expertDao.findUniversityInf(1));
+      //  System.out.println(expertDao.findUniversityInf(1));
 
-        System.out.println(expertDao.findExpertArtTop());
+        //System.out.println(expertDao.findExpertArtTop());
+        System.out.println(expertDao.findAllExpert());
     }
 }

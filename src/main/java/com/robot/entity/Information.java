@@ -16,7 +16,16 @@ public class Information {
     private String source;
     private String link;
     private String coverImg;
-    private String releaseTime;
+    private String postDate;
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
+
     private int type;
 
     public Integer getId() {
@@ -75,13 +84,7 @@ public class Information {
         this.coverImg = coverImg;
     }
 
-    public String getReleaseTime() {
-        return releaseTime;
-    }
 
-    public void setReleaseTime(String releaseTime) {
-        this.releaseTime = releaseTime;
-    }
 
     public int getType() {
         return type;
@@ -101,7 +104,7 @@ public class Information {
                 ", source='" + source + '\'' +
                 ", link='" + link + '\'' +
                 ", coverImg='" + coverImg + '\'' +
-                ", releaseTime=" + releaseTime +
+                ", postDate='" + postDate + '\'' +
                 ", type=" + type +
                 '}';
     }

@@ -6,7 +6,7 @@
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="link" column="url"/>
-        <result property="releaseTime" column="post_date"/>
+        <result property="postDate" column="post_date"/>
         <result property="source" column="source"/>
     </resultMap>
     <!--根据文章id查询文章具体信息-->
