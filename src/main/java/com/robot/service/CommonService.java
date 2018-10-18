@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,12 @@ public class CommonService {
 
     @Autowired
     ExpertService expertService;
+
     public String getIndex(){
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("news",associationService.getIndexNews());
-       // dataMap.put("members",associationService.getIndexMember());
-       // dataMap.put("notices",associationService.getIndexNotice());
+        dataMap.put("members",associationService.getIndexMember());
+        dataMap.put("notices",associationService.getIndexNotice());
         dataMap.put("information1",informationService.getInformation1Top());
         dataMap.put("school",expertService.findAllUniversity());
 //        dataMap.put("informations1",informationService.getInformationTop(1));

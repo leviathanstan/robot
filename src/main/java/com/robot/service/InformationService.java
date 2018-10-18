@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.InformationDao;
 import com.robot.entity.Information;
+import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,7 +84,9 @@ public class InformationService {
     public String getInformation1ByPage(Integer pageNum){
         PageHelper.startPage(pageNum, 12);
         List<Information> informations = informationDao.findInformation1ByPage();
-
+        for(Information information:informations){
+            information.setContent(CommonUtil.getPreview(information.getContent()));
+        }
         Map dataMap = new HashMap();
         dataMap.put("informations", informations);
 

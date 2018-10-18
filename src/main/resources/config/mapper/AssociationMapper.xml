@@ -64,7 +64,7 @@
     </select>
 
     <select id="findNotice" resultMap="noticeMap">
-      select notice_id,title,post_date from association_notice where 1=1
+      select notice_id,title,post_date,content from association_notice where 1=1
       <if test="title!=null and title.trim().length()>0">
         and locate(#{title},title)>0
       </if>

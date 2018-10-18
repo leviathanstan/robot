@@ -2,6 +2,7 @@ package com.robot.entity;
 
 import com.robot.dao.AssociationDao;
 import com.robot.dao.CompanyDao;
+import com.robot.dao.InformationDao;
 import com.robot.service.AssociationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 @WebAppConfiguration("src/main/resources")
@@ -21,7 +23,7 @@ public class AreaTest {
     @Autowired
     CompanyDao companyDao;
     @Autowired
-    AssociationDao associationDao;
+    InformationDao informationDao;
 
     @Autowired
     AssociationService associationService;
@@ -51,27 +53,5 @@ public class AreaTest {
         LocalDateTime dateTime = LocalDateTime.of(2016, 10, 23, 8, 20);
         System.out.println(dateTime);
     }
-
-
-    @Test
-    public void testReplace(){
-
-        String str = "<img src=\"static/img/notice/abc.jpg\"/>";
-        System.out.println(str);
-        System.out.println(str.replaceAll("src=\".","scr=\"/s"));
-    }
-
-//    @Test
-//    public void replaceMember(){
-//        ArrayList<Member> notices = associationDao.testMember();
-//        for (Member notice: notices){
-//            notice.setIntroduction(notice.getIntroduction().replaceAll("src=\"/","src=\"/static/"));
-//            notice.setIntroduction(notice.getIntroduction().replaceAll("href=\"/","href=\"/static/"));
-//        }
-//        for(Member news:notices){
-//            System.out.println(associationDao.updateMember(news));
-//
-//        }
-//    }
 
 }

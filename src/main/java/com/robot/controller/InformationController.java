@@ -26,7 +26,7 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getInformationInf/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getInformationInf/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getInformationInf(@PathVariable int id){
         return informationService.getInformationInfo(id);
     }
@@ -41,8 +41,8 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getInformationByPage",method = RequestMethod.POST)
-    public String getInformationByPage(@RequestParam Integer pageNum){
+    @RequestMapping(value = "/getInformationByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    public String getInformationByPage(Integer pageNum){
         return informationService.getInformation1ByPage(pageNum);
     }
 

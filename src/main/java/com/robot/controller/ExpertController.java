@@ -28,7 +28,7 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findExpertInf/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/findExpertInf/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findExpertInf(@PathVariable Integer id){
         return expertService.findExpertInf(id);
     }
@@ -41,7 +41,7 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findUniversityInf/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/findUniversityInf/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findUniversityInf(@PathVariable Integer id){
         return expertService.findUniversityInf(id);
     }
@@ -53,7 +53,7 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findExpertArtTop")
+    @RequestMapping(value = "/findExpertArtTop",produces = "text/html;charset=UTF-8")
     public String findExpertArtTop(){
         return expertService.findExpertArtTop();
     }
@@ -63,7 +63,7 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "findAllExpert",method = RequestMethod.GET)
+    @RequestMapping(value = "findAllExpert",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findAllExpert(){
         return expertService.findAllExpert();
     }
@@ -73,7 +73,7 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "findAllUniversity",method = RequestMethod.GET)
+    @RequestMapping(value = "findAllUniversity",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findAllUniversity(){
         return GsonUtil.getSuccessJson(expertService.findAllUniversity());
     }

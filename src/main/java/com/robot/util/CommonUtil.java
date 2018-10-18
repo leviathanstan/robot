@@ -35,4 +35,15 @@ public class CommonUtil {
         Matcher matcher = pattern.matcher(content);
         return matcher.matches();
     }
+
+    /**
+     *  文字预览
+     * @author asce
+     * @date 2018/10/18
+     * @param
+     * @return
+     */
+    public static String getPreview(String content){
+        return content.replaceAll(Constant.RULE_PREVIEW,"");
+    }
 }

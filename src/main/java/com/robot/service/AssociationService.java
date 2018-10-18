@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.AssociationDao;
 import com.robot.entity.Notice;
+import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
@@ -53,6 +54,9 @@ public class AssociationService {
         PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
         List<RobotNews> news = associationDao.findNews(args);
         PageInfo<RobotNews> pageInfo = new PageInfo<>(news);
+        for (RobotNews news1:news){
+            news1.setContent(CommonUtil.getPreview(news1.getContent()));
+        }
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
@@ -72,6 +76,11 @@ public class AssociationService {
         return associationDao.getMember();
     }
 
+    /**
+     * 成员列表
+     * @param args
+     * @return
+     */
     public String getMemberList(Map<String,String> args) {
         if (args==null)
             return GsonUtil.getErrorJson();
@@ -79,9 +88,17 @@ public class AssociationService {
         PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
         List<Member> members = associationDao.findMember();
         PageInfo<Member> pageInfo = new PageInfo<>(members);
+        for(Member member:members){
+            member.setIntroduction(CommonUtil.getPreview(member.getIntroduction()));
+        }
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
+    /**
+     * 得到成员具体信息
+     * @param id
+     * @return
+     */
     public String getMemberInfo(String id){
         Member member = associationDao.getMemberInfo(id);
         if(member==null)
@@ -110,6 +127,9 @@ public class AssociationService {
         PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
         List<Notice> notices = associationDao.findNotice(args);
         PageInfo<Notice> pageInfo = new PageInfo<>(notices);
+        for(Notice notice:notices){
+            notice.setContent(CommonUtil.getPreview(notice.getContent()));
+        }
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
