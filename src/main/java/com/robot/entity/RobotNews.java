@@ -9,6 +9,7 @@ public class RobotNews {
     private int amount;
     private String content;
     private String postDate;
+    private String source;
 
     public String getUrlId() {
         return id;
@@ -58,15 +59,28 @@ public class RobotNews {
         this.postDate = postDate;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     @Override
     public String toString() {
         return "RobotNews{" +
-                "urlId='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", amount=" + amount +
                 ", content='" + content + '\'' +
-                ", postDate=" + postDate +
+                ", postDate='" + postDate + '\'' +
+                ", source='" + source + '\'' +
                 '}';
     }
 }

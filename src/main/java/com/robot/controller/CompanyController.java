@@ -78,4 +78,40 @@ public class CompanyController {
     public String getCompanyNews(){
         return companyService.getCompanyNews();
     }
+
+    /**
+     * 获得首页的会员动态
+     * @author Ning
+     * @data 2019/10/19
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIndexMemberNews", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getIndexMemberNews(){
+        return companyService.getIndexMemberNews();
+    }
+
+    /**
+     * 根据会员id获得首页的会员具体新闻
+     * @author Ning
+     * @data 2019/10/19
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getMemberNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberNewsInfo(@RequestParam Integer memberId){
+        return companyService.getMemberNewsInfo(memberId);
+    }
+
+    /**
+     * 获取全部会员动态
+     * @author Ning
+     * @data 2019/10/19
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getMemberNewsList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberNewsList(@RequestParam Integer pageNum){
+        return companyService.getMemberNewsList(pageNum);
+    }
 }
