@@ -64,8 +64,8 @@ public class ExpertService {
      * @date 2018/10/15
      * @return
      */
-    public String findAllExpert(){
-        return GsonUtil.getSuccessJson(expertDao.findAllExpert());
+    public List<Expert> findAllExpert(){
+        return expertDao.findAllExpert();
     }
 
     /**

@@ -10,6 +10,15 @@ public class University {
     private Integer id;
     private String name;
     private String introduction;
+    private String postDate;
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
 
     public Integer getId() {
         return id;
@@ -41,6 +50,7 @@ public class University {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", introduction='" + introduction + '\'' +
+                ", postDate='" + postDate + '\'' +
                 '}';
     }
 }

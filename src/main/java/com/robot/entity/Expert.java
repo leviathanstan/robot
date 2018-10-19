@@ -11,6 +11,15 @@ public class Expert {
     private String name;
     private String introduction;
     private String faceImg;
+    private String postDate;
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
 
     public Integer getId() {
         return id;
@@ -51,6 +60,7 @@ public class Expert {
                 ", name='" + name + '\'' +
                 ", introduction='" + introduction + '\'' +
                 ", faceImg='" + faceImg + '\'' +
+                ", postDate='" + postDate + '\'' +
                 '}';
     }
 }

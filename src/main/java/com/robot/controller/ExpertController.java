@@ -65,7 +65,7 @@ public class ExpertController {
     @ResponseBody
     @RequestMapping(value = "findAllExpert",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findAllExpert(){
-        return expertService.findAllExpert();
+        return GsonUtil.getSuccessJson(expertService.findAllExpert());
     }
 
     /**

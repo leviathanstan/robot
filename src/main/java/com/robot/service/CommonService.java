@@ -31,6 +31,7 @@ public class CommonService {
         dataMap.put("notices",associationService.getIndexNotice());
         dataMap.put("information1",informationService.getInformation1Top());
         dataMap.put("school",expertService.findAllUniversity());
+        dataMap.put("experts",expertService.findAllExpert());
 //        dataMap.put("informations1",informationService.getInformationTop(1));
 //        dataMap.put("informations2",informationService.getInformationTop(2));
 //        dataMap.put("informations3",informationService.getInformationTop(3));

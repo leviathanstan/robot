@@ -3,10 +3,10 @@
 <mapper namespace="com.robot.dao.ExpertDao">
 
     <resultMap id="expert" type="com.robot.entity.Expert">
-        <id property="id" column="id"/>
-        <result property="faceImg" column="face_img"/>
+        <id property="id" column="specialist_id"/>
         <result property="introduction" column="introduction"/>
         <result property="name" column="name"/>
+        <result property="postDate" column="post_date"/>
     </resultMap>
     <resultMap id="expertArt" type="com.robot.entity.Article">
         <id property="id" column="id"/>
@@ -21,18 +21,23 @@
         <id property="id" column="school_id"/>
         <result property="name" column="name"/>
         <result property="introduction" column="introduction"/>
+        <result property="postDate" column="post_date"/>
     </resultMap>
+    <!--查找专家具体信息-->
     <select id="findExpertInf" parameterType="Integer" resultMap="expert">
-        select *from expert where id = #{id}
+        select *from specialist_robot where specialist_id = #{id}
     </select>
+    <!--查找高校具体信息-->
     <select id="findUniversityInf" parameterType="Integer" resultMap="university">
         select *from school_robot where school_id = #{id}
     </select>
+    <!--查找所有专家-->
     <select id="findAllExpert" resultMap="expert">
-        select *from expert
+        select specialist_id,name,post_date from specialist_robot order by post_date desc
     </select>
+    <!--查找所有高校-->
     <select id="findAllUniversity" resultMap="university">
-        select school_id,name,post_date from school_robot;
+        select school_id,name,post_date from school_robot order by post_date desc
     </select>
     <select id="findExpertArtTop" resultMap="expertArt">
         select *from expert_article order by release_time desc limit 8
