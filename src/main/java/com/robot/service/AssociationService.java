@@ -68,8 +68,8 @@ public class AssociationService {
     /**
      * 首页协会成员
      */
-    public String getIndexMember() {
-        return GsonUtil.getSuccessJson(associationDao.getIndexMember());
+    public List<Member> getIndexMember() {
+        return associationDao.getIndexMember();
     }
 
     /**

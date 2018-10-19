@@ -11,6 +11,7 @@ import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
+import org.aspectj.weaver.ArrayReferenceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,8 +60,8 @@ public class CompanyService {
     }
 
 
-    public String getIndexMemberNews() {
-        return GsonUtil.getSuccessJson(companyDao.getIndexMemberNews());
+    public ArrayList<RobotNews> getIndexMemberNews() {
+        return companyDao.getIndexMemberNews();
     }
 
     public String getMemberNewsInfo(Integer memberId) {

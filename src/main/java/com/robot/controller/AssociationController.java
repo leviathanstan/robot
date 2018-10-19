@@ -32,18 +32,6 @@ public class AssociationController {
     }
 
     /**
-     * 获得首页协会会员
-     * @author Ning
-     * @data 2018/10/11
-     * @return java.lang.String
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getIndexMember", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getIndexMember(){
-        return associationService.getIndexMember();
-    }
-
-    /**
      * 根据memberId获得会员具体信息
      * @author Ning
      * @data 2019/10/19
