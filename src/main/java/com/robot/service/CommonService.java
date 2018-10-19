@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.entity.Company;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class CommonService {
     AssociationService associationService;
 
     @Autowired
+    CompanyService companyService;
+
+    @Autowired
     InformationService informationService;
 
     @Autowired
@@ -28,6 +32,7 @@ public class CommonService {
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("news",associationService.getIndexNews());
         dataMap.put("members",associationService.getIndexMember());
+        dataMap.put("memberNews", companyService.getIndexMemberNews());
         dataMap.put("notices",associationService.getIndexNotice());
         dataMap.put("information1",informationService.getInformation1Top());
         dataMap.put("school",expertService.findAllUniversity());
