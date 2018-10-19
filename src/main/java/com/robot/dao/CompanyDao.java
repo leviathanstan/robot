@@ -3,6 +3,7 @@ package com.robot.dao;
 import com.robot.entity.Area;
 import com.robot.entity.Article;
 import com.robot.entity.Company;
+import com.robot.entity.RobotNews;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,4 +27,10 @@ public interface CompanyDao {
     Integer findCompanyById(Integer companyId);
 
     Integer getCompanyIdByName(String companyName);
+
+    ArrayList<RobotNews> getIndexMemberNews();
+
+    RobotNews getMemberNewsInfo(Integer memberId);
+
+    ArrayList<RobotNews> getMemberNewsList();
 }

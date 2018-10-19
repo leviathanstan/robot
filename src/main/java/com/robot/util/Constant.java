@@ -15,7 +15,7 @@ public class Constant {
     public static String RULE_PHONE = "^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\\d{8}$";
     public static String RULE_EMAIL= "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
     public static String RULE_NUMBER  = "^[0-9]*$";
-    public static String RULE_PREVIEW = "(<img(.*?)>)";
+    public static String RULE_PREVIEW = "(<(.*?)>)";
 
     //允许上传图片类型
 //    public final static List<String> TYPE_IMG = new ArrayList<String>(){{

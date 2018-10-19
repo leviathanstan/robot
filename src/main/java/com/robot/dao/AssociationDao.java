@@ -17,15 +17,21 @@ import java.util.Map;
 public interface AssociationDao {
 
     RobotNews getRobotNewsInf(String id);
+
     ArrayList<RobotNews> getRobotNewsTop();
+
     ArrayList<RobotNews> findNews(Map<String,String> args);
 
-    ArrayList<Member> getMember();
+    ArrayList<Member> getIndexMember();
+
     ArrayList<Member> findMember();
-    Member getMemberInfo(String id);
+
+    Member getMemberInfo(Integer id);
 
     ArrayList<Notice> getNotice();
+
     ArrayList<Notice> findNotice(Map<String,String> args);
+
     Notice getNoticeInfo(String id);
 
 }

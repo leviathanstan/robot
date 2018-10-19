@@ -1,15 +1,22 @@
 package com.robot.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.robot.dao.CompanyDao;
 import com.robot.entity.Area;
 import com.robot.entity.Article;
 import com.robot.entity.Company;
 
+import com.robot.entity.RobotNews;
+import com.robot.util.CommonUtil;
+import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
+import org.aspectj.weaver.ArrayReferenceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -18,7 +25,7 @@ import java.util.ArrayList;
  */
 @Service
 public class CompanyService {
-    
+
     @Autowired
     private CompanyDao companyDao;
 
@@ -50,5 +57,25 @@ public class CompanyService {
 
     public String getCompanyNews() {
         return GsonUtil.getSuccessJson(companyDao.getCompanyNews());
+    }
+
+
+    public ArrayList<RobotNews> getIndexMemberNews() {
+        return companyDao.getIndexMemberNews();
+    }
+
+    public String getMemberNewsInfo(Integer memberId) {
+        RobotNews memberNews = companyDao.getMemberNewsInfo(memberId);
+        if(memberNews==null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(memberNews);
+    }
+
+    public String getMemberNewsList(Integer pageNum) {
+        int page = CommonUtil.formatPageNum((String.valueOf(pageNum)));
+        PageHelper.startPage(page,Constant.PRODUCT_PAGE_COUNT);
+        ArrayList<RobotNews> robotNewsList = companyDao.getMemberNewsList();
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(robotNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 }

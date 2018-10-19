@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.AssociationDao;
 import com.robot.entity.Notice;
-import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
@@ -13,8 +12,6 @@ import com.robot.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,36 +67,26 @@ public class AssociationService {
 
     /**
      * 首页协会成员
-     * @return
      */
     public List<Member> getIndexMember() {
-        return associationDao.getMember();
+        return associationDao.getIndexMember();
     }
 
     /**
-     * 成员列表
-     * @param args
-     * @return
+     * 分页获得成员信息
      */
-    public String getMemberList(Map<String,String> args) {
-        if (args==null)
-            return GsonUtil.getErrorJson();
-        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
-        PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
+    public String getMemberList(Integer pageNum) {
+        int page = CommonUtil.formatPageNum((String.valueOf(pageNum)));
+        PageHelper.startPage(page,Constant.PRODUCT_PAGE_COUNT);
         List<Member> members = associationDao.findMember();
         PageInfo<Member> pageInfo = new PageInfo<>(members);
-        for(Member member:members){
-            member.setIntroduction(CommonUtil.getPreview(member.getIntroduction()));
-        }
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
     /**
-     * 得到成员具体信息
-     * @param id
-     * @return
+     * 获得具体成员信息
      */
-    public String getMemberInfo(String id){
+    public String getMemberInfo(Integer id){
         Member member = associationDao.getMemberInfo(id);
         if(member==null)
             return GsonUtil.getErrorJson();

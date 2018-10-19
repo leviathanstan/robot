@@ -9,7 +9,13 @@
     <result property="areaCount" column="area_count"/>
     </resultMap>
 
-
+    <resultMap id="memberNews" type="com.robot.entity.RobotNews">
+        <id property="id" column="id"/>
+        <result property="title" column="news_name"/>
+        <result property="content" column="content"/>
+        <result property="postDate" column="post_date"/>
+        <result property="source" column="source"/>
+    </resultMap>
 
     <select id="getCompanyBrand" resultType="com.robot.entity.Company">
         select * from company;
@@ -37,5 +43,17 @@
 
     <select id="getCompanyIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
         select id from company where name = #{companyName};
+    </select>
+
+    <select id="getIndexMemberNews" resultMap="memberNews">
+        select id, news_name, post_date, source from membernews order by post_date desc LIMIT 0, 7;
+    </select>
+
+    <select id="getMemberNewsInfo" parameterType="java.lang.Integer" resultMap="memberNews">
+        select * from membernews where id = #{memberId};
+    </select>
+
+    <select id="getMemberNewsList" resultMap="memberNews">
+        select id, news_name, post_date, source from membernews order by post_date desc
     </select>
 </mapper>

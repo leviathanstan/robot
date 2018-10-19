@@ -27,24 +27,23 @@
         </if>
     </select>
 
-    <resultMap id="associationMember" type="com.robot.entity.Member">
-       <id property="id" column="member_id"/>
+    <resultMap id="associationMember" type="com.robot.entity.Member" autoMapping="true">
+       <id property="id" column="id"/>
         <result property="memberName" column="name"/>
         <result property="positionId" column="position_num"/>
         <result property="joinTime" column="post_date"/>
-        <result property="introduction" column="introduction"/>
     </resultMap>
 
-    <select id="getMember" resultMap="associationMember">
-        select * from association_members where position_num='1' or position_num='2'
+    <select id="getIndexMember" resultMap="associationMember">
+        select id, name, position_num,post_date from association_member where position_num='1' or position_num='2';
     </select>
 
     <select id="findMember" resultMap="associationMember">
-        select * from association_members
+        select id, name, position_num,post_date from association_member order by post_date desc
     </select>
 
-    <select id="getMemberInfo" resultMap="associationMember" parameterType="String">
-        select * from association_members where member_id=#{id}
+    <select id="getMemberInfo" resultMap="associationMember" parameterType="java.lang.Integer">
+        select * from association_member where id=#{id};
     </select>
 
     <resultMap id="noticeMap" type="com.robot.entity.Notice">
