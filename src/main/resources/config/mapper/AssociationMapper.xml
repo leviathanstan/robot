@@ -49,7 +49,7 @@
     <resultMap id="noticeMap" type="com.robot.entity.Notice">
         <id property="id" column="notice_id"/>
         <result property="title" column="title"/>
-        <result property="time" column="post_date"/>
+        <result property="postDate" column="post_date"/>
         <result property="content" column="content"/>
         <result property="viewCount" column="view_count"/>
     </resultMap>

@@ -87,7 +87,7 @@ public class ExpertService {
      * @return
      */
     public String findExpertByPage(Integer pageNum){
-        PageHelper.startPage(pageNum,20);
+        PageHelper.startPage(pageNum,12);
         ArrayList<Expert> experts = expertDao.findAllExpert();
         HashMap dataMap = new HashMap();
         dataMap.put("experts",experts);
@@ -102,7 +102,7 @@ public class ExpertService {
      * @return
      */
     public String findUniversityByPage(Integer pageNum){
-        PageHelper.startPage(pageNum,10);
+        PageHelper.startPage(pageNum,12);
         ArrayList<University> schools = expertDao.findAllUniversity();
         HashMap dataMap = new HashMap();
         dataMap.put("schools",schools);

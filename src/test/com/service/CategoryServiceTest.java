@@ -1,6 +1,7 @@
 package com.service;
 
 import com.robot.dao.CategoryDao;
+import com.robot.dao.ExpertDao;
 import com.robot.dao.ProductDao;
 import com.robot.dto.CategoryDto;
 import org.junit.Test;
@@ -22,8 +23,12 @@ public class CategoryServiceTest {
     @Autowired
     public CategoryDao categoryDao;
 
+    @Autowired
+    public ExpertDao expertDao;
+
     @Test
     public void testCollection(){
         //CategoryDto categoryDto = categoryDao.testCollection();
+        expertDao.findAllExpert();
     }
 }

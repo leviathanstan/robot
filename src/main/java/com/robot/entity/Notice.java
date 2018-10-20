@@ -10,9 +10,17 @@ public class Notice {
 
     String id;
     String title;
-    String time;
+    String postDate;
     String content;
     int viewCount;
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
 
     public String getId() {
         return id;
@@ -28,14 +36,6 @@ public class Notice {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getContent() {
@@ -59,7 +59,7 @@ public class Notice {
         return "Notice{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", time='" + time + '\'' +
+                ", postDate='" + postDate + '\'' +
                 ", content='" + content + '\'' +
                 ", viewCount=" + viewCount +
                 '}';

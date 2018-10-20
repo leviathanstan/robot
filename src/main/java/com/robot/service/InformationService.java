@@ -81,15 +81,15 @@ public class InformationService {
         return informations1;
     }
 
-    public String getInformation1ByPage(Integer pageNum){
+    public String getInformation1ByPage(Integer Num){
+        int pageNum = CommonUtil.formatPageNum(Num +"");
         PageHelper.startPage(pageNum, 12);
         List<Information> informations = informationDao.findInformation1ByPage();
+        PageInfo<Information> pageInfo = new PageInfo<>(informations);
         for(Information information:informations){
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
-        Map dataMap = new HashMap();
-        dataMap.put("informations", informations);
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "content"), dataMap);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary","type","coverImg"), pageInfo);
     }
 }
