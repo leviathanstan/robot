@@ -77,4 +77,26 @@ public class ExpertController {
     public String findAllUniversity(){
         return GsonUtil.getSuccessJson(expertService.findAllUniversity());
     }
+
+    /**
+     * 获取专家的分页显示
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "findExpertByPage/{pageNum}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findExpertByPage(@PathVariable Integer pageNum){
+        return expertService.findExpertByPage(pageNum);
+    }
+
+    /**
+     * 获取高校的分页显示
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "findUniversityByPage/{pageNum}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findUniversityByPage(@PathVariable Integer pageNum){
+        return expertService.findUniversityByPage(pageNum);
+    }
 }

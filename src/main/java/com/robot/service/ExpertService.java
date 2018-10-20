@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.github.pagehelper.PageHelper;
 import com.robot.dao.ExpertDao;
 import com.robot.entity.Article;
 import com.robot.entity.Expert;
@@ -76,5 +77,35 @@ public class ExpertService {
      */
     public List<University> findAllUniversity(){
         return expertDao.findAllUniversity();
+    }
+
+    /**
+     * 获取专家的分页显示
+     * @author hua
+     * @date 2018/10/20
+     * @param pageNum
+     * @return
+     */
+    public String findExpertByPage(Integer pageNum){
+        PageHelper.startPage(pageNum,20);
+        ArrayList<Expert> experts = expertDao.findAllExpert();
+        HashMap dataMap = new HashMap();
+        dataMap.put("experts",experts);
+        return GsonUtil.getSuccessJson(dataMap);
+    }
+
+    /**
+     * 获取高校的分页显示
+     * @author hua
+     * @date 2018/10/20
+     * @param pageNum
+     * @return
+     */
+    public String findUniversityByPage(Integer pageNum){
+        PageHelper.startPage(pageNum,10);
+        ArrayList<University> schools = expertDao.findAllUniversity();
+        HashMap dataMap = new HashMap();
+        dataMap.put("schools",schools);
+        return GsonUtil.getSuccessJson(dataMap);
     }
 }
