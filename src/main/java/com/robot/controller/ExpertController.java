@@ -46,17 +46,7 @@ public class ExpertController {
         return expertService.findUniversityInf(id);
     }
 
-    /**
-     * 获取专家智点文章的前八条
-     * @author hua
-     * @date 2018/9/27
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/findExpertArtTop",produces = "text/html;charset=UTF-8")
-    public String findExpertArtTop(){
-        return expertService.findExpertArtTop();
-    }
+
 
     /**
      * 获取所有专家
@@ -98,5 +88,27 @@ public class ExpertController {
     @RequestMapping(value = "findUniversityByPage/{pageNum}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findUniversityByPage(@PathVariable Integer pageNum){
         return expertService.findUniversityByPage(pageNum);
+    }
+
+    /**
+     * 获取专家智点具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "findExpertArtInf/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findExpertArtInf(@PathVariable Integer id){
+        return expertService.findExpertArtInf(id);
+    }
+
+    /**
+     * 获取专家智点的分页显示
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "findExpertArtByPage",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    public String findExpertArtByPage( Integer pageNum){
+        return expertService.getExpertArtByPage(pageNum);
     }
 }

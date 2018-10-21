@@ -9,13 +9,12 @@
         <result property="postDate" column="post_date"/>
     </resultMap>
     <resultMap id="expertArt" type="com.robot.entity.Article">
-        <id property="id" column="id"/>
+        <id property="id" column="item_id"/>
         <result property="title" column="title"/>
-        <result property="releaseTime" column="release_time"/>
-        <result property="link" column="link"/>
+        <result property="postDate" column="post_date"/>
         <result property="summary" column="summary"/>
         <result property="content" column="content"/>
-        <result property="source" column="source"/>
+        <result property="url" column="source"/>
     </resultMap>
     <resultMap id="university" type="com.robot.entity.University">
         <id property="id" column="school_id"/>
@@ -39,7 +38,15 @@
     <select id="findAllUniversity" resultMap="university">
         select school_id,name,post_date from school_robot order by post_date desc
     </select>
+    <!--查找专家智点前八条-->
     <select id="findExpertArtTop" resultMap="expertArt">
-        select *from expert_article order by release_time desc limit 8
+        select item_id,title,source,post_date from expert_wisdom order by post_date desc limit 8
     </select>
+    <!--查找专家智点具体信息-->
+    <select id="findExpertArtInf" resultMap="expertArt">
+        select *from expert_wisdom where item_id = #{id}
+    </select>
+    <select id="findExpertArtByPage" resultMap="expertArt">
+        select *from expert_wisdom order by post_date desc
+     </select>
 </mapper>

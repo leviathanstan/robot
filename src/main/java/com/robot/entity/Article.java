@@ -12,11 +12,10 @@ public class Article {
 
     private Integer id;
     private String title;
-    private String releaseTime;
-    private String link;
+    private String postDate;
     private String summary;
     private String content;
-    private String source;
+    private String url;
     private String type;
 
 
@@ -36,21 +35,14 @@ public class Article {
         this.title = title;
     }
 
-    public String getReleaseTime() {
-        return releaseTime;
+    public String getPostDate() {
+        return postDate;
     }
 
-    public void setReleaseTime(String releaseTime) {
-        this.releaseTime = releaseTime;
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
 
     public String getSummary() {
         return summary;
@@ -68,12 +60,12 @@ public class Article {
         this.content = content;
     }
 
-    public String getSource() {
-        return source;
+    public String getUrl() {
+        return url;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getType() {
@@ -89,11 +81,10 @@ public class Article {
         return "Article{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", releaseTime=" + releaseTime +
-                ", link='" + link + '\'' +
+                ", postDate='" + postDate + '\'' +
                 ", summary='" + summary + '\'' +
                 ", content='" + content + '\'' +
-                ", source='" + source + '\'' +
+                ", url='" + url + '\'' +
                 ", type='" + type + '\'' +
                 '}';
     }

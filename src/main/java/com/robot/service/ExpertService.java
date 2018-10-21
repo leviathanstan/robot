@@ -1,10 +1,12 @@
 package com.robot.service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.robot.dao.ExpertDao;
 import com.robot.entity.Article;
 import com.robot.entity.Expert;
 import com.robot.entity.University;
+import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,9 +56,9 @@ public class ExpertService {
      * @date 2018/9/27
      * @return
      */
-    public String findExpertArtTop(){
+    public ArrayList<Article> findExpertArtTop(){
         ArrayList<Article> articles = expertDao.findExpertArtTop();
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class,"link","summary","content","source","type"),articles);
+        return articles;
     }
 
     /**
@@ -107,5 +109,29 @@ public class ExpertService {
         HashMap dataMap = new HashMap();
         dataMap.put("schools",schools);
         return GsonUtil.getSuccessJson(dataMap);
+    }
+
+    /**
+     * 获取专家智点具体信息
+     * @param id
+     * @return
+     */
+    public String findExpertArtInf(Integer id){
+        Article article = expertDao.findExpertArtInf(id);
+        if(null == article)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class,"summary","type"),article);
+    }
+
+    public String getExpertArtByPage(Integer Num){
+        int pageNum = CommonUtil.formatPageNum(Num +"");
+        PageHelper.startPage(pageNum, 12);
+        List<Article> articles = expertDao.findExpertArtByPage();
+        PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        for(Article article:articles){
+            article.setContent(CommonUtil.getPreview(article.getContent()));
+        }
+
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class, "summary","type"), pageInfo);
     }
 }
