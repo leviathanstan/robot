@@ -11,7 +11,7 @@
 
     <resultMap id="memberNews" type="com.robot.entity.RobotNews">
         <id property="id" column="id"/>
-        <result property="title" column="news_name"/>
+        <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="postDate" column="post_date"/>
         <result property="source" column="source"/>
@@ -46,14 +46,14 @@
     </select>
 
     <select id="getIndexMemberNews" resultMap="memberNews">
-        select id, news_name, post_date, source from membernews order by post_date desc LIMIT 0, 7;
+        select id, title, post_date, source from member_news order by post_date desc LIMIT 0, 7;
     </select>
 
     <select id="getMemberNewsInfo" parameterType="java.lang.Integer" resultMap="memberNews">
-        select * from membernews where id = #{memberId};
+        select * from member_news where id = #{memberId};
     </select>
 
     <select id="getMemberNewsList" resultMap="memberNews">
-        select id, news_name, post_date, source from membernews order by post_date desc
+        select id, title, post_date, source from member_news order by post_date desc
     </select>
 </mapper>

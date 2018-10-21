@@ -30,10 +30,10 @@ public class CommonService {
 
     public String getIndex(){
         Map<String,Object> dataMap = new HashMap<>();
-        //dataMap.put("news",associationService.getIndexNews());
-        //dataMap.put("members",associationService.getIndexMember());
-        //dataMap.put("memberNews", companyService.getIndexMemberNews());
-        //dataMap.put("notices",associationService.getIndexNotice());
+        dataMap.put("news",associationService.getIndexNews());
+        dataMap.put("members",associationService.getIndexMember());
+        dataMap.put("memberNews", companyService.getIndexMemberNews());
+        dataMap.put("notices",associationService.getIndexNotice());
         dataMap.put("information1",informationService.getInformation1Top());
         dataMap.put("school",expertService.findAllUniversity());
         dataMap.put("experts",expertService.findAllExpert());

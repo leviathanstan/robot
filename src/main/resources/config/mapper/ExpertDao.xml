@@ -9,7 +9,7 @@
         <result property="postDate" column="post_date"/>
     </resultMap>
     <resultMap id="expertArt" type="com.robot.entity.Article">
-        <id property="id" column="item_id"/>
+        <id property="id" column="wisdom_id"/>
         <result property="title" column="title"/>
         <result property="postDate" column="post_date"/>
         <result property="summary" column="summary"/>
@@ -40,11 +40,11 @@
     </select>
     <!--查找专家智点前八条-->
     <select id="findExpertArtTop" resultMap="expertArt">
-        select item_id,title,source,post_date from expert_wisdom order by post_date desc limit 8
+        select wisdom_id,title,source,post_date from expert_wisdom order by post_date desc limit 8
     </select>
     <!--查找专家智点具体信息-->
     <select id="findExpertArtInf" resultMap="expertArt">
-        select *from expert_wisdom where item_id = #{id}
+        select *from expert_wisdom where wisdom_id = #{id}
     </select>
     <select id="findExpertArtByPage" resultMap="expertArt">
         select *from expert_wisdom order by post_date desc
