@@ -24,27 +24,27 @@
     </resultMap>
     <!--查找专家具体信息-->
     <select id="findExpertInf" parameterType="Integer" resultMap="expert">
-        select *from specialist_robot where specialist_id = #{id}
+        select *from specialist_robot where id = #{id}
     </select>
     <!--查找高校具体信息-->
     <select id="findUniversityInf" parameterType="Integer" resultMap="university">
-        select *from school_robot where school_id = #{id}
+        select *from school_robot where id = #{id}
     </select>
     <!--查找所有专家-->
     <select id="findAllExpert" resultMap="expert">
-        select specialist_id,name,post_date,introduction from specialist_robot order by post_date desc
+        select id,name,post_date,introduction from specialist_robot order by post_date desc
     </select>
     <!--查找所有高校-->
     <select id="findAllUniversity" resultMap="university">
-        select school_id,name,post_date,introduction from school_robot order by post_date desc
+        select id,name,post_date,introduction from school_robot order by post_date desc
     </select>
     <!--查找专家智点前八条-->
     <select id="findExpertArtTop" resultMap="expertArt">
-        select wisdom_id,title,source,post_date,content from expert_wisdom order by post_date desc limit 8
+        select id,title,source,post_date,content from expert_wisdom order by post_date desc limit 8
     </select>
     <!--查找专家智点具体信息-->
     <select id="findExpertArtInf" resultMap="expertArt">
-        select *from expert_wisdom where wisdom_id = #{id}
+        select *from expert_wisdom where id = #{id}
     </select>
     <select id="findExpertArtByPage" resultMap="expertArt">
         select *from expert_wisdom order by post_date desc

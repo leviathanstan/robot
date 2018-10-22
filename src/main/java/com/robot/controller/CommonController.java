@@ -21,7 +21,6 @@ public class CommonController {
     @ResponseBody
     @RequestMapping(value = "/getIndex",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String getIndex(){
-
         return commonService.getIndex();
     }
 

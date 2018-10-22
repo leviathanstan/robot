@@ -5,7 +5,7 @@
 <mapper namespace="com.robot.dao.AssociationDao">
 
     <resultMap id="robotNews" type="com.robot.entity.RobotNews">
-        <id column="news_id" property="id"/>
+        <id column="id" property="id"/>
         <result column="url" property="url"/>
         <result column="title" property="title"/>
         <result column="post_date" property="postDate"/>
@@ -16,7 +16,7 @@
         select * from news_robot where news_id = #{id}
     </select>
     <select id="getRobotNewsTop" resultMap="robotNews">
-        select news_id,title,post_date from news_robot order by post_date desc limit 13
+        select id,title,post_date from news_robot order by post_date desc limit 13
     </select>
 
     <select id="findNews" resultMap="robotNews">
@@ -53,7 +53,7 @@
     </resultMap>
 
     <select id="getNotice" resultMap="noticeMap">
-      select notice_id,title,post_date from association_notice order by post_date desc limit 13
+      select id,title,post_date from association_notice order by post_date desc limit 13
     </select>
 
     <select id="getNoticeInfo" parameterType="String" resultMap="noticeMap">
@@ -61,7 +61,7 @@
     </select>
 
     <select id="findNotice" resultMap="noticeMap">
-      select notice_id,title,post_date,content from association_notice where 1=1
+      select id,title,post_date,content from association_notice where 1=1
       <if test="title!=null and title.trim().length()>0">
         and locate(#{title},title)>0
       </if>
