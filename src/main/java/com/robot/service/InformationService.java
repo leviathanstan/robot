@@ -26,70 +26,83 @@ public class InformationService {
     private InformationDao informationDao;
 
     /**
-     * 获取资讯文章的具体内容
+     * 获取行业动态的具体内容
      *
      * @param id
      * @return
      * @author hua
      * @date 2018/9/24
      */
-    public String getInformationInfo(int id) {
+    public String findInformationInfo(int id) {
         Information information = informationDao.findInformationInfo(id);
         return GsonUtil.getSuccessJson(information);
     }
 
-//    /**
-//     * 获取指定类别的资讯文章的前八条
-//     *
-//     * @param categoryId
-//     * @return
-//     * @author hua
-//     * @date 2018/9/27
-//     */
-//    public ArrayList<Information> getInformationTop(Integer categoryId) {
-//        ArrayList<Information> informations = informationDao.findInformationTop(categoryId);
-//        return informations;
-//    }
-//
-//    /**
-//     * 获取指定类型的所有资讯文章(分页)
-//     *
-//     * @param categoryId
-//     * @param pageNum
-//     * @return
-//     * @author hua
-//     * @date 2018/9/27
-//     */
-//    public String getInformationByPage(Integer categoryId, Integer pageNum) {
-//        PageHelper.startPage(pageNum, 12);
-//        List<Information> informations = informationDao.findInformationByPage(categoryId);
-//        //PageInfo<Information> pageInfo = new PageInfo<>(informations);
-//        Map dataMap = new HashMap();
-//        dataMap.put("informations", informations);
-//        //dataMap.put("pageInfo",pageInfo);
-//        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "content"), dataMap);
-//    }
-
     /**
      * 获取行业动态的前八条
+     *
+     * @return
      * @author hua
      * @date 2018/10/17
-     * @return
      */
-    public ArrayList<Information> getInformation1Top() {
-        ArrayList<Information> informations1 = informationDao.findInformation1Top();
+    public ArrayList<Information> findInformationTop() {
+        ArrayList<Information> informations1 = informationDao.findInformationTop();
         return informations1;
     }
 
-    public String getInformation1ByPage(Integer Num){
-        int pageNum = CommonUtil.formatPageNum(Num +"");
+    public String findInformationByPage(Integer Num) {
+        int pageNum = CommonUtil.formatPageNum(Num + "");
         PageHelper.startPage(pageNum, 12);
-        List<Information> informations = informationDao.findInformation1ByPage();
+        List<Information> informations = informationDao.findInformationByPage();
         PageInfo<Information> pageInfo = new PageInfo<>(informations);
-        for(Information information:informations){
+        for (Information information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary","type","coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
+    }
+
+    /**
+     * 获取政策的具体内容
+     *
+     * @param id
+     * @return
+     * @author hua
+     * @date 2018/10/22
+     */
+    public String findPolicyInfo(int id) {
+        Information information = informationDao.findPolicyInfo(id);
+        return GsonUtil.getSuccessJson(information);
+    }
+
+    /**
+     * 获取政策的前12条
+     *
+     * @return
+     * @author hua
+     * @date 2018/10/22
+     */
+    public ArrayList<Information> findPolicyTop() {
+        ArrayList<Information> informations1 = informationDao.findPolicyTop();
+        return informations1;
+    }
+
+    /**
+     * 获取分页显示的政策
+     * @author hua
+     * @date 2018/10/22
+     * @param Num
+     * @return
+     */
+    public String findPolicyByPage(Integer Num) {
+        int pageNum = CommonUtil.formatPageNum(Num + "");
+        PageHelper.startPage(pageNum, 12);
+        List<Information> informations = informationDao.findPolicyByPage();
+        PageInfo<Information> pageInfo = new PageInfo<>(informations);
+        for (Information information : informations) {
+            information.setContent(CommonUtil.getPreview(information.getContent()));
+        }
+
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
     }
 }

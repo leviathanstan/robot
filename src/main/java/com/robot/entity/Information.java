@@ -17,6 +17,7 @@ public class Information {
     private String link;
     private String coverImg;
     private String postDate;
+    private int viewCount;
 
     public String getPostDate() {
         return postDate;
@@ -84,7 +85,13 @@ public class Information {
         this.coverImg = coverImg;
     }
 
+    public int getViewCount() {
+        return viewCount;
+    }
 
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
 
     public int getType() {
         return type;

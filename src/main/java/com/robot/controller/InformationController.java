@@ -19,16 +19,16 @@ public class InformationController {
     private InformationService informationService;
 
     /**
-     * 获取资讯文章具体内容
+     * 获取行业动态具体内容
      * @author hua
      * @date 2018/9/24
      * @param id
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getInformationInf/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getInformationInf(@PathVariable int id){
-        return informationService.getInformationInfo(id);
+    @RequestMapping(value = "/findInformationInf/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findInformationInf(@PathVariable int id){
+        return informationService.findInformationInfo(id);
     }
 
 
@@ -41,9 +41,36 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getInformationByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
-    public String getInformationByPage(Integer pageNum){
-        return informationService.getInformation1ByPage(pageNum);
+    @RequestMapping(value = "/findInformationByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    public String findInformationByPage(Integer pageNum){
+        return informationService.findInformationByPage(pageNum);
     }
 
+    /**
+     * 获取政策具体内容
+     * @author hua
+     * @date 2018/10/22
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findPolicyInf/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findPolicyInf(@PathVariable int id){
+        return informationService.findPolicyInfo(id);
+    }
+
+
+
+    /**
+     * 获取分页显示的政策
+     * @author hua
+     * @date 2018/10/17
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findPolicyByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    public String findPolicyByPage(Integer pageNum){
+        return informationService.findPolicyByPage(pageNum);
+    }
 }

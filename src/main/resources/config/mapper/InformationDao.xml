@@ -2,31 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.robot.dao.InformationDao">
     <resultMap id="information" type="com.robot.entity.Information">
-        <result property="id" column="message_id"/>
+        <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="link" column="url"/>
         <result property="postDate" column="post_date"/>
         <result property="source" column="source"/>
+        <result property="viewCount" column="view_count"/>
     </resultMap>
-    <!--查询指定文章类型的资讯文章的前八条-->
-    <select id="findInformationTop" parameterType="Integer" resultMap="information">
-        select *from information where category_id = #{id} order by release_time desc limit 8
-    </select>
-    <!--查询指定类型的所有资讯文章-->
-    <select id="findInformationByPage" parameterType="Integer" resultMap="information">
-        select *from information where category_id = #{categoryId} order by release_time desc
-    </select>
-    <!--根据文章id查询文章具体信息-->
+
+    <!--根据文章id查询行业动态具体信息-->
     <select id="findInformationInfo" resultMap="information">
-        select *from message_robot where message_id = #{id}
+        select *from message_robot where id = #{id}
     </select>
     <!--查询行业动态的前十二条-->
-    <select id="findInformation1Top" resultMap="information">
+    <select id="findInformationTop" resultMap="information">
         select id,title,post_date from message_robot order by post_date desc limit 12
     </select>
     <!--查询行业动态的所有文章（分页）-->
-    <select id="findInformation1ByPage" resultMap="information">
+    <select id="findInformationByPage" resultMap="information">
         select *from message_robot order by post_date desc
     </select>
+
+    <!--根据文章id查询政策具体信息-->
+    <select id="findPolicyInfo" resultMap="information">
+        select *from policy_info where id = #{id}
+    </select>
+    <!--查询政策的前十二条-->
+    <select id="findPolicyTop" resultMap="information">
+        select id,title,post_date from policy_info order by post_date desc limit 12
+    </select>
+    <!--查询政策的所有文章（分页）-->
+    <select id="findPolicyByPage" resultMap="information">
+        select *from policy_info order by post_date desc
+    </select>
+
 </mapper>

@@ -17,6 +17,7 @@ public class Article {
     private String content;
     private String url;
     private String type;
+    private int viewCount;
 
 
     public Integer getId() {
@@ -74,6 +75,14 @@ public class Article {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
     }
 
     @Override

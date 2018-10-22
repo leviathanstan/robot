@@ -127,7 +127,7 @@ public class ExpertService {
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class,"summary","type"),article);
     }
 
-    public String getExpertArtByPage(Integer Num){
+    public String findExpertArtByPage(Integer Num){
         int pageNum = CommonUtil.formatPageNum(Num +"");
         PageHelper.startPage(pageNum, 12);
         List<Article> articles = expertDao.findExpertArtByPage();

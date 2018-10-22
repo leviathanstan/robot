@@ -87,6 +87,6 @@ public class ExpertController {
     @ResponseBody
     @RequestMapping(value = "findExpertArtByPage",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String findExpertArtByPage( Integer pageNum){
-        return expertService.getExpertArtByPage(pageNum);
+        return expertService.findExpertArtByPage(pageNum);
     }
 }
