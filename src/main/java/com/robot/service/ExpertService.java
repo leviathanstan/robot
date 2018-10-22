@@ -91,9 +91,11 @@ public class ExpertService {
     public String findExpertByPage(Integer pageNum){
         PageHelper.startPage(pageNum,12);
         ArrayList<Expert> experts = expertDao.findAllExpert();
-        HashMap dataMap = new HashMap();
-        dataMap.put("experts",experts);
-        return GsonUtil.getSuccessJson(dataMap);
+        PageInfo<Expert> pageInfo = new PageInfo<>(experts);
+        for(Expert expert:experts){
+            expert.setIntroduction(CommonUtil.getPreview(expert.getIntroduction()));
+        }
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 
     /**
@@ -106,9 +108,11 @@ public class ExpertService {
     public String findUniversityByPage(Integer pageNum){
         PageHelper.startPage(pageNum,12);
         ArrayList<University> schools = expertDao.findAllUniversity();
-        HashMap dataMap = new HashMap();
-        dataMap.put("schools",schools);
-        return GsonUtil.getSuccessJson(dataMap);
+        PageInfo<University> pageInfo = new PageInfo<>(schools);
+        for(University school:schools){
+            school.setIntroduction(CommonUtil.getPreview(school.getIntroduction()));
+        }
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 
     /**
@@ -131,7 +135,6 @@ public class ExpertService {
         for(Article article:articles){
             article.setContent(CommonUtil.getPreview(article.getContent()));
         }
-
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class, "summary","type"), pageInfo);
     }
 }

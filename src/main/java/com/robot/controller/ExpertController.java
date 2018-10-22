@@ -46,28 +46,6 @@ public class ExpertController {
         return expertService.findUniversityInf(id);
     }
 
-
-
-    /**
-     * 获取所有专家
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "findAllExpert",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findAllExpert(){
-        return GsonUtil.getSuccessJson(expertService.findAllExpert());
-    }
-
-    /**
-     * 获取所有高校
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "findAllUniversity",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findAllUniversity(){
-        return GsonUtil.getSuccessJson(expertService.findAllUniversity());
-    }
-
     /**
      * 获取专家的分页显示
      * @param pageNum

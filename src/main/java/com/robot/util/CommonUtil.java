@@ -44,6 +44,6 @@ public class CommonUtil {
      * @return
      */
     public static String getPreview(String content){
-        return content.replaceAll(Constant.RULE_PREVIEW,"");
+        return content==null?null:content.replaceAll(Constant.RULE_PREVIEW,"");
     }
 }

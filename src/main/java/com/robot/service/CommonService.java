@@ -1,7 +1,5 @@
 package com.robot.service;
 
-import com.robot.entity.Company;
-import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

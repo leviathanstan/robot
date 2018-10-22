@@ -32,15 +32,15 @@
     </select>
     <!--查找所有专家-->
     <select id="findAllExpert" resultMap="expert">
-        select specialist_id,name,post_date from specialist_robot order by post_date desc
+        select specialist_id,name,post_date,introduction from specialist_robot order by post_date desc
     </select>
     <!--查找所有高校-->
     <select id="findAllUniversity" resultMap="university">
-        select school_id,name,post_date from school_robot order by post_date desc
+        select school_id,name,post_date,introduction from school_robot order by post_date desc
     </select>
     <!--查找专家智点前八条-->
     <select id="findExpertArtTop" resultMap="expertArt">
-        select wisdom_id,title,source,post_date from expert_wisdom order by post_date desc limit 8
+        select wisdom_id,title,source,post_date,content from expert_wisdom order by post_date desc limit 8
     </select>
     <!--查找专家智点具体信息-->
     <select id="findExpertArtInf" resultMap="expertArt">
