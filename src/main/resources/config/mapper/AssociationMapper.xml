@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="getRobotNewsInf" resultMap="robotNews">
-        select * from news_robot where news_id = #{id}
+        select * from news_robot where id = #{id}
     </select>
     <select id="getRobotNewsTop" resultMap="robotNews">
         select id,title,post_date from news_robot order by post_date desc limit 13
@@ -46,7 +46,7 @@
     </select>
 
     <resultMap id="noticeMap" type="com.robot.entity.Notice">
-        <id property="id" column="notice_id"/>
+        <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="postDate" column="post_date"/>
         <result property="content" column="content"/>
@@ -57,7 +57,7 @@
     </select>
 
     <select id="getNoticeInfo" parameterType="String" resultMap="noticeMap">
-      select * from association_notice where notice_id=#{id}
+      select * from association_notice where id=#{id}
     </select>
 
     <select id="findNotice" resultMap="noticeMap">
