@@ -26,8 +26,8 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findInformationInf/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findInformationInf(@PathVariable int id){
+    @RequestMapping(value = "/findInformationInfo/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findInformationInfo(@PathVariable int id){
         return informationService.findInformationInfo(id);
     }
 
