@@ -26,6 +26,9 @@ public class CommonService {
     @Autowired
     ExpertService expertService;
 
+    @Autowired
+    TechnologyService technologyService;
+
     public String getIndex(){
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("news",associationService.getIndexNews());
@@ -37,6 +40,10 @@ public class CommonService {
         dataMap.put("school",expertService.findAllUniversity());
         dataMap.put("experts",expertService.findAllExpert());
         dataMap.put("expertArts",expertService.findExpertArtTop());
+        //技术
+        dataMap.put("case",technologyService.getIndexCase());
+        dataMap.put("basic",technologyService.getIndexBasic());
+        dataMap.put("science",technologyService.getIndexScience());
 
         return GsonUtil.getSuccessJson(dataMap);
     }
