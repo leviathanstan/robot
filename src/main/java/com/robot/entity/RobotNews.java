@@ -6,10 +6,11 @@ public class RobotNews {
     private String id;
     private String url;
     private String title;
-    private int amount;
+    private int viewCount;
     private String content;
     private String postDate;
     private String source;
+    private String img;
 
     public String getUrlId() {
         return id;
@@ -35,12 +36,12 @@ public class RobotNews {
         this.title = title;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getViewCount() {
+        return viewCount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setViewCount(int amount) {
+        this.viewCount = amount;
     }
 
     public String getContent() {
@@ -71,16 +72,25 @@ public class RobotNews {
         this.source = source;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public String toString() {
         return "RobotNews{" +
                 "id='" + id + '\'' +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
-                ", amount=" + amount +
+                ", amount=" + viewCount +
                 ", content='" + content + '\'' +
                 ", postDate='" + postDate + '\'' +
                 ", source='" + source + '\'' +
+                ", img='" + img + '\'' +
                 '}';
     }
 }

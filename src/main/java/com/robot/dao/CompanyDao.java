@@ -1,9 +1,7 @@
 package com.robot.dao;
 
-import com.robot.entity.Area;
-import com.robot.entity.Article;
-import com.robot.entity.Company;
-import com.robot.entity.RobotNews;
+import com.robot.entity.*;
+import org.omg.CORBA.ARG_IN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,4 +31,6 @@ public interface CompanyDao {
     RobotNews getMemberNewsInfo(Integer memberId);
 
     ArrayList<RobotNews> getMemberNewsList();
+
+    ArrayList<RobotNews> getIndexMemberDynamic();
 }

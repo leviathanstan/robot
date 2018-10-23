@@ -46,6 +46,7 @@ public class CommonService {
         dataMap.put("productLibrary", productService.getProductLibrary());
         dataMap.put("hotspot",informationService.findHotspotTop());
         dataMap.put("report",informationService.findReportTop());
+        dataMap.put("memberDynamic",companyService.getIndexMemberDynamic());
         //技术
         dataMap.put("case",technologyService.getIndexCase());
         dataMap.put("basic",technologyService.getIndexBasic());

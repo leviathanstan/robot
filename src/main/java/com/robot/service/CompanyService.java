@@ -4,19 +4,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.CompanyDao;
 import com.robot.entity.Area;
-import com.robot.entity.Article;
 import com.robot.entity.Company;
 
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
-import org.aspectj.weaver.ArrayReferenceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -77,5 +74,14 @@ public class CompanyService {
         ArrayList<RobotNews> robotNewsList = companyDao.getMemberNewsList();
         PageInfo<RobotNews> pageInfo = new PageInfo<>(robotNewsList);
         return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    public ArrayList<RobotNews> getIndexMemberDynamic(){
+        ArrayList<RobotNews> dynamic = companyDao.getIndexMemberDynamic();
+        for(int i = 0;i<2;i++){
+            dynamic.get(0).setImg("http://images.ofweek.com/Upload/News/2018-10/summary/2018101211737472.jpg");
+            dynamic.get(1).setImg("http://images.ofweek.com/Upload/News/2018-9/summary/2018928195525829.jpg");
+        }
+        return dynamic;
     }
 }

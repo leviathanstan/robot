@@ -56,4 +56,9 @@
     <select id="getMemberNewsList" resultMap="memberNews">
         select id, title, post_date, source from member_news order by post_date desc
     </select>
+
+    <select id="getIndexMemberDynamic" resultMap="memberNews">
+        select * from member_dynamic limit 14
+    </select>
+
 </mapper>
