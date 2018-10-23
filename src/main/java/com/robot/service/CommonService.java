@@ -27,6 +27,9 @@ public class CommonService {
     ExpertService expertService;
 
     @Autowired
+    ProductService productService;
+
+    @Autowired
     TechnologyService technologyService;
 
     public String getIndex(){
@@ -40,6 +43,7 @@ public class CommonService {
         dataMap.put("school",expertService.findAllUniversity());
         dataMap.put("experts",expertService.findAllExpert());
         dataMap.put("expertArts",expertService.findExpertArtTop());
+        dataMap.put("productLibrary", productService.getProductLibrary());
         dataMap.put("hotspot",informationService.findHotspotTop());
         dataMap.put("report",informationService.findReportTop());
         //技术

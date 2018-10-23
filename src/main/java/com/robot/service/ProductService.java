@@ -12,6 +12,7 @@ import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,5 +74,11 @@ public class ProductService {
         int id = Integer.parseInt(idStr);
         Product product = productDao.getProductInfo(id);
         return GsonUtil.getSuccessJson(product);
+    }
+
+
+    public String getProductLibrary() {
+        ArrayList<Product> products = productDao.getProductLibrary();
+        return GsonUtil.getSuccessJson(products);
     }
 }

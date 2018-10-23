@@ -60,4 +60,18 @@ public class ProductController {
     public String getProduct(@PathVariable String id){
         return productService.getProductInfo(id);
     }
+
+
+    /**
+     * @author Ning
+     * @data 2018/10/23
+     * 获得首页产品库
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getProductLibrary", method = RequestMethod.GET)
+    public String getProductLibrary(){
+        return productService.getProductLibrary();
+    }
+
 }

@@ -26,14 +26,27 @@
                   (select product_id from product_robot where robot_id=#{robotId})
       </if>
     </select>
-    <!-- 根据id查询详细信息-->
-    <select id="getProductInfo" parameterType="java.lang.Integer" resultMap="productMap">
-        select * from product where id=#{id}
-    </select>
 
     <resultMap id="productMap" type="com.robot.entity.Product" autoMapping="true">
         <result column="cover_img" property="coverImg"/>
         <result column="effect_time" property="effectTime"/>
         <result column="last_update_time" property="lastUpdateTime"/>
     </resultMap>
+
+    <!-- 根据id查询详细信息-->
+    <select id="getProductInfo" parameterType="java.lang.Integer" resultMap="productMap">
+        select * from product where id=#{id}
+    </select>
+
+
+
+
+    <resultMap id="productLibrary" type="com.robot.entity.Product">
+        <id property="id" column="product_id"/>
+        <result property="name" column="product_name"/>
+    </resultMap>
+    <select id="getProductLibrary" resultMap="productLibrary">
+--        select pro_brand, count(pro_brand) from product group by pro_brand order by count(pro_brand) desc LIMIT 0, 16;
+    select product_id, product_name from product order by pro_last_up_time desc LIMIT 0, 16;
+    </select>
 </mapper>

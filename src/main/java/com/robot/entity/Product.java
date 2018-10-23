@@ -13,6 +13,7 @@ public class Product {
     private Integer id;
     private String name;
     private int price;
+    private String brand;
     private String introduction;
     private String coverImg;
     private Company company;
@@ -111,12 +112,21 @@ public class Product {
         this.lastUpdateTime = lastUpdateTime;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
+                ", brand='" + brand + '\'' +
                 ", introduction='" + introduction + '\'' +
                 ", coverImg='" + coverImg + '\'' +
                 ", company=" + company +
