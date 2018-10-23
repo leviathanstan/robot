@@ -2,6 +2,9 @@ package com.service;
 
 import org.junit.Test;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author asce
  * @date 2018/10/18
@@ -39,6 +42,8 @@ public class CommonServiceTest {
         String str = "<img src=\"static/img/notice/abc.jpg\"/>";
         System.out.println(str);
         System.out.println(str.replaceAll("src=\".","scr=\"/s"));
+        Executor executor;
+        ExecutorService executorService;
     }
 
 //    @Test
