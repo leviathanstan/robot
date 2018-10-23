@@ -105,4 +105,50 @@ public class InformationService {
 
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
     }
+
+
+    public String findHotspotInfo(int id) {
+        Information information = informationDao.findHotspotInfo(id);
+        return GsonUtil.getSuccessJson(information);
+    }
+
+    public String findReportInfo(int id) {
+        Information information = informationDao.findReportInfo(id);
+        return GsonUtil.getSuccessJson(information);
+    }
+
+    public ArrayList<Information> findHotspotTop() {
+        ArrayList<Information> informations1 = informationDao.findHotspotTop();
+        return informations1;
+    }
+
+    public ArrayList<Information> findReportTop() {
+        ArrayList<Information> informations1 = informationDao.findReportTop();
+        return informations1;
+    }
+
+    public String findHotspotByPage(Integer Num) {
+        int pageNum = CommonUtil.formatPageNum(Num + "");
+        PageHelper.startPage(pageNum, 12);
+        List<Information> informations = informationDao.findHotspotByPage();
+        PageInfo<Information> pageInfo = new PageInfo<>(informations);
+        for (Information information : informations) {
+            information.setContent(CommonUtil.getPreview(information.getContent()));
+        }
+
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
+    }
+
+    public String findReportByPage(Integer Num) {
+        int pageNum = CommonUtil.formatPageNum(Num + "");
+        PageHelper.startPage(pageNum, 12);
+        List<Information> informations = informationDao.findReportByPage();
+        PageInfo<Information> pageInfo = new PageInfo<>(informations);
+        for (Information information : informations) {
+            information.setContent(CommonUtil.getPreview(information.getContent()));
+        }
+
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
+    }
+
 }

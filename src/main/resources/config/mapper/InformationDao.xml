@@ -37,4 +37,30 @@
         select *from policy_info order by post_date desc
     </select>
 
+    <!--根据文章id查询咨询热点具体信息-->
+    <select id="findHotspotInfo" resultMap="information">
+        select *from hotspot where id = #{id}
+    </select>
+    <!--查询咨询热点的前十二条-->
+    <select id="findHotspotTop" resultMap="information">
+        select id,title,post_date from hotspot order by post_date desc limit 12
+    </select>
+    <!--查询咨询热点的所有文章（分页）-->
+    <select id="findHotspotByPage" resultMap="information">
+        select *from hotspot order by post_date desc
+    </select>
+
+    <!--根据文章id查询行业报告具体信息-->
+    <select id="findReportInfo" resultMap="information">
+        select *from industry_report where id = #{id}
+    </select>
+    <!--查询行业报告的前十二条-->
+    <select id="findReportTop" resultMap="information">
+        select id,title,post_date from industry_report order by post_date desc limit 12
+    </select>
+    <!--查询行业报告的所有文章（分页）-->
+    <select id="findReportByPage" resultMap="information">
+        select *from industry_report order by post_date desc
+    </select>
+
 </mapper>

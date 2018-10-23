@@ -16,4 +16,12 @@ public interface InformationDao {
     Information findPolicyInfo(int id);
     ArrayList<Information> findPolicyTop();
     ArrayList<Information> findPolicyByPage();
+    Information findHotspotInfo(int id);
+    ArrayList<Information> findHotspotTop();
+    ArrayList<Information> findHotspotByPage();
+    Information findReportInfo(int id);
+    ArrayList<Information> findReportTop();
+    ArrayList<Information> findReportByPage();
+
+
 }

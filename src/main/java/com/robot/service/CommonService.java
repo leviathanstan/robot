@@ -37,6 +37,8 @@ public class CommonService {
         dataMap.put("school",expertService.findAllUniversity());
         dataMap.put("experts",expertService.findAllExpert());
         dataMap.put("expertArts",expertService.findExpertArtTop());
+        dataMap.put("hotspot",informationService.findHotspotTop());
+        dataMap.put("report",informationService.findReportTop());
 
         return GsonUtil.getSuccessJson(dataMap);
     }

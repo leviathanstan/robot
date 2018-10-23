@@ -73,4 +73,60 @@ public class InformationController {
     public String findPolicyByPage(Integer pageNum){
         return informationService.findPolicyByPage(pageNum);
     }
+
+    /**
+     * 获取咨询热点具体内容
+     * @author hua
+     * @date 2018/10/23
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findHotspotInfo/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findHotspotInfo(@PathVariable int id){
+        return informationService.findHotspotInfo(id);
+    }
+
+
+
+    /**
+     * 获取分页显示的咨询热点
+     * @author hua
+     * @date 2018/10/23
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findHotspotByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    public String findHotspotByPage(Integer pageNum){
+        return informationService.findHotspotByPage(pageNum);
+    }
+
+    /**
+     * 获取行业报告具体内容
+     * @author hua
+     * @date 2018/10/23
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findReportInfo/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findReportInfo(@PathVariable int id){
+        return informationService.findReportInfo(id);
+    }
+
+
+
+    /**
+     * 获取分页显示的行业报告
+     * @author hua
+     * @date 2018/10/23
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findReportByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    public String findReportByPage(Integer pageNum){
+        return informationService.findReportByPage(pageNum);
+    }
 }
