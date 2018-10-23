@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 @WebAppConfiguration("src/main/resources")
@@ -53,4 +54,5 @@ public class AreaTest {
         LocalDateTime dateTime = LocalDateTime.of(2016, 10, 23, 8, 20);
         System.out.println(dateTime);
     }
+    
 }
