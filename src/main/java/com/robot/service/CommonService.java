@@ -51,7 +51,7 @@ public class CommonService {
         dataMap.put("case",technologyService.getIndexCase());
         dataMap.put("basic",technologyService.getIndexBasic());
         dataMap.put("science",technologyService.getIndexScience());
-
+        dataMap.put("productEvaluation", productService.getProductEvaluation());
         return GsonUtil.getSuccessJson(dataMap);
     }
 
