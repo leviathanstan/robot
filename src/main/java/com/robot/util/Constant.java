@@ -1,6 +1,8 @@
 package com.robot.util;
 
 
+import java.net.InetAddress;
+
 /**
  * 常量类
  * @author asce
@@ -26,6 +28,17 @@ public class Constant {
 //        add("gif");
 //        add("tiff");
 //    }};
+    //本机ip
+    public static String HOST_ADDRESS = new Object(){
+        private String getIp(){
+            try {
+                return InetAddress.getLocalHost().getHostAddress();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return "error";
+        }
+    }.getIp();
 //    //项目根目录
 //    public static final String FILE_PATH =  new Object(){
 //        public  String getRootPath(){

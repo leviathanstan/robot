@@ -4,7 +4,7 @@
 
     <resultMap id="expert" type="com.robot.entity.Expert">
         <id property="id" column="id"/>
-        <result property="introduction" column="introduction"/>
+        <result property="introduction" column="content"/>
         <result property="name" column="name"/>
         <result property="postDate" column="post_date"/>
     </resultMap>
@@ -20,24 +20,24 @@
     <resultMap id="university" type="com.robot.entity.University">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="introduction" column="introduction"/>
+        <result property="introduction" column="content"/>
         <result property="postDate" column="post_date"/>
     </resultMap>
     <!--查找专家具体信息-->
     <select id="findExpertInf" parameterType="Integer" resultMap="expert">
-        select *from specialist_robot where id = #{id}
-    </select>
-    <!--查找高校具体信息-->
-    <select id="findUniversityInf" parameterType="Integer" resultMap="university">
-        select *from school_robot where id = #{id}
+        select *from expert_introduction where id = #{id}
     </select>
     <!--查找所有专家-->
     <select id="findAllExpert" resultMap="expert">
-        select id,name,post_date from specialist_robot order by post_date desc
+        select id,name,post_date from expert_introduction order by post_date desc
+    </select>
+    <!--查找高校具体信息-->
+    <select id="findUniversityInf" parameterType="Integer" resultMap="university">
+        select *from college_introduction where id = #{id}
     </select>
     <!--查找所有高校-->
     <select id="findAllUniversity" resultMap="university">
-        select id,name,post_date from school_robot order by post_date desc
+        select id,name,post_date from college_introduction order by post_date desc
     </select>
     <!--查找专家智点前八条-->
     <select id="findExpertArtTop" resultMap="expertArt">

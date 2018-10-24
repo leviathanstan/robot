@@ -13,36 +13,37 @@
     </resultMap>
 
     <select id="getRobotNewsInf" resultMap="robotNews">
-        select * from news_robot where id = #{id}
+        select * from association_news where id = #{id}
     </select>
     <select id="getRobotNewsTop" resultMap="robotNews">
-        select id,title,post_date from news_robot order by post_date desc limit 13
+        select id,title,post_date from association_news order by post_date desc limit 13
     </select>
 
     <select id="findNews" resultMap="robotNews">
-        select * from news_robot where 1=1
+        select * from association_news where 1=1
         <if test="title!=null and title.trim().length()>0">
             and locate(#{title},title)>0
         </if>
     </select>
 
-    <resultMap id="associationMember" type="com.robot.entity.Member" autoMapping="true">
+    <resultMap id="associationMember" type="com.robot.entity.Member">
        <id property="id" column="id"/>
         <result property="memberName" column="name"/>
         <result property="positionId" column="position_num"/>
         <result property="joinTime" column="post_date"/>
+        <result property="introduction" column="content"/>
     </resultMap>
 
     <select id="getIndexMember" resultMap="associationMember">
-        select id, name, position_num,post_date from association_member where position_num='1' or position_num='2';
+        select id, name, position_num,post_date from member_show where position_num='1' or position_num='2';
     </select>
 
     <select id="findMember" resultMap="associationMember">
-        select id, name, position_num,post_date from association_member order by post_date desc
+        select id, name, position_num,post_date from member_show order by post_date desc
     </select>
 
     <select id="getMemberInfo" resultMap="associationMember" parameterType="java.lang.Integer">
-        select * from association_member where id=#{id};
+        select * from member_show where id=#{id};
     </select>
 
     <resultMap id="noticeMap" type="com.robot.entity.Notice">
@@ -53,15 +54,15 @@
     </resultMap>
 
     <select id="getNotice" resultMap="noticeMap">
-      select id,title,post_date from association_notice order by post_date desc limit 13
+      select id,title,post_date from notice_announcement order by post_date desc limit 13
     </select>
 
     <select id="getNoticeInfo" parameterType="String" resultMap="noticeMap">
-      select * from association_notice where id=#{id}
+      select * from notice_announcement where id=#{id}
     </select>
 
     <select id="findNotice" resultMap="noticeMap">
-      select id,title,post_date,content from association_notice where 1=1
+      select id,title,post_date,content from notice_announcement where 1=1
       <if test="title!=null and title.trim().length()>0">
         and locate(#{title},title)>0
       </if>

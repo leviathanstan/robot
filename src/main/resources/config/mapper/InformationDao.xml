@@ -13,28 +13,28 @@
 
     <!--根据文章id查询行业动态具体信息-->
     <select id="findInformationInfo" resultMap="information">
-        select *from message_robot where id = #{id}
+        select *from industry_information where id = #{id}
     </select>
     <!--查询行业动态的前十二条-->
     <select id="findInformationTop" resultMap="information">
-        select id,title,post_date from message_robot order by post_date desc limit 12
+        select id,title,post_date from industry_information order by post_date desc limit 12
     </select>
     <!--查询行业动态的所有文章（分页）-->
     <select id="findInformationByPage" resultMap="information">
-        select *from message_robot order by post_date desc
+        select *from industry_information order by post_date desc
     </select>
 
     <!--根据文章id查询政策具体信息-->
     <select id="findPolicyInfo" resultMap="information">
-        select *from policy_info where id = #{id}
+        select *from policy_information where id = #{id}
     </select>
     <!--查询政策的前十二条-->
     <select id="findPolicyTop" resultMap="information">
-        select id,title,post_date from policy_info order by post_date desc limit 12
+        select id,title,post_date from policy_information order by post_date desc limit 12
     </select>
     <!--查询政策的所有文章（分页）-->
     <select id="findPolicyByPage" resultMap="information">
-        select *from policy_info order by post_date desc
+        select *from policy_information order by post_date desc
     </select>
 
     <!--根据文章id查询咨询热点具体信息-->

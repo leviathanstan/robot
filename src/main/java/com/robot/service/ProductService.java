@@ -77,8 +77,8 @@ public class ProductService {
     }
 
 
-    public String getProductLibrary() {
+    public ArrayList<Product> getProductLibrary() {
         ArrayList<Product> products = productDao.getProductLibrary();
-        return GsonUtil.getSuccessJson(products);
+        return products;
     }
 }
