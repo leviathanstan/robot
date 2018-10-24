@@ -52,8 +52,16 @@ public class CompanyService {
 
     }
 
-    public String getCompanyNews() {
-        return GsonUtil.getSuccessJson(companyDao.getCompanyNews());
+    /**
+     * 企业新闻
+     * @return
+     */
+    public ArrayList<RobotNews> getCompanyNews() {
+        ArrayList<RobotNews> companyNews = companyDao.getCompanyNews();
+        for(RobotNews robotNews : companyNews){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        return companyNews;
     }
 
 
@@ -80,5 +88,14 @@ public class CompanyService {
     public ArrayList<RobotNews> getIndexMemberDynamic(){
         ArrayList<RobotNews> dynamic = companyDao.getIndexMemberDynamic();
         return dynamic;
+    }
+
+    public String getCompanyNewsInfo(Integer newsId) {
+        RobotNews companyNews = companyDao.getCompanyNewsInfo(newsId);
+        if(companyNews == null){
+            return GsonUtil.getErrorJson();
+        }else{
+            return GsonUtil.getSuccessJson(companyNews);
+        }
     }
 }

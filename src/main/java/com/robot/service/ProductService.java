@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.robot.dao.CategoryDao;
 import com.robot.dao.ProductDao;
 import com.robot.dto.CategoryDto;
+import com.robot.entity.Article;
 import com.robot.entity.Product;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
@@ -77,8 +78,22 @@ public class ProductService {
     }
 
 
+    /**
+     * 首页产品库
+     * @author Ning
+     * @data 2018/10/24
+     * @return java.lang.String
+     */
     public ArrayList<Product> getProductLibrary() {
-        ArrayList<Product> products = productDao.getProductLibrary();
-        return products;
+        return productDao.getProductLibrary();
+    }
+
+    /**
+     * 首页产品评测
+     * @data 2018/10/24
+     * @return java.lang.String
+     */
+    public ArrayList<Article> getProductEvaluation(){
+         return productDao.getProductEvaluation();
     }
 }

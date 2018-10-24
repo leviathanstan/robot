@@ -54,5 +54,12 @@ public class AreaTest {
         LocalDateTime dateTime = LocalDateTime.of(2016, 10, 23, 8, 20);
         System.out.println(dateTime);
     }
-    
+
+
+    @Test
+    public void test1111(){
+        String s = "2013-12-12 2";
+        String s1 = s.substring(0, s.lastIndexOf(" "));
+        System.out.println(s1);
+    }
 }

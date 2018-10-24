@@ -16,6 +16,14 @@ public class Constant {
     public static String RULE_NUMBER  = "^[0-9]*$";
     public static String RULE_PREVIEW = "(<(.*?)>)";
 
+    public static String USERNAMEREGULAREXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+    public static String PHONEREGULAREXPRESSION = "^[0-9]{11}$";
+    public static String USERWECHATREGULAREXPRESSION = "^[a-zA-Z0-9\u4E00-\u9FA5]{3,10}$";
+    public static String USERCOMPANYNAMEREGULAREXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+    public static String ADDRESSREGULAREXPRESSION = "^[a-zA-Z0-9\u4E00-\u9FA5]{0,20}$";
+    public static String USERPOSITIONREGULAREXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+    public static String EMAILREGULAREXPRESSION = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
+
     //允许上传图片类型
 //    public final static List<String> TYPE_IMG = new ArrayList<String>(){{
 //        add("png");

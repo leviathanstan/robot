@@ -32,4 +32,6 @@ public interface CompanyDao {
     ArrayList<RobotNews> getMemberNewsList();
 
     ArrayList<RobotNews> getIndexMemberDynamic();
+
+    RobotNews getCompanyNewsInfo(Integer newsId);
 }

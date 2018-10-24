@@ -1,6 +1,8 @@
 package com.robot.controller;
 
 import com.robot.service.CompanyService;
+import com.robot.util.GsonUtil;
+import javafx.scene.chart.ValueAxis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -68,18 +70,6 @@ public class CompanyController {
     }
 
     /**
-     * 获得企业新闻
-     * @author Ning
-     * @data 2018/9/26
-     * @return java.lang.String
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getCompanyNews", method = RequestMethod.GET)
-    public String getCompanyNews(){
-        return companyService.getCompanyNews();
-    }
-
-    /**
      * 根据会员id获得首页的会员具体新闻
      * @author Ning
      * @data 2019/10/19
@@ -101,5 +91,19 @@ public class CompanyController {
     @RequestMapping(value = "/getMemberNewsList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getMemberNewsList(@RequestParam Integer pageNum){
         return companyService.getMemberNewsList(pageNum);
+    }
+
+
+    /**
+     * 得到具体的企业新闻内容
+     * @author Ning
+     * @data 2018/10/24
+     * @param newsId
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyNewsInfo(@RequestParam Integer newsId){
+        return companyService.getCompanyNewsInfo(newsId);
     }
 }

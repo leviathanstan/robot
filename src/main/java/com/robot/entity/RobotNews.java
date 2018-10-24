@@ -10,6 +10,7 @@ public class RobotNews {
     private String content;
     private String postDate;
     private String source;
+    private String readGuide;
     private String img;
 
     public String getUrlId() {
@@ -80,16 +81,25 @@ public class RobotNews {
         this.img = img;
     }
 
+    public String getReadGuide() {
+        return readGuide;
+    }
+
+    public void setReadGuide(String readGuide) {
+        this.readGuide = readGuide;
+    }
+
     @Override
     public String toString() {
         return "RobotNews{" +
                 "id='" + id + '\'' +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
-                ", amount=" + viewCount +
+                ", viewCount=" + viewCount +
                 ", content='" + content + '\'' +
                 ", postDate='" + postDate + '\'' +
                 ", source='" + source + '\'' +
+                ", readGuide='" + readGuide + '\'' +
                 ", img='" + img + '\'' +
                 '}';
     }

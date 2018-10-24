@@ -1,5 +1,6 @@
 package com.robot.dao;
 
+import com.robot.entity.Article;
 import com.robot.entity.Product;
 
 import java.util.ArrayList;
@@ -16,4 +17,6 @@ public interface ProductDao {
     Product getProductInfo(int id);
 
     ArrayList<Product> getProductLibrary();
+
+    ArrayList<Article> getProductEvaluation();
 }

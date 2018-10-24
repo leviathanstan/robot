@@ -17,6 +17,18 @@
         <result property="source" column="source"/>
     </resultMap>
 
+    <resultMap id="companyNewsOfIndex" type="com.robot.entity.RobotNews">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="postDate" column="post_datetime"/>
+    </resultMap>
+
+    <resultMap id="companyNews" type="com.robot.entity.RobotNews">
+        <id property="id" column="id"/>
+        <result property="postDate" column="post_datetime"/>
+        <result property="readGuide" column="guide"/>
+    </resultMap>
+
     <select id="getCompanyBrand" resultType="com.robot.entity.Company">
         select * from company;
     </select>
@@ -33,8 +45,8 @@
       select * from company where id = #{companyId};
     </select>
 
-    <select id="getCompanyNews" resultType="com.robot.entity.RobotNews">
-        select *, release_time as releasetime from company_article order by release_time desc;
+    <select id="getCompanyNews" resultMap="companyNewsOfIndex">
+        select id, title, post_datetime from entreprise_news order by post_datetime desc LIMIT 7;
     </select>
 
     <select id="findCompanyById" resultType="java.lang.Integer">
@@ -59,6 +71,10 @@
 
     <select id="getIndexMemberDynamic" resultMap="memberNews">
         select * from member_dynamic limit 14
+    </select>
+
+    <select id="getCompanyNewsInfo" parameterType="java.lang.Integer" resultMap="companyNews">
+        select * from entreprise_news where id=#{newsId};
     </select>
 
 </mapper>

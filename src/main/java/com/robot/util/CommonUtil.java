@@ -59,4 +59,18 @@ public class CommonUtil {
         content = content.replaceAll("href=\"static","href=\"http://"+Constant.HOST_ADDRESS+":8080/static/robot");
         return content;
     }
+
+    /**
+     * 将datetime转为date格式
+     * @param oldDate
+     * @return
+     */
+    public static String getDate(String oldDate){
+        if(oldDate != null){
+            return oldDate.substring(0, oldDate.lastIndexOf(" "));
+        }else{
+            return null;
+        }
+
+    }
 }

@@ -39,6 +39,26 @@
     <!-- 首页产品  -->
     <select id="getIndexProduct" resultMap="productMap">
         select * from product limit 14
+
+
+
+
+    <resultMap id="productLibrary" type="com.robot.entity.Product">
+        <id property="id" column="product_id"/>
+        <result property="name" column="product_name"/>
+    </resultMap>
+    <select id="getProductLibrary" resultMap="productLibrary">
+--        select pro_brand, count(pro_brand) from product group by pro_brand order by count(pro_brand) desc LIMIT 0, 16;
+    select product_id, product_name from product order by pro_last_up_time desc limit 0, 16;
+    </select>
+
+    <resultMap id="productEvaluation" type="com.robot.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="postDate" column="post_date"/>
+    </resultMap>
+    <select id="getProductEvaluation" resultMap="productEvaluation">
+      select id, title, post_date from product_evaluation order by post_date desc limit 0, 9;
     </select>
 
 
