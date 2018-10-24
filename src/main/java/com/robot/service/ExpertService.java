@@ -35,6 +35,10 @@ public class ExpertService {
      */
     public String findExpertInf(Integer id){
         Expert expert = expertDao.findExpertInf(id);
+        if (expert==null){
+            return GsonUtil.getErrorJson();
+        }
+        expert.setIntroduction(CommonUtil.getAbsolutePath(expert.getIntroduction()));
         return GsonUtil.getSuccessJson(expert);
     }
 
@@ -47,6 +51,10 @@ public class ExpertService {
      */
     public String findUniversityInf(Integer id){
         University university = expertDao.findUniversityInf(id);
+        if (university==null){
+            return GsonUtil.getErrorJson();
+        }
+        university.setIntroduction(CommonUtil.getAbsolutePath(university.getIntroduction()));
         return GsonUtil.getSuccessJson(university);
     }
 
@@ -124,6 +132,7 @@ public class ExpertService {
         Article article = expertDao.findExpertArtInf(id);
         if(null == article)
             return GsonUtil.getErrorJson();
+        article.setContent(CommonUtil.getAbsolutePath(article.getContent()));
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class,"summary","type"),article);
     }
 

@@ -46,4 +46,15 @@ public class CommonUtil {
     public static String getPreview(String content){
         return content==null?null:content.replaceAll(Constant.RULE_PREVIEW,"");
     }
+
+    /**
+     * 将相对路径替换为绝对路径
+     * @param content
+     * @return
+     */
+    public static String getAbsolutePath(String content){
+        content = content.replaceAll("src=\"/static","stc=\"http://"+Constant.HOST_ADDRESS+":8080/static/robot");
+        content = content.replaceAll("href=\"/static","href=\"http://"+Constant.HOST_ADDRESS+":8080/static/robot");
+        return content;
+    }
 }

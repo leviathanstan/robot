@@ -33,9 +33,10 @@ public class AssociationService {
      */
     public String getRobotNewsInf(String urlId){
         RobotNews robotNews = associationDao.getRobotNewsInf(urlId);
-        if(robotNews != null)
+        if(robotNews != null) {
+            robotNews.setContent(CommonUtil.getAbsolutePath(robotNews.getContent()));
             return GsonUtil.getSuccessJson(robotNews);
-        else
+        } else
             return GsonUtil.getErrorJson();
     }
 
@@ -88,8 +89,10 @@ public class AssociationService {
      */
     public String getMemberInfo(Integer id){
         Member member = associationDao.getMemberInfo(id);
-        if(member==null)
+        if(member==null){
             return GsonUtil.getErrorJson();
+        }
+        member.setIntroduction(CommonUtil.getAbsolutePath(member.getIntroduction()));
         return GsonUtil.getSuccessJson(member);
     }
 
@@ -129,6 +132,7 @@ public class AssociationService {
         Notice notice = associationDao.getNoticeInfo(id);
         if(notice==null)
             return GsonUtil.getErrorJson();
+        notice.setContent(CommonUtil.getAbsolutePath(notice.getContent()));
         return GsonUtil.getSuccessJson(notice);
     }
 }

@@ -1,6 +1,5 @@
 package com.robot.entity;
 
-import java.util.List;
 
 /**
  * @author asce

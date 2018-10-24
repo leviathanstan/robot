@@ -65,6 +65,7 @@ public class CompanyService {
         RobotNews memberNews = companyDao.getMemberNewsInfo(memberId);
         if(memberNews==null)
             return GsonUtil.getErrorJson();
+        memberNews.setContent(CommonUtil.getAbsolutePath(memberNews.getContent()));
         return GsonUtil.getSuccessJson(memberNews);
     }
 
@@ -78,10 +79,6 @@ public class CompanyService {
 
     public ArrayList<RobotNews> getIndexMemberDynamic(){
         ArrayList<RobotNews> dynamic = companyDao.getIndexMemberDynamic();
-        for(int i = 0;i<2;i++){
-            dynamic.get(0).setImg("http://images.ofweek.com/Upload/News/2018-10/summary/2018101211737472.jpg");
-            dynamic.get(1).setImg("http://images.ofweek.com/Upload/News/2018-9/summary/2018928195525829.jpg");
-        }
         return dynamic;
     }
 }

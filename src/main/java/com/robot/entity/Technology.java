@@ -9,7 +9,7 @@ public class Technology {
 
     private int id;
     private String title;
-    private String post_date;
+    private String postDate;
     private String img;
 
     public int getId() {
@@ -28,12 +28,12 @@ public class Technology {
         this.title = title;
     }
 
-    public String getPost_date() {
-        return post_date;
+    public String getPostDate() {
+        return postDate;
     }
 
-    public void setPost_date(String post_date) {
-        this.post_date = post_date;
+    public void setPostDate(String post_date) {
+        this.postDate = post_date;
     }
 
     public String getImg() {
@@ -49,7 +49,7 @@ public class Technology {
         return "Technology{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", post_date='" + post_date + '\'' +
+                ", post_date='" + postDate + '\'' +
                 ", img='" + img + '\'' +
                 '}';
     }

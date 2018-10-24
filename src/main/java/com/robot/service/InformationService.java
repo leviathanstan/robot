@@ -35,6 +35,10 @@ public class InformationService {
      */
     public String findInformationInfo(int id) {
         Information information = informationDao.findInformationInfo(id);
+        if (information==null){
+            return GsonUtil.getErrorJson();
+        }
+        information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
         return GsonUtil.getSuccessJson(information);
     }
 
@@ -72,6 +76,10 @@ public class InformationService {
      */
     public String findPolicyInfo(int id) {
         Information information = informationDao.findPolicyInfo(id);
+        if (information==null){
+            return GsonUtil.getErrorJson();
+        }
+        information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
         return GsonUtil.getSuccessJson(information);
     }
 
