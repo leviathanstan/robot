@@ -3,8 +3,8 @@ package com.robot.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.ExpertDao;
-import com.robot.entity.Article;
 import com.robot.entity.Expert;
+import com.robot.entity.RobotNews;
 import com.robot.entity.University;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 /**
  * @author hua
  * @date 2018/9/25
@@ -64,8 +61,8 @@ public class ExpertService {
      * @date 2018/9/27
      * @return
      */
-    public ArrayList<Article> findExpertArtTop(){
-        ArrayList<Article> articles = expertDao.findExpertArtTop();
+    public ArrayList<RobotNews> findExpertArtTop(){
+        ArrayList<RobotNews> articles = expertDao.findExpertArtTop();
         return articles;
     }
 
@@ -129,21 +126,21 @@ public class ExpertService {
      * @return
      */
     public String findExpertArtInf(Integer id){
-        Article article = expertDao.findExpertArtInf(id);
+        RobotNews article = expertDao.findExpertArtInf(id);
         if(null == article)
             return GsonUtil.getErrorJson();
         article.setContent(CommonUtil.getAbsolutePath(article.getContent()));
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class,"summary","type"),article);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class,"summary","type"),article);
     }
 
     public String findExpertArtByPage(Integer Num){
         int pageNum = CommonUtil.formatPageNum(Num +"");
         PageHelper.startPage(pageNum, 12);
-        List<Article> articles = expertDao.findExpertArtByPage();
-        PageInfo<Article> pageInfo = new PageInfo<>(articles);
-        for(Article article:articles){
+        List<RobotNews> articles = expertDao.findExpertArtByPage();
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(articles);
+        for(RobotNews article:articles){
             article.setContent(CommonUtil.getPreview(article.getContent()));
         }
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Article.class, "summary","type"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "summary","type"), pageInfo);
     }
 }

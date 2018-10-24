@@ -33,7 +33,7 @@
       select * from company where id = #{companyId};
     </select>
 
-    <select id="getCompanyNews" resultType="com.robot.entity.Article">
+    <select id="getCompanyNews" resultType="com.robot.entity.RobotNews">
         select *, release_time as releasetime from company_article order by release_time desc;
     </select>
 

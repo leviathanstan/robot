@@ -3,6 +3,8 @@ package com.service;
 import com.robot.util.Constant;
 import org.junit.Test;
 
+import java.net.*;
+import java.util.Enumeration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
@@ -61,9 +63,5 @@ public class CommonServiceTest {
 //        }
 //    }
 
-    @Test
-    public void testIp(){
-        System.out.println(Constant.HOST_ADDRESS);
-    }
 
 }

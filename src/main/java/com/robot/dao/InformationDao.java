@@ -1,6 +1,6 @@
 package com.robot.dao;
 
-import com.robot.entity.Information;
+import com.robot.entity.RobotNews;
 
 import java.util.ArrayList;
 
@@ -10,18 +10,18 @@ import java.util.ArrayList;
  */
 public interface InformationDao {
 
-    Information findInformationInfo(int id);
-    ArrayList<Information> findInformationTop();
-    ArrayList<Information> findInformationByPage();
-    Information findPolicyInfo(int id);
-    ArrayList<Information> findPolicyTop();
-    ArrayList<Information> findPolicyByPage();
-    Information findHotspotInfo(int id);
-    ArrayList<Information> findHotspotTop();
-    ArrayList<Information> findHotspotByPage();
-    Information findReportInfo(int id);
-    ArrayList<Information> findReportTop();
-    ArrayList<Information> findReportByPage();
+    RobotNews findInformationInfo(int id);
+    ArrayList<RobotNews> findInformationTop();
+    ArrayList<RobotNews> findInformationByPage();
+    RobotNews findPolicyInfo(int id);
+    ArrayList<RobotNews> findPolicyTop();
+    ArrayList<RobotNews> findPolicyByPage();
+    RobotNews findHotspotInfo(int id);
+    ArrayList<RobotNews> findHotspotTop();
+    ArrayList<RobotNews> findHotspotByPage();
+    RobotNews findReportInfo(int id);
+    ArrayList<RobotNews> findReportTop();
+    ArrayList<RobotNews> findReportByPage();
 
 
 }

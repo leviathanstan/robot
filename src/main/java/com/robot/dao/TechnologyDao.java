@@ -1,6 +1,6 @@
 package com.robot.dao;
 
-import com.robot.entity.Technology;
+import com.robot.entity.RobotNews;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public interface TechnologyDao {
 
-    ArrayList<Technology> getIndexBasic();
-    ArrayList<Technology> getIndexCase();
-    ArrayList<Technology> getIndexScience();
+    ArrayList<RobotNews> getIndexBasic();
+    ArrayList<RobotNews> getIndexCase();
+    ArrayList<RobotNews> getIndexScience();
 }

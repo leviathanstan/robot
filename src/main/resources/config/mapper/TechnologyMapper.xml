@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.TechnologyDao">
-    <resultMap id="technologyMap" type="com.robot.entity.Technology">
+    <resultMap id="technologyMap" type="com.robot.entity.RobotNews">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="post_date" property="post_date"/>

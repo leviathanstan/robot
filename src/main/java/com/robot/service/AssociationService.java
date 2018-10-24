@@ -3,7 +3,6 @@ package com.robot.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.AssociationDao;
-import com.robot.entity.Notice;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
@@ -100,7 +99,7 @@ public class AssociationService {
      * 首页公告
      * @return
      */
-    public List<Notice> getIndexNotice(){
+    public List<RobotNews> getIndexNotice(){
         return associationDao.getNotice();
     }
     /**
@@ -115,9 +114,9 @@ public class AssociationService {
             return GsonUtil.getErrorJson();
         int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
         PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
-        List<Notice> notices = associationDao.findNotice(args);
-        PageInfo<Notice> pageInfo = new PageInfo<>(notices);
-        for(Notice notice:notices){
+        List<RobotNews> notices = associationDao.findNotice(args);
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(notices);
+        for(RobotNews notice:notices){
             notice.setContent(CommonUtil.getPreview(notice.getContent()));
         }
         return GsonUtil.getSuccessJson(pageInfo);
@@ -129,7 +128,7 @@ public class AssociationService {
      * @return
      */
     public String getNoticeInfo(String id){
-        Notice notice = associationDao.getNoticeInfo(id);
+        RobotNews notice = associationDao.getNoticeInfo(id);
         if(notice==null)
             return GsonUtil.getErrorJson();
         notice.setContent(CommonUtil.getAbsolutePath(notice.getContent()));

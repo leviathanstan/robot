@@ -1,7 +1,6 @@
 package com.robot.dao;
 
 import com.robot.entity.*;
-import org.omg.CORBA.ARG_IN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public interface CompanyDao {
 
     Company getCompanyInfo(Integer companyId);
 
-    ArrayList<Article> getCompanyNews();
+    ArrayList<RobotNews> getCompanyNews();
 
     Integer findCompanyById(Integer companyId);
 

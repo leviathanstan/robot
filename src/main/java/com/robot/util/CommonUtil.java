@@ -1,5 +1,7 @@
 package com.robot.util;
 
+import java.net.*;
+import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,8 +55,8 @@ public class CommonUtil {
      * @return
      */
     public static String getAbsolutePath(String content){
-        content = content.replaceAll("src=\"/static","stc=\"http://"+Constant.HOST_ADDRESS+":8080/static/robot");
-        content = content.replaceAll("href=\"/static","href=\"http://"+Constant.HOST_ADDRESS+":8080/static/robot");
+        content = content.replaceAll("src=\"static","stc=\"http://"+Constant.HOST_ADDRESS+":8080/static/robot");
+        content = content.replaceAll("href=\"static","href=\"http://"+Constant.HOST_ADDRESS+":8080/static/robot");
         return content;
     }
 }

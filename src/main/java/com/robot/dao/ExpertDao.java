@@ -1,7 +1,7 @@
 package com.robot.dao;
 
-import com.robot.entity.Article;
 import com.robot.entity.Expert;
+import com.robot.entity.RobotNews;
 import com.robot.entity.University;
 
 import java.util.ArrayList;
@@ -14,9 +14,9 @@ public interface ExpertDao {
 
      Expert findExpertInf(int id);
      University findUniversityInf(int id);
-     ArrayList<Article> findExpertArtTop();
+     ArrayList<RobotNews> findExpertArtTop();
      ArrayList<Expert> findAllExpert();
      ArrayList<University> findAllUniversity();
-     Article findExpertArtInf(int id);
-     ArrayList<Article> findExpertArtByPage();
+     RobotNews findExpertArtInf(int id);
+     ArrayList<RobotNews> findExpertArtByPage();
 }

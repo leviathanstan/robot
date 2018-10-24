@@ -46,7 +46,7 @@
         select * from member_show where id=#{id};
     </select>
 
-    <resultMap id="noticeMap" type="com.robot.entity.Notice">
+    <resultMap id="noticeMap" type="com.robot.entity.RobotNews">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="postDate" column="post_date"/>

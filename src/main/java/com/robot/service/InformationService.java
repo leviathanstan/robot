@@ -4,16 +4,14 @@ package com.robot.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.InformationDao;
-import com.robot.entity.Information;
+import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hua
@@ -34,7 +32,7 @@ public class InformationService {
      * @date 2018/9/24
      */
     public String findInformationInfo(int id) {
-        Information information = informationDao.findInformationInfo(id);
+        RobotNews information = informationDao.findInformationInfo(id);
         if (information==null){
             return GsonUtil.getErrorJson();
         }
@@ -49,21 +47,21 @@ public class InformationService {
      * @author hua
      * @date 2018/10/17
      */
-    public ArrayList<Information> findInformationTop() {
-        ArrayList<Information> informations1 = informationDao.findInformationTop();
+    public ArrayList<RobotNews> findInformationTop() {
+        ArrayList<RobotNews> informations1 = informationDao.findInformationTop();
         return informations1;
     }
 
     public String findInformationByPage(Integer Num) {
         int pageNum = CommonUtil.formatPageNum(Num + "");
         PageHelper.startPage(pageNum, 12);
-        List<Information> informations = informationDao.findInformationByPage();
-        PageInfo<Information> pageInfo = new PageInfo<>(informations);
-        for (Information information : informations) {
+        List<RobotNews> informations = informationDao.findInformationByPage();
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
+        for (RobotNews information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
     }
 
     /**
@@ -75,7 +73,7 @@ public class InformationService {
      * @date 2018/10/22
      */
     public String findPolicyInfo(int id) {
-        Information information = informationDao.findPolicyInfo(id);
+        RobotNews information = informationDao.findPolicyInfo(id);
         if (information==null){
             return GsonUtil.getErrorJson();
         }
@@ -90,8 +88,8 @@ public class InformationService {
      * @author hua
      * @date 2018/10/22
      */
-    public ArrayList<Information> findPolicyTop() {
-        ArrayList<Information> informations1 = informationDao.findPolicyTop();
+    public ArrayList<RobotNews> findPolicyTop() {
+        ArrayList<RobotNews> informations1 = informationDao.findPolicyTop();
         return informations1;
     }
 
@@ -105,58 +103,58 @@ public class InformationService {
     public String findPolicyByPage(Integer Num) {
         int pageNum = CommonUtil.formatPageNum(Num + "");
         PageHelper.startPage(pageNum, 12);
-        List<Information> informations = informationDao.findPolicyByPage();
-        PageInfo<Information> pageInfo = new PageInfo<>(informations);
-        for (Information information : informations) {
+        List<RobotNews> informations = informationDao.findPolicyByPage();
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
+        for (RobotNews information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
     }
 
 
     public String findHotspotInfo(int id) {
-        Information information = informationDao.findHotspotInfo(id);
+        RobotNews information = informationDao.findHotspotInfo(id);
         return GsonUtil.getSuccessJson(information);
     }
 
     public String findReportInfo(int id) {
-        Information information = informationDao.findReportInfo(id);
+        RobotNews information = informationDao.findReportInfo(id);
         return GsonUtil.getSuccessJson(information);
     }
 
-    public ArrayList<Information> findHotspotTop() {
-        ArrayList<Information> informations1 = informationDao.findHotspotTop();
+    public ArrayList<RobotNews> findHotspotTop() {
+        ArrayList<RobotNews> informations1 = informationDao.findHotspotTop();
         return informations1;
     }
 
-    public ArrayList<Information> findReportTop() {
-        ArrayList<Information> informations1 = informationDao.findReportTop();
+    public ArrayList<RobotNews> findReportTop() {
+        ArrayList<RobotNews> informations1 = informationDao.findReportTop();
         return informations1;
     }
 
     public String findHotspotByPage(Integer Num) {
         int pageNum = CommonUtil.formatPageNum(Num + "");
         PageHelper.startPage(pageNum, 12);
-        List<Information> informations = informationDao.findHotspotByPage();
-        PageInfo<Information> pageInfo = new PageInfo<>(informations);
-        for (Information information : informations) {
+        List<RobotNews> informations = informationDao.findHotspotByPage();
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
+        for (RobotNews information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
     }
 
     public String findReportByPage(Integer Num) {
         int pageNum = CommonUtil.formatPageNum(Num + "");
         PageHelper.startPage(pageNum, 12);
-        List<Information> informations = informationDao.findReportByPage();
-        PageInfo<Information> pageInfo = new PageInfo<>(informations);
-        for (Information information : informations) {
+        List<RobotNews> informations = informationDao.findReportByPage();
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
+        for (RobotNews information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Information.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
     }
 
 }
