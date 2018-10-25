@@ -1,7 +1,7 @@
 package com.robot.dao;
 
-import com.robot.entity.Article;
 import com.robot.entity.Product;
+import com.robot.entity.RobotNews;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,5 +18,7 @@ public interface ProductDao {
 
     ArrayList<Product> getProductLibrary();
 
-    ArrayList<Article> getProductEvaluation();
+    ArrayList<RobotNews> getProductEvaluation();
+    ArrayList<RobotNews> getIndexNews();
+    ArrayList<RobotNews> getIndexRecommend();
 }

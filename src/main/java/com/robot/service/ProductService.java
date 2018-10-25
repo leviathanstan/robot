@@ -5,8 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.robot.dao.CategoryDao;
 import com.robot.dao.ProductDao;
 import com.robot.dto.CategoryDto;
-import com.robot.entity.Article;
 import com.robot.entity.Product;
+import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
@@ -63,7 +63,7 @@ public class ProductService {
     }
 
     /**
-     *
+     * 产品具体信息
      * @author asce
      * @date 2018/9/22
      * @param idStr     产品id
@@ -93,7 +93,27 @@ public class ProductService {
      * @data 2018/10/24
      * @return java.lang.String
      */
-    public ArrayList<Article> getProductEvaluation(){
+    public ArrayList<RobotNews> getProductEvaluation(){
          return productDao.getProductEvaluation();
+    }
+    /**
+     * 首页产品新闻
+     * @author asce
+     * @date 2018/10/25
+     * @param
+     * @return
+     */
+    public ArrayList<RobotNews> getIndexNews(){
+        return productDao.getIndexNews();
+    }
+    /**
+     * 首页产品推荐
+     * @author asce
+     * @date 2018/10/25
+     * @param
+     * @return
+     */
+    public ArrayList<RobotNews> getIndexRecommend(){
+        return productDao.getIndexRecommend();
     }
 }

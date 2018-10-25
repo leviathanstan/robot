@@ -34,6 +34,7 @@ public class CommonService {
 
     public String getIndex(){
         Map<String,Object> dataMap = new HashMap<>();
+        //原机器人协会
         dataMap.put("news",associationService.getIndexNews());
         dataMap.put("members",associationService.getIndexMember());
         dataMap.put("memberNews", companyService.getIndexMemberNews());
@@ -43,17 +44,21 @@ public class CommonService {
         dataMap.put("school",expertService.findAllUniversity());
         dataMap.put("experts",expertService.findAllExpert());
         dataMap.put("expertArts",expertService.findExpertArtTop());
+        //会员
         dataMap.put("companyNews", companyService.getCompanyNews());
+        //dataMap.put("memberDynamic",companyService.getIndexMemberDynamic());
+        //资讯
         //dataMap.put("hotspot",informationService.findHotspotTop());
         //dataMap.put("report",informationService.findReportTop());
-        //dataMap.put("memberDynamic",companyService.getIndexMemberDynamic());
         //技术
         //dataMap.put("case",technologyService.getIndexCase());
-        //dataMap.put("basic",technologyService.getIndexBasic());
+        dataMap.put("basic",technologyService.getIndexBasic());
         //dataMap.put("science",technologyService.getIndexScience());
         //产品
-        //dataMap.put("productEvaluation", productService.getProductEvaluation());
-        //dataMap.put("productLibrary", productService.getProductLibrary());
+        dataMap.put("productEvaluation", productService.getProductEvaluation());
+        dataMap.put("productLibrary", productService.getProductLibrary());
+        dataMap.put("productNews",productService.getIndexNews());
+        dataMap.put("productRecommend",productService.getIndexRecommend());
         return GsonUtil.getSuccessJson(dataMap);
     }
 

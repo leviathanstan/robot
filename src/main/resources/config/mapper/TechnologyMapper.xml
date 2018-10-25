@@ -3,20 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.TechnologyDao">
-    <resultMap id="technologyMap" type="com.robot.entity.RobotNews">
+    <resultMap id="technologyMap" type="com.robot.entity.RobotNews" autoMapping="true">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
-        <result column="post_date" property="post_date"/>
+        <result column="post_date" property="postDate"/>
     </resultMap>
-    <!--基础技术-->
+    <!--首页基础技术-->
     <select id="getIndexBasic" resultMap="technologyMap">
-        select * from technology_case order by post_date desc limit 14
+        select id, title, post_date from basic_knowledge order by post_date desc limit 14
     </select>
-    <!--技术研讨-->
+    <!--首页技术研讨-->
     <select id="getIndexScience" resultMap="technologyMap">
         select * from technology_science limit 14
     </select>
-    <!--案例库-->
+    <!--首页案例库-->
     <select id="getIndexCase" resultMap="technologyMap">
         select * from technology_case order by post_date desc limit 14
     </select>
