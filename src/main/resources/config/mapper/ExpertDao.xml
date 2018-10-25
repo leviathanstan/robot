@@ -12,7 +12,6 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="postDate" column="post_date"/>
-        <result property="summary" column="summary"/>
         <result property="content" column="content"/>
         <result property="url" column="source"/>
         <result property="viewCount" column="view_count"/>

@@ -56,8 +56,8 @@ public class ProductController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value= "/getProductInfo/{id}", method = RequestMethod.GET)
-    public String getProduct(@PathVariable String id){
+    @RequestMapping(value= "/getProductInfo", method = RequestMethod.GET)
+    public String getProduct(String id){
         return productService.getProductInfo(id);
     }
 

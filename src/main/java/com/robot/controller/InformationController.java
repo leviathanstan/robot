@@ -26,8 +26,8 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findInformationInfo/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findInformationInfo(@PathVariable int id){
+    @RequestMapping(value = "/findInformationInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findInformationInfo(int id){
         return informationService.findInformationInfo(id);
     }
 
@@ -54,8 +54,8 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findPolicyInf/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findPolicyInf(@PathVariable int id){
+    @RequestMapping(value = "/findPolicyInf",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findPolicyInf(int id){
         return informationService.findPolicyInfo(id);
     }
 
@@ -82,8 +82,8 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findHotspotInfo/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findHotspotInfo(@PathVariable int id){
+    @RequestMapping(value = "/findHotspotInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findHotspotInfo(int id){
         return informationService.findHotspotInfo(id);
     }
 
@@ -110,8 +110,8 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findReportInfo/{id}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findReportInfo(@PathVariable int id){
+    @RequestMapping(value = "/findReportInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findReportInfo(int id){
         return informationService.findReportInfo(id);
     }
 

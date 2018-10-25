@@ -51,8 +51,8 @@ public class CompanyController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getSpecifiedBrand/{specifiedId}", method = RequestMethod.GET)
-    public String getSpecifiedBrand(@PathVariable Integer specifiedId){
+    @RequestMapping(value = "/getSpecifiedBrand", method = RequestMethod.GET)
+    public String getSpecifiedBrand(Integer specifiedId){
         return companyService.getSpecifiedBrand(specifiedId);
     }
 
@@ -64,8 +64,8 @@ public class CompanyController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getCompanyInfo/{companyId}", method = RequestMethod.GET)
-    public String getCompanyInfo(@PathVariable Integer companyId){
+    @RequestMapping(value = "/getCompanyInfo", method = RequestMethod.GET)
+    public String getCompanyInfo(Integer companyId){
         return companyService.getCompanyInfo(companyId);
     }
 

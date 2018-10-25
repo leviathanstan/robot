@@ -61,7 +61,7 @@ public class InformationService {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
 
     /**
@@ -109,7 +109,7 @@ public class InformationService {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class,"url" ), pageInfo);
     }
 
 
@@ -142,7 +142,7 @@ public class InformationService {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
 
     public String findReportByPage(Integer Num) {
@@ -154,7 +154,7 @@ public class InformationService {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "link", "summary", "type", "coverImg"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
 
 }

@@ -130,7 +130,7 @@ public class ExpertService {
         if(null == article)
             return GsonUtil.getErrorJson();
         article.setContent(CommonUtil.getAbsolutePath(article.getContent()));
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class,"summary","type"),article);
+        return GsonUtil.getSuccessJson(article);
     }
 
     public String findExpertArtByPage(Integer Num){
@@ -141,6 +141,6 @@ public class ExpertService {
         for(RobotNews article:articles){
             article.setContent(CommonUtil.getPreview(article.getContent()));
         }
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "summary","type"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
 }

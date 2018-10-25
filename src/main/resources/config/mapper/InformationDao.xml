@@ -5,7 +5,7 @@
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
-        <result property="link" column="url"/>
+        <result property="url" column="url"/>
         <result property="postDate" column="post_date"/>
         <result property="source" column="source"/>
         <result property="viewCount" column="view_count"/>

@@ -25,8 +25,8 @@ public class ConferenceController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getRelevantConference/{relevantId}", method = RequestMethod.GET)
-    public String getHoldingConference(@PathVariable Integer relevantId){
+    @RequestMapping(value = "/getRelevantConference", method = RequestMethod.GET)
+    public String getHoldingConference(Integer relevantId){
         return conferenceService.getRelevantConference(relevantId);
     }
 
@@ -38,8 +38,8 @@ public class ConferenceController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getRelevantMeeting/{relevantId}", method = RequestMethod.GET)
-    public String getRelevantMeeting(@PathVariable Integer relevantId){
+    @RequestMapping(value = "/getRelevantMeeting", method = RequestMethod.GET)
+    public String getRelevantMeeting(Integer relevantId){
         return conferenceService.getRelevantMeting(relevantId);
     }
 

@@ -28,8 +28,8 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findExpertInf/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findExpertInf(@PathVariable Integer id){
+    @RequestMapping(value = "/findExpertInf",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findExpertInf(Integer id){
         return expertService.findExpertInf(id);
     }
 
@@ -41,8 +41,8 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findUniversityInf/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findUniversityInf(@PathVariable Integer id){
+    @RequestMapping(value = "/findUniversityInf",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findUniversityInf(Integer id){
         return expertService.findUniversityInf(id);
     }
 
@@ -52,8 +52,8 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "findExpertByPage/{pageNum}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findExpertByPage(@PathVariable Integer pageNum){
+    @RequestMapping(value = "findExpertByPage",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findExpertByPage( Integer pageNum){
         return expertService.findExpertByPage(pageNum);
     }
 
@@ -63,8 +63,8 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "findUniversityByPage/{pageNum}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findUniversityByPage(@PathVariable Integer pageNum){
+    @RequestMapping(value = "findUniversityByPage",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findUniversityByPage(Integer pageNum){
         return expertService.findUniversityByPage(pageNum);
     }
 
@@ -74,8 +74,8 @@ public class ExpertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "findExpertArtInf/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findExpertArtInf(@PathVariable Integer id){
+    @RequestMapping(value = "findExpertArtInf",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findExpertArtInf(Integer id){
         return expertService.findExpertArtInf(id);
     }
 
