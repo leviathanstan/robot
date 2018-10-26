@@ -66,10 +66,10 @@ public class CommonUtil {
      * @return
      */
     public static String getDate(String oldDate){
-        if(oldDate != null){
+        if(oldDate != null && oldDate.contains("")){
             return oldDate.substring(0, oldDate.lastIndexOf(" "));
         }else{
-            return null;
+            return oldDate;
         }
 
     }

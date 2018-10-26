@@ -44,8 +44,10 @@ public class CommonService {
         dataMap.put("school",expertService.findAllUniversity());
         dataMap.put("experts",expertService.findAllExpert());
         dataMap.put("expertArts",expertService.findExpertArtTop());
-        //会员
+        //企业
         dataMap.put("companyNews", companyService.getCompanyNews());
+        dataMap.put("companyBrand", companyService.getCompanyBrand());
+        dataMap.put("companyDynamics", companyService.getCompanyDynamics());
         //dataMap.put("memberDynamic",companyService.getIndexMemberDynamic());
         //资讯
         //dataMap.put("hotspot",informationService.findHotspotTop());

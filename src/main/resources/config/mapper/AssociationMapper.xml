@@ -12,6 +12,14 @@
         <result column="content" property="content"/>
     </resultMap>
 
+    <resultMap id="associationMember" type="com.robot.entity.Member">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="positionId" column="position_num"/>
+        <result property="joinTime" column="post_date"/>
+        <result property="introduction" column="content"/>
+    </resultMap>
+
     <select id="getRobotNewsInf" resultMap="robotNews">
         select * from association_news where id = #{id}
     </select>
@@ -26,14 +34,7 @@
         </if>
     </select>
 
-    <resultMap id="associationMember" type="com.robot.entity.Member">
-       <id property="id" column="id"/>
-        <result property="memberName" column="name"/>
-        <result property="positionId" column="position_num"/>
-        <result property="joinTime" column="post_date"/>
-        <result property="introduction" column="content"/>
-    </resultMap>
-
+    <!--得到首页协会成员-->
     <select id="getIndexMember" resultMap="associationMember">
         select id, name, position_num,post_date from member_show where position_num='1' or position_num='2';
     </select>
@@ -68,5 +69,4 @@
       </if>
         order by post_date desc
     </select>
-
 </mapper>

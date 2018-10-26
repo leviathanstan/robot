@@ -7,7 +7,7 @@ package com.robot.entity;
  */
 public class Member {
     private Integer id;
-    private String memberName;
+    private String name;
     private Integer positionId;
     private String joinTime;
     private String introduction;
@@ -23,12 +23,12 @@ public class Member {
         this.id = id;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getName() {
+        return name;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getPositionId() {
@@ -59,7 +59,7 @@ public class Member {
     public String toString() {
         return "Member{" +
                 "id=" + id +
-                ", memberName='" + memberName + '\'' +
+                ", name='" + name + '\'' +
                 ", positionId=" + positionId +
                 ", joinTime='" + joinTime + '\'' +
                 ", introduction='" + introduction + '\'' +

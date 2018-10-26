@@ -19,15 +19,54 @@ public class CompanyController {
     private CompanyService companyService;
 
     /**
-     * 品牌展厅
+     * 得到全部的企业新闻内容
      * @author Ning
-     * @date 2018/9/22
+     * @data 2018/10/26
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getBrand", method = RequestMethod.GET)
-    public String getCompanyBrand(){
-        return companyService.getCompanyBrand();
+    @RequestMapping(value = "/getCompanyNewsList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyNewsList(@RequestParam Integer pageNum){
+        return companyService.getCompanyNewsList(pageNum);
+    }
+
+    /**
+     * 得到具体的企业新闻内容
+     * @author Ning
+     * @data 2018/10/24
+     * @param newsId
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyNewsInfo(@RequestParam Integer newsId){
+        return companyService.getCompanyNewsInfo(newsId);
+    }
+
+    /**
+     * 得到全部的企业动态内容
+     * @author Ning
+     * @data 2018/10/26
+     * @param pageNum
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyDynamicsList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyDynamicsList(@RequestParam Integer pageNum){
+        return companyService.getCompanyDynamicsList(pageNum);
+    }
+
+    /**
+     * 得到具体的企业动态内容
+     * @author Ning
+     * @data 2018/10/24
+     * @param newsId
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyDynamicsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyDynamicsInfo(@RequestParam Integer newsId){
+        return companyService.getCompanyDynamicsInfo(newsId);
     }
 
     /**
@@ -52,7 +91,7 @@ public class CompanyController {
      */
     @ResponseBody
     @RequestMapping(value = "/getSpecifiedBrand", method = RequestMethod.GET)
-    public String getSpecifiedBrand(Integer specifiedId){
+    public String getSpecifiedBrand(@RequestParam Integer specifiedId){
         return companyService.getSpecifiedBrand(specifiedId);
     }
 
@@ -65,7 +104,7 @@ public class CompanyController {
      */
     @ResponseBody
     @RequestMapping(value = "/getCompanyInfo", method = RequestMethod.GET)
-    public String getCompanyInfo(Integer companyId){
+    public String getCompanyInfo(@RequestParam Integer companyId){
         return companyService.getCompanyInfo(companyId);
     }
 
@@ -93,17 +132,4 @@ public class CompanyController {
         return companyService.getMemberNewsList(pageNum);
     }
 
-
-    /**
-     * 得到具体的企业新闻内容
-     * @author Ning
-     * @data 2018/10/24
-     * @param newsId
-     * @return java.lang.String
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getCompanyNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getCompanyNewsInfo(@RequestParam Integer newsId){
-        return companyService.getCompanyNewsInfo(newsId);
-    }
 }

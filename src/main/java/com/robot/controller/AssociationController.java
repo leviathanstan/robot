@@ -26,7 +26,7 @@ public class AssociationController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getMemberList", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getMemberList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getMemberList(@RequestParam Integer pageNum){
         return associationService.getMemberList(pageNum);
     }
@@ -43,11 +43,7 @@ public class AssociationController {
         return associationService.getMemberInfo(memberId);
     }
 
-    @RequestMapping(value = "/newsDetail")
-    public String showNews(String id, ModelMap modelMap) {
-        modelMap.addAttribute("id", id);
-        return "";
-    }
+
     /**
      * 获取协会新闻详细信息
      * @author hua
@@ -61,12 +57,6 @@ public class AssociationController {
         return associationService.getRobotNewsInf(id);
     }
 
-
-    @RequestMapping(value = "/noticeDetail")
-    public String showDetail(String id, ModelMap modelMap) {
-        modelMap.addAttribute("noticeId", id);
-        return "";
-    }
 
     @ResponseBody
     @RequestMapping(value = "/getNoticeInfo" ,method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
