@@ -11,7 +11,20 @@ import java.util.List;
  */
 public interface CompanyDao {
 
-    List<Company> getCompanyBrand();
+    ArrayList<Company> getCompanyBrand();
+
+    ArrayList<RobotNews> getCompanyNews();
+
+    ArrayList<RobotNews> getCompanyNewsList();
+
+    RobotNews getCompanyNewsInfo(Integer newsId);
+
+    ArrayList<RobotNews> getCompanyDynamics();
+
+    ArrayList<RobotNews> getCompanyDynamicsList();
+
+    RobotNews getCompanyDynamicsInfo(Integer newsId);
+
 
     ArrayList<Area> getCompanyArea();
 
@@ -19,11 +32,7 @@ public interface CompanyDao {
 
     Company getCompanyInfo(Integer companyId);
 
-    ArrayList<RobotNews> getCompanyNews();
-
     Integer findCompanyById(Integer companyId);
-
-    Integer getCompanyIdByName(String companyName);
 
     ArrayList<RobotNews> getIndexMemberNews();
 
@@ -31,7 +40,6 @@ public interface CompanyDao {
 
     ArrayList<RobotNews> getMemberNewsList();
 
-    ArrayList<RobotNews> getIndexMemberDynamic();
 
-    RobotNews getCompanyNewsInfo(Integer newsId);
+
 }

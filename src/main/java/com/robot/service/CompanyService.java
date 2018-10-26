@@ -27,11 +27,84 @@ public class CompanyService {
     private CompanyDao companyDao;
 
 
-    public String getCompanyBrand() {
-        ArrayList<Company> companyList = (ArrayList<Company>) companyDao.getCompanyBrand();
-        return GsonUtil.getSuccessJson(companyList);
+
+
+    /**
+     * 企业新闻(首页)
+     */
+    public ArrayList<RobotNews> getCompanyNews() {
+        ArrayList<RobotNews> companyNews = companyDao.getCompanyNews();
+        for(RobotNews robotNews : companyNews){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        return companyNews;
     }
 
+    /**
+     *企业新闻
+     */
+    public String getCompanyNewsList(Integer pageNum) {
+        int page = CommonUtil.formatPageNum((String.valueOf(pageNum)));
+        PageHelper.startPage(page,Constant.PRODUCT_PAGE_COUNT);
+        ArrayList<RobotNews> companyNewsList = companyDao.getCompanyNewsList();
+        for(RobotNews robotNews : companyNewsList){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    /**
+     * 品牌展厅(首页)
+     */
+    public ArrayList<Company> getCompanyBrand() {
+        ArrayList<Company> companyList = companyDao.getCompanyBrand();
+        return companyList;
+    }
+
+    /**
+     * 会员动态(首页)
+     */
+    public ArrayList<RobotNews> getCompanyDynamics() {
+        ArrayList<RobotNews> companyNews = companyDao.getCompanyDynamics();
+        for(RobotNews robotNews : companyNews){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        return companyNews;
+    }
+
+    /**
+     * 会员动态
+     */
+    public String getCompanyDynamicsList(Integer pageNum) {
+        int page = CommonUtil.formatPageNum((String.valueOf(pageNum)));
+        PageHelper.startPage(page,Constant.PRODUCT_PAGE_COUNT);
+        ArrayList<RobotNews> companyNewsList = companyDao.getCompanyDynamicsList();
+        for(RobotNews robotNews : companyNewsList){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+
+    public String getCompanyNewsInfo(Integer newsId) {
+        RobotNews companyNews = companyDao.getCompanyNewsInfo(newsId);
+        if(companyNews == null){
+            return GsonUtil.getErrorJson();
+        }else{
+            return GsonUtil.getSuccessJson(companyNews);
+        }
+    }
+
+    public String getCompanyDynamicsInfo(Integer newsId) {
+        RobotNews companyNews = companyDao.getCompanyDynamicsInfo(newsId);
+        if(companyNews == null){
+            return GsonUtil.getErrorJson();
+        }else{
+            return GsonUtil.getSuccessJson(companyNews);
+        }
+    }
 
     public String getCompanyArea() {
         ArrayList<Area> areaList = companyDao.getCompanyArea();
@@ -51,19 +124,6 @@ public class CompanyService {
         }
 
     }
-
-    /**
-     * 企业新闻
-     * @return
-     */
-    public ArrayList<RobotNews> getCompanyNews() {
-        ArrayList<RobotNews> companyNews = companyDao.getCompanyNews();
-        for(RobotNews robotNews : companyNews){
-            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
-        }
-        return companyNews;
-    }
-
 
     public ArrayList<RobotNews> getIndexMemberNews() {
         return companyDao.getIndexMemberNews();
@@ -85,17 +145,6 @@ public class CompanyService {
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
-    public ArrayList<RobotNews> getIndexMemberDynamic(){
-        ArrayList<RobotNews> dynamic = companyDao.getIndexMemberDynamic();
-        return dynamic;
-    }
 
-    public String getCompanyNewsInfo(Integer newsId) {
-        RobotNews companyNews = companyDao.getCompanyNewsInfo(newsId);
-        if(companyNews == null){
-            return GsonUtil.getErrorJson();
-        }else{
-            return GsonUtil.getSuccessJson(companyNews);
-        }
-    }
+
 }

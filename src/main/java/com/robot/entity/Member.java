@@ -59,7 +59,7 @@ public class Member {
     public String toString() {
         return "Member{" +
                 "id=" + id +
-                ", memberName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", positionId=" + positionId +
                 ", joinTime='" + joinTime + '\'' +
                 ", introduction='" + introduction + '\'' +
