@@ -49,7 +49,7 @@ public class CommonService {
         //dataMap.put("memberDynamic",companyService.getIndexMemberDynamic());
         //资讯
         //dataMap.put("hotspot",informationService.findHotspotTop());
-        //dataMap.put("report",informationService.findReportTop());
+        dataMap.put("report",informationService.findReportTop());
         //技术
         //dataMap.put("case",technologyService.getIndexCase());
         dataMap.put("basic",technologyService.getIndexBasic());

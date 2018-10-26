@@ -1,7 +1,7 @@
 package com.service;
 
 import com.robot.dao.AssociationDao;
-import com.robot.entity.Notice;
+
 import com.robot.entity.RobotNews;
 import com.robot.service.AssociationService;
 import org.aspectj.weaver.ast.Not;

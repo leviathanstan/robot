@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.ExpertDao;
 import com.robot.dao.InformationDao;
-import com.robot.entity.Information;
+
 import com.robot.service.InformationService;
 import com.robot.util.CommonUtil;
 import org.junit.Test;

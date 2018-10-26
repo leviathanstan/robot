@@ -28,7 +28,7 @@
 
     <resultMap id="associationMember" type="com.robot.entity.Member">
        <id property="id" column="id"/>
-        <result property="memberName" column="name"/>
+        <result property="name" column="name"/>
         <result property="positionId" column="position_num"/>
         <result property="joinTime" column="post_date"/>
         <result property="introduction" column="content"/>
