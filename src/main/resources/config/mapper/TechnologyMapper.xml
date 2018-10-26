@@ -7,17 +7,27 @@
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="post_date" property="postDate"/>
+        <result column="cover" property="img"/>
     </resultMap>
     <!--首页基础技术-->
     <select id="getIndexBasic" resultMap="technologyMap">
-        select id, title, post_date from basic_knowledge order by post_date desc limit 14
+        select id, title, post_date,cover from basic_knowledge order by post_date desc limit 14
     </select>
-    <!--首页技术研讨-->
-    <select id="getIndexScience" resultMap="technologyMap">
-        select * from technology_science limit 14
+    <!--首页技术研讨,无时间-->
+    <select id="getIndexDiscuss" resultMap="technologyMap">
+        select id,cover,title from technique_discuss limit 14
     </select>
     <!--首页案例库-->
     <select id="getIndexCase" resultMap="technologyMap">
         select * from technology_case order by post_date desc limit 14
     </select>
+    <!--首页基础技术带封面-->
+    <select id="getIndexCoverBasic" resultMap="technologyMap">
+        select id, title, post_date, cover from basic_knowledge where cover!='' limit 3
+    </select>
+    <!--首页技术研讨带封面-->
+    <select id="getIndexCoverDiscuss" resultMap="technologyMap">
+        select id, title, cover from tchnology_discuss where cover!='' limit 3
+    </select>
+
 </mapper>

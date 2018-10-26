@@ -28,7 +28,8 @@ public class ProductService {
     private ProductDao productDao;
     @Autowired
     private CategoryDao categoryDao;
-
+    //首页最少要求封面数
+    private final int countCover = 3;
     /**
      * 筛选,查找产品
      * @author asce
@@ -94,7 +95,11 @@ public class ProductService {
      * @return java.lang.String
      */
     public ArrayList<RobotNews> getProductEvaluation(){
-         return productDao.getProductEvaluation();
+        ArrayList<RobotNews> evaluation = productDao.getProductEvaluation();
+        if (CommonUtil.judgeCover(evaluation,countCover)){
+            evaluation.addAll(productDao.getIndexCoverEvaluation());
+        }
+         return evaluation;
     }
     /**
      * 首页产品新闻
@@ -104,7 +109,11 @@ public class ProductService {
      * @return
      */
     public ArrayList<RobotNews> getIndexNews(){
-        return productDao.getIndexNews();
+        ArrayList<RobotNews> news = productDao.getIndexNews();
+        if (CommonUtil.judgeCover(news,countCover)){
+            news.addAll(productDao.getIndexCoverNews());
+        }
+        return news;
     }
     /**
      * 首页产品推荐
@@ -114,6 +123,10 @@ public class ProductService {
      * @return
      */
     public ArrayList<RobotNews> getIndexRecommend(){
-        return productDao.getIndexRecommend();
+        ArrayList<RobotNews> recommend = productDao.getIndexRecommend();
+        if (CommonUtil.judgeCover(recommend,countCover)){
+            recommend.addAll(productDao.getIndexCoverRecommend());
+        }
+        return recommend;
     }
 }

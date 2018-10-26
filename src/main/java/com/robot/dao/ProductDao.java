@@ -1,7 +1,9 @@
 package com.robot.dao;
 
 import com.robot.entity.Product;
+import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,12 @@ public interface ProductDao {
 
     List<Product> findProductIf(Map<String,String> args);
     Product getProductInfo(int id);
-
     ArrayList<Product> getProductLibrary();
 
     ArrayList<RobotNews> getProductEvaluation();
     ArrayList<RobotNews> getIndexNews();
     ArrayList<RobotNews> getIndexRecommend();
+    ArrayList<RobotNews> getIndexCoverEvaluation();
+    ArrayList<RobotNews> getIndexCoverNews();
+    ArrayList<RobotNews> getIndexCoverRecommend();
 }

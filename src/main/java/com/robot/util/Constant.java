@@ -34,7 +34,7 @@ public class Constant {
 //        add("tiff");
 //    }};
     //本机ip
-    public static String HOST_ADDRESS = "120.79.30.14";
+    public static String HOST_ADDRESS = CommonUtil.getLocalIp();
 //    //项目根目录
 //    public static final String FILE_PATH =  new Object(){
 //        public  String getRootPath(){
@@ -50,15 +50,6 @@ public class Constant {
 //            return path;
 //        }
 //    }.getRootPath();
-
-    //public static final String URL_PROPERTIES_PATH = "properties/url.properties";
-
-    //pdf转html时，html存放路径
-    //public static final String PDF_TO_HTML_PATH = "";
-    //office转pdf时，pdf存放路径
-    //public static final String OFFICE_TO_PDF_PATH = "";
-    //office存放路径
-    //public static final String OFFICE_PATH = "";
 
     //图片存放地址
     //public static final String IMG_PATH =  FILE_PATH + "img" + File.separator;

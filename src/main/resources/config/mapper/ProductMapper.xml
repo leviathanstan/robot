@@ -4,30 +4,44 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.ProductDao">
 
-    <resultMap id="productMap" type="com.robot.entity.Product">
+    <resultMap id="productMap" type="com.robot.entity.Product" autoMapping="true">
         <id property="id" column="id"/>
-        <result property="name" column="product_name"/>
+        <result property="name" column="name"/>
+        <result property="postDate" column="post_date"/>
+        <result property="coverImg" column="cover"/>
     </resultMap>
     <!-- 首页产品 -->
     <select id="getProductLibrary" resultMap="productMap">
-    select id, product_name from product order by pro_last_up_time desc limit 0, 16;
+    select id, name, pro_last_up_time, cover from product order by pro_last_up_time desc limit 0, 16;
     </select>
-
     <resultMap id="articleMap" type="com.robot.entity.RobotNews" autoMapping="true">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="postDate" column="post_date"/>
+        <result property="img" column="cover"/>
     </resultMap>
+    <!-- 首页产品推荐 -->
+    <select id="getIndexRecommend" resultMap="articleMap">
+        select id, title, post_date, cover from product_recommend order by post_date limit 16
+    </select>
+    <!--首页产品推荐带封面-->
+    <select id="getIndexCoverRecommend" resultMap="articleMap">
+        select id, title, cover, post_date from product_recommend where cover!='' limit 4
+    </select>
     <!-- 首页产品评测 -->
     <select id="getProductEvaluation" resultMap="articleMap">
-      select id, title, post_date from product_evaluate order by post_date desc limit 0, 9;
+      select id, title, post_date, cover from product_evaluate order by post_date desc limit 0, 16;
     </select>
     <!-- 首页产品新闻 -->
     <select id="getIndexNews" resultMap="articleMap">
-      select id,title,post_date from product_news order by post_date limit 16
+      select id,title,post_date, cover from product_news order by post_date limit 16
     </select>
-    <!-- 首页产品推荐 -->
-    <select id="getIndexRecommend" resultMap="productMap">
-        select id,title, post_date from product_recommend order by post_date limit 16
+    <!--首页产品评测带封面-->
+    <select id="getIndexCoverEvaluation" resultMap="articleMap">
+        select id, title, post_date, cover from product_evaluate where cover!='' limit 4
+    </select>
+    <!--首页产品新闻带封面-->
+    <select id="getIndexCoverNews" resultMap="articleMap">
+        select id, title, cover, post_date from product_news where cover!='' limit 4
     </select>
 </mapper>

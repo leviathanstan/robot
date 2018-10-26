@@ -16,19 +16,14 @@ public class CommonService {
 
     @Autowired
     AssociationService associationService;
-
     @Autowired
     CompanyService companyService;
-
     @Autowired
     InformationService informationService;
-
     @Autowired
     ExpertService expertService;
-
     @Autowired
     ProductService productService;
-
     @Autowired
     TechnologyService technologyService;
 
@@ -55,7 +50,7 @@ public class CommonService {
         //技术
         //dataMap.put("case",technologyService.getIndexCase());
         dataMap.put("basic",technologyService.getIndexBasic());
-        //dataMap.put("science",technologyService.getIndexScience());
+        dataMap.put("science",technologyService.getIndexDiscuss());
         //产品
         dataMap.put("productEvaluation", productService.getProductEvaluation());
         dataMap.put("productLibrary", productService.getProductLibrary());
