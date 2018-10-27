@@ -3,6 +3,9 @@ package com.robot.util;
 import com.robot.entity.RobotNews;
 
 import java.net.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
@@ -58,7 +61,7 @@ public class CommonUtil {
      * @return
      */
     public static String getAbsolutePath(String content){
-        content = content.replaceAll("src=\"static","stc=\""+Constant.HOST_ADDRESS+"/static/robot");
+        content = content.replaceAll("src=\"static","src=\""+Constant.HOST_ADDRESS+"/static/robot");
         content = content.replaceAll("href=\"static","href=\""+Constant.HOST_ADDRESS+"/static/robot");
         return content;
     }
@@ -71,15 +74,15 @@ public class CommonUtil {
     public static String getDate(String oldDate){
         if(oldDate != null){
             try {
-                return oldDate.substring(0, oldDate.lastIndexOf(" "));
-            }catch (Exception e){
+                LocalDateTime time = LocalDateTime.parse(oldDate,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+                return time.toLocalDate().toString();
+            }catch (DateTimeParseException e){
                 e.printStackTrace();
                 return oldDate;
             }
         }else{
             return null;
         }
-
     }
 
     /**

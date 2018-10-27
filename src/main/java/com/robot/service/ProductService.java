@@ -99,7 +99,10 @@ public class ProductService {
         if (CommonUtil.judgeCover(evaluation,countCover)){
             evaluation.addAll(productDao.getIndexCoverEvaluation());
         }
-         return evaluation;
+        for(RobotNews eva:evaluation){
+            eva.setPostDate(CommonUtil.getDate(eva.getPostDate()));
+        }
+        return evaluation;
     }
     /**
      * 首页产品新闻
@@ -112,6 +115,9 @@ public class ProductService {
         ArrayList<RobotNews> news = productDao.getIndexNews();
         if (CommonUtil.judgeCover(news,countCover)){
             news.addAll(productDao.getIndexCoverNews());
+        }
+        for(RobotNews robotNews:news){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
         }
         return news;
     }
@@ -126,6 +132,9 @@ public class ProductService {
         ArrayList<RobotNews> recommend = productDao.getIndexRecommend();
         if (CommonUtil.judgeCover(recommend,countCover)){
             recommend.addAll(productDao.getIndexCoverRecommend());
+        }
+        for(RobotNews robotNews:recommend){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
         }
         return recommend;
     }
