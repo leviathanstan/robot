@@ -32,4 +32,5 @@ public interface AssociationDao {
 
     RobotNews getNoticeInfo(String id);
 
+    String getRobotContent(String id);
 }

@@ -22,6 +22,7 @@ public interface InformationDao {
     RobotNews findReportInfo(int id);
     ArrayList<RobotNews> findReportTop();
     ArrayList<RobotNews> findReportByPage();
-
+    String findInfContent(String id);
+    String findPolContent(String id);
 
 }

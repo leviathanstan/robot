@@ -95,6 +95,34 @@ public class CommonUtil {
             return Constant.HOST_ADDRESS+"/static/robot/img/"+matcher.group(1);
         return null;
     }
+
+    /**
+     * 从正文内容中获取第一张图片路径（static前带斜杠）
+     * @param content
+     * @return
+     */
+    public static String getFirstImgFromContent2(String content){
+        String regex = "src=\"/static/img/(.*?)\"";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        if (matcher.find())
+            return Constant.HOST_ADDRESS+"/static/robot/img/"+matcher.group(1);
+        return null;
+    }
+
+    /**
+     * 从正文内容中获取第一张图片路径（不含static）
+     * @param content
+     * @return
+     */
+    public static String getFirstImgFromContent3(String content){
+        String regex = "src=\"/img/(.*?)\"";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        if (matcher.find())
+            return Constant.HOST_ADDRESS+"/static/robot/img/"+matcher.group(1);
+        return null;
+    }
     /**
      * 获取本机ip地址（补全http://)
      * @author asce

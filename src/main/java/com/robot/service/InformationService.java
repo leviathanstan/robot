@@ -49,6 +49,9 @@ public class InformationService {
      */
     public ArrayList<RobotNews> findInformationTop() {
         ArrayList<RobotNews> informations1 = informationDao.findInformationTop();
+        for(RobotNews robotNews:informations1){
+            robotNews.setImg(CommonUtil.getFirstImgFromContent2(informationDao.findInfContent(robotNews.getId())));
+        }
         return informations1;
     }
 
@@ -90,6 +93,9 @@ public class InformationService {
      */
     public ArrayList<RobotNews> findPolicyTop() {
         ArrayList<RobotNews> informations1 = informationDao.findPolicyTop();
+        for(RobotNews robotNews:informations1){
+            robotNews.setImg(CommonUtil.getFirstImgFromContent3(informationDao.findPolContent(robotNews.getId())));
+        }
         return informations1;
     }
 
@@ -156,5 +162,6 @@ public class InformationService {
 
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
+
 
 }

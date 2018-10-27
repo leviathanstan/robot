@@ -26,6 +26,9 @@
     <select id="getRobotNewsTop" resultMap="robotNews">
         select id,title,post_date from association_news order by post_date desc limit 13
     </select>
+    <select id="getRobotContent" resultType="String">
+        select content from association_news where id = #{id}
+    </select>
 
     <select id="findNews" resultMap="robotNews">
         select * from association_news where 1=1

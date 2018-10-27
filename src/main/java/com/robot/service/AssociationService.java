@@ -62,7 +62,11 @@ public class AssociationService {
      * @return
      */
     public List<RobotNews> getIndexNews(){
-        return associationDao.getRobotNewsTop();
+        List<RobotNews> informations =  associationDao.getRobotNewsTop();
+        for(RobotNews robotNews:informations){
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(associationDao.getRobotContent(robotNews.getId())));
+        }
+        return informations;
     }
 
     /**

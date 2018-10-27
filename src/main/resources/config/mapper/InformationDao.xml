@@ -25,6 +25,10 @@
     <select id="findInformationByPage" resultMap="information">
         select *from industry_information order by post_date desc
     </select>
+    <!--根据行业动态的id查询内容-->
+    <select id="findInfContent"  resultType="String">
+        select content from industry_information where id = #{id}
+    </select>
 
     <!--根据文章id查询政策具体信息-->
     <select id="findPolicyInfo" resultMap="information">
@@ -37,6 +41,9 @@
     <!--查询政策的所有文章（分页）-->
     <select id="findPolicyByPage" resultMap="information">
         select *from policy_information order by post_date desc
+    </select>
+    <select id="findPolContent" resultType="String">
+        select content from policy_information where id = #{id}
     </select>
 
     <!--根据文章id查询咨询热点具体信息-->
