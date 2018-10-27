@@ -61,8 +61,8 @@ public class CommonUtil {
      * @return
      */
     public static String getAbsolutePath(String content){
-        content = content.replaceAll("src=\"static","src=\""+Constant.HOST_ADDRESS+"/static/robot");
-        content = content.replaceAll("href=\"static","href=\""+Constant.HOST_ADDRESS+"/static/robot");
+        content = content.replaceAll("src=\"/static","src=\""+Constant.HOST_ADDRESS+"/resources/robot");
+        content = content.replaceAll("href=\"/static","href=\""+Constant.HOST_ADDRESS+"/resources/robot");
         return content;
     }
 
@@ -95,7 +95,7 @@ public class CommonUtil {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
         if (matcher.find())
-            return Constant.HOST_ADDRESS+"/static/robot/img/"+matcher.group(1);
+            return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
         return null;
     }
 

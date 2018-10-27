@@ -3,10 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
-
     <display-name>robot</display-name>
     <description>robot</description>
-
+    <!-- 欢迎页 -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    
     <!-- 配置请求控制器,即配置springmvc文件 -->
     <servlet>
         <servlet-name>springDispatcherServlet</servlet-name>
