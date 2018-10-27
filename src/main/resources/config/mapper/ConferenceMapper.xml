@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.ConferenceDao">
+
+    <select id="getHoldingConference" resultType="com.robot.entity.Conference">
+        select *, hold_time as holdTime from conference where type = 0 and hold_time &gt;= NOW();
+    </select>
+
+    <select id="getPassConference" resultType="com.robot.entity.Conference">
+        select *, hold_time as holdTime from conference where type = 0 and hold_time &lt; NOW();
+    </select>
+
+    <select id="getHoldingMeeting" resultType="com.robot.entity.Conference">
+        select *, hold_time as holdTime from conference where type = 1 and hold_time &gt;= NOW();
+    </select>
+
+    <select id="getPassMeeting" resultType="com.robot.entity.Conference">
+        select *, hold_time as holdTime from conference where type = 1 and hold_time &lt; NOW();
+    </select>
+
+    <select id="findEnrollByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(id) from registration_form where name = #{enrolment};
+    </select>
+    
+    <insert id="insertToEnroll" parameterType="com.robot.entity.RegistrationForm">
+        insert into registration_form(id, name, gender, phone, wechat, email, company_name, position, company_address, conference_id, status)value(null, #{name}, #{gender}, #{phone}, #{weChat}, #{email}, #{companyName}, #{position}, #{companyAddress}, #{conferenceId}, 0);
+    </insert>
+</mapper>

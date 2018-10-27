@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.ProductDao">
+    <!-- 查询、筛选后列表-->
+    <select id="findProductIf" parameterType="java.util.Map" resultMap="productMap">
+      select id,name,introduction,cover_img from product where 1=1
+      <if test="name!=null and name.trim().length>0">
+          and locate(#{name},name)>0
+      </if>
+      <if test="industryId!=null and industryId.trim().length>0">
+          and id in
+                  (select product_id from product_category where industry_id=#{industryId})
+      </if>
+      <if test="brandId!=null and brandId.trim().length>0">
+          and id in
+                  (select product_id from product_category where brand_id=#{brandId})
+      </if>
+      <if test="partsId!=null and partsId.trim().length>0">
+          and id in
+                  (select product_id from product_category where parts_id=#{partsId})
+      </if>
+      <if test="robotId!=null and robotId.trim().length>0">
+          and id in
+                  (select product_id from product_robot where robot_id=#{robotId})
+      </if>
+    </select>
+    <!-- 根据id查询详细信息-->
+    <select id="getProductInfo" parameterType="java.lang.Integer" resultMap="productMap">
+        select * from product where id=#{id}
+    </select>
+
+    <resultMap id="productMap" type="com.robot.entity.Product" autoMapping="true">
+        <result column="cover_img" property="coverImg"/>
+        <result column="effect_time" property="effectTime"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+    </resultMap>
+</mapper>
