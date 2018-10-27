@@ -7,6 +7,10 @@ import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import org.junit.Test;
 
 import java.net.*;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.concurrent.Executor;
@@ -93,4 +97,15 @@ public class CommonServiceTest {
         System.out.println(news.size());
     }
 
+    @Test
+    public void testParse(){
+        String str = "2017-08-23 12:12:23.0";
+        System.out.println(LocalDateTime.now());
+        try {
+            LocalDateTime time = LocalDateTime.parse(str,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            System.out.println(time.toLocalDate());
+        }catch (DateTimeParseException e){
+            e.printStackTrace();
+        }
+    }
 }
