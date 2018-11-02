@@ -2,11 +2,8 @@ package com.robot.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.robot.dao.CategoryDao;
 import com.robot.dao.ProductDao;
-import com.robot.dto.CategoryDto;
 import com.robot.entity.Product;
-import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
@@ -26,10 +23,6 @@ public class ProductService {
 
     @Autowired
     private ProductDao productDao;
-    @Autowired
-    private CategoryDao categoryDao;
-    //首页最少要求封面数
-    private final int countCover = 3;
     /**
      * 筛选,查找产品
      * @author asce
@@ -44,23 +37,6 @@ public class ProductService {
         List<Product> products = productDao.findProductIf(args);
         PageInfo<Product> pageInfo = new PageInfo<>(products);
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class,"company","load","axis","imgs","effectTime","lastUpdateTime"),pageInfo);
-    }
-
-    /**
-     * 取得产品的所有可能分类
-     * @author asce
-     * @date 2018/9/22
-     * @param
-     * @return java.lang.String
-     */
-    public String getCategory(){
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setAreas(categoryDao.getArea());
-        categoryDto.setBrands(categoryDao.getProductBrand());
-        categoryDto.setIndustries(categoryDao.getProductIndustry());
-        categoryDto.setParts(categoryDao.getProductParts());
-        categoryDto.setRobots(categoryDao.getProductRobot());
-        return GsonUtil.getSuccessJson(categoryDto);
     }
 
     /**
@@ -89,53 +65,5 @@ public class ProductService {
         return productDao.getProductLibrary();
     }
 
-    /**
-     * 首页产品评测
-     * @data 2018/10/24
-     * @return java.lang.String
-     */
-    public ArrayList<RobotNews> getProductEvaluation(){
-        ArrayList<RobotNews> evaluation = productDao.getProductEvaluation();
-        if (CommonUtil.judgeCover(evaluation,countCover)){
-            evaluation.addAll(productDao.getIndexCoverEvaluation());
-        }
-        for(RobotNews eva:evaluation){
-            eva.setPostDate(CommonUtil.getDate(eva.getPostDate()));
-        }
-        return evaluation;
-    }
-    /**
-     * 首页产品新闻
-     * @author asce
-     * @date 2018/10/25
-     * @param
-     * @return
-     */
-    public ArrayList<RobotNews> getIndexNews(){
-        ArrayList<RobotNews> news = productDao.getIndexNews();
-        if (CommonUtil.judgeCover(news,countCover)){
-            news.addAll(productDao.getIndexCoverNews());
-        }
-        for(RobotNews robotNews:news){
-            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
-        }
-        return news;
-    }
-    /**
-     * 首页产品推荐
-     * @author asce
-     * @date 2018/10/25
-     * @param
-     * @return
-     */
-    public ArrayList<RobotNews> getIndexRecommend(){
-        ArrayList<RobotNews> recommend = productDao.getIndexRecommend();
-        if (CommonUtil.judgeCover(recommend,countCover)){
-            recommend.addAll(productDao.getIndexCoverRecommend());
-        }
-        for(RobotNews robotNews:recommend){
-            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
-        }
-        return recommend;
-    }
+
 }

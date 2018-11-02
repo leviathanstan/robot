@@ -3,6 +3,7 @@ package com.robot.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.robot.dao.InformationDao;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hua
@@ -23,6 +26,53 @@ public class InformationService {
     @Autowired
     private InformationDao informationDao;
 
+    /**
+     * information类别
+     */
+    private enum InformationEnum {
+        PRODUCT_NEWS(1), PRODUCT_RECOMMEND(2), PRODUCT_EVALUATE(3), BASIC_KNOWLEDGE(4), ENTERPRISE_NEWS(5), INDUSTRY_INFORMATION(6),
+        POLICY_INFORMATION(7), MEMBER_NEWS(8), NOTICE(9), ASSOCIATION_NEWS(10), EXPERT_WISDOM(11) ,CONSULTING_FOCUS(12);
+        private final int id;
+        InformationEnum(int id) {
+            this.id = id;
+        }
+        public int getId(){
+            return id;
+        }
+    }
+
+    /**
+     * 首页information数量
+     */
+    private enum NumberEnum{
+        INFORMATION_NUMBER(8), ASSOCIATION_NUMBER(13), COMPANY_NUMBER(12), PRODUCT_NUMBER(14), KNOWLEDGE(14), EXPERT(14);
+        private final int number;
+        NumberEnum(int number){
+            this.number = number;
+        }
+        public int getNumber(){
+            return number;
+        }
+    }
+    /**
+     * 首页information封面要求数量
+     */
+    private enum CoverEnum{
+        PRODUCT_NUMBER(4), KNOWLEDGE_NUMBER(3);
+        private final int number;
+        CoverEnum(int number){
+            this.number = number;
+        }
+        public int getNumber(){
+            return number;
+        }
+    }
+    /**
+     * 一列的数量
+     */
+    private final int PAGE_LENGTH = 12;
+
+    //******************************************协会********************************************//
     /**
      * 获取行业动态的具体内容
      *
@@ -48,22 +98,29 @@ public class InformationService {
      * @date 2018/10/17
      */
     public ArrayList<RobotNews> findInformationTop() {
-        ArrayList<RobotNews> informations1 = informationDao.findInformationTop();
-        for(RobotNews robotNews:informations1){
-            robotNews.setImg(CommonUtil.getFirstImgFromContent2(informationDao.findInfContent(robotNews.getId())));
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.INFORMATION_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.INDUSTRY_INFORMATION.getId());
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        for(RobotNews robotNews:informations){
+            robotNews.setImg(CommonUtil.getFirstImgFromContent2(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
-        return informations1;
+        return informations;
     }
 
+    /**
+     * 行业动态列表
+     * @param Num
+     * @return
+     */
     public String findInformationByPage(Integer Num) {
         int pageNum = CommonUtil.formatPageNum(Num + "");
-        PageHelper.startPage(pageNum, 12);
-        List<RobotNews> informations = informationDao.findInformationByPage();
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<RobotNews> informations = informationDao.getInformationList(InformationEnum.INDUSTRY_INFORMATION.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
         for (RobotNews information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
-
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
 
@@ -76,7 +133,7 @@ public class InformationService {
      * @date 2018/10/22
      */
     public String findPolicyInfo(int id) {
-        RobotNews information = informationDao.findPolicyInfo(id);
+        RobotNews information = informationDao.findInformationInfo(id);
         if (information==null){
             return GsonUtil.getErrorJson();
         }
@@ -92,11 +149,14 @@ public class InformationService {
      * @date 2018/10/22
      */
     public ArrayList<RobotNews> findPolicyTop() {
-        ArrayList<RobotNews> informations1 = informationDao.findPolicyTop();
-        for(RobotNews robotNews:informations1){
-            robotNews.setImg(CommonUtil.getFirstImgFromContent3(informationDao.findPolContent(robotNews.getId())));
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.INFORMATION_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.INDUSTRY_INFORMATION.getId());
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        for(RobotNews robotNews:informations){
+            robotNews.setImg(CommonUtil.getFirstImgFromContent3(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
-        return informations1;
+        return informations;
     }
 
     /**
@@ -108,60 +168,463 @@ public class InformationService {
      */
     public String findPolicyByPage(Integer Num) {
         int pageNum = CommonUtil.formatPageNum(Num + "");
-        PageHelper.startPage(pageNum, 12);
-        List<RobotNews> informations = informationDao.findPolicyByPage();
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<RobotNews> informations = informationDao.getInformationList(InformationEnum.POLICY_INFORMATION.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
         for (RobotNews information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
-
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class,"url" ), pageInfo);
     }
 
+    /**
+     * 首页资讯热点
+     * @return
+     */
+    public ArrayList<RobotNews> getIndexHot(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.INFORMATION_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.CONSULTING_FOCUS.getId());
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        return informations;
+    }
 
-    public String findHotspotInfo(int id) {
-        RobotNews information = informationDao.findHotspotInfo(id);
+    /**
+     * 资讯热点具体内容
+     *
+     * @param id
+     * @return
+     * @author hua
+     * @date 2018/10/22
+     */
+    public String findHotInfo(String id) {
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews information = informationDao.findInformationInfo(infoId);
+        if (information==null){
+            return GsonUtil.getErrorJson();
+        }
         return GsonUtil.getSuccessJson(information);
     }
-
-    public String findReportInfo(int id) {
-        RobotNews information = informationDao.findReportInfo(id);
-        return GsonUtil.getSuccessJson(information);
+    //******************************************协会********************************************//
+    /**
+     * 获取协会动态详细信息
+     * @author hua
+     * @date 2018/10/11
+     * @param id
+     * @return
+     */
+    public String getAssociationNewsInfo(String id){
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews robotNews = informationDao.findInformationInfo(infoId);
+        if(robotNews != null) {
+            robotNews.setContent(CommonUtil.getAbsolutePath(robotNews.getContent()));
+            return GsonUtil.getSuccessJson(robotNews);
+        } else
+            return GsonUtil.getErrorJson();
     }
 
-    public ArrayList<RobotNews> findHotspotTop() {
-        ArrayList<RobotNews> informations1 = informationDao.findHotspotTop();
-        return informations1;
-    }
-
-    public ArrayList<RobotNews> findReportTop() {
-        ArrayList<RobotNews> informations1 = informationDao.findReportTop();
-        return informations1;
-    }
-
-    public String findHotspotByPage(Integer Num) {
-        int pageNum = CommonUtil.formatPageNum(Num + "");
-        PageHelper.startPage(pageNum, 12);
-        List<RobotNews> informations = informationDao.findHotspotByPage();
-        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
-        for (RobotNews information : informations) {
-            information.setContent(CommonUtil.getPreview(information.getContent()));
+    /**
+     *  协会动态列表
+     * @param
+     * @return
+     */
+    public String getAssociationNewsList(String page){
+        int pageNum = CommonUtil.formatPageNum(page);
+        PageHelper.startPage(pageNum,PAGE_LENGTH);
+        List<RobotNews> news = informationDao.getInformationList(InformationEnum.ASSOCIATION_NEWS.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(news);
+        for (RobotNews news1:news){
+            news1.setContent(CommonUtil.getPreview(news1.getContent()));
         }
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
 
+    /**
+     * 首页协会动态
+     * @return
+     */
+    public List<RobotNews> getIndexAssociationNews(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.ASSOCIATION_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.ASSOCIATION_NEWS.getId());
+        List<RobotNews> informations =  informationDao.getIndexInformation(map);
+        for(RobotNews robotNews:informations){
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+        }
+        return informations;
+    }
+
+    /**
+     * 首页公告
+     * @return
+     */
+    public List<RobotNews> getIndexNotice(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.ASSOCIATION_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.NOTICE.getId());
+        return informationDao.getIndexInformation(map);
+    }
+
+    /**
+     * 公告列表
+     * @author asce
+     * @date 2018/10/12
+     * @param page
+     * @return
+     */
+    public String getNoticeList(String page){
+        int pageNum = CommonUtil.formatPageNum(page);
+        PageHelper.startPage(pageNum,PAGE_LENGTH);
+        List<RobotNews> notices = informationDao.getInformationList(InformationEnum.NOTICE.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(notices);
+        for(RobotNews notice:notices){
+            notice.setContent(CommonUtil.getPreview(notice.getContent()));
+        }
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    /**
+     * 公告详细信息
+     * @param id
+     * @return
+     */
+    public String getNoticeInfo(String id){
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews notice = informationDao.findInformationInfo(infoId);
+        if(notice==null)
+            return GsonUtil.getErrorJson();
+        notice.setContent(CommonUtil.getAbsolutePath(notice.getContent()));
+        return GsonUtil.getSuccessJson(notice);
+    }
+    //******************************************企业********************************************//
+    /**
+     * 企业新闻(首页)
+     */
+    public ArrayList<RobotNews> getCompanyNews() {
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.COMPANY_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.ENTERPRISE_NEWS.getId());
+        ArrayList<RobotNews> companyNews = informationDao.getIndexInformation(map);
+        for(RobotNews robotNews : companyNews){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        return companyNews;
+    }
+
+    /**
+     * 企业新闻列表
+     */
+    public String getCompanyNewsList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page,PAGE_LENGTH);
+        ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.ENTERPRISE_NEWS.getId());
+        for(RobotNews robotNews : companyNewsList){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+    /**
+     * 企业新闻具体信息
+     */
+    public String getCompanyNewsInfo(String id) {
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews news = informationDao.findInformationInfo(infoId);
+        if(news==null)
+            return GsonUtil.getErrorJson();
+        news.setContent(CommonUtil.getAbsolutePath(news.getContent()));
+        return GsonUtil.getSuccessJson(news);
+    }
+    /**
+     * 会员动态(首页)
+     */
+    public ArrayList<RobotNews> getCompanyDynamics() {
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.COMPANY_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.MEMBER_NEWS.getId());
+        ArrayList<RobotNews> companyNews = informationDao.getIndexInformation(map);
+        for(RobotNews robotNews : companyNews){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        return companyNews;
+    }
+
+    /**
+     * 会员动态列表
+     */
+    public String getCompanyDynamicsList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page,PAGE_LENGTH);
+        ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.MEMBER_NEWS.getId());
+        for(RobotNews robotNews : companyNewsList){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+    /**
+     * 会员动态具体信息
+     */
+    public String getCompanyDynamicsInfo(String id) {
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews news = informationDao.findInformationInfo(infoId);
+        if(news==null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(news);
+    }
+    //***************************技术********************************//
+    /**
+     * 首页基础知识
+     * @author asce
+     * @date 2018/11/2
+     * @param
+     * @return
+     */
+    public List<RobotNews> getIndexBasic(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.KNOWLEDGE.getNumber());
+        map.put("categoryId",InformationEnum.BASIC_KNOWLEDGE.getId());
+        ArrayList<RobotNews> basices = informationDao.getIndexInformation(map);
+        if (CommonUtil.judgeCover(basices,CoverEnum.KNOWLEDGE_NUMBER.getNumber())) {
+            map.put("number",CoverEnum.KNOWLEDGE_NUMBER.getNumber());
+            basices.addAll(informationDao.getIndexCover(map));
+        }
+        return basices;
+    }
+    /**
+     * 基础知识列表
+     */
+    public String getBasicList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page,PAGE_LENGTH);
+        ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.BASIC_KNOWLEDGE.getId());
+        for(RobotNews robotNews : companyNewsList){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+    /**
+     * 基础知识具体信息
+     */
+    public String getBasicInfo(String id) {
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews news = informationDao.findInformationInfo(infoId);
+        if(news==null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(news);
+    }
+    //*************************产品****************************//
+    /**
+     * 首页产品评测
+     * @data 2018/10/24
+     * @return java.lang.String
+     */
+    public ArrayList<RobotNews> getIndexEvaluate(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.PRODUCT_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.PRODUCT_EVALUATE.getId());
+        ArrayList<RobotNews> evaluation = informationDao.getIndexInformation(map);
+        if (CommonUtil.judgeCover(evaluation,CoverEnum.PRODUCT_NUMBER.getNumber())){
+            map.put("number",CoverEnum.PRODUCT_NUMBER.getNumber());
+            evaluation.addAll(informationDao.getIndexCover(map));
+        }
+        for(RobotNews eva:evaluation){
+            eva.setPostDate(CommonUtil.getDate(eva.getPostDate()));
+        }
+        return evaluation;
+    }
+    /**
+     * 产品评测列表
+     */
+    public String getEvaluateList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page,PAGE_LENGTH);
+        ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.PRODUCT_EVALUATE.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+    /**
+     * 产品评测具体信息
+     */
+    public String getEvaluateInfo(String id) {
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews news = informationDao.findInformationInfo(infoId);
+        if(news==null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(news);
+    }
+    /**
+     * 首页产品新闻
+     * @author asce
+     * @date 2018/10/25
+     * @param
+     * @return
+     */
+    public ArrayList<RobotNews> getIndexProductNews(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.PRODUCT_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.PRODUCT_NEWS.getId());
+        ArrayList<RobotNews> news = informationDao.getIndexInformation(map);
+        if (CommonUtil.judgeCover(news,CoverEnum.PRODUCT_NUMBER.getNumber())){
+            map.put("number",CoverEnum.PRODUCT_NUMBER.getNumber());
+            news.addAll(informationDao.getIndexCover(map));
+        }
+        for(RobotNews robotNews:news){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        return news;
+    }
+    /**
+     * 产品新闻列表
+     */
+    public String getProductNewsList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page,PAGE_LENGTH);
+        ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.PRODUCT_NEWS.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+    /**
+     * 产品新闻具体信息
+     */
+    public String getProductNewsInfo(String id) {
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews news = informationDao.findInformationInfo(infoId);
+        if(news==null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(news);
+    }
+    /**
+     * 首页产品推荐
+     * @author asce
+     * @date 2018/10/25
+     * @param
+     * @return
+     */
+    public ArrayList<RobotNews> getIndexRecommend(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.PRODUCT_NUMBER.getNumber());
+        map.put("categoryId",InformationEnum.PRODUCT_RECOMMEND.getId());
+        ArrayList<RobotNews> recommend = informationDao.getIndexInformation(map);
+        if (CommonUtil.judgeCover(recommend,CoverEnum.PRODUCT_NUMBER.getNumber())){
+            map.put("number",CoverEnum.PRODUCT_NUMBER.getNumber());
+            recommend.addAll(informationDao.getIndexCover(map));
+        }
+        for(RobotNews robotNews:recommend){
+            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+        }
+        return recommend;
+    }
+    /**
+     * 产品推荐列表
+     */
+    public String getRecommendList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page,PAGE_LENGTH);
+        ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.PRODUCT_RECOMMEND.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+    /**
+     * 产品推荐具体信息
+     */
+    public String getRecommendInfo(String id) {
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews news = informationDao.findInformationInfo(infoId);
+        if(news==null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(news);
+    }
+    //*************************专家智点****************************//
+    /**
+     * 首页专家智点
+     * @author hua
+     * @date 2018/9/27
+     * @return
+     */
+    public ArrayList<RobotNews> getIndexExpertArt(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("number",NumberEnum.EXPERT.getNumber());
+        map.put("categoryId",InformationEnum.EXPERT_WISDOM.getId());
+        ArrayList<RobotNews> articles = informationDao.getIndexInformation(map);
+        return articles;
+    }
+    /**
+     * 获取专家智点具体信息
+     * @param id
+     * @return
+     */
+    public String getExpertArtInfo(String id){
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        RobotNews article = informationDao.findInformationInfo(infoId);
+        if(null == article)
+            return GsonUtil.getErrorJson();
+        article.setContent(CommonUtil.getAbsolutePath(article.getContent()));
+        return GsonUtil.getSuccessJson(article);
+    }
+
+    /**
+     * 专家智点列表
+     * @param Num
+     * @return
+     */
+    public String getExpertArtList(String Num){
+        int pageNum = CommonUtil.formatPageNum(Num);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<RobotNews> articles = informationDao.getInformationList(InformationEnum.EXPERT_WISDOM.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(articles);
+        for(RobotNews article:articles){
+            article.setContent(CommonUtil.getPreview(article.getContent()));
+        }
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
+    //************************行业报告**********************************************//
+    /**
+     * 首页行业报告
+     * @author hua
+     * @date 2018/9/27
+     * @return
+     */
+//    public ArrayList<RobotNews> getIndexReport(){
+//        ArrayList<RobotNews> reports = informationDao.(map);
+//        return reports;
+//    }
 
-    public String findReportByPage(Integer Num) {
-        int pageNum = CommonUtil.formatPageNum(Num + "");
-        PageHelper.startPage(pageNum, 12);
-        List<RobotNews> informations = informationDao.findReportByPage();
-        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
-        for (RobotNews information : informations) {
-            information.setContent(CommonUtil.getPreview(information.getContent()));
-        }
+    //************************技术研讨**********************************************//
+    /**
+     * 首页技术研讨
+     * @author hua
+     * @date 2018/9/27
+     * @return
+     */
+//    public ArrayList<RobotNews> getIndexDiscuss(){
+//        ArrayList<RobotNews> discuss = informationDao.(map);
+//        return discuss;
+//    }
 
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
-    }
-
-
+    //************************案列库************************************************//
+    /**
+     * 首页案列库
+     * @author hua
+     * @date 2018/9/27
+     * @return
+     */
+//    public ArrayList<RobotNews> getIndexCase(){
+//        Map<String,Integer> map = new HashMap<>();
+//        map.put("number",NumberEnum.EXPERT.getNumber());
+//        map.put("categoryId",InformationEnum.EXPERT_WISDOM.getId());
+//        ArrayList<RobotNews> articles = informationDao.getIndexInformation(map);
+//        return articles;
+//    }
 }

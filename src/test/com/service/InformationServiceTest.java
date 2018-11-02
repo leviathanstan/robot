@@ -1,20 +1,15 @@
 package com.service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.robot.dao.ExpertDao;
+
 import com.robot.dao.InformationDao;
 
-import com.robot.service.InformationService;
-import com.robot.util.CommonUtil;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.List;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,9 +18,6 @@ public class InformationServiceTest {
 
     @Autowired
     private InformationDao informationDao;
-
-    @Autowired
-    private ExpertDao expertDao;
 
     @Test
     public void test(){
@@ -44,8 +36,6 @@ public class InformationServiceTest {
 //            System.out.println(info);
 //        }
 
-
-        System.out.println(expertDao.findAllExpert());
 
     }
 }

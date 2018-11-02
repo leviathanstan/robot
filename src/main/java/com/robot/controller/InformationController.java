@@ -1,7 +1,6 @@
 package com.robot.controller;
 
 import com.robot.service.InformationService;
-import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +30,6 @@ public class InformationController {
         return informationService.findInformationInfo(id);
     }
 
-
-
     /**
      * 获取分页显示的行业动态
      * @author hua
@@ -59,8 +56,6 @@ public class InformationController {
         return informationService.findPolicyInfo(id);
     }
 
-
-
     /**
      * 获取分页显示的政策
      * @author hua
@@ -75,58 +70,205 @@ public class InformationController {
     }
 
     /**
-     * 获取咨询热点具体内容
+     * 获取资讯热点具体信息
      * @author hua
-     * @date 2018/10/23
+     * @date 2018/10/17
      * @param id
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findHotspotInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findHotspotInfo(int id){
-        return informationService.findHotspotInfo(id);
+    @RequestMapping(value = "/getHotSpotInfo",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
+    public String getHostSpotList(String id){
+        return informationService.findHotInfo(id);
     }
 
-
-
     /**
-     * 获取分页显示的咨询热点
-     * @author hua
-     * @date 2018/10/23
+     * 专家智点列表
      * @param pageNum
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findHotspotByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
-    public String findHotspotByPage(Integer pageNum){
-        return informationService.findHotspotByPage(pageNum);
+    @RequestMapping(value = "/getExpertArtList",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getExpertArtInfo(String pageNum){
+        return informationService.getExpertArtList(pageNum);
     }
-
     /**
-     * 获取行业报告具体内容
-     * @author hua
-     * @date 2018/10/23
+     * 专家具体信息
      * @param id
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findReportInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findReportInfo(int id){
-        return informationService.findReportInfo(id);
+    @RequestMapping(value = "/findExpertArtInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findExpertArtInfo(String id){
+        return informationService.getExpertArtInfo(id);
     }
 
-
-
     /**
-     * 获取分页显示的行业报告
-     * @author hua
-     * @date 2018/10/23
+     * 企业新闻列表
      * @param pageNum
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findReportByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
-    public String findReportByPage(Integer pageNum){
-        return informationService.findReportByPage(pageNum);
+    @RequestMapping(value = "/getCompanyNewsList", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getCompanyNewsList(String pageNum){
+        return informationService.getCompanyNewsList(pageNum);
     }
+
+    /**
+     * 企业新闻具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyNewsInfo(String id){
+        return informationService.getCompanyNewsInfo(id);
+    }
+
+    /**
+     * 企业动态列表
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyDynamicsList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyDynamicsList(String pageNum){
+        return informationService.getCompanyDynamicsList(pageNum);
+    }
+
+    /**
+     * 企业动态具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCompanyDynamicsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCompanyDynamicsInfo(String id){
+        return informationService.getCompanyDynamicsInfo(id);
+    }
+
+    /**
+     * 协会新闻具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAssociationNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getAssociationNewsInfo(String id){
+        return informationService.getAssociationNewsInfo(id);
+    }
+
+    /**
+     * 协会新闻列表
+     * @param pageaNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAssociationNewsList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getAssociationNewsList(String pageaNum){
+        return informationService.getAssociationNewsList(pageaNum);
+    }
+
+    /**
+     * 通知公告列表
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getNoticeList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getNotice(String pageNum){
+        return informationService.getNoticeList(pageNum);
+    }
+
+    /**
+     * 通知公告具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getNoticeInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getNoticeInfo(String id){
+        return informationService.getNoticeInfo(id);
+    }
+
+    /**
+     * 基础知识列表
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getBasicList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getBasicList(String pageNum){
+        return informationService.getBasicList(pageNum);
+    }
+
+    /**
+     * 基础知识具体信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getBasicInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getBasicInfo(String id){
+        return informationService.getBasicInfo(id);
+    }
+
+    /***
+     * 产品评测列表
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getEvaluateList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getEvaluateList(String pageNum){
+        return informationService.getEvaluateList(pageNum);
+    }
+
+    /**
+     * 产品评测具体信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getEvaluateInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getEvaluateInfo(String id){
+        return informationService.getEvaluateInfo(id);
+    }
+
+    /**
+     * 产品新闻列表
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getProductNewsList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getProductNewsList(String pageNum){
+        return informationService.getProductNewsList(pageNum);
+    }
+
+    /**
+     * 产品新闻具体信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getProductNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getProductNewsInfo(String id){
+        return informationService.getProductNewsInfo(id);
+    }
+
+    /**
+     * 产品推荐列表
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getRecommendList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getRecommendList(String pageNum){
+        return informationService.getRecommendList(pageNum);
+    }
+
+    /**
+     * 产品推荐具体信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getRecommendInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getRecommendInfo(String id){
+        return informationService.getRecommendInfo(id);
+    }
+
 }

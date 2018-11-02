@@ -108,4 +108,20 @@ public class CommonServiceTest {
             e.printStackTrace();
         }
     }
+
+    public enum SeasonEnum {
+        PRODUCT_NEWS(1), PRODUCT_RECOMMEND(2), PRODUCT_EVALUATE(3), BASIC_KNOWLEDGE(4), ENTERPRISE_NEWS(5), INDUSTRY_INFORMATION(6),
+        POLICY_INFORMATION(7), MEMBER_NEWS(8), NOTICE(9), ASSOCIATION_NEWS(10), EXPERT_INTRODUCTION(11) ,COSULTING_FOCUS(12);
+        private final int id;
+        SeasonEnum(int id) {
+            this.id = id;
+        }
+        public int getId(){
+            return id;
+        }
+    }
+    @Test
+    public void testEnum(){
+        System.out.println(SeasonEnum.PRODUCT_NEWS.getId());
+    }
 }

@@ -19,10 +19,4 @@ public interface ProductDao {
     Product getProductInfo(int id);
     ArrayList<Product> getProductLibrary();
 
-    ArrayList<RobotNews> getProductEvaluation();
-    ArrayList<RobotNews> getIndexNews();
-    ArrayList<RobotNews> getIndexRecommend();
-    ArrayList<RobotNews> getIndexCoverEvaluation();
-    ArrayList<RobotNews> getIndexCoverNews();
-    ArrayList<RobotNews> getIndexCoverRecommend();
 }

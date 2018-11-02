@@ -9,61 +9,17 @@
     <result property="areaCount" column="area_count"/>
     </resultMap>
 
-    <resultMap id="memberNews" type="com.robot.entity.RobotNews">
-        <id property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="postDate" column="post_date"/>
-        <result property="source" column="source"/>
-    </resultMap>
-
-    <resultMap id="companyNewsOfIndex" type="com.robot.entity.RobotNews">
-        <id property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="postDate" column="post_datetime"/>
-    </resultMap>
-
-    <resultMap id="companyNews" type="com.robot.entity.RobotNews">
-        <id property="id" column="id"/>
-        <result property="postDate" column="post_datetime"/>
-        <result property="readGuide" column="guide"/>
-    </resultMap>
-
     <resultMap id="companyBrand" type="com.robot.entity.Company">
         <id property="id" column="id"/>
         <result property="name" column="company"/>
         <result property="logo" column="image_url"/>
     </resultMap>
-    <!--企业新闻-->
-    <select id="getCompanyNews" resultMap="companyNewsOfIndex">
-        select id, title, post_datetime from entreprise_news order by post_datetime desc limit 9;
-    </select>
-
-    <select id="getCompanyNewsList" resultMap="companyNewsOfIndex">
-        select id, title, post_datetime from entreprise_news order by post_datetime desc
-    </select>
-    <!--企业动态-->
-    <select id="getCompanyDynamics" resultMap="companyNewsOfIndex">
-        select id, title, post_datetime from entreprise_news order by rand() limit 9;
-    </select>
-
-    <select id="getCompanyDynamicsList" resultMap="companyNewsOfIndex">
-        select id, title, post_datetime from entreprise_news order by rand()
-    </select>
 
     <!--品牌展厅-->
     <select id="getCompanyBrand" resultMap="companyBrand">
-        select id, company, image_url from brand_exhibition order by rand() limit 8;
+        select id, name, image_url from brand_exhibition order by rand() limit 8;
     </select>
-    <!--得到具体的新闻信息-->
-    <select id="getCompanyNewsInfo" parameterType="java.lang.Integer" resultMap="companyNews">
-        select * from entreprise_news where id=#{newsId};
-    </select>
-    <!--得到具体的动态信息-->
-    <select id="getCompanyDynamicsInfo" parameterType="java.lang.Integer" resultMap="companyNews">
-        select * from entreprise_news where id=#{newsId};
-    </select>
-
+    <!--
     <select id="getCompanyArea" resultMap="companyArea">
         select companyInfo.name, count(companyInfo.name) as area_count from (select * from area inner join company_area on area.id = company_area.area_id) as companyInfo group by companyInfo.name;
     </select>
@@ -79,19 +35,6 @@
     <select id="findCompanyById" resultType="java.lang.Integer">
         select count(id) from company where id = #{companyId};
     </select>
-
-    <select id="getIndexMemberNews" resultMap="memberNews">
-        select id, title, post_date, source from member_news order by post_date desc LIMIT 0, 7;
-    </select>
-
-    <select id="getMemberNewsInfo" parameterType="java.lang.Integer" resultMap="memberNews">
-        select * from member_news where id = #{memberId};
-    </select>
-
-    <select id="getMemberNewsList" resultMap="memberNews">
-        select id, title, post_date, source from member_news order by post_date desc
-    </select>
-
-
+    -->
 
 </mapper>

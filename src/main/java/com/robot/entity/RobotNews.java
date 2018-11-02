@@ -3,7 +3,7 @@ package com.robot.entity;
 
 public class RobotNews {
 
-    private String id;
+    private int id;
     private String url;
     private String title;
     private int viewCount;
@@ -13,11 +13,7 @@ public class RobotNews {
     private String readGuide;
     private String img;
 
-    public String getUrlId() {
-        return id;
-    }
-
-    public void setId(String urlId) {
+    public void setId(int urlId) {
         this.id = urlId;
     }
 
@@ -61,7 +57,7 @@ public class RobotNews {
         this.postDate = postDate;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

@@ -3,6 +3,7 @@ package com.robot.dao;
 import com.robot.entity.RobotNews;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author hua
@@ -11,18 +12,9 @@ import java.util.ArrayList;
 public interface InformationDao {
 
     RobotNews findInformationInfo(int id);
-    ArrayList<RobotNews> findInformationTop();
-    ArrayList<RobotNews> findInformationByPage();
-    RobotNews findPolicyInfo(int id);
-    ArrayList<RobotNews> findPolicyTop();
-    ArrayList<RobotNews> findPolicyByPage();
-    RobotNews findHotspotInfo(int id);
-    ArrayList<RobotNews> findHotspotTop();
-    ArrayList<RobotNews> findHotspotByPage();
-    RobotNews findReportInfo(int id);
-    ArrayList<RobotNews> findReportTop();
-    ArrayList<RobotNews> findReportByPage();
-    String findInfContent(String id);
-    String findPolContent(String id);
+    ArrayList<RobotNews> getInformationList(int categoryId);
+    ArrayList<RobotNews> getIndexInformation(Map<String,Integer> map);
+    ArrayList<RobotNews> getIndexCover(Map<String,Integer> map);
+
 
 }

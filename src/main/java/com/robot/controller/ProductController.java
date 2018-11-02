@@ -3,7 +3,6 @@ package com.robot.controller;
 import com.robot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,19 +35,6 @@ public class ProductController {
     }
 
     /**
-     *  获取产品所有分类
-     * @author asce
-     * @date 2018/9/22
-     * @param
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value= "/getCategory", method = RequestMethod.GET)
-    public String getCategory(){
-        return productService.getCategory();
-    }
-
-    /**
      *  获取产品详细信息
      * @author asce
      * @date 2018/9/22
@@ -60,19 +46,5 @@ public class ProductController {
     public String getProduct(String id){
         return productService.getProductInfo(id);
     }
-
-
-//    /**
-//     * @author Ning
-//     * @data 2018/10/23
-//     * 获得首页产品库
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "/getProductLibrary", method = RequestMethod.GET)
-//    public String getProductLibrary(){
-//        return productService.getProductLibrary();
-//    }
-
 
 }

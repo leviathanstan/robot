@@ -30,6 +30,13 @@ public class CommonUtil {
         return pageNum;
     }
 
+    public static int formateParmNum(String parm){
+        if(!simpleMatch(Constant.RULE_NUMBER,parm)){
+            return 0;
+        }
+        return Integer.parseInt(parm);
+    }
+
     /**
      * 简单匹配
      * @param rule
@@ -109,7 +116,7 @@ public class CommonUtil {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
         if (matcher.find())
-            return Constant.HOST_ADDRESS+"/static/robot/img/"+matcher.group(1);
+            return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
         return null;
     }
 
@@ -123,7 +130,7 @@ public class CommonUtil {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
         if (matcher.find())
-            return Constant.HOST_ADDRESS+"/static/robot/img/"+matcher.group(1);
+            return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
         return null;
     }
     /**

@@ -1,16 +1,13 @@
 package com.robot.entity;
 
 /**
- * 专家
  * @author asce
- * @date 2018/9/21
+ * @date 2018/11/2
  */
-public class Expert {
-
+public class Introduction {
     private Integer id;
     private String name;
     private String introduction;
-    private String faceImg;
     private String postDate;
 
     public String getPostDate() {
@@ -45,21 +42,12 @@ public class Expert {
         this.introduction = introduction;
     }
 
-    public String getFaceImg() {
-        return faceImg;
-    }
-
-    public void setFaceImg(String faceImg) {
-        this.faceImg = faceImg;
-    }
-
     @Override
     public String toString() {
-        return "Expert{" +
+        return "University{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", introduction='" + introduction + '\'' +
-                ", faceImg='" + faceImg + '\'' +
                 ", postDate='" + postDate + '\'' +
                 '}';
     }
