@@ -7,7 +7,7 @@
     <resultMap id="productMap" type="com.robot.entity.Product" autoMapping="true">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="postDate" column="post_date"/>
+        <result property="lastUpdateTime" column="post_date"/>
         <result property="coverImg" column="cover"/>
     </resultMap>
     <!-- 首页产品 -->

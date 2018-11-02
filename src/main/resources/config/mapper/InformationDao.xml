@@ -21,8 +21,8 @@
         select id,title,content,post_date,cover from information where category_id=#{categoryId}
     </select>
     <!--资讯详情-->
-    <select id="getInformationInfo" parameterType="int" resultMap="informationMap">
-        select * from inforamtion where id=#{id}
+    <select id="findInformationInfo" parameterType="int" resultMap="informationMap">
+        select * from information where id=#{id}
     </select>
     <!--获取资讯中有封面的数据-->
     <select id="getIndexCover" resultMap="informationMap" parameterType="map">
