@@ -1,13 +1,15 @@
 package com.robot.entity;
 
 
+import java.util.ArrayList;
+
 public class RobotNews {
 
     private int id;
     private String url;
     private String title;
     private int viewCount;
-    private String content;
+    private ArrayList<String> content;
     private String postDate;
     private String source;
     private String readGuide;
@@ -41,11 +43,11 @@ public class RobotNews {
         this.viewCount = amount;
     }
 
-    public String getContent() {
+    public ArrayList<String> getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(ArrayList<String> content) {
         this.content = content;
     }
 

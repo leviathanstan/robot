@@ -2,15 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.robot.dao.InformationDao">
     <resultMap id="informationMap" type="com.robot.entity.RobotNews">
-        <result property="id" column="id"/>
+        <id property="id" column="id"/>
         <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="url" column="url"/>
         <result property="postDate" column="post_date"/>
+        <result property="img" column="cover"/>
+        <result property="url" column="url"/>
         <result property="source" column="source"/>
         <result property="viewCount" column="view_count"/>
         <result property="readGuide" column="guide"/>
-        <result property="img" column="cover"/>
+    </resultMap>
+    <resultMap id="informationDetail" type="com.robot.entity.RobotNews" extends="informationMap">
+        <collection property="content" column="{informationId=id}" javaType="ArrayList" ofType="java.lang.String" select="getContentOfInfo"/>
     </resultMap>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">
@@ -18,7 +20,7 @@
     </select>
     <!--资讯列表-->
     <select id="getInformationList" parameterType="int" resultMap="informationMap">
-        select id,title,content,post_date,cover from information where category_id=#{categoryId}
+        select id,title,content,post_date,cover from information,information_content where category_id=#{categoryId} and information_id=id
     </select>
     <!--资讯详情-->
     <select id="findInformationInfo" parameterType="int" resultMap="informationMap">
@@ -27,6 +29,10 @@
     <!--获取资讯中有封面的数据-->
     <select id="getIndexCover" resultMap="informationMap" parameterType="map">
         select id, title, cover, post_date from information where category_id=#{categoryId} and cover!='' limit #{number}
+    </select>
+    <!--查询正文所有分页-->
+    <select id="getContentOfInfo" resultMap="informationDetail" parameterType="java.util.Map">
+        select * from information_content where information_id=#{informationId,jdbcType=java.lang.Integer}
     </select>
     <!--首页行业报告
     <select id="getIndexReport" parameterType="int" resultMap="">

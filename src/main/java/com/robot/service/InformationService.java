@@ -103,7 +103,7 @@ public class InformationService {
         map.put("categoryId",InformationEnum.INDUSTRY_INFORMATION.getId());
         ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
         for(RobotNews robotNews:informations){
-            robotNews.setImg(CommonUtil.getFirstImgFromContent2(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
         return informations;
     }
@@ -154,7 +154,7 @@ public class InformationService {
         map.put("categoryId",InformationEnum.INDUSTRY_INFORMATION.getId());
         ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
         for(RobotNews robotNews:informations){
-            robotNews.setImg(CommonUtil.getFirstImgFromContent3(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
         return informations;
     }

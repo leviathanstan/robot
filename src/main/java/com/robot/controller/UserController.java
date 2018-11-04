@@ -41,9 +41,9 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/registe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String registe(User user, @RequestParam(value = "confirmPassword") String confirmPassword, HttpSession session) {
-        return userService.registe(user, confirmPassword, session);
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String register(User user, @RequestParam(value = "confirmPassword") String confirmPassword, HttpSession session) {
+        return userService.register(user, confirmPassword, session);
     }
 
     /**
@@ -55,12 +55,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "validate",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    public String validate(@RequestParam(value = "checkcode") String checkcode,HttpSession session){
-        User user = (User)session.getAttribute("user");
-        String code=(String) session.getAttribute("emailCode");
-        session.removeAttribute("emailCode");
-        session.removeAttribute("user");
-        return userService.validate(checkcode,code,user);
+    public String validateRegister(@RequestParam(value = "checkcode") String checkcode,HttpSession session){
+        return userService.validate(checkcode,session);
     }
 
     /**
@@ -82,10 +78,9 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "validateEmail/{checkcode}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String validateEmail(@PathVariable String checkcode, HttpSession session) {
-        String code = (String) session.getAttribute("emailCode");
-        return userService.validateEmail(checkcode, code);
+    @RequestMapping(value = "validateEmail", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String validateEmail(@RequestParam String checkcode, HttpSession session) {
+        return userService.validateEmail(checkcode, session);
     }
 
     /**
@@ -97,7 +92,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String resetPassword(String password, String confirmPassword, HttpSession session) {
-        String email = (String) session.getAttribute("email");
-        return userService.resetPassword(password, email, confirmPassword);
+        return userService.resetPassword(password, confirmPassword,session);
     }
 }

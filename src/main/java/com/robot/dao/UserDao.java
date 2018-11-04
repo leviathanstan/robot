@@ -19,7 +19,7 @@ public interface UserDao {
      * 注册
      * @param user
      */
-    void registe(User user);
+    int register(User user);
 
     /**
      * 登陆

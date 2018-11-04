@@ -1,6 +1,7 @@
 package com.service;
 
 import com.robot.entity.RobotNews;
+import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -123,5 +126,19 @@ public class CommonServiceTest {
     @Test
     public void testEnum(){
         System.out.println(SeasonEnum.PRODUCT_NEWS.getId());
+    }
+
+    ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
+
+    @Test
+    public void testSchedule(){
+        exec.schedule(()->System.out.println("The thread can only run once!"),1000,TimeUnit.MILLISECONDS);
+        exec.schedule(()->System.out.println("The thread can only run twice!"),2000,TimeUnit.MILLISECONDS);
+        exec.schedule(()->System.out.println("The thread can only run three!"),1000,TimeUnit.MILLISECONDS);
+        try {
+            Thread.sleep(5000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

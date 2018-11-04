@@ -5,7 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 public class SendEmailUtil {
 
-    public static void sendEmail(JavaMailSender javaMailSender, String email, String code) {
+    public static void sendEmail(JavaMailSender javaMailSender, String email, String code) throws Exception{
         SimpleMailMessage message = new SimpleMailMessage();//消息构造器
         message.setFrom("gdut0000@163.com");//发件人
         message.setTo(email);//收件人

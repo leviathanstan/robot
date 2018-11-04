@@ -58,21 +58,44 @@ public class CommonUtil {
      * @param
      * @return
      */
+    public static ArrayList<String> getPreview(ArrayList<String> content){
+        if (content==null)  return null;
+        ArrayList<String> preview = new ArrayList<>();
+        preview.add(content.get(0).replaceAll(Constant.RULE_PREVIEW,""));
+        return preview;
+    }
+    /**
+     *  文字预览
+     * @author asce
+     * @date 2018/10/18
+     * @param
+     * @return
+     */
     public static String getPreview(String content){
         return content==null?null:content.replaceAll(Constant.RULE_PREVIEW,"");
     }
-
+    /**
+     * 将相对路径替换为绝对路径
+     * @param content
+     * @return
+     */
+    public static ArrayList<String> getAbsolutePath(ArrayList<String> content){
+        for(String str:content) {
+            str = str.replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources/robot");
+            str = str.replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources/robot");
+        }
+        return content;
+    }
     /**
      * 将相对路径替换为绝对路径
      * @param content
      * @return
      */
     public static String getAbsolutePath(String content){
-        content = content.replaceAll("src=\"/static","src=\""+Constant.HOST_ADDRESS+"/resources/robot");
-        content = content.replaceAll("href=\"/static","href=\""+Constant.HOST_ADDRESS+"/resources/robot");
+        content = content.replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources/robot");
+        content = content.replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources/robot");
         return content;
     }
-
     /**
      * 将datetime转为date格式
      * @param oldDate
@@ -97,38 +120,10 @@ public class CommonUtil {
      * @param content
      * @return
      */
-    public static String getFirstImgFromContent(String content){
-        String regex = "src=\"static/img/(.*?)\"";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(content);
-        if (matcher.find())
-            return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
-        return null;
-    }
-
-    /**
-     * 从正文内容中获取第一张图片路径（static前带斜杠）
-     * @param content
-     * @return
-     */
-    public static String getFirstImgFromContent2(String content){
+    public static String getFirstImgFromContent(ArrayList<String> content){
         String regex = "src=\"/static/img/(.*?)\"";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(content);
-        if (matcher.find())
-            return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
-        return null;
-    }
-
-    /**
-     * 从正文内容中获取第一张图片路径（不含static）
-     * @param content
-     * @return
-     */
-    public static String getFirstImgFromContent3(String content){
-        String regex = "src=\"/img/(.*?)\"";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(content);
+        Matcher matcher = pattern.matcher(content.get(0));
         if (matcher.find())
             return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
         return null;
