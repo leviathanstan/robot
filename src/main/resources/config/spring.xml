@@ -28,6 +28,10 @@
         <property name="locations">
             <list>
                 <value>classpath:properties/jdbc.properties</value>
+<<<<<<< HEAD
+=======
+                <value>classpath:properties/email.properties</value>
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             </list>
         </property>
     </bean>
@@ -68,6 +72,23 @@
     </bean>
     <tx:annotation-driven transaction-manager="txManager" />
 
+<<<<<<< HEAD
 
+=======
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"></property>
+        <property name="username" value="${mail.username}"></property>
+        <property name="password" value="${mail.password}"></property>
+        <property name="defaultEncoding" value="UTF-8"></property>
+        <property name="port" value="465"></property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtps.auth">true</prop>
+                <prop key="mail.smtp.ssl.enable">true</prop>
+                <prop key="mail.transport.protocol">smtps</prop>
+            </props>
+        </property>
+    </bean>
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
 
 </beans>

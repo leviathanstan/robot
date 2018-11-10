@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.dao.UserDao">
+
+    <select id="checkUsername" parameterType="com.robot.entity.User" resultType="com.robot.entity.User">
+		select * from user where username=#{username}
+	</select>
+
+    <select id="checkEmail" parameterType="com.robot.entity.User" resultType="com.robot.entity.User">
+		select * from user where email = #{email}
+	</select>
+
+    <insert id="registe" parameterType="com.robot.entity.User">
+		insert into user(id,username,password,email)value(null,#{username},#{password},#{email})
+	</insert>
+
+	<select id="login" parameterType="com.robot.entity.User"
+			resultType="com.robot.entity.User">
+		select username,email from user where username=#{username} and password=#{password}
+	</select>
+
+	<select id="findEmail" parameterType="java.lang.String" resultType="java.lang.String">
+        select email from user where email=#{email}
+    </select>
+
+	<update id="resetPassword" parameterType="java.lang.String" >
+        update user set password=#{password} where email=#{email}
+    </update>
+</mapper>

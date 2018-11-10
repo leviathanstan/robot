@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -28,3 +29,16 @@
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
 </body>
 </html>
+=======
+<%--
+  Created by IntelliJ IDEA.
+  User: 张瑞钧
+  Date: 2018/10/27
+  Time: 21:01
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    response.sendRedirect("index.html");
+%>
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
