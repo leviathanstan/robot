@@ -9,7 +9,7 @@ public class RobotNews {
     private String url;
     private String title;
     private int viewCount;
-    private ArrayList<String> content;
+    private ArrayList<Detail> content;
     private String postDate;
     private String source;
     private String readGuide;
@@ -43,11 +43,11 @@ public class RobotNews {
         this.viewCount = amount;
     }
 
-    public ArrayList<String> getContent() {
+    public ArrayList<Detail> getContent() {
         return content;
     }
 
-    public void setContent(ArrayList<String> content) {
+    public void setContent(ArrayList<Detail> content) {
         this.content = content;
     }
 

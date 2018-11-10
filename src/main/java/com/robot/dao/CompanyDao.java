@@ -13,12 +13,7 @@ public interface CompanyDao {
 
     ArrayList<Company> getCompanyBrand();
 
-    ArrayList<Area> getCompanyArea();
-
-    List<Company> getSpecifiedBrand(int specifiedId);
-
-    Company getCompanyInfo(Integer companyId);
-
-    Integer findCompanyById(Integer companyId);
-
+//    ArrayList<Area> getCompanyArea();
+//
+//    List<Company> getSpecifiedBrand(int specifiedId);
 }

@@ -1,5 +1,6 @@
 package com.robot.util;
 
+import com.robot.entity.Detail;
 import com.robot.entity.RobotNews;
 
 import java.net.*;
@@ -58,11 +59,10 @@ public class CommonUtil {
      * @param
      * @return
      */
-    public static ArrayList<String> getPreview(ArrayList<String> content){
+    public static ArrayList<Detail> getPreview(ArrayList<Detail> content){
         if (content==null)  return null;
-        ArrayList<String> preview = new ArrayList<>();
-        preview.add(content.get(0).replaceAll(Constant.RULE_PREVIEW,""));
-        return preview;
+        content.get(0).setContent(content.get(0).getContent().replaceAll(Constant.RULE_PREVIEW,""));
+        return content;
     }
     /**
      *  文字预览
@@ -79,10 +79,10 @@ public class CommonUtil {
      * @param content
      * @return
      */
-    public static ArrayList<String> getAbsolutePath(ArrayList<String> content){
-        for(String str:content) {
-            str = str.replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources/robot");
-            str = str.replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources/robot");
+    public static ArrayList<Detail> getAbsolutePath(ArrayList<Detail> content){
+        for(Detail str:content) {
+            str.setContent(str.getContent().replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources/robot"));
+            str.setContent(str.getContent().replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources/robot"));
         }
         return content;
     }
@@ -120,10 +120,10 @@ public class CommonUtil {
      * @param content
      * @return
      */
-    public static String getFirstImgFromContent(ArrayList<String> content){
+    public static String getFirstImgFromContent(ArrayList<Detail> content){
         String regex = "src=\"/static/img/(.*?)\"";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(content.get(0));
+        Matcher matcher = pattern.matcher(content.get(0).getContent());
         if (matcher.find())
             return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
         return null;

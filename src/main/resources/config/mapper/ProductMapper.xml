@@ -12,6 +12,6 @@
     </resultMap>
     <!-- 首页产品 -->
     <select id="getProductLibrary" resultMap="productMap">
-    select id, name, pro_last_up_time, cover from product order by pro_last_up_time desc limit 0, 16;
+    select id, name, pro_last_up_time, cover from product_library order by pro_last_up_time desc limit 0, 16;
     </select>
 </mapper>

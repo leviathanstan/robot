@@ -29,23 +29,14 @@ public class CompanyService {
         return companyList;
     }
 
-    public String getCompanyArea() {
-        ArrayList<Area> areaList = companyDao.getCompanyArea();
-        return GsonUtil.getSuccessJson(areaList);
-    }
-
-    public String getSpecifiedBrand(Integer specifiedId) {
-        ArrayList<Company> companyList = (ArrayList<Company>) companyDao.getSpecifiedBrand(specifiedId);
-        return GsonUtil.getSuccessJson(companyList);
-    }
-
-    public String getCompanyInfo(Integer companyId) {
-        if(companyDao.findCompanyById(companyId) == 1){
-            return GsonUtil.getSuccessJson((companyDao.getCompanyInfo(companyId)));
-        }else {
-            return GsonUtil.getErrorJson();
-        }
-
-    }
+//    public String getCompanyArea() {
+//        ArrayList<Area> areaList = companyDao.getCompanyArea();
+//        return GsonUtil.getSuccessJson(areaList);
+//    }
+//
+//    public String getSpecifiedBrand(Integer specifiedId) {
+//        ArrayList<Company> companyList = (ArrayList<Company>) companyDao.getSpecifiedBrand(specifiedId);
+//        return GsonUtil.getSuccessJson(companyList);
+//    }
 
 }

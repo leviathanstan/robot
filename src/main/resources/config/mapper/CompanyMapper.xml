@@ -11,7 +11,7 @@
 
     <resultMap id="companyBrand" type="com.robot.entity.Company">
         <id property="id" column="id"/>
-        <result property="name" column="company"/>
+        <result property="name" column="name"/>
         <result property="logo" column="image_url"/>
     </resultMap>
 
