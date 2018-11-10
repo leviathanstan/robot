@@ -13,7 +13,10 @@ public class Product {
     private Integer id;
     private String name;
     private int price;
+<<<<<<< HEAD
+=======
     private String brand;
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
     private String introduction;
     private String coverImg;
     private Company company;
@@ -112,6 +115,8 @@ public class Product {
         this.lastUpdateTime = lastUpdateTime;
     }
 
+<<<<<<< HEAD
+=======
     public String getBrand() {
         return brand;
     }
@@ -120,13 +125,17 @@ public class Product {
         this.brand = brand;
     }
 
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
+<<<<<<< HEAD
+=======
                 ", brand='" + brand + '\'' +
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
                 ", introduction='" + introduction + '\'' +
                 ", coverImg='" + coverImg + '\'' +
                 ", company=" + company +

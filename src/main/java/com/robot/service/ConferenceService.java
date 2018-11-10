@@ -4,7 +4,10 @@ import com.robot.bean.Msg;
 import com.robot.dao.CompanyDao;
 import com.robot.dao.ConferenceDao;
 import com.robot.entity.RegistrationForm;
+<<<<<<< HEAD
+=======
 import com.robot.util.Constant;
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,12 +52,29 @@ public class ConferenceService {
     }
 
     public String enroll(RegistrationForm registrationForm) {
+<<<<<<< HEAD
+        String usernameRegularExpression = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+        String phoneRegularExpression = "^[0-9]{11}$";
+        String userWechatRegularExpression = "^[a-zA-Z0-9\u4E00-\u9FA5]{3,10}$";
+        String userCompanyNameRegularExpression = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+        String addressRegularExpression = "^[a-zA-Z0-9\u4E00-\u9FA5]{0,20}$";
+        String userPositionRegularExpression = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+        String emailRegularExpression = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
+
         Msg msg = new Msg();
+
+=======
+        Msg msg = new Msg();
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
         if("".equals(registrationForm.getName()) || registrationForm.getName() == null){
             msg.setResult("姓名不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getName().matches(usernameRegularExpression))){
+=======
         }else if(!(registrationForm.getName().matches(Constant.USERNAMEREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("姓名格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -74,7 +94,11 @@ public class ConferenceService {
             msg.setResult("手机号码不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getPhone().matches(phoneRegularExpression))){
+=======
         }else if(!(registrationForm.getPhone().matches(Constant.PHONEREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("手机号码格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -82,7 +106,11 @@ public class ConferenceService {
             msg.setResult("微信号不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getWeChat().matches(userWechatRegularExpression))){
+=======
         }else if(!(registrationForm.getWeChat().matches(Constant.USERWECHATREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("微信号格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -90,7 +118,11 @@ public class ConferenceService {
             msg.setResult("公司名不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getCompanyName().matches(userCompanyNameRegularExpression))){
+=======
         }else if(!(registrationForm.getCompanyName().matches(Constant.USERCOMPANYNAMEREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("公司名格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -98,7 +130,11 @@ public class ConferenceService {
             msg.setResult("公司名不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getCompanyName().matches(userCompanyNameRegularExpression))){
+=======
         }else if(!(registrationForm.getCompanyName().matches(Constant.USERCOMPANYNAMEREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("公司名格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -106,7 +142,11 @@ public class ConferenceService {
             msg.setResult("公司地址不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getCompanyAddress().matches(addressRegularExpression))){
+=======
         }else if(!(registrationForm.getCompanyAddress().matches(Constant.ADDRESSREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("公司地址格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -114,7 +154,11 @@ public class ConferenceService {
             msg.setResult("职位不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getPosition().matches(userPositionRegularExpression))){
+=======
         }else if(!(registrationForm.getPosition().matches(Constant.USERPOSITIONREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("职位格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -122,7 +166,11 @@ public class ConferenceService {
             msg.setResult("邮箱不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
+<<<<<<< HEAD
+        }else if(!(registrationForm.getEmail().matches(emailRegularExpression))){
+=======
         }else if(!(registrationForm.getEmail().matches(Constant.EMAILREGULAREXPRESSION))){
+>>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             msg.setResult("邮箱格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
