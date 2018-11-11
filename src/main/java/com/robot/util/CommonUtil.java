@@ -3,12 +3,10 @@ package com.robot.util;
 import com.robot.entity.Detail;
 import com.robot.entity.RobotNews;
 
-import java.net.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

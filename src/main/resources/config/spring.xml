@@ -19,19 +19,16 @@
     <!--beans scanning package -->
     <context:component-scan base-package="com.robot">
         <context:exclude-filter type="annotation"
-            expression="org.springframework.stereotype.Controller" />
+                                expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
     <task:annotation-driven />
     <!--property placeholder resolver -->
     <bean id="propertyConfigurer"
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:properties/jdbc.properties</value>
-<<<<<<< HEAD
-=======
                 <value>classpath:properties/email.properties</value>
->>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
             </list>
         </property>
     </bean>
@@ -67,14 +64,11 @@
     -->
     <!--事务-->
     <bean id="txManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
     <tx:annotation-driven transaction-manager="txManager" />
 
-<<<<<<< HEAD
-
-=======
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${mail.host}"></property>
         <property name="username" value="${mail.username}"></property>
@@ -89,6 +83,5 @@
             </props>
         </property>
     </bean>
->>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
 
 </beans>

@@ -2,24 +2,19 @@ package com.robot.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-<<<<<<< HEAD
+
 import com.robot.dao.CategoryDao;
 import com.robot.dao.ProductDao;
 import com.robot.dto.CategoryDto;
-=======
-import com.robot.dao.ProductDao;
->>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
 import com.robot.entity.Product;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
 import java.util.List;
 import java.util.Map;
 
@@ -32,12 +27,9 @@ public class ProductService {
 
     @Autowired
     private ProductDao productDao;
-<<<<<<< HEAD
     @Autowired
     private CategoryDao categoryDao;
 
-=======
->>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
     /**
      * 筛选,查找产品
      * @author asce
@@ -55,7 +47,6 @@ public class ProductService {
     }
 
     /**
-<<<<<<< HEAD
      * 取得产品的所有可能分类
      * @author asce
      * @date 2018/9/22
@@ -74,9 +65,7 @@ public class ProductService {
 
     /**
      *
-=======
      * 产品具体信息
->>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
      * @author asce
      * @date 2018/9/22
      * @param idStr     产品id
@@ -89,9 +78,6 @@ public class ProductService {
         Product product = productDao.getProductInfo(id);
         return GsonUtil.getSuccessJson(product);
     }
-<<<<<<< HEAD
-=======
-
 
     /**
      * 首页产品库
@@ -103,6 +89,4 @@ public class ProductService {
         return productDao.getProductLibrary();
     }
 
-
->>>>>>> c6bdb2c26a1aabdf0358f9d750b3eee24fd510cc
 }
