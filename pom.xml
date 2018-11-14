@@ -67,7 +67,7 @@
     </build>
 
     <properties>
-        <spring.version>4.3.18.RELEASE</spring.version>
+        <spring.version>5.1.1.RELEASE</spring.version>
         <mybatis.version>3.4.5</mybatis.version>
         <poi.version>3.12</poi.version>
     </properties>
@@ -139,6 +139,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
@@ -300,10 +306,7 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>4.2.5.RELEASE</version>
-        </dependency>
+
     </dependencies>
+
 </project>

@@ -33,7 +33,7 @@
         </property>
     </bean>
 
-    <!--datasource -->
+    <!--mysql datasource -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="jdbcUrl" value="${jdbc.url}" />
         <property name="driverClass" value="${jdbc.driver}" />

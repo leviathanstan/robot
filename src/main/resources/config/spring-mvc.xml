@@ -51,5 +51,14 @@
     <mvc:resources mapping="/upload/**" location="/WEB-INF/upload/" />
     -->
     <mvc:resources mapping="/**" location="/WEB-INF/dist/"/>
+    <!-- interceptors -->
+    <mvc:interceptors>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.robot.interceptor.PermissionsInterceptor"/>
+        </mvc:interceptor>
+
+    </mvc:interceptors>
 
 </beans>

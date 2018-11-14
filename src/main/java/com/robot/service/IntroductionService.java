@@ -27,7 +27,7 @@ public class IntroductionService {
      * introduction类别
      */
     private enum IntroductionEnum {
-        EXPERT(1), UNIVERSITIES(2), MEMBER(3);
+        EXPERT(16), UNIVERSITIES(17), MEMBER(18);
         private final int id;
         IntroductionEnum(int id) {
             this.id = id;
