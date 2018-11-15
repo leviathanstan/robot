@@ -80,20 +80,44 @@ public class CommonService {
     public String find(HashMap<String,String> args) {
         String channel = args.get("channel");
         int channelOption = CommonUtil.formateParmNum(channel);
-        switch (channelOption) {
-//            case SearchEnum.INFORMATION.getNumber():
-//
-//                break;
-//            case SearchEnum.PRODUCT.getNumber():
-//
-//                break;
-//            case SearchEnum.WORK.getNumber():
-//
-//                break;
-//        }
+        SearchEnum searchEnum = getSearchEnum(channelOption);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("informationCount",informationService.getSearchCount(args.get("content")));
+        map.put("productCount", productService.getSearchCount(args.get("content")));
+        // TODO: 2018/11/15
+        switch (searchEnum) {
+            case INFORMATION:
+                map.put("results",informationService.findInformation(args));
+                map.put("informationCategoryCount",informationService.getCategoryCount(args.get("content")));
+                break;
+            case PRODUCT:
+                map.put("results",productService.searchProduct(args));
 
+                break;
+            case WORK:
 
+                break;
+            default:
+
+                break;
         }
-        return GsonUtil.getSuccessJson();
+
+        return GsonUtil.getSuccessJson(map);
+    }
+    /**
+     * 根据values寻找对应枚举
+     * @author asce
+     * @date 2018/11/15
+     * @param
+     * @return
+     */
+    private SearchEnum getSearchEnum(int option){
+        SearchEnum[] searchEnums = SearchEnum.values();
+        for(int i = 0; i< searchEnums.length;i++){
+            if (searchEnums[i].getNumber()==option){
+                return searchEnums[i];
+            }
+        }
+        return null;
     }
 }

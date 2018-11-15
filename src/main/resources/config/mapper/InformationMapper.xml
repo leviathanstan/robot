@@ -52,10 +52,17 @@
     <select id="find" resultMap="informationDetail" parameterType="map">
         select * from information where 1=1
         <if test="title !=null and title.trim().length()>0 ">
-            and locate(#{title},title)>0 or locate(#{title},title)>0
+            and locate(#{title},content)>0 or id in(select distinct information_id from information_content where locate(#{content},content)>0)
         </if>
         <if test="categoryId !=null and categoryId.length()>0">
             and category_id = #{catgoryId}
         </if>
+    </select>
+    <!-- 搜索统计-->
+    <select id="searchCount" resultType="int" parameterType="java.lang.String">
+        select count(id) from information where locate(#{title},content) or id in(select distinct information_id from information_content where locate(#{content},content)>0)
+    </select>
+    <select id="searchCategoryCount" resultType="int" parameterType="java.lang.String">
+        select count(id) from information where locate(#{content},title) or id in(select distinct information_id from information_content where locate(#{content},content)>0)
     </select>
 </mapper>

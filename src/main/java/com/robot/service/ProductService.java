@@ -30,6 +30,25 @@ public class ProductService {
     @Autowired
     private CategoryDao categoryDao;
 
+    public int getSearchCount(String content){
+        return productDao.getSearchCount(content);
+    }
+
+    /**
+     * 搜索产品
+     * @author asce
+     * @date 2018/11/15
+     * @param
+     * @return
+     */
+    public PageInfo<Product> searchProduct(Map<String,String> args){
+        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
+        List<Product> products = productDao.findProductIf(args);
+        PageInfo<Product> pageInfo = new PageInfo<>(products);
+        return pageInfo;
+    }
+
     /**
      * 筛选,查找产品
      * @author asce

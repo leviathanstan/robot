@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.robot.dao.InformationDao;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
+import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,11 +81,21 @@ public class InformationService {
 
     //******************************************管理********************************************//
 
-    public String findInformation(HashMap<String,String> args){
-
-        return GsonUtil.getSuccessJson();
+    public PageInfo<RobotNews> findInformation(HashMap<String,String> args){
+        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        PageHelper.startPage(pageNum,PAGE_LENGTH);
+        List<RobotNews> information = informationDao.find(args);
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(information);
+        return pageInfo;
     }
 
+    public int getSearchCount(String content){
+        return informationDao.searchCount(content);
+    }
+
+    public HashMap<String,Integer> getCategoryCount(String content){
+        return informationDao.searchCategoryCount(content);
+    }
     //******************************************协会********************************************//
 
     /**

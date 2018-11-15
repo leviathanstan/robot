@@ -15,5 +15,6 @@ public interface ProductDao {
     List<Product> findProductIf(Map<String,String> args);
     Product getProductInfo(int id);
     ArrayList<Product> getProductLibrary();
+    int getSearchCount(String content);
 
 }
