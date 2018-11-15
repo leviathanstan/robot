@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.SurveyDao">
+
+    <resultMap id="surveyMap" type="com.robot.entity.Survey">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="template_type" property="templateType"/>
+        <collection property="questions" column="{surveyId=id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Question" select="getSurveyQuestions"/>
+    </resultMap>
+
+    <resultMap id="questionMap" type="com.robot.entity.Question">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="answer_type" property="answerType"/>
+        <result column="option_type" property="optionType"/>
+        <result column="min_number" property="minNumber"/>
+        <result column="max_number" property="maxNumber"/>
+        <result column="page" property="page"/>
+        <result column="survey_id" property="surveyId"/>
+        <result column="precedent_choice_id" property="precedentChoiceId"/>
+        <collection property="choices" column="{questionId=id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Choice" select="getQuestionChoices"/>
+    </resultMap>
+
+    <resultMap id="choiceMap" type="com.robot.entity.Choice">
+        <id column="id" property="id"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="question_id" property="questionId"/>
+        <result column="default_status" property="defaultStatus"/>
+        <result column="title" property="title"/>
+        <result column="type" property="type"/>
+    </resultMap>
+
+    <!--添加问卷-->
+    <insert id="addSurvey" parameterType="com.robot.entity.Survey">
+        insert into survey (user_id, title, remark, create_time,template_type) values (#{userId},#{title},#{remark},#{createTime},#{templateType});
+    </insert>
+    <!--添加问题-->
+    <insert id="addQuestion" parameterType="com.robot.entity.Question">
+        insert into questions (title,serial_number,answer_type,option_type,min_number,max_number,page,survey_id,precedent_choice_id) values (#{title},#{serialNumber},#{answerType},#{optionType},#{minNumber},#{maxNumber},#{page},#{survey_id},#{precedentChoiceId})
+    </insert>
+    <!--添加选项-->
+    <insert id="addChoice" parameterType="com.robot.entity.Choice">
+        insert into choices (serial_number,question_id,default_status,title,type) values (#{serialNumber},#{questionId},#{defaultStatus},#{title},#{type},);
+    </insert>
+    <!-- 获取问卷 -->
+    <select id="getSurveyInfo" parameterType="int" resultMap="surveyMap">
+        select * from survey where id=#{id}
+    </select>
+    <!-- 获取问题-->
+    <select id="getSurveyQuestion" parameterType="int" resultMap="questionMap">
+        select * from questions where survey_id = #{surveyId,jdbcType=INTEGER}
+    </select>
+    <!-- 获取选项 -->
+    <select id="getQuestionChoices" parameterType="int" resultMap="choiceMap">
+        select * from choices where question_id = #{questionId,jdbcType=INTEGER}
+    </select>
+    <!-- 更新问卷-->
+    <update id="updateSurvey" parameterType="com.robot.entity.Survey">
+        update survey set id=#{id}
+        <if test="title!=null and title.trim().length()>0">
+            ,title=#{title}
+        </if>
+        <if test="remark!=null and remark.trim().length()>0">
+            , remark=#{remark}
+        </if>
+        where id=#{id}
+    </update>
+    <!--更新问题-->
+    <update id="updateQuestion" parameterType="com.robot.entity.Question">
+        select questions set id=#{id}
+        <if test="title!=null and title.trim().length()>0">
+            ,title=#{title}
+        </if>
+        <if test="serialNumber!=null">
+            , serial_number=#{serialNumber}
+        </if>
+        <if test="answerType!=null">
+            , answer_type=#{answerType}
+        </if>
+        <if test="optionType!=null">
+            , option_type=#{optionType}
+        </if>
+        <if test="minNumber!=null">
+            , min_number=#{minNumber}
+        </if>
+        <if test="maxNumber!=null">
+            , max_number=#{maxNumber}
+        </if>
+        <if test="page!=null">
+            , page=#{page}
+        </if>
+        <if test="precedentChoiceId!=null">
+            , precedent_choice_id=#{precedentChoiceId}
+        </if>
+           where id=#{id}
+    </update>
+    <!--更新选项-->
+    <update id="updateChoice" parameterType="com.robot.entity.Choice">
+        update choices set id=#{id},
+        <if test="serialNumber!=null">
+            , serial_number=#{serialNumber}
+        </if>
+        <if test="defaultStatus!=null">
+            , default_status=#{defaultStatus}
+        </if>
+        <if test="type!=null">
+            , type=#{type}
+        </if>
+        <if test="title!=null and title.trim().length()>0">
+            , title=#{title}
+        </if>
+        where id=#{id}
+    </update>
+
+</mapper>

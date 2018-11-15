@@ -1,6 +1,9 @@
 package com.robot.resolver;
 
 import com.robot.util.GsonUtil;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +22,12 @@ public class ExceptionResolver {
         e.printStackTrace();
         if (e instanceof NullPointerException){
             return GsonUtil.getErrorJson("你的网络不好，请稍后再试");
+        }
+        if (e instanceof HttpRequestMethodNotSupportedException){
+            return GsonUtil.getErrorJson("HTTP method error!");
+        }
+        if (e instanceof MissingServletRequestParameterException){
+            return GsonUtil.getErrorJson("参数错误");
         }
         return GsonUtil.getErrorJson("服务器繁忙，请稍后再试");
     }

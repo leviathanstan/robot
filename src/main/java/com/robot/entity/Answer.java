@@ -8,9 +8,9 @@ package com.robot.entity;
 public class Answer {
     private Integer id;
     private String ip;
-    private Integer questionId;
-    private Integer choiceId;
-    private String content;
+    private Integer questionId;     //文字题或打分题
+    private Integer choiceId;       //选择题
+    private String content;         //1、文字题 2、打分题(1分："1"，二分："2",.....) 3、选择题选项是文字题
 
     public Integer getId() {
         return id;
@@ -50,5 +50,16 @@ public class Answer {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", ip='" + ip + '\'' +
+                ", questionId=" + questionId +
+                ", choiceId=" + choiceId +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

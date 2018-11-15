@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.AnswerDao">
+    <!--添加回答文字-->
+    <insert id="addTextAnswer" parameterType="com.robot.entity.Answer">
+        insert into text_answers (ip,question_id,content) values (#{ip},#{questionId},#{content});
+    </insert>
+
+    <!--添加选项回答-->
+    <insert id="addChoiceAnswer" parameterType="com.robot.entity.Answer">
+        insert into choice_answers (ip,choice_id,content) values (#{ip},#{choiceId},#{content});
+    </insert>
+</mapper>

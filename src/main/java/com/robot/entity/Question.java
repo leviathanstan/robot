@@ -9,14 +9,15 @@ import java.util.ArrayList;
  */
 public class Question {
     private Integer id;
-    private Integer serialNumber;//题号
+    private Integer surveyId;
+    private Integer serialNumber;//题号                             0代表题号，null代表无效数据
     private String title;
-    private Integer answerType;//单选、多选、文字、打分
-    private Integer optionType;//可选、必选
-    private Integer minNumber;//最少选项、字数
-    private Integer maxNumber;//最多选项、字数
-    private Integer precedentChoiceId;//先例选项
-    private Integer page;//当前页数
+    private Integer answerType;//单选:0、多选:1、文字:2、打分:3       null代表无效数据
+    private Integer optionType;//可选:0、必选:1                      null代表无效数据
+    private Integer minNumber;//最少选项、字数                       0代表无限制，null代表无效数据
+    private Integer maxNumber;//最多选项、字数                       0代表无限制，null代表无效数据
+    private Integer precedentChoiceId;//先例选项                    0代表无关联，null代表无效数据
+    private Integer page;//当前页数                                 0代表无分页，null代表无效数据
     private ArrayList<Choice> choices;
 
     public Integer getId() {
@@ -97,5 +98,30 @@ public class Question {
 
     public void setChoices(ArrayList<Choice> choices) {
         this.choices = choices;
+    }
+
+    public Integer getSurveyId() {
+        return surveyId;
+    }
+
+    public void setSurveyId(Integer surveyId) {
+        this.surveyId = surveyId;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", surveyId=" + surveyId +
+                ", serialNumber=" + serialNumber +
+                ", title='" + title + '\'' +
+                ", answerType=" + answerType +
+                ", optionType=" + optionType +
+                ", minNumber=" + minNumber +
+                ", maxNumber=" + maxNumber +
+                ", precedentChoiceId=" + precedentChoiceId +
+                ", page=" + page +
+                ", choices=" + choices +
+                '}';
     }
 }

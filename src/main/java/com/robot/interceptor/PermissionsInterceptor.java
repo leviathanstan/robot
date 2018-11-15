@@ -49,6 +49,7 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
                 if (rank==null||rank!=1){
                     handle(request,response);
                 }
+                return false;
             }else{
                 //默认为管理员操作
             }

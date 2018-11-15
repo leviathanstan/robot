@@ -13,6 +13,7 @@ public class Survey {
     private Integer userId;
     private String remark;
     private Integer templateType;//是否模板
+    private String createTime;
     private ArrayList<Question> questions;
 
     public Integer getId() {
@@ -61,5 +62,26 @@ public class Survey {
 
     public void setQuestions(ArrayList<Question> questions) {
         this.questions = questions;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", userId=" + userId +
+                ", remark='" + remark + '\'' +
+                ", templateType=" + templateType +
+                ", createTime='" + createTime + '\'' +
+                ", questions=" + questions +
+                '}';
     }
 }

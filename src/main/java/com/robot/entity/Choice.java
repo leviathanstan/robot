@@ -7,10 +7,11 @@ package com.robot.entity;
  */
 public class Choice {
     private Integer id;
-    private Integer serialNumber;
-    private Integer defaultStatus;
+    private Integer questionId;
+    private Integer serialNumber;               //0代表题号，null代表无效数据
+    private Integer defaultStatus;              //0代表不选中，1代表选中，null代表无效数据
     private String title;
-    private Integer type;//选项、文字
+    private Integer type;//选项、文字            //0代表选项，1代表文字，null代表无效数据
 
     public Integer getId() {
         return id;
@@ -50,5 +51,25 @@ public class Choice {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    @Override
+    public String toString() {
+        return "Choice{" +
+                "id=" + id +
+                ", questionId=" + questionId +
+                ", serialNumber=" + serialNumber +
+                ", defaultStatus=" + defaultStatus +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                '}';
     }
 }

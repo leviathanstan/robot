@@ -28,7 +28,7 @@ public class AccessUtil {
 	 * @param request
 	 * @return
 	 */
-	private static List<String> list = new ArrayList<String>();
+	private static List<String> list = new ArrayList<>();
 	static{
 		list.add("X-Forwarded-For");
 		list.add("Proxy-Client-IP");

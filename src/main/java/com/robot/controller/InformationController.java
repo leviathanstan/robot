@@ -93,7 +93,7 @@ public class InformationController {
         return informationService.getExpertArtList(pageNum);
     }
     /**
-     * 专家具体信息
+     * 专家智点具体信息
      * @param id
      * @return
      */
