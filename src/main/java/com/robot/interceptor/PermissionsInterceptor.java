@@ -46,11 +46,11 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
         if (methodPermission!=null) {//检测注解
             if(methodPermission.access().equals("manager")){
                 Integer rank = (Integer) request.getSession().getAttribute("rank");
-                if (rank!=1){
+                if (rank==null||rank!=1){
                     handle(request,response);
                 }
             }else{
-                //默认为用户操作
+                //默认为管理员操作
             }
 
         }

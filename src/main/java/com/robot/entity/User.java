@@ -12,6 +12,7 @@ public class User {
     private String password;
     private String phone;
     private String email;
+    private Integer rank;
 
     public Integer getId() {
         return id;
@@ -51,6 +52,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
     @Override

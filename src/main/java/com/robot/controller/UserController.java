@@ -1,5 +1,6 @@
 package com.robot.controller;
 
+import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.User;
 
 import com.robot.service.UserService;
@@ -19,6 +20,34 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 用户搜索
+     * @author asce
+     * @date 2018/11/15
+     * @param
+     * @return
+     */
+    @PermissionsCheck
+    @ResponseBody
+    @RequestMapping(value = "/manager/find", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findUser(User user,String pageNum){
+        return userService.findUser(user,pageNum);
+    }
+
+    /**
+     * 管理员登录
+     * @author asce
+     * @date 2018/11/15
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/manager/login", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String adminLogin(User user, HttpSession session){
+        return userService.adminLogin(user, session);
+    }
+
     /**
      * 用户登录
      *
@@ -33,30 +62,29 @@ public class UserController {
     }
 
     /**
-     * 用户注册
+     * 用户注册信息判断
      *
      * @param user
-     * @param confirmPassword
      * @param session
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String register(User user, @RequestParam(value = "confirmPassword") String confirmPassword, HttpSession session) {
-        return userService.register(user, confirmPassword, session);
+    @RequestMapping(value = "/validate", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String register(User user, HttpSession session) {
+        return userService.validate(user, session);
     }
 
     /**
-     * 注册时邮箱验证
+     * 注册时验证码验证
      *
-     * @param checkcode
+     * @param checkCode
      * @param session
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "validate",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    public String validateRegister(@RequestParam(value = "checkcode") String checkcode,HttpSession session){
-        return userService.validate(checkcode,session);
+    @RequestMapping(value = "register",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    public String validateRegister(@RequestParam(value = "checkCode") String checkCode,HttpSession session){
+        return userService.register(checkCode,session);
     }
 
     /**
@@ -74,13 +102,13 @@ public class UserController {
     /**
      * 重置密码时邮箱验证
      *
-     * @param checkcode
+     * @param checkCode
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "validateEmail", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String validateEmail(@RequestParam String checkcode, HttpSession session) {
-        return userService.validateEmail(checkcode, session);
+    public String validateEmail(@RequestParam String checkCode, HttpSession session) {
+        return userService.validateEmail(checkCode, session);
     }
 
     /**
@@ -91,7 +119,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String resetPassword(String password, String confirmPassword, HttpSession session) {
-        return userService.resetPassword(password, confirmPassword,session);
+    public String resetPassword(String password, HttpSession session) {
+        return userService.resetPassword(password,session);
     }
 }

@@ -3,17 +3,9 @@ package com.robot.dao;
 import com.robot.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
+
 public interface UserDao {
-
-    /**
-     * 查询用户名是否已存在
-     */
-    User checkUsername(User user);
-
-    /**
-     * 查询邮箱是否已存在
-     */
-    User checkEmail(User user);
 
     /**
      * 注册
@@ -29,13 +21,6 @@ public interface UserDao {
     User login(User user);
 
     /**
-     * 查找邮箱
-     * @param email
-     * @return
-     */
-    String findEmail(String email);
-
-    /**
      * 修改密码
      * @param password
      * @param email
@@ -43,5 +28,6 @@ public interface UserDao {
      */
     int resetPassword(@Param("password") String password, @Param("email") String email);
 
+    ArrayList<User> find(User user);
 
 }

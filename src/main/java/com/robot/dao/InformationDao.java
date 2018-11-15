@@ -1,8 +1,11 @@
 package com.robot.dao;
 
 import java.util.ArrayList;
+
+import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,5 +18,5 @@ public interface InformationDao {
     ArrayList<RobotNews> getInformationList(int categoryId);
     ArrayList<RobotNews> getIndexInformation(Map<String,Integer> map);
     ArrayList<RobotNews> getIndexCover(Map<String,Integer> map);
-
+    ArrayList<RobotNews> find(HashMap<String,String> args);
 }

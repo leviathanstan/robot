@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,25 @@ public class CommonService {
     @Autowired
     ProductService productService;
 
+    private enum SearchEnum {
+        INFORMATION(1),PRODUCT(2),WORK(3);
+        private final int number;
+
+        SearchEnum(int number) {
+            this.number = number;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+    }
+    /**
+     * 首页
+     * @author asce
+     * @date 2018/11/15
+     * @param
+     * @return
+     */
     public String getIndex(){
         Map<String,Object> dataMap = new HashMap<>();
         //原机器人协会
@@ -50,5 +70,30 @@ public class CommonService {
         dataMap.put("productNews",informationService.getIndexProductNews());
         dataMap.put("productRecommend",informationService.getIndexRecommend());
         return GsonUtil.getSuccessJson(dataMap);
+    }
+
+    /**
+     * 搜索
+     * @param args
+     * @return
+     */
+    public String find(HashMap<String,String> args) {
+        String channel = args.get("channel");
+        int channelOption = CommonUtil.formateParmNum(channel);
+        switch (channelOption) {
+//            case SearchEnum.INFORMATION.getNumber():
+//
+//                break;
+//            case SearchEnum.PRODUCT.getNumber():
+//
+//                break;
+//            case SearchEnum.WORK.getNumber():
+//
+//                break;
+//        }
+
+
+        }
+        return GsonUtil.getSuccessJson();
     }
 }
