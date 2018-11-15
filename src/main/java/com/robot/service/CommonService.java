@@ -2,6 +2,7 @@ package com.robot.service;
 
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
  * @author asce
  * @date 2018/11/11
  */
+@Service
 public class CommonService {
     @Autowired
     CompanyService companyService;

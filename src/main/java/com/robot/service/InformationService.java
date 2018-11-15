@@ -112,6 +112,7 @@ public class InformationService {
             for (RobotNews robotNews : informations) {
                 robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
             }
+            CommonUtil.formateDateTimeToDate(informations);
             return informations;
         }
 
@@ -164,6 +165,7 @@ public class InformationService {
             for (RobotNews robotNews : informations) {
                 robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
             }
+            CommonUtil.formateDateTimeToDate(informations);
             return informations;
         }
 
@@ -196,6 +198,7 @@ public class InformationService {
             map.put("number", NumberEnum.INFORMATION_NUMBER.getNumber());
             map.put("categoryId", InformationEnum.CONSULTING_FOCUS.getId());
             ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+            CommonUtil.formateDateTimeToDate(informations);
             return informations;
         }
 
@@ -263,10 +266,11 @@ public class InformationService {
             Map<String, Integer> map = new HashMap<>();
             map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
             map.put("categoryId", InformationEnum.ASSOCIATION_NEWS.getId());
-            List<RobotNews> informations = informationDao.getIndexInformation(map);
+            ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
             for (RobotNews robotNews : informations) {
                 robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
             }
+            CommonUtil.formateDateTimeToDate(informations);
             return informations;
         }
 
@@ -279,7 +283,9 @@ public class InformationService {
             Map<String, Integer> map = new HashMap<>();
             map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
             map.put("categoryId", InformationEnum.NOTICE.getId());
-            return informationDao.getIndexInformation(map);
+            ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);;
+            CommonUtil.formateDateTimeToDate(informations);
+            return informations;
         }
 
         /**
@@ -326,9 +332,7 @@ public class InformationService {
             map.put("number", NumberEnum.COMPANY_NUMBER.getNumber());
             map.put("categoryId", InformationEnum.ENTERPRISE_NEWS.getId());
             ArrayList<RobotNews> companyNews = informationDao.getIndexInformation(map);
-            for (RobotNews robotNews : companyNews) {
-                robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
-            }
+            CommonUtil.formateDateTimeToDate(companyNews);
             return companyNews;
         }
 
@@ -367,9 +371,7 @@ public class InformationService {
             map.put("number", NumberEnum.COMPANY_NUMBER.getNumber());
             map.put("categoryId", InformationEnum.MEMBER_NEWS.getId());
             ArrayList<RobotNews> companyNews = informationDao.getIndexInformation(map);
-            for (RobotNews robotNews : companyNews) {
-                robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
-            }
+            CommonUtil.formateDateTimeToDate(companyNews);
             return companyNews;
         }
 
@@ -417,6 +419,7 @@ public class InformationService {
                 map.put("number", CoverEnum.KNOWLEDGE_NUMBER.getNumber());
                 basices.addAll(informationDao.getIndexCover(map));
             }
+            CommonUtil.formateDateTimeToDate(basices);
             return basices;
         }
 
@@ -462,9 +465,7 @@ public class InformationService {
                 map.put("number", CoverEnum.PRODUCT_NUMBER.getNumber());
                 evaluation.addAll(informationDao.getIndexCover(map));
             }
-            for (RobotNews eva : evaluation) {
-                eva.setPostDate(CommonUtil.getDate(eva.getPostDate()));
-            }
+            CommonUtil.formateDateTimeToDate(evaluation);
             return evaluation;
         }
 
@@ -508,9 +509,7 @@ public class InformationService {
                 map.put("number", CoverEnum.PRODUCT_NUMBER.getNumber());
                 news.addAll(informationDao.getIndexCover(map));
             }
-            for (RobotNews robotNews : news) {
-                robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
-            }
+            CommonUtil.formateDateTimeToDate(news);
             return news;
         }
 
@@ -554,9 +553,7 @@ public class InformationService {
                 map.put("number", CoverEnum.PRODUCT_NUMBER.getNumber());
                 recommend.addAll(informationDao.getIndexCover(map));
             }
-            for (RobotNews robotNews : recommend) {
-                robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
-            }
+            CommonUtil.formateDateTimeToDate(recommend);
             return recommend;
         }
 
@@ -596,6 +593,7 @@ public class InformationService {
             map.put("number", NumberEnum.EXPERT.getNumber());
             map.put("categoryId", InformationEnum.EXPERT_WISDOM.getId());
             ArrayList<RobotNews> articles = informationDao.getIndexInformation(map);
+            CommonUtil.formateDateTimeToDate(articles);
             return articles;
         }
 

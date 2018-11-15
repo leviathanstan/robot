@@ -1,6 +1,7 @@
 package com.robot.util;
 
 import com.robot.entity.Detail;
+import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,11 @@ public class CommonUtil {
         return pageNum;
     }
 
+    /**
+     * 是否为数字
+     * @param parm
+     * @return
+     */
     public static int formateParmNum(String parm){
         if(!simpleMatch(Constant.RULE_NUMBER,parm)){
             return 0;
@@ -36,6 +42,14 @@ public class CommonUtil {
         return Integer.parseInt(parm);
     }
 
+    /**
+     * 是否为空
+     * @param str
+     * @return
+     */
+    public static boolean isNullOrEmpty(String str){
+        return (str==null||str.equals("")) ? true : false;
+    }
     /**
      * 简单匹配
      * @param rule
@@ -107,9 +121,22 @@ public class CommonUtil {
             }catch (DateTimeParseException e){
                 e.printStackTrace();
                 return oldDate;
+            }catch (Exception e){
+                e.printStackTrace();
+                return oldDate;
             }
         }else{
             return null;
+        }
+    }
+
+    /**
+     * 时间格式化（informationController）
+     * @param informations
+     */
+    public static void formateDateTimeToDate(ArrayList<RobotNews> informations){
+        for(RobotNews information:informations){
+            information.setPostDate(getDate(information.getPostDate()));
         }
     }
 
