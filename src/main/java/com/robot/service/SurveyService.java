@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 /**
  * @author asce
@@ -25,6 +26,25 @@ public class SurveyService {
     @Autowired
     AnswerDao answerDao;
 
+
+
+
+//    public String updateChoice(Choice[] choice[]){
+//
+//    }
+//
+//    public String updateQuestion(Question question){
+//
+//    }
+//
+//    public String updateSurvey(Survey survey){
+//
+//    }
+//
+//    public String addChoice(Choice[] choices){
+//
+//    }
+
     /**
      * 新建问卷
      * @author asce
@@ -33,8 +53,13 @@ public class SurveyService {
      * @return
      */
     public String addSurvey(Survey survey, HttpSession session){
+        String result = validateSurvey(survey);
+        if (!result.equals("success")){
+            return GsonUtil.getErrorJson(result);
+        }
         User user = (User) session.getAttribute("user");
         survey.setUserId(1);//user.getId());
+        survey.setCreateTime(LocalDateTime.now().toString());
         if (surveyDao.addSurvey(survey)!=1){
             return GsonUtil.getErrorJson("创建失败");
         }
@@ -49,9 +74,14 @@ public class SurveyService {
      */
     @Transactional(rollbackForClassName="RuntimeException")
     public String addQuestion(Question question){
+        String result = validateQuestion(question);
+        if (!result.equals("success")){
+            return GsonUtil.getErrorJson(result);
+        }
         int n1 = surveyDao.addQuestion(question);
         int n2 = 0;
         for(Choice choice:question.getChoices()){
+            choice.setQuestionId(question.getId());
             n2 += surveyDao.addChoice(choice);
         }
         if((n1+n2)!=(question.getChoices().size()+1)){
@@ -99,6 +129,26 @@ public class SurveyService {
     }
 
     /**
+     * 验证问卷
+     * @author asce
+     * @date 2018/11/16
+     * @param
+     * @return
+     */
+    private String validateSurvey(Survey survey){
+        if (survey.getTitle()==null){
+            return "标题不能为空";
+        }
+        if(survey.getTemplateType()!=0||survey.getTemplateType()!=1){
+            return "问卷类型错误";
+        }
+        if(survey.getRemark()==null){
+            return "备注不能为空";
+        }
+        return "success";
+    }
+
+    /**
      * 验证问题格式
      * @author asce
      * @date 2018/11/15
@@ -107,14 +157,37 @@ public class SurveyService {
      */
     private String validateQuestion(Question question){
         String result;
-
+        if (question.getSerialNumber()==null){
+            return "序号不能为空";
+        }
+        if(question.getAnswerType()==null||(question.getAnswerType()!=0&&question.getAnswerType()!=1&&question.getAnswerType()!=2&&question.getAnswerType()!=3)){
+            return "问题类型错误";
+        }
+        if(question.getMaxNumber()==null){
+            return "最大限制不能为空";
+        }
+        if(question.getMinNumber()==null){
+            return "最小限制不能为空";
+        }
+        if(question.getOptionType()==null||(question.getOptionType()!=0&&question.getOptionType()!=1)){
+            return "选项类型错误";
+        }
+        if(question.getPage()==null){
+            return "页数不能为空";
+        }
+        if(question.getSurveyId()==null){
+            return "没有关联问卷";
+        }
+        if(question.getTitle()==null){
+            return "标题不能为空";
+        }
         for(Choice choice:question.getChoices()){
             result = validateChoice(choice);
             if(!result.equals("success")){
                 return result;
             }
         }
-        return "";
+        return "success";
     }
     /**
      * 验证选项格式
@@ -124,7 +197,18 @@ public class SurveyService {
      * @return
      */
     private String validateChoice(Choice choice){
-
-        return "";
+        if(choice.getSerialNumber()==null){
+            return "序号不能为空";
+        }
+        if (choice.getDefaultStatus()==null||(choice.getDefaultStatus()!=0&&choice.getDefaultStatus()!=1)){
+            return "默认状态错误";
+        }
+        if(choice.getType()==null||(choice.getType()!=0&&choice.getType()!=1)){
+            return "选项类型不能为空";
+        }
+        if(choice.getTitle()==null){
+            return "标题不能为空";
+        }
+        return "success";
     }
 }

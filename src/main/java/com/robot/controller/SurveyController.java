@@ -2,6 +2,7 @@ package com.robot.controller;
 
 import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.Answer;
+import com.robot.entity.Choice;
 import com.robot.entity.Question;
 import com.robot.entity.Survey;
 import com.robot.service.SurveyService;
@@ -22,6 +23,27 @@ public class SurveyController {
     @Autowired
     SurveyService surveyService;
 
+
+//    //@PermissionsCheck
+//    @ResponseBody
+//    @RequestMapping(value = "/updateChoice", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+//    public String updateChoice(@RequestBody Choice choice){
+//        return surveyService.updateChoice(choice);
+//    }
+//
+//    //@PermissionsCheck
+//    @ResponseBody
+//    @RequestMapping(value = "/updateQuestion", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+//    public String updateQuestion(@RequestBody Question question){
+//        return surveyService.updateQuestion(question);
+//    }
+//
+//    //@PermissionsCheck
+//    @ResponseBody
+//    @RequestMapping(value = "/updateSurvey", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+//    public String updateSurvey(@RequestBody Survey survey){
+//        return surveyService.updateSurvey(survey);
+//    }
     /**
      * 新增问卷
      * @param survey

@@ -1,7 +1,6 @@
 package com.robot.controller;
 
 import com.robot.annotation.PermissionsCheck;
-import com.robot.dao.InformationDao;
 import com.robot.entity.RobotNews;
 import com.robot.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findInformationByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findInformationList",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
     public String findInformationByPage(Integer pageNum){
         return informationService.findInformationByPage(pageNum);
     }
@@ -54,7 +53,7 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findPolicyInf",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findPolicyInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String findPolicyInf(int id){
         return informationService.findPolicyInfo(id);
     }
@@ -67,7 +66,7 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findPolicyByPage",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findPolicyList",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
     public String findPolicyByPage(Integer pageNum){
         return informationService.findPolicyByPage(pageNum);
     }

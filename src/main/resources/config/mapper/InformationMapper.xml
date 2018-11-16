@@ -24,7 +24,7 @@
     </select>
     <!--资讯列表-->
     <select id="getInformationList" parameterType="int" resultMap="informationDetail">
-        select id,title,post_date,cover from information where category_id=#{categoryId}
+        select id,title,post_date,cover,guide from information where category_id=#{categoryId}
     </select>
     <!--资讯详情-->
     <select id="findInformationInfo" parameterType="int" resultMap="informationDetail">

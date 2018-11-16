@@ -143,6 +143,7 @@ public class InformationService {
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
         for (RobotNews information : informations) {
             information.setContent(CommonUtil.getPreview(information.getContent()));
+            information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
         }
         return pageInfo;
     }
@@ -221,6 +222,7 @@ public class InformationService {
         if (information == null) {
             return GsonUtil.getErrorJson();
         }
+        information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
         information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
         return GsonUtil.getSuccessJson(information);
     }
@@ -256,6 +258,7 @@ public class InformationService {
         List<RobotNews> informations = informationDao.getInformationList(InformationEnum.INDUSTRY_INFORMATION.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
         for (RobotNews information : informations) {
+            information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
@@ -274,6 +277,7 @@ public class InformationService {
         if (information == null) {
             return GsonUtil.getErrorJson();
         }
+        information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
         information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
         return GsonUtil.getSuccessJson(information);
     }
@@ -311,6 +315,7 @@ public class InformationService {
         List<RobotNews> informations = informationDao.getInformationList(InformationEnum.POLICY_INFORMATION.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
         for (RobotNews information : informations) {
+            information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
             information.setContent(CommonUtil.getPreview(information.getContent()));
         }
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
@@ -332,7 +337,6 @@ public class InformationService {
 
     /**
      * 资讯热点具体内容
-     *
      * @param id
      * @return
      * @author hua
@@ -342,6 +346,7 @@ public class InformationService {
         int infoId;
         if ((infoId = CommonUtil.formatPageNum(id)) == 0) return GsonUtil.getErrorJson();
         RobotNews information = informationDao.findInformationInfo(infoId);
+        information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
         if (information == null) {
             return GsonUtil.getErrorJson();
         }
@@ -363,6 +368,7 @@ public class InformationService {
         RobotNews robotNews = informationDao.findInformationInfo(infoId);
         if (robotNews != null) {
             robotNews.setContent(CommonUtil.getAbsolutePath(robotNews.getContent()));
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
             return GsonUtil.getSuccessJson(robotNews);
         } else
             return GsonUtil.getErrorJson();
@@ -380,6 +386,7 @@ public class InformationService {
         List<RobotNews> news = informationDao.getInformationList(InformationEnum.ASSOCIATION_NEWS.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(news);
         for (RobotNews news1 : news) {
+            news1.setPostDate(CommonUtil.formateDbTime(news1.getPostDate()));
             news1.setContent(CommonUtil.getPreview(news1.getContent()));
         }
         return GsonUtil.getSuccessJson(pageInfo);
@@ -430,6 +437,7 @@ public class InformationService {
         List<RobotNews> notices = informationDao.getInformationList(InformationEnum.NOTICE.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(notices);
         for (RobotNews notice : notices) {
+            notice.setPostDate(CommonUtil.formateDbTime(notice.getPostDate()));
             notice.setContent(CommonUtil.getPreview(notice.getContent()));
         }
         return GsonUtil.getSuccessJson(pageInfo);
@@ -447,6 +455,7 @@ public class InformationService {
         RobotNews notice = informationDao.findInformationInfo(infoId);
         if (notice == null)
             return GsonUtil.getErrorJson();
+        notice.setPostDate(CommonUtil.formateDbTime(notice.getPostDate()));
         notice.setContent(CommonUtil.getAbsolutePath(notice.getContent()));
         return GsonUtil.getSuccessJson(notice);
     }
@@ -472,7 +481,7 @@ public class InformationService {
         PageHelper.startPage(page, PAGE_LENGTH);
         ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.ENTERPRISE_NEWS.getId());
         for (RobotNews robotNews : companyNewsList) {
-            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
         }
         PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
         return GsonUtil.getSuccessJson(pageInfo);
@@ -487,6 +496,7 @@ public class InformationService {
         RobotNews news = informationDao.findInformationInfo(infoId);
         if (news == null)
             return GsonUtil.getErrorJson();
+        news.setPostDate(CommonUtil.formateDbTime(news.getPostDate()));
         news.setContent(CommonUtil.getAbsolutePath(news.getContent()));
         return GsonUtil.getSuccessJson(news);
     }
@@ -511,7 +521,7 @@ public class InformationService {
         PageHelper.startPage(page, PAGE_LENGTH);
         ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.MEMBER_NEWS.getId());
         for (RobotNews robotNews : companyNewsList) {
-            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
         }
         PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
         return GsonUtil.getSuccessJson(pageInfo);
@@ -526,6 +536,7 @@ public class InformationService {
         RobotNews news = informationDao.findInformationInfo(infoId);
         if (news == null)
             return GsonUtil.getErrorJson();
+        news.setPostDate(CommonUtil.formateDbTime(news.getPostDate()));
         return GsonUtil.getSuccessJson(news);
     }
     //***************************技术********************************//
@@ -559,7 +570,7 @@ public class InformationService {
         PageHelper.startPage(page, PAGE_LENGTH);
         ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.BASIC_KNOWLEDGE.getId());
         for (RobotNews robotNews : companyNewsList) {
-            robotNews.setPostDate(CommonUtil.getDate(robotNews.getPostDate()));
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
         }
         PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
         return GsonUtil.getSuccessJson(pageInfo);
@@ -574,6 +585,7 @@ public class InformationService {
         RobotNews news = informationDao.findInformationInfo(infoId);
         if (news == null)
             return GsonUtil.getErrorJson();
+        news.setPostDate(CommonUtil.formateDbTime(news.getPostDate()));
         return GsonUtil.getSuccessJson(news);
     }
     //*************************产品****************************//
@@ -605,6 +617,9 @@ public class InformationService {
         PageHelper.startPage(page, PAGE_LENGTH);
         ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.PRODUCT_EVALUATE.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        for (RobotNews robotNews : companyNewsList) {
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
+        }
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
@@ -617,6 +632,7 @@ public class InformationService {
         RobotNews news = informationDao.findInformationInfo(infoId);
         if (news == null)
             return GsonUtil.getErrorJson();
+        news.setPostDate(CommonUtil.formateDbTime(news.getPostDate()));
         return GsonUtil.getSuccessJson(news);
     }
 
@@ -649,6 +665,9 @@ public class InformationService {
         PageHelper.startPage(page, PAGE_LENGTH);
         ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.PRODUCT_NEWS.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        for (RobotNews robotNews : companyNewsList) {
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
+        }
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
@@ -661,6 +680,7 @@ public class InformationService {
         RobotNews news = informationDao.findInformationInfo(infoId);
         if (news == null)
             return GsonUtil.getErrorJson();
+        news.setPostDate(CommonUtil.formateDbTime(news.getPostDate()));
         return GsonUtil.getSuccessJson(news);
     }
 
@@ -693,6 +713,9 @@ public class InformationService {
         PageHelper.startPage(page, PAGE_LENGTH);
         ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.PRODUCT_RECOMMEND.getId());
         PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        for (RobotNews robotNews : companyNewsList) {
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
+        }
         return GsonUtil.getSuccessJson(pageInfo);
     }
 
@@ -705,6 +728,7 @@ public class InformationService {
         RobotNews news = informationDao.findInformationInfo(infoId);
         if (news == null)
             return GsonUtil.getErrorJson();
+        news.setPostDate(CommonUtil.formateDbTime(news.getPostDate()));
         return GsonUtil.getSuccessJson(news);
     }
     //*************************专家智点****************************//
@@ -738,6 +762,7 @@ public class InformationService {
         if (null == article)
             return GsonUtil.getErrorJson();
         article.setContent(CommonUtil.getAbsolutePath(article.getContent()));
+        article.setPostDate(CommonUtil.formateDbTime(article.getPostDate()));
         return GsonUtil.getSuccessJson(article);
     }
 
@@ -754,6 +779,7 @@ public class InformationService {
         PageInfo<RobotNews> pageInfo = new PageInfo<>(articles);
         for (RobotNews article : articles) {
             article.setContent(CommonUtil.getPreview(article.getContent()));
+            article.setPostDate(CommonUtil.formateDbTime(article.getPostDate()));
         }
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }

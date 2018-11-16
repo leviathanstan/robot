@@ -41,12 +41,12 @@
         insert into survey (user_id, title, remark, create_time,template_type) values (#{userId},#{title},#{remark},#{createTime},#{templateType});
     </insert>
     <!--添加问题-->
-    <insert id="addQuestion" parameterType="com.robot.entity.Question">
-        insert into questions (title,serial_number,answer_type,option_type,min_number,max_number,page,survey_id,precedent_choice_id) values (#{title},#{serialNumber},#{answerType},#{optionType},#{minNumber},#{maxNumber},#{page},#{survey_id},#{precedentChoiceId})
+    <insert id="addQuestion" parameterType="com.robot.entity.Question" useGeneratedKeys="true" keyProperty="id">
+        insert into questions (title,serial_number,answer_type,option_type,min_number,max_number,page,survey_id,precedent_choice_id) values (#{title},#{serialNumber},#{answerType},#{optionType},#{minNumber},#{maxNumber},#{page},#{surveyId},#{precedentChoiceId})
     </insert>
     <!--添加选项-->
     <insert id="addChoice" parameterType="com.robot.entity.Choice">
-        insert into choices (serial_number,question_id,default_status,title,type) values (#{serialNumber},#{questionId},#{defaultStatus},#{title},#{type},);
+        insert into choices (serial_number,question_id,default_status,title,type) values (#{serialNumber},#{questionId},#{defaultStatus},#{title},#{type});
     </insert>
     <!-- 获取问卷 -->
     <select id="getSurveyInfo" parameterType="int" resultMap="surveyMap">

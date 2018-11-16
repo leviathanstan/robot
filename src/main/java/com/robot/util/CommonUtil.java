@@ -131,7 +131,7 @@ public class CommonUtil {
     }
 
     /**
-     * 时间格式化（informationController）
+     * 时间格式化（informationController）--首页
      * @param informations
      */
     public static void formateDateTimeToDate(ArrayList<RobotNews> informations){
@@ -139,6 +139,15 @@ public class CommonUtil {
             information.setPostDate(getDate(information.getPostDate()));
         }
     }
+
+    public static String formateDbTime(String dbTime){
+        if (dbTime.endsWith("00:00:00.0")){
+            LocalDateTime time = LocalDateTime.parse(dbTime,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            return time.toLocalDate().toString();
+        }
+        return dbTime.substring(0,19);
+    }
+
 
     /**
      * 从正文内容中获取第一张图片路径

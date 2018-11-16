@@ -16,7 +16,7 @@ public class Question {
     private Integer optionType;//可选:0、必选:1                      null代表无效数据
     private Integer minNumber;//最少选项、字数                       0代表无限制，null代表无效数据
     private Integer maxNumber;//最多选项、字数                       0代表无限制，null代表无效数据
-    private Integer precedentChoiceId;//先例选项                    0代表无关联，null代表无效数据
+    private Integer precedentChoiceId;//先例选项                    null代表无关联
     private Integer page;//当前页数                                 0代表无分页，null代表无效数据
     private ArrayList<Choice> choices;
 

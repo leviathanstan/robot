@@ -160,4 +160,13 @@ public class CommonServiceTest {
         Question question = GsonUtil.getObjectFromJson(jsonstr,Question.class);
         System.out.println(question);
     }
+
+    @Test
+    public void testStringEnd(){
+        String time = "2018-09-26 11:33:00.0";
+        String time2 = "2018-09-26 00:00:00.0";
+        System.out.println(time.endsWith("00:00:00.0"));
+        System.out.println(time2.endsWith("00:00:00.0"));
+        System.out.println(time.substring(0,19));
+    }
 }
