@@ -20,8 +20,8 @@ public class Product {
     private String load;     //负载
     private String axis;     //轴
     private String imgs;     //多张图片通过‘;’分割
-    private LocalDate effectTime;
-    private LocalDateTime lastUpdateTime;
+    private String effectTime;
+    private String lastUpdateTime;
 
 
     public Integer getId() {
@@ -96,19 +96,19 @@ public class Product {
         this.imgs = imgs;
     }
 
-    public LocalDate getEffectTime() {
+    public String getEffectTime() {
         return effectTime;
     }
 
-    public void setEffectTime(LocalDate effectTime) {
+    public void setEffectTime(String effectTime) {
         this.effectTime = effectTime;
     }
 
-    public LocalDateTime getLastUpdateTime() {
+    public String getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+    public void setLastUpdateTime(String lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 

@@ -54,16 +54,32 @@
         <if test="title !=null and title.trim().length()>0 ">
             and locate(#{title},content)>0 or id in(select distinct information_id from information_content where locate(#{content},content)>0)
         </if>
-        <if test="categoryId !=null and categoryId.length()>0">
-            and category_id = #{catgoryId}
+        <if test="categoryIds !=null and categoryIds.size()!=0">
+            and category_id in
+                            <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
+                                #{item}
+                            </foreach>
         </if>
     </select>
     <!-- 搜索统计-->
     <select id="searchCount" resultType="int" parameterType="java.lang.String">
-        select count(id) from information where locate(#{title},content) or id in(select distinct information_id from information_content where locate(#{content},content)>0)
+        select count(id) from information where 1=1
+        <if test="_parameter!=null and _parameter.trim().length()>0">
+            and locate(#{content},title) or id in(select distinct information_id from information_content where locate(#{content},content)>0)
+        </if>
     </select>
-    <select id="searchCategoryCount" resultType="int" parameterType="java.lang.String">
-        select count(id) from information where locate(#{content},title) or id in(select distinct information_id from information_content where locate(#{content},content)>0)
+    <!-- 搜索某些类别下结果总数-->
+    <select id="searchCategoryCount" resultType="int" parameterType="map">
+        select count(id) from information where category_id in
+          <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
+            #{item}
+          </foreach>
+         and (locate(#{content},title) or
+                                          id in(
+                                                select distinct information_id from information_content where
+                                                                                                              locate(#{content},content)>0
+                                                )
+              )
     </select>
 
     <select id="findInformationById" parameterType="int" resultType="java.lang.String">
@@ -97,4 +113,5 @@
         </set>
         where i.id=#{id}
     </update>
+
 </mapper>

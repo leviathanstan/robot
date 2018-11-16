@@ -6,16 +6,12 @@ import com.robot.dao.InformationDao;
 import com.robot.entity.Detail;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
-import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import com.robot.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author asce
@@ -83,20 +79,132 @@ public class InformationService {
 
     //******************************************管理********************************************//
 
+    /**
+     * 搜索
+     * @author asce
+     * @date 2018/11/16
+     * @param
+     * @return
+     */
     public PageInfo<RobotNews> findInformation(HashMap<String,String> args){
         int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        int category = CommonUtil.formateParmNum(args.get("category"));
+        ArrayList categoryIds = new ArrayList();
+        //先判断是否是分类查找
+        switch (category){
+            case   0:
+                categoryIds.add(InformationEnum.INDUSTRY_INFORMATION.getId());
+                categoryIds.add(InformationEnum.CONSULTING_FOCUS.getId());
+                categoryIds.add(InformationEnum.POLICY_INFORMATION.getId());
+                categoryIds.add(InformationEnum.NOTICE.getId());
+                categoryIds.add(InformationEnum.ASSOCIATION_NEWS.getId());
+                categoryIds.add(InformationEnum.MEMBER_NEWS.getId());
+                categoryIds.add(InformationEnum.ENTERPRISE_NEWS.getId());
+                categoryIds.add(InformationEnum.PRODUCT_NEWS.getId());
+                categoryIds.add(InformationEnum.PRODUCT_EVALUATE.getId());
+                categoryIds.add(InformationEnum.PRODUCT_RECOMMEND.getId());
+                categoryIds.add(InformationEnum.BASIC_KNOWLEDGE.getId());
+                break;
+            case 100:
+                categoryIds.add(InformationEnum.INDUSTRY_INFORMATION.getId());
+                categoryIds.add(InformationEnum.CONSULTING_FOCUS.getId());
+                categoryIds.add(InformationEnum.POLICY_INFORMATION.getId());
+                break;
+            case 200:
+                categoryIds.add(InformationEnum.NOTICE.getId());
+                categoryIds.add(InformationEnum.ASSOCIATION_NEWS.getId());
+                break;
+            case 300:
+                categoryIds.add(InformationEnum.MEMBER_NEWS.getId());
+                categoryIds.add(InformationEnum.ENTERPRISE_NEWS.getId());
+                break;
+            case 400:
+                categoryIds.add(InformationEnum.PRODUCT_NEWS.getId());
+                categoryIds.add(InformationEnum.PRODUCT_EVALUATE.getId());
+                categoryIds.add(InformationEnum.PRODUCT_RECOMMEND.getId());
+                break;
+            case 500:
+                categoryIds.add(InformationEnum.BASIC_KNOWLEDGE.getId());
+                break;
+            default:
+                break;
+        }
+        //如果还是空，则根据具体一个类别查找
+        if (categoryIds.size()==0){
+            categoryIds.add(category);
+        }
+        //由于泛型，另外封装一个map
+        HashMap<String,Object> dataMap = new HashMap();
+        dataMap.put("content",args.get("content"));
+        dataMap.put("categoryIds",categoryIds);
+        //查找
         PageHelper.startPage(pageNum,PAGE_LENGTH);
-        List<RobotNews> information = informationDao.find(args);
-        PageInfo<RobotNews> pageInfo = new PageInfo<>(information);
+        List<RobotNews> informations = informationDao.find(dataMap);
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
+        for (RobotNews information : informations) {
+            information.setContent(CommonUtil.getPreview(information.getContent()));
+        }
         return pageInfo;
     }
 
+    /**
+     * information搜索总数
+     * @param content
+     * @return
+     */
     public int getSearchCount(String content){
         return informationDao.searchCount(content);
     }
 
+    /**
+     * 获得不同分类下的搜索结果总数
+     * @author asce
+     * @date 2018/11/16
+     * @param
+     * @return
+     */
     public HashMap<String,Integer> getCategoryCount(String content){
-        return informationDao.searchCategoryCount(content);
+        HashMap map = new HashMap();
+        HashMap countMap = new HashMap();
+        map.put("content", content);
+        ArrayList categoryIds = new ArrayList();
+        //资讯
+        categoryIds.add(InformationEnum.INDUSTRY_INFORMATION.getId());
+        categoryIds.add(InformationEnum.CONSULTING_FOCUS.getId());
+        categoryIds.add(InformationEnum.POLICY_INFORMATION.getId());
+        map.put("categoryIds",categoryIds);
+        countMap.put("informationCount",informationDao.searchCategoryCount(map));
+        map.remove("categoryIds");
+        categoryIds.clear();
+        //协会
+        categoryIds.add(InformationEnum.NOTICE.getId());
+        categoryIds.add(InformationEnum.ASSOCIATION_NEWS.getId());
+        map.put("categoryIds",categoryIds);
+        countMap.put("associationCount",informationDao.searchCategoryCount(map));
+        map.remove("categoryIds");
+        categoryIds.clear();
+        //企业
+        categoryIds.add(InformationEnum.MEMBER_NEWS.getId());
+        categoryIds.add(InformationEnum.ENTERPRISE_NEWS.getId());
+        map.put("categoryIds",categoryIds);
+        countMap.put("companyCount",informationDao.searchCategoryCount(map));
+        map.remove("categoryIds");
+        categoryIds.clear();
+        //产品
+        categoryIds.add(InformationEnum.PRODUCT_NEWS.getId());
+        categoryIds.add(InformationEnum.PRODUCT_EVALUATE.getId());
+        categoryIds.add(InformationEnum.PRODUCT_RECOMMEND.getId());
+        map.put("categoryIds",categoryIds);
+        countMap.put("productCount",informationDao.searchCategoryCount(map));
+        map.remove("categoryIds");
+        categoryIds.clear();
+        //技术
+        categoryIds.add(InformationEnum.BASIC_KNOWLEDGE.getId());
+        map.put("categoryIds",categoryIds);
+        countMap.put("knowledgeCount",informationDao.searchCategoryCount(map));
+        map.remove("categoryIds");
+        categoryIds.clear();
+        return countMap;
     }
     //******************************************协会********************************************//
 

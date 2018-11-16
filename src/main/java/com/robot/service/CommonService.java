@@ -118,6 +118,6 @@ public class CommonService {
                 return searchEnums[i];
             }
         }
-        return null;
+        return SearchEnum.INFORMATION;
     }
 }

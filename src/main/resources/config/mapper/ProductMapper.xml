@@ -6,7 +6,7 @@
     <resultMap id="productMap" type="com.robot.entity.Product" autoMapping="true">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="lastUpdateTime" column="post_date"/>
+        <result property="lastUpdateTime" column="pro_last_up_time"/>
         <result property="coverImg" column="cover"/>
     </resultMap>
     <!-- 首页产品 -->
@@ -17,11 +17,14 @@
     <select id="findProductIf" parameterType="map" resultMap="productMap">
         select * from product_library where 1=1
         <if test="name!=null and name.trim().length()>0">
-            and locate(#{content},name)>0 or local(#{content},introduction)>0
+            and locate(#{content},name)>0 or local(#{content},product_introduction)>0
         </if>
     </select>
     <!--搜索统计-->
     <select id="getSearchCount" parameterType="java.lang.String" resultType="int">
-        select count(id) from product_library where locate(#{content},name)>0 or local(#{content},introduction)>0
+        select count(id) from product_library where 1=1
+        <if test="_parameter!=null and _parameter.trim().length()>0">
+            and (locate(#{content},name)>0 or locate(#{content},product_introduction)>0)
+        </if>
     </select>
 </mapper>
