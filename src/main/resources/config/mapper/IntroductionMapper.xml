@@ -4,6 +4,8 @@
     <resultMap id="introductionMap" type="com.robot.entity.Introduction" autoMapping="true">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="content" property="introduction"/>
+        <result column="category_id" property="categoryId"/>
     </resultMap>
 
     <select id="getIndexIntroduction" parameterType="map" resultMap="introductionMap">
@@ -16,5 +18,29 @@
 
     <select id="findIntroductionInfo" parameterType="int" resultMap="introductionMap">
         select * from introduction where id=#{id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from introduction where id=#{id}
+    </delete>
+
+    <insert id="add" parameterType="com.robot.entity.Introduction">
+        insert into introduction(name,content,category_id) values(#{name},#{introduction},#{categoryId})
+        <selectKey resultType="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="com.robot.entity.Introduction">
+        update introduction
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="introduction!=null">content=#{introduction}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findIntroductionById" parameterType="int" resultType="java.lang.String">
+        select name from introduction where id=#{id}
     </select>
 </mapper>

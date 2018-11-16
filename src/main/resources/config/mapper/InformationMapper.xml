@@ -65,4 +65,36 @@
     <select id="searchCategoryCount" resultType="int" parameterType="java.lang.String">
         select count(id) from information where locate(#{content},title) or id in(select distinct information_id from information_content where locate(#{content},content)>0)
     </select>
+
+    <select id="findInformationById" parameterType="int" resultType="java.lang.String">
+        select title from information where id=#{id}
+    </select>
+    <!--删除-->
+    <delete id="delete" parameterType="int">
+        delete from information where id=#{id}
+    </delete>
+    <!--添加-->
+    <insert id="add" parameterType="com.robot.entity.RobotNews">
+        insert into information(url,cover,title,guide,source,category_id)
+        values(#{url},#{img},#{title},#{readGuide},#{source},#{categoryId})
+        <selectKey resultType="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+    <insert id="addContent" parameterType="map">
+        insert into information_content(information_id,content,page) values(#{id},#{content},#{page})
+        <selectKey resultType="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+    <!--修改-->
+    <update id="update" parameterType="com.robot.entity.RobotNews">
+        update information i,information_content ic
+        <set>
+            <if test="img!=null">cover=#{img},</if>
+            <if test="title!=null">title=#{title},</if>
+            <if test="readGuide!=null">guide=#{readGuide}</if>
+        </set>
+        where i.id=#{id}
+    </update>
 </mapper>

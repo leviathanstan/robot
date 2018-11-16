@@ -14,6 +14,7 @@ public class RobotNews {
     private String source;
     private String readGuide;
     private String img;
+    private int categoryId;
 
     public void setId(int urlId) {
         this.id = urlId;
@@ -43,13 +44,6 @@ public class RobotNews {
         this.viewCount = amount;
     }
 
-    public ArrayList<Detail> getContent() {
-        return content;
-    }
-
-    public void setContent(ArrayList<Detail> content) {
-        this.content = content;
-    }
 
     public String getPostDate() {
         return postDate;
@@ -87,14 +81,30 @@ public class RobotNews {
         this.readGuide = readGuide;
     }
 
+    public ArrayList<Detail> getContent() {
+        return content;
+    }
+
+    public void setContent(ArrayList<Detail> content) {
+        this.content = content;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String toString() {
         return "RobotNews{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", viewCount=" + viewCount +
-                ", content='" + content + '\'' +
+                ", content=" + content +
                 ", postDate='" + postDate + '\'' +
                 ", source='" + source + '\'' +
                 ", readGuide='" + readGuide + '\'' +

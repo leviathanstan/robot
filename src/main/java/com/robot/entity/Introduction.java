@@ -9,6 +9,7 @@ public class Introduction {
     private String name;
     private String introduction;
     private String postDate;
+    private int categoryId;
 
     public String getPostDate() {
         return postDate;
@@ -40,6 +41,14 @@ public class Introduction {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override

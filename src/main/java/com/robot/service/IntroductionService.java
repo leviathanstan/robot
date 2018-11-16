@@ -6,6 +6,7 @@ import com.robot.dao.IntroductionDao;
 import com.robot.entity.Introduction;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
+import com.robot.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -183,5 +184,45 @@ public class IntroductionService {
         }
         member.setIntroduction(CommonUtil.getAbsolutePath(member.getIntroduction()));
         return GsonUtil.getSuccessJson(member);
+    }
+
+    /**
+     * 删除专家、高校、协会成员
+     * @param id
+     * @return
+     */
+    public String deleteIntroduction(String id){
+        int infoId;
+        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
+        if(1!=introductionDao.delete(infoId))
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson();
+    }
+
+    /**
+     * 修改专家、高校、协会成员
+     * @param introduction
+     * @return
+     */
+    public String updateIntroduction(Introduction introduction){
+        if(ValidateUtil.isInvalidString(introductionDao.findIntroductionById(introduction.getId())))
+            return GsonUtil.getErrorJson("修改内容不存在");
+        if(introductionDao.update(introduction)<1)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson();
+    }
+
+    /**
+     * 添加专家、高校、协会成员
+     * @param introduction
+     * @return
+     */
+    public String addIntroduction(Introduction introduction){
+        if(ValidateUtil.isInvalidString(introduction.getIntroduction())||ValidateUtil.isInvalidString(introduction.getName())||ValidateUtil.isInvalidString(Integer.toString(introduction.getCategoryId())))
+            return GsonUtil.getErrorJson("添加内容不完整");
+
+        if(1!=introductionDao.add(introduction))
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson();
     }
 }

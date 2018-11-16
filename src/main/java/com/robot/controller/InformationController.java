@@ -1,5 +1,8 @@
 package com.robot.controller;
 
+import com.robot.annotation.PermissionsCheck;
+import com.robot.dao.InformationDao;
+import com.robot.entity.RobotNews;
 import com.robot.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -269,5 +272,41 @@ public class InformationController {
     @RequestMapping(value = "getRecommendInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getRecommendInfo(String id){
         return informationService.getRecommendInfo(id);
+    }
+
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
+   // @PermissionsCheck(access = "manager")
+    @ResponseBody
+    @RequestMapping(value = "deleteInformation", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String deleteInformation(String id){
+        return informationService.deleteInformation(id);
+    }
+
+    /**
+     * 修改文章
+     * @param robotNews
+     * @return
+     */
+   // @PermissionsCheck(access = "manager")
+    @ResponseBody
+    @RequestMapping(value = "updateInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String updateInformation(RobotNews robotNews){
+        return informationService.updateInformation(robotNews);
+    }
+
+    /**
+     * 添加文章
+     * @param robotNews
+     * @return
+     */
+   // @PermissionsCheck(access = "manager")
+    @ResponseBody
+    @RequestMapping(value = "addInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String addInformation(RobotNews robotNews){
+        return informationService.addInformation(robotNews);
     }
 }

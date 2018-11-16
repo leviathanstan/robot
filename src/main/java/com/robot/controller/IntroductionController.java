@@ -1,5 +1,7 @@
 package com.robot.controller;
 
+import com.robot.annotation.PermissionsCheck;
+import com.robot.entity.Introduction;
 import com.robot.service.IntroductionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,4 +86,38 @@ public class IntroductionController {
         return introductionService.getMemberInfo(id);
     }
 
+    /**
+     * 删除专家，高校，协会会员
+     * @param id
+     * @return
+     */
+   // @PermissionsCheck(access = "manager")
+    @ResponseBody
+    @RequestMapping(value = "deleteIntroduction", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String deleteIntroduction(String id){
+        return introductionService.deleteIntroduction(id);
+    }
+
+    /**
+     * 修改专家，高校，协会会员
+     * @param introduction
+     * @return
+     */
+   // @PermissionsCheck(access = "manager")
+    @ResponseBody
+    @RequestMapping(value = "updateIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String updateIntroduction(Introduction introduction){
+        return introductionService.updateIntroduction(introduction);
+    }
+    /**
+     * 添加专家，高校，协会会员
+     * @param introduction
+     * @return
+     */
+   // @PermissionsCheck(access = "manager")
+    @ResponseBody
+    @RequestMapping(value = "addIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String addIntroduction(Introduction introduction){
+        return introductionService.addIntroduction(introduction);
+    }
 }

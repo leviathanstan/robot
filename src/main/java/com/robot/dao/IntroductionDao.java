@@ -14,4 +14,8 @@ public interface IntroductionDao {
     ArrayList<Introduction> getIndexIntroduction(Map<String,Integer> map);
     ArrayList<Introduction> getIntroductionList(int categoryId);
     Introduction findIntroductionInfo(int id);
+    int delete(int id);
+    int add(Introduction introduction);
+    int update(Introduction introduction);
+    String findIntroductionById(int id);
 }

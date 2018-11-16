@@ -2,6 +2,7 @@ package com.robot.dao;
 
 import java.util.ArrayList;
 
+import com.robot.entity.Detail;
 import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
 
@@ -21,4 +22,10 @@ public interface InformationDao {
     ArrayList<RobotNews> find(HashMap<String,String> args);
     int searchCount(String content);
     HashMap<String,Integer> searchCategoryCount(String content);
+    int delete(int id);
+    int add(RobotNews robotNews);
+    int addContent(HashMap map);
+    int update(RobotNews robotNews );
+    String findInformationById(int id);
+
 }

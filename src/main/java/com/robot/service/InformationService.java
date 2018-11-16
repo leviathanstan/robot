@@ -3,10 +3,12 @@ package com.robot.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.InformationDao;
+import com.robot.entity.Detail;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
+import com.robot.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -646,6 +648,51 @@ public class InformationService {
             article.setContent(CommonUtil.getPreview(article.getContent()));
         }
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
+    }
+
+    /**
+     * 添加文章
+     * @param robotNews
+     * @return
+     */
+    public String addInformation(RobotNews robotNews){
+
+        if(1!=informationDao.add(robotNews))
+            return GsonUtil.getErrorJson();
+
+        for(Detail detail:robotNews.getContent()){
+            HashMap map = new HashMap();
+            map.put("id",robotNews.getId());
+            map.put("content",detail.getContent());
+            map.put("page",detail.getPage());
+            if(1!=informationDao.addContent(map))
+                return GsonUtil.getErrorJson();
+        }
+        return GsonUtil.getSuccessJson();
+    }
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
+    public String deleteInformation(String id){
+        int infoId;
+        if((infoId = CommonUtil.formatPageNum(id)) == 0)return GsonUtil.getErrorJson();
+        if(1!=informationDao.delete(infoId))
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson();
+    }
+    /**
+     * 修改文章
+     * @param robotNews
+     * @return
+     */
+    public String updateInformation(RobotNews robotNews){
+        if(ValidateUtil.isInvalidString(informationDao.findInformationById(robotNews.getId())))
+            return GsonUtil.getErrorJson("修改文章不存在");
+        if(informationDao.update(robotNews)<1)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson();
     }
     //************************行业报告**********************************************//
     /**
