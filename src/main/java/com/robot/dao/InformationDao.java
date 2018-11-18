@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.robot.entity.RobotNews;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,9 @@ public interface InformationDao {
     ArrayList<RobotNews> find(HashMap<String,Object> args);
     int searchCount(String content);
     int searchCategoryCount(HashMap<String,Object> args);
+    List<String> findRelatedKeyword(int informationId);
+    List<RobotNews> findRelatedInformation(int informationId);
+
     int delete(int id);
     int add(RobotNews robotNews);
     int addContent(HashMap map);

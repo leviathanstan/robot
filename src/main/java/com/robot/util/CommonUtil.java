@@ -145,7 +145,7 @@ public class CommonUtil {
             LocalDateTime time = LocalDateTime.parse(dbTime,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             return time.toLocalDate().toString();
         }
-        return dbTime.substring(0,19);
+        return dbTime.substring(0,16);
     }
 
 

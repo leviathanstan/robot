@@ -81,6 +81,21 @@
                                                 )
               )
     </select>
+    <!-- 相关关键字-->
+    <select id="findRelatedKeyword" parameterType="int" resultType="java.lang.String">
+        select keyword from keyword where id in (select keyword_id from keyword_information where information_id=#{informationId})
+    </select>
+    <!-- 相关information-->
+    <select id="findRelatedInformation" parameterType="int" resultMap="informationMap">
+        select id, title from information where id in (
+                                                        select information_id from (
+                                                                                    select distinct information_id from keyword_information where keyword_id in (
+                                                                                                                                                                  select keyword_id from keyword_information where information_id=#{informationId}
+                                                                                                                                                                  )
+                                                                                                                                                                  and information_id!=#{information} limit 5)as a
+                                                        )
+    </select>
+
 
     <select id="findInformationById" parameterType="int" resultType="java.lang.String">
         select title from information where id=#{id}
