@@ -100,33 +100,40 @@
     <select id="findInformationById" parameterType="int" resultType="java.lang.String">
         select title from information where id=#{id}
     </select>
-    <!--删除-->
-    <delete id="delete" parameterType="int">
+    <!--删除正文内容-->
+    <delete id="deleteContent" parameterType="int">
+        delete from information_content where information_id=#{id}
+    </delete>
+    <!--删除文章-->
+    <delete id="deleteInformation" parameterType="int">
         delete from information where id=#{id}
     </delete>
     <!--添加-->
     <insert id="add" parameterType="com.robot.entity.RobotNews">
-        insert into information(url,cover,title,guide,source,category_id)
-        values(#{url},#{img},#{title},#{readGuide},#{source},#{categoryId})
+        insert into information(url,cover,title,guide,source,category_id,post_date)
+        values(#{url},#{img},#{title},#{readGuide},#{source},#{categoryId},#{postDate})
         <selectKey resultType="java.lang.Integer" keyProperty="id">
             SELECT @@IDENTITY AS ID
         </selectKey>
     </insert>
     <insert id="addContent" parameterType="map">
         insert into information_content(information_id,content,page) values(#{id},#{content},#{page})
-        <selectKey resultType="java.lang.Integer" keyProperty="id">
-            SELECT @@IDENTITY AS ID
-        </selectKey>
     </insert>
     <!--修改-->
     <update id="update" parameterType="com.robot.entity.RobotNews">
-        update information i,information_content ic
+        update information id=#{id}
         <set>
-            <if test="img!=null">cover=#{img},</if>
-            <if test="title!=null">title=#{title},</if>
-            <if test="readGuide!=null">guide=#{readGuide}</if>
+            <if test="img!=null">,cover=#{img}</if>
+            <if test="title!=null">,title=#{title}</if>
+            <if test="readGuide!=null">,guide=#{readGuide}</if>
+            <if test="source!=null">,source=#{source}</if>
+            <if test="categoryId!=null">,category_id=#{categoryId}</if>
         </set>
-        where i.id=#{id}
+        where id=#{id}
+    </update>
+    <!--修改内容-->
+    <update id="updateContent" parameterType="map">
+        update information content=#{content} where information_id=#{informationId} and page=#{page}
     </update>
 
 </mapper>

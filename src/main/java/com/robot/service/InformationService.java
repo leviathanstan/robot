@@ -11,7 +11,9 @@ import com.robot.util.GsonUtil;
 import com.robot.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -85,8 +87,9 @@ public class InformationService {
      * @param robotNews
      * @return
      */
+    @Transactional
     public String addInformation(RobotNews robotNews){
-
+        robotNews.setPostDate(LocalDateTime.now().toString());
         if(1!=informationDao.add(robotNews))
             return GsonUtil.getErrorJson();
 
@@ -95,21 +98,30 @@ public class InformationService {
             map.put("id",robotNews.getId());
             map.put("content",detail.getContent());
             map.put("page",detail.getPage());
-            if(1!=informationDao.addContent(map))
-                return GsonUtil.getErrorJson();
+            if(1!=informationDao.addContent(map)) {
+                throw new RuntimeException();
+            }
         }
-        return GsonUtil.getSuccessJson();
+        return GsonUtil.getSuccessJson(robotNews);
     }
     /**
      * 删除文章
      * @param id
      * @return
      */
+    @Transactional
     public String deleteInformation(String id){
         int infoId;
         if((infoId = CommonUtil.formatPageNum(id)) == 0)return GsonUtil.getErrorJson();
-        if(1!=informationDao.delete(infoId))
-            return GsonUtil.getErrorJson();
+        try{
+            System.out.println(infoId);
+            informationDao.deleteContent(infoId);
+            if(1!=informationDao.deleteInformation(infoId)){
+                throw new RuntimeException();
+            }
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
         return GsonUtil.getSuccessJson();
     }
     /**
@@ -117,11 +129,28 @@ public class InformationService {
      * @param robotNews
      * @return
      */
+    @Transactional
     public String updateInformation(RobotNews robotNews){
         if(ValidateUtil.isInvalidString(informationDao.findInformationById(robotNews.getId())))
             return GsonUtil.getErrorJson("修改文章不存在");
         if(informationDao.update(robotNews)<1)
             return GsonUtil.getErrorJson();
+        if(robotNews.getContent()!=null&&robotNews.getContent().size()!=0){
+            for(Detail detail:robotNews.getContent()){
+                HashMap map = new HashMap();
+                map.put("informationId",robotNews.getId());
+                map.put("content",detail.getContent());
+                map.put("page",detail.getPage());
+                try {
+                    if (1 != informationDao.updateContent(map)) {
+                        throw new RuntimeException();
+                    }
+                }catch (Exception e){
+                    throw new RuntimeException();
+                }
+            }
+        }
+
         return GsonUtil.getSuccessJson();
     }
     //******************************************搜索********************************************//

@@ -24,10 +24,12 @@ public interface InformationDao {
     List<String> findRelatedKeyword(int informationId);
     List<RobotNews> findRelatedInformation(int informationId);
 
-    int delete(int id);
+    int deleteInformation(int id);
+    int deleteContent(int id);
     int add(RobotNews robotNews);
     int addContent(HashMap map);
     int update(RobotNews robotNews );
+    int updateContent(Map<String,String> map);
     String findInformationById(int id);
 
 }

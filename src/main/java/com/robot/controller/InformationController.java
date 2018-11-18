@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -280,8 +281,8 @@ public class InformationController {
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
-    @RequestMapping(value = "deleteInformation", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String deleteInformation(String id){
+    @RequestMapping(value = "deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String deleteInformation(@RequestParam String id){
         return informationService.deleteInformation(id);
     }
 
