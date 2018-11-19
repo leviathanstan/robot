@@ -4,7 +4,9 @@ import com.robot.entity.Question;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
+import com.robot.util.Md5Util;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -168,5 +170,9 @@ public class CommonServiceTest {
         System.out.println(time.endsWith("00:00:00.0"));
         System.out.println(time2.endsWith("00:00:00.0"));
         System.out.println(time.substring(0,19));
+    }
+    @Test
+    public void testBasic(){
+        System.out.println(Md5Util.GetMD5Code("123456"));
     }
 }

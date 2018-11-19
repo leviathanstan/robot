@@ -93,7 +93,7 @@ public class IntroductionController {
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
-    @RequestMapping(value = "deleteIntroduction", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "manager/deleteIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteIntroduction(String id){
         return introductionService.deleteIntroduction(id);
     }
@@ -105,7 +105,7 @@ public class IntroductionController {
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
-    @RequestMapping(value = "updateIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "manager/updateIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateIntroduction(Introduction introduction){
         return introductionService.updateIntroduction(introduction);
     }
@@ -116,7 +116,7 @@ public class IntroductionController {
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
-    @RequestMapping(value = "addIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "manager/addIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addIntroduction(Introduction introduction){
         return introductionService.addIntroduction(introduction);
     }

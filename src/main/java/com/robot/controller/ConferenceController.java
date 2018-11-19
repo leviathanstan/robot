@@ -45,13 +45,13 @@ public class ConferenceController {
 
 
     /**
-     * 取得报名表信息
+     * 报名
      * @author Ning
      * @data 2018/9/27
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/writeForm", method = RequestMethod.POST)
+    @RequestMapping(value = "/attend", method = RequestMethod.POST)
     public String writeForm(RegistrationForm registrationForm){
             return conferenceService.enroll(registrationForm);
     }
