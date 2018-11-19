@@ -1,18 +1,24 @@
 package com.robot.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.robot.dao.AnswerDao;
 import com.robot.dao.SurveyDao;
 import com.robot.entity.*;
 import com.robot.util.AccessUtil;
 import com.robot.util.CommonUtil;
+import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.security.jgss.GSSUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author asce
@@ -25,25 +31,165 @@ public class SurveyService {
     SurveyDao surveyDao;
     @Autowired
     AnswerDao answerDao;
+    private final int LENGTH = 10;
 
+    /**
+     * 搜索问卷
+     * @author asce
+     * @date 2018/11/19
+     * @param
+     * @return
+     */
+    public String search(Map<String,String> args){
+        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        PageHelper.startPage(pageNum,LENGTH);
+        List<Survey> surveys = surveyDao.search(args);
+        PageInfo<Survey> pageInfo = new PageInfo<>(surveys);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
 
+    /**
+     * 删除问卷
+     * @author asce
+     * @date 2018/11/18
+     * @param
+     * @return
+     */
+    @Transactional
+    public String deleteSurveyById(int id){
+        int sum = 0, num = 0;
+        Survey survey = surveyDao.getSurveyInfo(id);
+        for(Question  question:survey.getQuestions()){
+            num += question.getChoices().size() + 1;
+            sum += surveyDao.deleteChoiceByQuestion(question.getId());
+            sum += surveyDao.deleteQuestionById(question.getId());
+        }
+        sum += surveyDao.deleteSurveyById(id);
+        if (sum != num + 1){
+            throw new RuntimeException();
+        }
+        return GsonUtil.getSuccessJson();
+    }
+    /**
+     * 删除单个问题
+     * @author asce
+     * @date 2018/11/18
+     * @param
+     * @return
+     */
+    @Transactional
+    public String deleteQuestionById(int id){
+        int sum = 0;
+        Question question = surveyDao.getQuestionInfo(id);
+        sum += surveyDao.deleteChoiceByQuestion(id);
+        sum += surveyDao.deleteQuestionById(id);
+        if (sum != question.getChoices().size()+1){
+            throw new RuntimeException();
+        }
+        return GsonUtil.getSuccessJson();
+    }
+    /**
+     * 删除单个选项
+     * @author asce
+     * @date 2018/11/18
+     * @param
+     * @return
+     */
+    public String deleteChoiceById(int id){
+        if (surveyDao.deleteChoiceById(id)!=1){
+            return GsonUtil.getErrorJson("删除失败");
+        }
+        return GsonUtil.getSuccessJson();
+    }
 
+    /**
+     * 更新选项
+     * @author asce
+     * @date 2018/11/18
+     * @param
+     * @return
+     */
+    public String updateChoice(Choice[] choices){
+        int sum = 0;
+        for(Choice choice:choices){
+            String result = validateChoice(choice);
+            if (!result.equals("success")){
+                return GsonUtil.getErrorJson(result);
+            }
+        }
+        for(Choice choice:choices){
+            sum += surveyDao.updateChoice(choice);
+        }
+        if(sum!=choices.length){
+            throw new RuntimeException();
+        }
+        return GsonUtil.getSuccessJson();
+    }
+    /**
+     * 更新问题
+     * @author asce
+     * @date 2018/11/18
+     * @param
+     * @return
+     */
+    @Transactional
+    public String updateQuestion(Question question){
+        String result = validateQuestion(question);
+        if (!result.equals("success")){
+            return GsonUtil.getErrorJson(result);
+        }
+        int n1 = surveyDao.updateQuestion(question);
+        for(Choice choice:question.getChoices()){
+            n1 += surveyDao.updateChoice(choice);
+        }
+        if(n1!=(question.getChoices().size()+1)){
+            throw new RuntimeException();
+        }
+        return GsonUtil.getSuccessJson();
+    }
 
-//    public String updateChoice(Choice[] choice[]){
-//
-//    }
-//
-//    public String updateQuestion(Question question){
-//
-//    }
-//
-//    public String updateSurvey(Survey survey){
-//
-//    }
-//
-//    public String addChoice(Choice[] choices){
-//
-//    }
+    /**
+     * 更新问卷
+     * @author asce
+     * @date 2018/11/18
+     * @param
+     * @return
+     */
+    public String updateSurvey(Survey survey){
+        String result = validateSurvey(survey);
+        if (!result.equals("success")){
+            return GsonUtil.getErrorJson(result);
+        }
+        if(surveyDao.updateSurvey(survey)!=1){
+            return GsonUtil.getErrorJson("修改失败");
+        }
+        return GsonUtil.getSuccessJson();
+    }
+
+    /**
+     * 添加选项
+     * @author asce
+     * @date 2018/11/18
+     * @param
+     * @return
+     */
+    @Transactional
+    public String addChoice(Choice[] choices){
+        int sum = 0;
+        for(Choice choice:choices){
+            String result = validateChoice(choice);
+            if (!result.equals("success")){
+                return GsonUtil.getErrorJson(result);
+            }
+        }
+        for(Choice choice:choices){
+            sum += surveyDao.addChoice(choice);
+        }
+        if(sum!=choices.length){
+            throw new RuntimeException();
+        }
+        return GsonUtil.getSuccessJson();
+    }
 
     /**
      * 新建问卷
@@ -79,12 +225,11 @@ public class SurveyService {
             return GsonUtil.getErrorJson(result);
         }
         int n1 = surveyDao.addQuestion(question);
-        int n2 = 0;
         for(Choice choice:question.getChoices()){
             choice.setQuestionId(question.getId());
-            n2 += surveyDao.addChoice(choice);
+            n1 += surveyDao.addChoice(choice);
         }
-        if((n1+n2)!=(question.getChoices().size()+1)){
+        if(n1 != (question.getChoices().size()+1)){
             throw new RuntimeException();
         }
         return GsonUtil.getSuccessJson();

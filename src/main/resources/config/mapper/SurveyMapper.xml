@@ -4,8 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.SurveyDao">
 
+    <resultMap id="surveySimple" type="com.robot.entity.Survey">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
     <resultMap id="surveyMap" type="com.robot.entity.Survey">
         <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
         <result column="title" property="title"/>
         <result column="remark" property="remark"/>
         <result column="create_time" property="createTime"/>
@@ -53,11 +60,14 @@
         select * from survey where id=#{id}
     </select>
     <!-- 获取问题-->
-    <select id="getSurveyQuestion" parameterType="int" resultMap="questionMap">
+    <select id="getSurveyQuestions" parameterType="map" resultMap="questionMap">
         select * from questions where survey_id = #{surveyId,jdbcType=INTEGER}
     </select>
+    <select id="getQuestionInfo" parameterType="int" resultMap="questionMap">
+        select * from question where id=#{id}
+    </select>
     <!-- 获取选项 -->
-    <select id="getQuestionChoices" parameterType="int" resultMap="choiceMap">
+    <select id="getQuestionChoices" parameterType="map" resultMap="choiceMap">
         select * from choices where question_id = #{questionId,jdbcType=INTEGER}
     </select>
     <!-- 更新问卷-->
@@ -117,5 +127,38 @@
         </if>
         where id=#{id}
     </update>
+    <!--删除问卷-->
+    <delete id="deleteSurveyById" parameterType="int">
+        delete survey where id=#{id}
+    </delete>
+    <!--删除问题-->
+    <delete id="deleteQuestionById" parameterType="int">
+        delete question where id=#{id}
+    </delete>
+    <!--删除选项-->
+    <delete id="deleteChoiceById" parameterType="int">
+        delete choice where id=#{id}
+    </delete>
+    <delete id="deleteChoiceByQuestion" parameterType="int">
+        delete choice where question_id=#{questionId}
+    </delete>
+    <!-- 搜索-->
+    <select id="search" parameterType="map" resultMap="surveySimple">
+        select id, title, create_time from survey where 1=1
+        <if test="title!=null">
+            and locate(#{title},title)
+        </if>
+        <if test="beginTime!=null and beginTime.trim().length()>0">
+            and create_time > #{beginTime}
+        </if>
+        <if test="endTime!=null and endTime.trim().length()>0">
+            and create_time <![CDATA[<]]> #{endTime}
+        </if>
+        <choose>
+            <when test="templateType!=null">
+                and template_type = #{templateType}
+            </when>
+        </choose>
+    </select>
 
 </mapper>
