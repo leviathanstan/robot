@@ -958,10 +958,10 @@ public class InformationService {
      * @date 2018/9/27
      * @return
      */
-//    public ArrayList<RobotNews> getIndexDiscuss(){
-//        ArrayList<RobotNews> discuss = informationDao.(map);
-//        return discuss;
-//    }
+    public ArrayList<RobotNews> getIndexDiscuss(){
+        ArrayList<RobotNews> discuss = informationDao.getIndexDiscuss();
+        return discuss;
+    }
 
     //************************案列库************************************************//
     /**

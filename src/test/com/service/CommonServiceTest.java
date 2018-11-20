@@ -1,5 +1,7 @@
 package com.service;
 
+import com.robot.entity.Area;
+import com.robot.entity.Position;
 import com.robot.entity.Question;
 import com.robot.entity.RobotNews;
 import com.robot.util.CommonUtil;
@@ -175,4 +177,25 @@ public class CommonServiceTest {
     public void testBasic(){
         System.out.println(Md5Util.GetMD5Code("123456"));
     }
+
+    @Test
+    public void sortLambda(){
+        ArrayList<Area> areas = new ArrayList<>();
+        Area area = new Area();
+        area.setName("aa");
+        area.setType(3);
+        areas.add(area);
+        area = new Area();
+        area.setType(1);
+        area.setName("bb");
+        areas.add(area);
+        area = new Area();
+        area.setType(5);
+        area.setName("cc");
+        areas.add(area);
+        Position position = new Position();
+        position.setJobArea(areas);
+        System.out.println(position.getJobArea());
+    }
+
 }

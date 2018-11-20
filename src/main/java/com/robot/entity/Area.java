@@ -9,7 +9,7 @@ public class Area {
 
     private Integer id;
     private String name;
-    private Integer areaCount;
+    private Integer type;
 
     public Integer getId() {
         return id;
@@ -17,14 +17,6 @@ public class Area {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getAreaCount() {
-        return areaCount;
-    }
-
-    public void setAreaCount(Integer areaCount) {
-        this.areaCount = areaCount;
     }
 
     public String getName() {
@@ -35,12 +27,20 @@ public class Area {
         this.name = name;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Area{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", areaCount=" + areaCount +
+                ", type=" + type +
                 '}';
     }
 }

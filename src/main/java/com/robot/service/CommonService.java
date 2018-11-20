@@ -22,6 +22,8 @@ public class CommonService {
     IntroductionService introductionService;
     @Autowired
     ProductService productService;
+    @Autowired
+    PositionService positionService;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),WORK(3);
@@ -63,12 +65,14 @@ public class CommonService {
         //技术
         //dataMap.put("case",technologyService.getIndexCase());
         dataMap.put("basic",informationService.getIndexBasic());
-        //dataMap.put("science",informationService.get());
+        dataMap.put("science",informationService.getIndexDiscuss());
         //产品
         dataMap.put("productEvaluation", informationService.getIndexEvaluate());
         dataMap.put("productLibrary", productService.getProductLibrary());
         dataMap.put("productNews",informationService.getIndexProductNews());
         dataMap.put("productRecommend",informationService.getIndexRecommend());
+        //招聘
+        dataMap.put("position", positionService.getIndex());
         return GsonUtil.getSuccessJson(dataMap);
     }
 

@@ -18,6 +18,13 @@
         <result column="content" property="content"/>
         <result column="page" property="page"/>
     </resultMap>
+    <!--技术研讨-->
+    <resultMap id="discussMap" type="com.robot.entity.RobotNews">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="postDate" column="post_date"/>
+        <result property="img" column="cover"/>
+    </resultMap>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">
         select id,title,post_date,cover from information where category_id=#{categoryId} order by post_date desc limit #{number}
@@ -43,11 +50,10 @@
 
     </select>
     -->
-    <!--首页技术研讨
-    <select id="getIndexDiscuss" parameterType="int" resultMap="">
-
+    <!--首页技术研讨-->
+    <select id="getIndexDiscuss" parameterType="int" resultMap="discussMap">
+        select id, cover, title from technique_discuss limit 6
     </select>
-    -->
     <!--搜索-->
     <select id="find" resultMap="informationDetail" parameterType="map">
         select * from information where 1=1

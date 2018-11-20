@@ -23,6 +23,7 @@ public interface InformationDao {
     int searchCategoryCount(HashMap<String,Object> args);
     List<String> findRelatedKeyword(int informationId);
     List<RobotNews> findRelatedInformation(int informationId);
+    ArrayList<RobotNews> getIndexDiscuss();
 
     int deleteInformation(int id);
     int deleteContent(int id);

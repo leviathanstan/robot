@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.PositionDao">
+    <resultMap id="positionMap" type="com.robot.entity.Position" autoMapping="true">
+        <id column="p_id" property="id"/>
+        <result column="position_name" property="positionName"/>
+        <result column="company_name" property="companyName"/>
+        <result column="company_introduction" property="companyIntroduction"/>
+        <result column="create_time" property="createTime"/>
+        <result column="degree_required" property="degreeRequired"/>
+        <result column="work_age" property="workAge"/>
+        <collection property="jobArea" column="{positionId=p_id" javaType="java.util.ArrayList" ofType="com.robot.entity.Position" select="getPositionAreas"/>
+    </resultMap>
+    <resultMap id="positionDetail" type="com.robot.entity.Position" extends="positionMap">
+        <result column="company_size" property="companySize"/>
+        <result column="company_nature" property="companyNature"/>
+        <result column="job_description" property="jobDescription"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="industry_name" property="industry"/>
+        <result column="industry_position_name" property="position"/>
+    </resultMap>
+    <resultMap id="areaMap" type="com.robot.entity.Area">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="region_type" property="type"/>
+    </resultMap>
+    <resultMap id="industryMap" type="com.robot.entity.Industry">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <select id="getIndex" resultMap="positionMap">
+        select id as p_id, position_name, salary, degree_required, work_age from position order by create_time limit 8
+    </select>
+    <!--搜索-->
+    <select id="search" resultMap="positionMap" parameterType="map">
+        select *,position.id as p_id,i1.name as industry_name,i2.name as industry_position_name from position left join
+                                                                                                                        industry_category as i1 on i1.id = industry_id
+                                                                                                              left join
+                                                                                                                        industry_category as i2 on i2.id = position_id
+                                                                                                              where 1=1
+                                                                                                              <if test="content!=null and content.trim().length()>0">
+                                                                                                                  and (locate(#{content},position_name) > 0 or locate(#{content},company_name) > 0)
+                                                                                                              </if>
+                                                                                                              <if test="industryId!=null and industryId!=0">
+                                                                                                                  and (industry_id=#{industryId} or position_id=#{industryId})
+                                                                                                              </if>
+                                                                                                              <if test="regionIds!=null and regionIds.size()!=0">
+                                                                                                                  and p_id in (
+                                                                                                                              select distinct position_id from region_relation where region_id in
+                                                                                                                                                                                      <foreach item="item" index="index" collection="regionIds" open="(" separator="," close=")">
+                                                                                                                                                                                          #{item}
+                                                                                                                                                                                      </foreach>
+                                                                                                                              )
+                                                                                                              </if>
+    </select>
+    <!--详情-->
+    <select id="getPositionInfo" parameterType="int" resultMap="positionDetail">
+        select *,position.id as p_id,i1.name as industry_name,i2.name as industry_position_name from position left join
+                                                                                                                        industry_category as i1 on i1.id = industry_id
+                                                                                                              left join
+                                                                                                                        industry_category as i2 on i2.id = position_id
+                                                                                                              where
+                                                                                                                        position.id=#{id};
+    </select>
+    <!-- 地区 -->
+    <select id="getPositionAreas" resultMap="areaMap" parameterType="map">
+        select id, name, region_type from region where id in (select region_id from region_relation where position_id=#{positionId} and region_type='0')
+    </select>
+    <!--各级地区-->
+    <select id="getAreas" resultMap="areaMap" parameterType="int">
+        select id,name from region where 1=1
+        <choose>
+            <when test="_parameter!=0">
+                and parent_id=#{parentId}
+            </when>
+            <otherwise>
+                and parent_id=null
+            </otherwise>
+        </choose>
+    </select>
+    <!--各级行业-->
+    <select id="getIndustry" resultMap="industryMap" parameterType="int">
+        select id,name from industry_category where 1=1
+        <choose>
+            <when test="_parameter!=0">
+                and parent_id=#{parentId}
+            </when>
+            <otherwise>
+                and parent_id=null
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
