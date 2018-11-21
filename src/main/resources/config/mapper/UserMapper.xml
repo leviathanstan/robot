@@ -40,7 +40,7 @@
 			and locate(#{phone},phone)>0
 		</if>
 		<choose>
-			<when test="rank !=0">
+			<when test="rank !=null">
 				and  rank =#{rank}
 			</when>
 			<otherwise>
