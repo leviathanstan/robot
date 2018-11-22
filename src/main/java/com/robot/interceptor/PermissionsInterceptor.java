@@ -50,8 +50,8 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
                     handle(request,response);
                 }
                 return false;
-            }else{
-                //默认为管理员操作
+            }else if(methodPermission.access().equals("organizers")){
+
             }
 
         }

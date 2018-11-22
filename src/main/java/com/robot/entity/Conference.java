@@ -9,9 +9,10 @@ import java.time.LocalDateTime;
 public class Conference {
 
     private Integer id;
+    private Integer userId;
     private String coverImg;
     private String title;
-    private LocalDateTime holdTime;
+    private String holdTime;
     private String address;
     private String host;
     private String introduction;
@@ -41,11 +42,11 @@ public class Conference {
         this.title = title;
     }
 
-    public LocalDateTime getHoldTime() {
+    public String getHoldTime() {
         return holdTime;
     }
 
-    public void setHoldTime(LocalDateTime holdTime) {
+    public void setHoldTime(String holdTime) {
         this.holdTime = holdTime;
     }
 
@@ -79,6 +80,14 @@ public class Conference {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override

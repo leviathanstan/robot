@@ -3,28 +3,63 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.robot.dao.ConferenceDao">
-
-    <select id="getHoldingConference" resultType="com.robot.entity.Conference">
-        select *, hold_time as holdTime from conference where type = 0 and hold_time &gt;= NOW();
+    <resultMap id="conferenceMap" type="com.robot.entity.Conference" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="cover" property="coverImg"/>
+        <result column="hold_time" property="holdTime"/>
+    </resultMap>
+    <!--首页-->
+    <select id="getIndexConference" resultMap="conferenceMap" parameterType="int">
+        select id, title, hold_time, cover from conference where conference_type = #{type} order by hold_time limit 6
     </select>
-
-    <select id="getPassConference" resultType="com.robot.entity.Conference">
-        select *, hold_time as holdTime from conference where type = 0 and hold_time &lt; NOW();
+    <!--列表-->
+    <select id="getConferenceList" resultMap="conferenceMap" parameterType="int">
+        select id, title, hold_time, cover from conference where conference_type = #{type} order by hold_time
     </select>
-
-    <select id="getHoldingMeeting" resultType="com.robot.entity.Conference">
-        select *, hold_time as holdTime from conference where type = 1 and hold_time &gt;= NOW();
+    <!--详情-->
+    <select id="getInfo" resultMap="conferenceMap" parameterType="int">
+        select * from conference where id = #{id}
     </select>
-
-    <select id="getPassMeeting" resultType="com.robot.entity.Conference">
-        select *, hold_time as holdTime from conference where type = 1 and hold_time &lt; NOW();
+    <!--还没举办-->
+    <select id="getHoldingConference" resultMap="conferenceMap" parameterType="int">
+        select *, hold_time as holdTime from conference where conference_type = #{type} and hold_time &gt;= NOW();
     </select>
-
-    <select id="findEnrollByName" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(id) from registration_form where name = #{enrolment};
+    <!--已经举办-->
+    <select id="getPassConference" resultMap="conferenceMap" parameterType="int">
+        select *, hold_time as holdTime from conference where conference_type = #{type} and hold_time &lt; NOW();
     </select>
-    
-    <insert id="insertToEnroll" parameterType="com.robot.entity.RegistrationForm">
-        insert into registration_form(id, name, gender, phone, wechat, email, company_name, position, company_address, conference_id, status)value(null, #{name}, #{gender}, #{phone}, #{weChat}, #{email}, #{companyName}, #{position}, #{companyAddress}, #{conferenceId}, 0);
+    <!-- 报名-->
+    <insert id="addForm" parameterType="com.robot.entity.RegistrationForm">
+        insert into registration_form(name, gender, phone, wechat, email, company_name, position, company_address, conference_id, status)value(#{name}, #{gender}, #{phone}, #{weChat}, #{email}, #{companyName}, #{position}, #{companyAddress}, #{conferenceId}, 0);
     </insert>
+
+    <!-- 添加会议-->
+    <insert id="addConference" parameterType="com.robot.entity.Conference">
+        insert into conference(title, cover_img, hold_time, address, user_id, introduction, conference_type) values (#{title},#{coverImg},#{holdTime},#{address},#{userId},#{introduction},#{type})
+    </insert>
+    <!-- 更新会议-->
+    <update id="updateConference" parameterType="com.robot.entity.Conference">
+        update conference set id=#{id}
+        <if test="title!=null and title.trim().length()>0">
+            ,title = #{title}
+        </if>
+        <if test="coverImg!=null and coverImg.trim().length()>0">
+            ,cover_img =#{coverImg}
+        </if>
+        <if test="holdTime!=null and holdTime.trim().length()>0">
+            ,hold_time=#{holdTime}
+        </if>
+        <if test="address!=null and address.trim().length()>0">
+            ,address = #{address}
+        </if>
+        <if test="introduction!=null and introduction.trim().length()>0">
+            ,introduction = #{introduction}
+        </if>
+        where id=#{id}
+    </update>
+    <!-- 删除会议-->
+    <delete id="deleteConference" parameterType="int">
+        delete conference where id=#{id}
+    </delete>
+
 </mapper>

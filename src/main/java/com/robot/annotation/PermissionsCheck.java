@@ -13,4 +13,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface PermissionsCheck {
     String access() default "manager";
+    enum access{MANAGER,ORGANIZER}     //MANAGER:超级管理员，ORGANIZER:主办方
 }

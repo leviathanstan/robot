@@ -24,6 +24,8 @@ public class CommonService {
     ProductService productService;
     @Autowired
     PositionService positionService;
+    @Autowired
+    ConferenceService conferenceService;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),WORK(3);
@@ -73,6 +75,9 @@ public class CommonService {
         dataMap.put("productRecommend",informationService.getIndexRecommend());
         //招聘
         dataMap.put("position", positionService.getIndex());
+        //会议
+        dataMap.put("conference",conferenceService.getIndexConference());
+        dataMap.put("metting", conferenceService.getIndexMetting());
         return GsonUtil.getSuccessJson(dataMap);
     }
 

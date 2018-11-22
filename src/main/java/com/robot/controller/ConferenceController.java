@@ -1,10 +1,14 @@
 package com.robot.controller;
 
+import com.robot.annotation.PermissionsCheck;
+import com.robot.entity.Conference;
 import com.robot.entity.RegistrationForm;
 import com.robot.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -18,40 +22,47 @@ public class ConferenceController {
     @Autowired
     private ConferenceService conferenceService;
 
-    /**
-     * 取得相应的展会信息
-     * @author Ning
-     * @data 2018/9/27
-     * @return java.lang.String
-     */
+    //@PermissionsCheck
     @ResponseBody
-    @RequestMapping(value = "/getRelevantConference", method = RequestMethod.GET)
-    public String getHoldingConference(Integer relevantId){
-        return conferenceService.getRelevantConference(relevantId);
+    @RequestMapping(value = "/deleteConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String deleteConference(int id, HttpSession session){
+        return conferenceService.deleteConference(id, session);
     }
 
-
-    /**
-     * 取得相应的会议信息
-     * @author Ning
-     * @data 2018/9/27
-     * @return java.lang.String
-     */
+    //@PermissionsCheck
     @ResponseBody
-    @RequestMapping(value = "/getRelevantMeeting", method = RequestMethod.GET)
-    public String getRelevantMeeting(Integer relevantId){
-        return conferenceService.getRelevantMeting(relevantId);
+    @RequestMapping(value = "/updateConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String updateConference(Conference conference,HttpSession session){
+        return conferenceService.updateConference(conference,session);
     }
 
-
-    /**
-     * 报名
-     * @author Ning
-     * @data 2018/9/27
-     * @return java.lang.String
-     */
+    //@PermissionsCheck
     @ResponseBody
-    @RequestMapping(value = "/attend", method = RequestMethod.POST)
+    @RequestMapping(value = "/addConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String addConference(Conference conference,HttpSession session){
+        return conferenceService.addConference(conference,session);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getPassConference", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getPassConference(){
+        return conferenceService.getPassConference();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getHoldingConferences", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getHoldingConferences(){
+        return conferenceService.getHoldingConferences();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getConferenceList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getConferenceList(String pageNum){
+        return conferenceService.getConferenceList(pageNum);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/attend", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String writeForm(RegistrationForm registrationForm){
             return conferenceService.enroll(registrationForm);
     }
