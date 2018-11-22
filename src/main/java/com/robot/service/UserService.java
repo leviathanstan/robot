@@ -46,26 +46,6 @@ public class UserService {
     }
 
     /**
-     * 管理员登录
-     * @author asce
-     * @date 2018/11/15
-     * @param
-     * @return
-     */
-    public String adminLogin(User user,HttpSession session){
-        User dbUser = null;
-        user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
-        user.setRank(1);
-        if((dbUser=userDao.login(user)) == null){
-            return GsonUtil.getErrorJson("密码或账号错误");
-        }else{
-            session.setAttribute("user",dbUser);
-            session.setAttribute("rank",1);
-            return GsonUtil.getSuccessJson();
-        }
-    }
-
-    /**
      * @param user
      * @return
      * @function用户登录
@@ -77,6 +57,9 @@ public class UserService {
             return GsonUtil.getErrorJson("密码或账号错误");
         }else{
             session.setAttribute("user",dbUser);
+            if(dbUser.getRank()==1){    //管理员
+                session.setAttribute("rank", 1);
+            }
             return GsonUtil.getSuccessJson(dbUser);
         }
     }

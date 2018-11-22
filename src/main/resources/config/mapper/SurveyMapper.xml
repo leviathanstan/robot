@@ -154,6 +154,9 @@
         <if test="endTime!=null and endTime.trim().length()>0">
             and create_time <![CDATA[<]]> #{endTime}
         </if>
+        <if test="userId!=null and userId!=0">
+            and user_id = #{userId}
+        </if>
         <choose>
             <when test="templateType!=null">
                 and template_type = #{templateType}

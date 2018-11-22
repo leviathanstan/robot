@@ -27,8 +27,8 @@ public class SurveyController {
     //@PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/search", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String search(@RequestParam Map<String,String> args){
-        return surveyService.search(args);
+    public String search(@RequestParam Map<String,String> args,HttpSession session){
+        return surveyService.search(args,session);
     }
 
     /**

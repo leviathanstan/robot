@@ -25,6 +25,7 @@ public class Position {
     private int viewCount;
 
     private ArrayList<Area> jobArea;
+    private String areas;
     private String position;
     private String industry;
 
@@ -146,16 +147,17 @@ public class Position {
      * @param
      * @return
      */
-    public String getJobArea() {
+    public ArrayList<Area> getJobArea() {
+        return this.jobArea;
+    }
+
+    public void setJobArea(ArrayList<Area> jobArea) {
         jobArea.sort(Comparator.comparing(Area::getType));
         String str = "";
         for(Area area:jobArea){
             str += area.getName();
         }
-        return str;
-    }
-
-    public void setJobArea(ArrayList<Area> jobArea) {
+        areas = str;
         this.jobArea = jobArea;
     }
 
@@ -173,5 +175,28 @@ public class Position {
 
     public void setIndustry(String industry) {
         this.industry = industry;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "id=" + id +
+                ", positionName='" + positionName + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companySize='" + companySize + '\'' +
+                ", companyNature='" + companyNature + '\'' +
+                ", salary='" + salary + '\'' +
+                ", degreeRequired='" + degreeRequired + '\'' +
+                ", workAge='" + workAge + '\'' +
+                ", hiring='" + hiring + '\'' +
+                ", phone='" + phone + '\'' +
+                ", jobDescription='" + jobDescription + '\'' +
+                ", companyIntroduction='" + companyIntroduction + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", viewCount=" + viewCount +
+                ", jobArea=" + jobArea +
+                ", position='" + position + '\'' +
+                ", industry='" + industry + '\'' +
+                '}';
     }
 }

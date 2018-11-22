@@ -9,7 +9,7 @@
 	<!-- 登录 -->
 	<select id="login" parameterType="com.robot.entity.User"
 			resultType="com.robot.entity.User">
-		select username,email from user where 1=1
+		select username,email,rank from user where 1=1
 		<choose>
 			<when test="rank !=0 and rank != null">
 				and  rank =#{rank}

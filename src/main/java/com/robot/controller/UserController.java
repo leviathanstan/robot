@@ -36,19 +36,6 @@ public class UserController {
     }
 
     /**
-     * 管理员登录
-     * @author asce
-     * @date 2018/11/15
-     * @param
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/manager/login", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String adminLogin(User user, HttpSession session){
-        return userService.adminLogin(user, session);
-    }
-
-    /**
      * 用户登录
      *
      * @param user

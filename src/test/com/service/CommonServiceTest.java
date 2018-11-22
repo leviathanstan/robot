@@ -10,6 +10,8 @@ import com.robot.util.Md5Util;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -166,19 +168,6 @@ public class CommonServiceTest {
     }
 
     @Test
-    public void testStringEnd(){
-        String time = "2018-09-26 11:33:00.0";
-        String time2 = "2018-09-26 00:00:00.0";
-        System.out.println(time.endsWith("00:00:00.0"));
-        System.out.println(time2.endsWith("00:00:00.0"));
-        System.out.println(time.substring(0,19));
-    }
-    @Test
-    public void testBasic(){
-        System.out.println(Md5Util.GetMD5Code("123456"));
-    }
-
-    @Test
     public void sortLambda(){
         ArrayList<Area> areas = new ArrayList<>();
         Area area = new Area();
@@ -197,5 +186,4 @@ public class CommonServiceTest {
         position.setJobArea(areas);
         System.out.println(position.getJobArea());
     }
-
 }

@@ -40,9 +40,12 @@ public class SurveyService {
      * @param
      * @return
      */
-    public String search(Map<String,String> args){
+    public String search(Map<String,String> args, HttpSession session){
         int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
         PageHelper.startPage(pageNum,LENGTH);
+        if (args.get("userId")=="0"){
+            args.put("userId",((User)session.getAttribute("user")).getId()+"");
+        }
         List<Survey> surveys = surveyDao.search(args);
         PageInfo<Survey> pageInfo = new PageInfo<>(surveys);
         return GsonUtil.getSuccessJson(pageInfo);
