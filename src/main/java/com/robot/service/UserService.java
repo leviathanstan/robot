@@ -117,10 +117,11 @@ public class UserService {
                     session.removeAttribute("emailCode");
                     session.removeAttribute("registerUser");
                     return GsonUtil.getSuccessJson();
-                }
+                }else
+                    return GsonUtil.getErrorJson();
             }
         }
-        return GsonUtil.getErrorJson();
+
     }
 
     /**
