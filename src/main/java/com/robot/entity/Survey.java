@@ -15,6 +15,7 @@ public class Survey {
     private Integer templateType;//是否模板
     private String createTime;
     private ArrayList<Question> questions;
+    private ArrayList<Integer> categoryIds;
 
     public Integer getId() {
         return id;
@@ -70,6 +71,14 @@ public class Survey {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public ArrayList<Integer> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(ArrayList<Integer> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 
     @Override

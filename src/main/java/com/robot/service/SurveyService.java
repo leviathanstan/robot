@@ -17,6 +17,7 @@ import sun.security.jgss.GSSUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -201,6 +202,7 @@ public class SurveyService {
      * @param
      * @return
      */
+    @Transactional
     public String addSurvey(Survey survey, HttpSession session){
         String result = validateSurvey(survey);
         if (!result.equals("success")){
@@ -209,8 +211,18 @@ public class SurveyService {
         User user = (User) session.getAttribute("user");
         survey.setUserId(1);//user.getId());
         survey.setCreateTime(LocalDateTime.now().toString());
+        int sum = 0;
         if (surveyDao.addSurvey(survey)!=1){
             return GsonUtil.getErrorJson("创建失败");
+        }
+        Map<String,String> map = new HashMap<>();
+        map.put("surveyId", survey.getId()+"");
+        for(Integer categoryId:survey.getCategoryIds()){
+            map.put("categoryId",categoryId+"");
+            sum += surveyDao.addSurveyCategory(map);
+        }
+        if (sum!= survey.getCategoryIds().size()){
+            throw new RuntimeException();
         }
         return GsonUtil.getSuccessJson();
     }
@@ -287,7 +299,7 @@ public class SurveyService {
         if (survey.getTitle()==null){
             return "标题不能为空";
         }
-        if(survey.getTemplateType()!=0||survey.getTemplateType()!=1){
+        if(survey.getTemplateType()!=0&&survey.getTemplateType()!=1){
             return "问卷类型错误";
         }
         if(survey.getRemark()==null){

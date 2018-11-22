@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public interface SurveyDao {
     int addSurvey(Survey survey);
+    int addSurveyCategory(Map<String,String> map);
     int addQuestion(Question question);
     int addChoice(Choice choice);
     Survey getSurveyInfo(int id);

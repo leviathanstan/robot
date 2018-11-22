@@ -131,37 +131,14 @@ public class CommonServiceTest {
     @Test
     public void testJson(){
         String jsonstr = "{\n" +
-                "\"surveyId\":1, \n" +
-                "\"serialNumber\":1,\n" +
-                "\"title\":\"first test\",\n" +
-                "\"answerType\":0,\n" +
-                "\"optionType\":0,\n" +
-                "\"minNumber\":1,\n" +
-                "\"maxNumber\":3,\n" +
-                "\"precedentChoiceId\":0,\n" +
-                "\"choices\":\n" +
-                "[\n" +
-                "{\n" +
-                "\"serialNumber\":1,\n" +
-                "\"title\":\"first choice\",\n" +
-                "\"type\":0\n" +
-                "},\n" +
-                "{\n" +
-                "\"serialNumber\":2,\n" +
-                "\"title\":\"second choice\",\n" +
-                "\"type\":0\n" +
-                "},\n" +
-                "{\n" +
-                "\"serialNumber\":3,\n" +
-                "\"title\":\"third choice\",\n" +
-                "\"type\":0\n" +
-                "},\n" +
-                "{\n" +
-                "\"serialNumber\":4,\n" +
-                "\"title\":\"fouth choice\",\n" +
-                "\"type\":1\n" +
-                "}\n" +
-                "]\n" +
+                "\t\"survey\":{\n" +
+                "\t\t\"title\":\"abc\",\n" +
+                "\t\t\"remark\":\"ddd\",\n" +
+                "\t\t\"templateType\":1\n" +
+                "\t},\n" +
+                "\t\"categoryIds\":[\n" +
+                "\t\t1,2,3\n" +
+                "\t\t]\n" +
                 "}";
         Question question = GsonUtil.getObjectFromJson(jsonstr,Question.class);
         System.out.println(question);

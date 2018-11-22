@@ -44,8 +44,12 @@
     </resultMap>
 
     <!--添加问卷-->
-    <insert id="addSurvey" parameterType="com.robot.entity.Survey">
+    <insert id="addSurvey" parameterType="com.robot.entity.Survey" useGeneratedKeys="true" keyProperty="id">
         insert into survey (user_id, title, remark, create_time,template_type) values (#{userId},#{title},#{remark},#{createTime},#{templateType});
+    </insert>
+    <!--添加问卷关联-->
+    <insert id="addSurveyCategory" parameterType="map">
+        insert into survey_category (survey_id,category_id) values(#{surveyId},#{categoryId})
     </insert>
     <!--添加问题-->
     <insert id="addQuestion" parameterType="com.robot.entity.Question" useGeneratedKeys="true" keyProperty="id">

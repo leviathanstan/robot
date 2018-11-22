@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -111,8 +112,8 @@ public class SurveyController {
     //@PermissionsCheck
     @RequestMapping(value = "/manager/addSurvey", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String addSurvey(Survey survey, HttpSession session){
-        return surveyService.addSurvey(survey,session);
+    public String addSurvey(@RequestBody Survey survey, HttpSession session){
+        return surveyService.addSurvey(survey, session);
     }
 
     /**
