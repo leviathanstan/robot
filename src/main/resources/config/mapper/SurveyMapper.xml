@@ -8,6 +8,10 @@
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="template_type" property="templateType"/>
+        <result column="status" property="status"/>
+        <collection property="categoryIds" column="{surveyId=id}" javaType="java.util.ArrayList" ofType="java.lang.Integer" select="getSurveyCategories"/>
     </resultMap>
 
     <resultMap id="surveyMap" type="com.robot.entity.Survey">
@@ -45,7 +49,7 @@
 
     <!--添加问卷-->
     <insert id="addSurvey" parameterType="com.robot.entity.Survey" useGeneratedKeys="true" keyProperty="id">
-        insert into survey (user_id, title, remark, create_time,template_type) values (#{userId},#{title},#{remark},#{createTime},#{templateType});
+        insert into survey (user_id, title, remark, create_time,template_type,status) values (#{userId},#{title},#{remark},#{createTime},#{templateType},#{status});
     </insert>
     <!--添加问卷关联-->
     <insert id="addSurveyCategory" parameterType="map">
@@ -53,7 +57,7 @@
     </insert>
     <!--添加问题-->
     <insert id="addQuestion" parameterType="com.robot.entity.Question" useGeneratedKeys="true" keyProperty="id">
-        insert into questions (title,serial_number,answer_type,option_type,min_number,max_number,page,survey_id,precedent_choice_id) values (#{title},#{serialNumber},#{answerType},#{optionType},#{minNumber},#{maxNumber},#{page},#{surveyId},#{precedentChoiceId})
+        insert into questions (title,serial_number,answer_type,option_type,min_number,max_number,page,survey_id,precedent_choice_id,precedent_question_id) values (#{title},#{serialNumber},#{answerType},#{optionType},#{minNumber},#{maxNumber},#{page},#{surveyId},#{precedentChoiceId},#{precedentQuestionId})
     </insert>
     <!--添加选项-->
     <insert id="addChoice" parameterType="com.robot.entity.Choice">
@@ -62,6 +66,10 @@
     <!-- 获取问卷 -->
     <select id="getSurveyInfo" parameterType="int" resultMap="surveyMap">
         select * from survey where id=#{id}
+    </select>
+    <!--获取问卷群体-->
+    <select id="getSurveyCategories" parameterType="map" resultType="java.lang.Integer">
+        select category_id from survey_category where survey_id=#{surveyId,jdbcType=INTEGER}
     </select>
     <!-- 获取问题-->
     <select id="getSurveyQuestions" parameterType="map" resultMap="questionMap">
@@ -76,12 +84,15 @@
     </select>
     <!-- 更新问卷-->
     <update id="updateSurvey" parameterType="com.robot.entity.Survey">
-        update survey set id=#{id}
+        update survey set update_time=#{updateTime}
         <if test="title!=null and title.trim().length()>0">
             ,title=#{title}
         </if>
         <if test="remark!=null and remark.trim().length()>0">
             , remark=#{remark}
+        </if>
+        <if test="status!=null">
+            , status=#{status}
         </if>
         where id=#{id}
     </update>
@@ -116,7 +127,7 @@
     </update>
     <!--更新选项-->
     <update id="updateChoice" parameterType="com.robot.entity.Choice">
-        update choices set id=#{id},
+        update choices set update_time=#{updateTime}
         <if test="serialNumber!=null">
             , serial_number=#{serialNumber}
         </if>
@@ -133,22 +144,22 @@
     </update>
     <!--删除问卷-->
     <delete id="deleteSurveyById" parameterType="int">
-        delete survey where id=#{id}
+        delete from survey where id=#{id}
     </delete>
     <!--删除问题-->
     <delete id="deleteQuestionById" parameterType="int">
-        delete question where id=#{id}
+        delete from questions where id=#{id}
     </delete>
     <!--删除选项-->
     <delete id="deleteChoiceById" parameterType="int">
-        delete choice where id=#{id}
+        delete from choices where id=#{id}
     </delete>
     <delete id="deleteChoiceByQuestion" parameterType="int">
-        delete choice where question_id=#{questionId}
+        delete from choices where question_id=#{questionId}
     </delete>
     <!-- 搜索-->
     <select id="search" parameterType="map" resultMap="surveySimple">
-        select id, title, create_time from survey where 1=1
+        select id, title, create_time, update_time,status, template_type  from survey where 1=1
         <if test="title!=null">
             and locate(#{title},title)
         </if>

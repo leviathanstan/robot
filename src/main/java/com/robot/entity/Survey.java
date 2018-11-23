@@ -13,7 +13,9 @@ public class Survey {
     private Integer userId;
     private String remark;
     private Integer templateType;//是否模板
+    private Integer status;
     private String createTime;
+    private String updateTime;
     private ArrayList<Question> questions;
     private ArrayList<Integer> categoryIds;
 
@@ -79,6 +81,22 @@ public class Survey {
 
     public void setCategoryIds(ArrayList<Integer> categoryIds) {
         this.categoryIds = categoryIds;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override

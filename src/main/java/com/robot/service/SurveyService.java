@@ -11,6 +11,7 @@ import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import sun.security.jgss.GSSUtil;
 
@@ -208,6 +209,13 @@ public class SurveyService {
         if (!result.equals("success")){
             return GsonUtil.getErrorJson(result);
         }
+        for(Question question:survey.getQuestions()) {
+            question.setSurveyId(0);
+            result = validateQuestion(question);
+            if (!result.equals("success")){
+                return GsonUtil.getErrorJson(result);
+            }
+        }
         User user = (User) session.getAttribute("user");
         survey.setUserId(1);//user.getId());
         survey.setCreateTime(LocalDateTime.now().toString());
@@ -224,7 +232,11 @@ public class SurveyService {
         if (sum!= survey.getCategoryIds().size()){
             throw new RuntimeException();
         }
-        return GsonUtil.getSuccessJson();
+        for(Question question:survey.getQuestions()){
+            question.setSurveyId(survey.getId());
+            addQuestion(question);
+        }
+        return GsonUtil.getSuccessJson(survey.getId());
     }
     /**
      * 添加题目
@@ -233,12 +245,8 @@ public class SurveyService {
      * @param
      * @return
      */
-    @Transactional(rollbackForClassName="RuntimeException")
+    @Transactional(rollbackForClassName="RuntimeException",propagation = Propagation.REQUIRED)
     public String addQuestion(Question question){
-        String result = validateQuestion(question);
-        if (!result.equals("success")){
-            return GsonUtil.getErrorJson(result);
-        }
         int n1 = surveyDao.addQuestion(question);
         for(Choice choice:question.getChoices()){
             choice.setQuestionId(question.getId());
@@ -304,6 +312,9 @@ public class SurveyService {
         }
         if(survey.getRemark()==null){
             return "备注不能为空";
+        }
+        if(survey.getStatus()!=0&&survey.getStatus()!=1){
+            return "发布状态不和法";
         }
         return "success";
     }
