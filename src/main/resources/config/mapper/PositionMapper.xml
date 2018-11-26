@@ -30,12 +30,13 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
     </resultMap>
+    <!-- 首页-->
     <select id="getIndex" resultMap="positionMap">
-        select id as p_id, position_name, salary, degree_required, work_age from position order by create_time limit 8
+        select id as p_id, position_name, salary, degree_required, work_age from positions order by create_time limit 8
     </select>
     <!--搜索-->
     <select id="search" resultMap="positionMap" parameterType="map">
-        select *,position.id as p_id,i1.name as industry_name,i2.name as industry_position_name from position left join
+        select *,positions.id as p_id,i1.name as industry_name,i2.name as industry_position_name from positions left join
                                                                                                                         industry_category as i1 on i1.id = industry_id
                                                                                                               left join
                                                                                                                         industry_category as i2 on i2.id = position_category_id
@@ -57,12 +58,12 @@
     </select>
     <!--详情-->
     <select id="getPositionInfo" parameterType="int" resultMap="positionDetail">
-        select *,position.id as p_id,i1.name as industry_name,i2.name as industry_position_name from position left join
+        select *,positions.id as p_id,i1.name as industry_name,i2.name as industry_position_name from positions left join
                                                                                                                         industry_category as i1 on i1.id = industry_id
                                                                                                               left join
                                                                                                                         industry_category as i2 on i2.id = position_category_id
                                                                                                               where
-                                                                                                                        position.id=#{id};
+                                                                                                                        positions.id=#{id};
     </select>
     <!-- 地区 -->
     <select id="getPositionAreas" resultMap="areaMap" parameterType="map">
@@ -92,4 +93,64 @@
             </otherwise>
         </choose>
     </select>
+    <!--添加招聘-->
+    <insert id="addPosition" parameterType="com.robot.entity.Position" useGeneratedKeys="true" keyProperty="id">
+        insert into positions(position_name, company_name, company_size, company_nature, salary, degree_required, work_age, hiring, phone, job_description, company_introduction, create_time, industry_id, position_category_id)
+          values
+          (#{positionName}, #{companyName}, #{companySize}, #{companyNature}, #{salary}, #{degreeRequired}, #{workAge}, #{hiring}, #{phone}, #{jobDescription}, #{companyIntroduction}, #{createTime}, #{industry}, #{position})
+    </insert>
+    <insert id="addPositionRegion" parameterType="map">
+        insert into region_relation(region_id,position_id,region_type) values (#{regionId},#{positionId},'0')
+    </insert>
+    <!-- 修改招聘 -->
+    <update id="updatePosition" parameterType="com.robot.entity.Position">
+        update positions set id=#{id}
+        <if test="positionName!=null and positionName.trim().length()>0">
+            , position_name=#{positionName}
+        </if>
+        <if test="companyName!=null and companyName.trim().length()>0">
+            , company_name=#{companyName}
+        </if>
+        <if test="companySize!=null and companySize.trim().length()>0">
+            , company_size = #{companySize}
+        </if>
+        <if test="companyNature!=null and companyNature.trim().length()>0">
+            , company_nature = #{companyNature}
+        </if>
+        <if test="salary!=null and salary.trim().length()>0">
+            , salary = #{salary}
+        </if>
+        <if test="degreeRequired!=null and degreeRequired.trim().length()>0">
+            , degree_required = #{degreeRequired}
+        </if>
+        <if test="workAge!=null and workAge.trim().length()>0">
+            , work_age = #{workAge}
+        </if>
+        <if test="hiring!=null and hiring.trim().length()>0">
+            , hiring = #{hiring}
+        </if>
+        <if test="phone and phone.trim().length()>0">
+            , phone = #{phone}
+        </if>
+        <if test="jobDescription!=null and jobDescription.trim().length()>0">
+            , job_description = #{jobDescription}
+        </if>
+        <if test="companyIntroduction!=null and companyIntroduction.trim().length()>0">
+            , company_introduction =#{companyIntroduction}
+        </if>
+        <if test="industry!=null and industry.trim().length()>0">
+            , industry_id = #{industry}
+        </if>
+        <if test="position!=null and position.trim().length()>0">
+            , position_category_id = #{position}
+        </if>
+        where id=#{id}
+    </update>
+    <!--删除招聘-->
+    <delete id="deletePosition" parameterType="int">
+        delete from positions where id=#{id}
+    </delete>
+    <delete id="deletePositionRegion" parameterType="int">
+        delete from region_relation where position_id=#{positionId}
+    </delete>
 </mapper>

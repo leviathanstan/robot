@@ -22,6 +22,7 @@
         <result column="create_time" property="createTime"/>
         <result column="template_type" property="templateType"/>
         <collection property="questions" column="{surveyId=id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Question" select="getSurveyQuestions"/>
+        <collection property="categoryIds" column="{surveyId=id}" javaType="java.util.ArrayList" ofType="java.lang.Integer" select="getSurveyCategories"/>
     </resultMap>
 
     <resultMap id="questionMap" type="com.robot.entity.Question">
@@ -145,6 +146,10 @@
     <!--删除问卷-->
     <delete id="deleteSurveyById" parameterType="int">
         delete from survey where id=#{id}
+    </delete>
+    <!--删除问卷关联-->
+    <delete id="deleteSurveyCategory" parameterType="int">
+        delete from survey_category where survey_id=#{surveyId}
     </delete>
     <!--删除问题-->
     <delete id="deleteQuestionById" parameterType="int">

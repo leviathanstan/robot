@@ -11,10 +11,13 @@ import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author asce
@@ -26,6 +29,39 @@ public class PositionService {
     PositionDao positionDao;
 
     private final int PAGE_LENGTH = 15;
+
+    @Transactional
+    public String deletePosition(int positionId){
+        positionDao.deletePositionRegion(positionId);
+        positionDao.deletePosition(positionId);
+        return GsonUtil.getSuccessJson();
+    }
+
+    @Transactional
+    public String updatePosition(Position position,int[] regionIds){
+        positionDao.updatePosition(position);
+        Map<String,String> map = new HashMap<>();
+        map.put("positionId",position.getId()+"");
+        positionDao.deletePositionRegion(position.getId());
+        for(int regionId:regionIds) {
+            map.put("regionId",regionId+"");
+            positionDao.addPositionRegion(map);
+        }
+        return GsonUtil.getSuccessJson();
+    }
+
+    @Transactional
+    public String addPosition(Position position,int[] regionIds){
+        position.setCreateTime(LocalDateTime.now().toString());
+        positionDao.addPosition(position);
+        Map<String,String> map = new HashMap<>();
+        map.put("positionId",position.getId()+"");
+        for(int regionId:regionIds) {
+            map.put("regionId",regionId+"");
+            positionDao.addPositionRegion(map);
+        }
+        return GsonUtil.getSuccessJson();
+    }
 
     /**
      * 首页

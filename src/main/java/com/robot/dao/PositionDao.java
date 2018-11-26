@@ -6,6 +6,7 @@ import com.robot.entity.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author asce
@@ -17,4 +18,10 @@ public interface PositionDao {
     Position getPositionInfo(int id);
     ArrayList<Area> getAreas(int parentId);
     ArrayList<Industry> getIndustry(int parentId);
+
+    int addPosition(Position position);
+    int addPositionRegion(Map<String,String> map);
+    int updatePosition(Position position);
+    int deletePosition(int id);
+    int deletePositionRegion(int positionId);
 }

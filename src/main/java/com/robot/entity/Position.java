@@ -140,17 +140,17 @@ public class Position {
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
     }
+
+    public ArrayList<Area> getJobArea() {
+        return this.jobArea;
+    }
     /**
-     * 按照地区大小转换为一个字符串返回
+     * 按照地区大小转换为一个字符串
      * @author asce
      * @date 2018/11/20
      * @param
      * @return
      */
-    public ArrayList<Area> getJobArea() {
-        return this.jobArea;
-    }
-
     public void setJobArea(ArrayList<Area> jobArea) {
         jobArea.sort(Comparator.comparing(Area::getType));
         String str = "";
@@ -175,6 +175,14 @@ public class Position {
 
     public void setIndustry(String industry) {
         this.industry = industry;
+    }
+
+    public String getAreas() {
+        return areas;
+    }
+
+    public void setAreas(String areas) {
+        this.areas = areas;
     }
 
     @Override

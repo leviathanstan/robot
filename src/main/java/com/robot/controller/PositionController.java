@@ -1,5 +1,7 @@
 package com.robot.controller;
 
+import com.robot.annotation.PermissionsCheck;
+import com.robot.entity.Position;
 import com.robot.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,5 +44,26 @@ public class PositionController {
     @RequestMapping(value = "/getLevelIndustry", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getLevelIndustry(String parentId){
         return positionService.getLevelIndustry(parentId);
+    }
+
+    //@PermissionsCheck
+    @ResponseBody
+    @RequestMapping(value = "manager/deletePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String deletePosition(int id){
+        return positionService.deletePosition(id);
+    }
+
+    //@PermissionsCheck
+    @ResponseBody
+    @RequestMapping(value = "manager/updatePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String updatePosition(Position position, int[] regionIds){
+        return positionService.updatePosition(position,regionIds);
+    }
+
+    //@PermissionsCheck
+    @ResponseBody
+    @RequestMapping(value = "manager/addPosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String addPosition(Position position, @RequestParam int[] regionIds){
+        return positionService.addPosition(position,regionIds);
     }
 }

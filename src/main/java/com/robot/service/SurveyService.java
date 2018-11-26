@@ -69,6 +69,8 @@ public class SurveyService {
             sum += surveyDao.deleteChoiceByQuestion(question.getId());
             sum += surveyDao.deleteQuestionById(question.getId());
         }
+        num += survey.getCategoryIds().size();
+        sum += surveyDao.deleteSurveyCategory(id);
         sum += surveyDao.deleteSurveyById(id);
         if (sum != num + 1){
             throw new RuntimeException();

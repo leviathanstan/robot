@@ -23,6 +23,7 @@ public interface SurveyDao {
     int updateQuestion(Question question);
     int updateChoice(Choice choice);
     int deleteSurveyById(int id);
+    int deleteSurveyCategory(int surveyId);
     int deleteQuestionById(int id);
     int deleteChoiceById(int id);
     int deleteChoiceByQuestion(int id);
