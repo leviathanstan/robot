@@ -4,20 +4,22 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.AnswerDao;
 import com.robot.dao.SurveyDao;
+import com.robot.dto.ChoiceStatisticDto;
+import com.robot.dto.QuestionStatisticDto;
+import com.robot.dto.SurveyStatisticDto;
 import com.robot.entity.*;
 import com.robot.util.AccessUtil;
 import com.robot.util.CommonUtil;
-import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import sun.security.jgss.GSSUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,38 @@ public class SurveyService {
     AnswerDao answerDao;
     private final int LENGTH = 10;
 
-
+    /**
+     * 某问卷数据统计
+     * @author asce
+     * @date 2018/11/27
+     * @param
+     * @return
+     */
+    public String getSurveyStatistic(int surveyId){
+        SurveyStatisticDto surveyStatisticDto = new SurveyStatisticDto();
+        surveyStatisticDto.setCount(answerDao.getAnswerCount(surveyId));
+        Survey survey = surveyDao.getSurveyInfo(surveyId);
+        ArrayList<QuestionStatisticDto> questionStatisticDtos = new ArrayList<>();
+        for(Question question:survey.getQuestions()){
+            QuestionStatisticDto questionStatisticDto = new QuestionStatisticDto();
+            questionStatisticDto.setQuestion(question);
+            ArrayList<ChoiceStatisticDto> choiceStatisticDtos = new ArrayList<>();
+            for(Choice choice:question.getChoices()){
+                ChoiceStatisticDto choiceStatisticDto = new ChoiceStatisticDto();
+                choiceStatisticDto.setChoice(choice);
+                if(choice.getType()==0) {
+                    choiceStatisticDto.setCount(answerDao.getChoiceAnswerCount(choice.getId()));
+                }else if(choice.getType()==1){
+                    //choiceStatisticDto.setCount(answerDao.getTextAnswerCount(question.getId()));
+                }
+                choiceStatisticDtos.add(choiceStatisticDto);
+            }
+            questionStatisticDto.setChoiceStatisticDtos(choiceStatisticDtos);
+            questionStatisticDtos.add(questionStatisticDto);
+        }
+        surveyStatisticDto.setQuestionStatisticDtos(questionStatisticDtos);
+        return GsonUtil.getSuccessJson(surveyStatisticDto);
+    }
 
     /**
      * 搜索问卷

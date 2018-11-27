@@ -88,7 +88,7 @@
     <bean id="scheduleTask" class="com.robot.schedule.ScheduleTask" />
     <task:scheduled-tasks>
         <task:scheduled ref="scheduleTask" method="runSpider"
-        cron="0 0 19 * * ?" /><!-- 每天凌晨3点执行  -->
+        cron="0 0 3 * * ?" /><!-- 每天凌晨3点执行  -->
     </task:scheduled-tasks>
 
 </beans>

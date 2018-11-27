@@ -28,7 +28,7 @@ public class CommonService {
     ConferenceService conferenceService;
 
     private enum SearchEnum {
-        INFORMATION(1),PRODUCT(2),WORK(3);
+        INFORMATION(1),PRODUCT(2);
         private final int number;
 
         SearchEnum(int number) {
@@ -88,8 +88,6 @@ public class CommonService {
      */
     public String find(HashMap<String,String> args) {
         String channel = args.get("channel");
-        System.out.println(channel);
-        System.out.println(args.get("content"));
         int channelOption = CommonUtil.formateParmNum(channel);
         SearchEnum searchEnum = getSearchEnum(channelOption);
         HashMap<String,Object> map = new HashMap<>();
@@ -103,9 +101,6 @@ public class CommonService {
                 break;
             case PRODUCT:
                 map.put("results",productService.searchProduct(args));
-
-                break;
-            case WORK:
 
                 break;
             default:

@@ -8,15 +8,15 @@ import java.util.ArrayList;
  * @date 2018/11/27
  */
 public class SurveyStatisticDto {
-    private ArrayList<AnswerStatisticDto> answerStatisticDtos;
+    private ArrayList<QuestionStatisticDto> questionStatisticDtos;
     private int count;
 
-    public ArrayList<AnswerStatisticDto> getAnswerStatisticDtos() {
-        return answerStatisticDtos;
+    public ArrayList<QuestionStatisticDto> getQuestionStatisticDtos() {
+        return questionStatisticDtos;
     }
 
-    public void setAnswerStatisticDtos(ArrayList<AnswerStatisticDto> answerStatisticDtos) {
-        this.answerStatisticDtos = answerStatisticDtos;
+    public void setQuestionStatisticDtos(ArrayList<QuestionStatisticDto> questionStatisticDtos) {
+        this.questionStatisticDtos = questionStatisticDtos;
     }
 
     public int getCount() {

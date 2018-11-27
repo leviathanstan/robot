@@ -80,12 +80,14 @@
           <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
             #{item}
           </foreach>
-         and (locate(#{content},title)>0 or
-                                          id in(
-                                                select distinct information_id from information_content where
-                                                                                                              locate(#{content},content)>0
-                                                )
-              )
+        <if test="content!=null and content.trim().length()>0">
+            and (locate(#{content},title)>0 or
+                                              id in(
+                                                    select distinct information_id from information_content where
+                                                                                                                  locate(#{content},content)>0
+                                                    )
+                )
+        </if>
     </select>
     <!-- 相关关键字-->
     <select id="findRelatedKeyword" parameterType="int" resultType="java.lang.String">

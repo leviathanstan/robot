@@ -17,9 +17,7 @@ public class SpiderManager {
     private static final String OFWEEK_PROJECT = "OfWeek";
     private static final String GDROBOT_PROJECT = "GDRobot";
 
-    @Value("#{'${GDRobotModels}'.split(',')}")
     private static List<String> GDRobot;
-    @Value("#{'${OfWeekModels}'.split(',')}")
     private static List<String> OfWeek;
 
     public static Map<String, List<String>> getParamMap(){
@@ -38,5 +36,23 @@ public class SpiderManager {
             }
         }
         return spiderStatuses;
+    }
+
+    public List<String> getGDRobot() {
+        return GDRobot;
+    }
+
+    @Value("#{'${GDRobotModels}'.split(',')}")
+    public void setGDRobot(List<String> GDRobot) {
+        SpiderManager.GDRobot = GDRobot;
+    }
+
+    public List<String> getOfWeek() {
+        return OfWeek;
+    }
+
+    @Value("#{'${OfWeekModels}'.split(',')}")
+    public void setOfWeek(List<String> ofWeek) {
+        OfWeek = ofWeek;
     }
 }

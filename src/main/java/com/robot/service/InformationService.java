@@ -165,7 +165,7 @@ public class InformationService {
     public PageInfo<RobotNews> findInformation(HashMap<String,String> args){
         int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
         int category = CommonUtil.formateParmNum(args.get("categoryId"));
-        ArrayList categoryIds = new ArrayList();
+        ArrayList<Integer> categoryIds = new ArrayList();
         //先判断是否是分类查找
         switch (category){
             case   0:
@@ -208,6 +208,9 @@ public class InformationService {
         //如果还是空，则根据具体一个类别查找
         if (categoryIds.size()==0){
             categoryIds.add(category);
+        }
+        for(int testI:categoryIds){
+            System.out.println(testI);
         }
         //由于泛型，另外封装一个map
         HashMap<String,Object> dataMap = new HashMap();

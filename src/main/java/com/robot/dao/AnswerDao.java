@@ -13,8 +13,8 @@ public interface AnswerDao {
     int addTextAnswer(Answer answer);
     int addChoiceAnswer(Answer answer);
     int addRecord(HashMap<String,String> map);
-    ArrayList<String> getTextAnswerCount(int questionId);
-    int getChoiceAnswerCount(int questionId);
-    int getAnswerCount(int surveyId);
+    //ArrayList<String> getTextAnswerCount(int questionId);
+    int getChoiceAnswerCount(int choiceId);
+    int getAnswerCount(int questionId);
 
 }
