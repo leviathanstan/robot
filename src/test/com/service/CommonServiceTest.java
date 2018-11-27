@@ -4,6 +4,7 @@ import com.robot.entity.Area;
 import com.robot.entity.Position;
 import com.robot.entity.Question;
 import com.robot.entity.RobotNews;
+import com.robot.scrapy.SpiderManager;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import com.robot.util.Md5Util;
@@ -163,4 +164,6 @@ public class CommonServiceTest {
         position.setJobArea(areas);
         System.out.println(position.getJobArea());
     }
+
+
 }

@@ -2,6 +2,9 @@ package com.robot.dao;
 
 import com.robot.entity.Answer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * @author asce
  * @date 2018/11/15
@@ -9,4 +12,9 @@ import com.robot.entity.Answer;
 public interface AnswerDao {
     int addTextAnswer(Answer answer);
     int addChoiceAnswer(Answer answer);
+    int addRecord(HashMap<String,String> map);
+    ArrayList<String> getTextAnswerCount(int questionId);
+    int getChoiceAnswerCount(int questionId);
+    int getAnswerCount(int surveyId);
+
 }

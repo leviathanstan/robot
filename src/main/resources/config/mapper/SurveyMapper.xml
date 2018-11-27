@@ -183,5 +183,8 @@
             </when>
         </choose>
     </select>
-
+    <!--根据问题id查找问卷id-->
+    <select id="getSurveyIdByQuestion" parameterType="int" resultType="int">
+        select survey_id from question where id=#{questionId}
+    </select>
 </mapper>

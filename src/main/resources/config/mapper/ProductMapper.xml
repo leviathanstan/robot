@@ -7,7 +7,7 @@
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="lastUpdateTime" column="pro_last_up_time"/>
-        <result property="coverImg" column="cover"/>
+        <result property="img" column="cover"/>
     </resultMap>
     <!-- 首页产品 -->
     <select id="getProductLibrary" resultMap="productMap">

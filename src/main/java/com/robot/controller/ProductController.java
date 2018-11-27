@@ -35,19 +35,6 @@ public class ProductController {
     }
 
     /**
-     *  获取产品所有分类
-     * @author asce
-     * @date 2018/9/22
-     * @param
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value= "/getCategory", method = RequestMethod.GET)
-    public String getCategory(){
-        return productService.getCategory();
-    }
-
-    /**
      * @author asce
      * @date 2018/9/22
      * @param id    产品id

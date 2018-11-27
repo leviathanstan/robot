@@ -88,6 +88,8 @@ public class CommonService {
      */
     public String find(HashMap<String,String> args) {
         String channel = args.get("channel");
+        System.out.println(channel);
+        System.out.println(args.get("content"));
         int channelOption = CommonUtil.formateParmNum(channel);
         SearchEnum searchEnum = getSearchEnum(channelOption);
         HashMap<String,Object> map = new HashMap<>();

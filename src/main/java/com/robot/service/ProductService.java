@@ -3,9 +3,7 @@ package com.robot.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import com.robot.dao.CategoryDao;
 import com.robot.dao.ProductDao;
-import com.robot.dto.CategoryDto;
 import com.robot.entity.Product;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
@@ -27,8 +25,6 @@ public class ProductService {
 
     @Autowired
     private ProductDao productDao;
-    @Autowired
-    private CategoryDao categoryDao;
 
     public int getSearchCount(String content){
         return productDao.getSearchCount(content);
@@ -63,23 +59,6 @@ public class ProductService {
         List<Product> products = productDao.findProductIf(args);
         PageInfo<Product> pageInfo = new PageInfo<>(products);
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class,"company","load","axis","imgs","effectTime","lastUpdateTime"),pageInfo);
-    }
-
-    /**
-     * 取得产品的所有可能分类
-     * @author asce
-     * @date 2018/9/22
-     * @param
-     * @return java.lang.String
-     */
-    public String getCategory(){
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setAreas(categoryDao.getArea());
-        categoryDto.setBrands(categoryDao.getProductBrand());
-        categoryDto.setIndustries(categoryDao.getProductIndustry());
-        categoryDto.setParts(categoryDao.getProductParts());
-        categoryDto.setRobots(categoryDao.getProductRobot());
-        return GsonUtil.getSuccessJson(categoryDto);
     }
 
     /**

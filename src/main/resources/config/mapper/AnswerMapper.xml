@@ -7,9 +7,24 @@
     <insert id="addTextAnswer" parameterType="com.robot.entity.Answer">
         insert into text_answers (ip,question_id,content) values (#{ip},#{questionId},#{content});
     </insert>
-
     <!--添加选项回答-->
     <insert id="addChoiceAnswer" parameterType="com.robot.entity.Answer">
         insert into choice_answers (ip,choice_id,content) values (#{ip},#{choiceId},#{content});
     </insert>
+    <!--回答用户记录-->
+    <insert id="addRecord" parameterType="map">
+        insert into answer_record (ip,survey_id,answer_id) values (#{ip},#{surveyId},#{answerId});
+    </insert>
+    <!--文字回答统计-->
+    <select id="getTextAnswerCount" parameterType="int" resultType="String">
+        select content from text_answer where question_id=#{questionId}
+    </select>
+    <!--选项回答统计-->
+    <select id="getChoiceAnswerCount" parameterType="int" resultType="int">
+        select count(id) from choice_answers where choice_id=#{choiceId}
+    </select>
+    <!--回答总数统计-->
+    <select id="getAnswerCount" parameterType="int" resultType="int">
+        select count(id) from answer_record where survey_id=#{surveyId}
+    </select>
 </mapper>

@@ -164,7 +164,7 @@ public class InformationService {
      */
     public PageInfo<RobotNews> findInformation(HashMap<String,String> args){
         int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
-        int category = CommonUtil.formateParmNum(args.get("category"));
+        int category = CommonUtil.formateParmNum(args.get("categoryId"));
         ArrayList categoryIds = new ArrayList();
         //先判断是否是分类查找
         switch (category){

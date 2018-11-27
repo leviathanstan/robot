@@ -1,6 +1,5 @@
 package com.robot.entity;
 
-import java.time.LocalDateTime;
 
 /**
  * @author asce
@@ -10,7 +9,7 @@ public class Conference {
 
     private Integer id;
     private Integer userId;
-    private String coverImg;
+    private String img;
     private String title;
     private String holdTime;
     private String address;
@@ -26,12 +25,12 @@ public class Conference {
         this.id = id;
     }
 
-    public String getCoverImg() {
-        return coverImg;
+    public String getImg() {
+        return img;
     }
 
-    public void setCoverImg(String coverImg) {
-        this.coverImg = coverImg;
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getTitle() {
@@ -94,7 +93,7 @@ public class Conference {
     public String toString() {
         return "Conference{" +
                 "id=" + id +
-                ", coverImg='" + coverImg + '\'' +
+                ", coverImg='" + img + '\'' +
                 ", title='" + title + '\'' +
                 ", holdTime=" + holdTime +
                 ", address='" + address + '\'' +

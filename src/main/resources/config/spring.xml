@@ -29,10 +29,10 @@
             <list>
                 <value>classpath:properties/jdbc.properties</value>
                 <value>classpath:properties/email.properties</value>
+                <value>classpath:properties/spider.properties</value>
             </list>
         </property>
     </bean>
-
     <!--mysql datasource -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="jdbcUrl" value="${jdbc.url}" />
@@ -88,7 +88,7 @@
     <bean id="scheduleTask" class="com.robot.schedule.ScheduleTask" />
     <task:scheduled-tasks>
         <task:scheduled ref="scheduleTask" method="runSpider"
-        cron="0 0 3 * * ?" /><!-- 每天凌晨3点执行  -->
+        cron="0 0 19 * * ?" /><!-- 每天凌晨3点执行  -->
     </task:scheduled-tasks>
 
 </beans>

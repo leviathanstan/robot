@@ -28,4 +28,5 @@ public interface SurveyDao {
     int deleteChoiceById(int id);
     int deleteChoiceByQuestion(int id);
     ArrayList<Survey> search(Map<String,String> args);
+    int getSurveyIdByQuestion(int questionId);
 }

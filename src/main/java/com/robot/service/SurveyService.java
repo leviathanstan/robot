@@ -35,6 +35,8 @@ public class SurveyService {
     AnswerDao answerDao;
     private final int LENGTH = 10;
 
+
+
     /**
      * 搜索问卷
      * @author asce
@@ -219,6 +221,7 @@ public class SurveyService {
             }
         }
         User user = (User) session.getAttribute("user");
+        // TODO: 2018/11/27  
         survey.setUserId(1);//user.getId());
         survey.setCreateTime(LocalDateTime.now().toString());
         int sum = 0;
@@ -278,7 +281,13 @@ public class SurveyService {
                 sum += answerDao.addTextAnswer(answer);
             }
         }
-        if(sum!=answers.length){
+        int surveyId = surveyDao.getSurveyIdByQuestion(answers[0].getQuestionId());
+        HashMap<String,String> map = new HashMap<>();
+        map.put("ip",ip);
+        map.put("surveyId",surveyId+"");
+        map.put("answerTime",LocalDateTime.now().toString());
+        sum += answerDao.addRecord(map);
+        if(sum!=answers.length+1){
             throw new RuntimeException();
         }
         return GsonUtil.getSuccessJson();

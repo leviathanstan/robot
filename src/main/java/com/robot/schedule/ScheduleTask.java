@@ -23,7 +23,7 @@ public class ScheduleTask {
 				}
 				throw new ConnectException("爬虫状态异常");
 			}
-			if (status.getProjects().contains("robot")) {
+			if (status.getProjects().contains("OfWeek")) {
 				List<SpiderStatus> spiderStatuses = SpiderManager.runSpider();
 				if (Spider.isStatusError(status)) {
 					System.out.println("爬虫状态异常：" + status.stackTrace());

@@ -57,8 +57,8 @@
     <!--搜索-->
     <select id="find" resultMap="informationDetail" parameterType="map">
         select * from information where 1=1
-        <if test="title !=null and title.trim().length()>0 ">
-            and locate(#{title},content)>0 or id in(select distinct information_id from information_content where locate(#{content},content)>0)
+        <if test="content !=null and content.trim().length()>0 ">
+            and locate(#{content},title)>0 or id in(select distinct information_id from information_content where locate(#{content},content)>0)
         </if>
         <if test="categoryIds !=null and categoryIds.size()!=0">
             and category_id in
@@ -71,7 +71,7 @@
     <select id="searchCount" resultType="int" parameterType="java.lang.String">
         select count(id) from information where 1=1
         <if test="_parameter!=null and _parameter.trim().length()>0">
-            and locate(#{content},title) or id in(select distinct information_id from information_content where locate(#{content},content)>0)
+            and locate(#{content},title)>0 or id in(select distinct information_id from information_content where locate(#{content},content)>0)
         </if>
     </select>
     <!-- 搜索某些类别下结果总数-->
@@ -80,7 +80,7 @@
           <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
             #{item}
           </foreach>
-         and (locate(#{content},title) or
+         and (locate(#{content},title)>0 or
                                           id in(
                                                 select distinct information_id from information_content where
                                                                                                               locate(#{content},content)>0

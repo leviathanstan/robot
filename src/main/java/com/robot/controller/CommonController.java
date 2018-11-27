@@ -1,5 +1,6 @@
 package com.robot.controller;
 
+import com.robot.schedule.ScheduleTask;
 import com.robot.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,9 @@ public class CommonController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/search", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/search", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String search(@RequestParam HashMap args){
         return commonService.find(args);
     }
+
 }

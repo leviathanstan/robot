@@ -17,6 +17,7 @@ public class Question {
     private Integer minNumber;//最少选项、字数                       0代表无限制，null代表无效数据
     private Integer maxNumber;//最多选项、字数                       0代表无限制，null代表无效数据
     private Integer precedentChoiceId;//先例选项                    null代表无关联
+    private Integer precedentQuestionId;//先例问题                  null代表无关联
     private Integer page;//当前页数                                 0代表无分页，null代表无效数据
     private ArrayList<Choice> choices;
 
@@ -106,6 +107,14 @@ public class Question {
 
     public void setSurveyId(Integer surveyId) {
         this.surveyId = surveyId;
+    }
+
+    public Integer getPrecedentQuestionId() {
+        return precedentQuestionId;
+    }
+
+    public void setPrecedentQuestionId(Integer precedentQuestionId) {
+        this.precedentQuestionId = precedentQuestionId;
     }
 
     @Override

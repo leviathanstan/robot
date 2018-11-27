@@ -15,7 +15,7 @@ public class Product {
     private int price;
     private String brand;
     private String introduction;
-    private String coverImg;
+    private String img;
     private Company company;
     private String load;     //负载
     private String axis;     //轴
@@ -56,12 +56,12 @@ public class Product {
         this.introduction = introduction;
     }
 
-    public String getCoverImg() {
-        return coverImg;
+    public String getImg() {
+        return img;
     }
 
-    public void setCoverImg(String coverImg) {
-        this.coverImg = coverImg;
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public Company getCompany() {
@@ -128,7 +128,7 @@ public class Product {
                 ", price=" + price +
                 ", brand='" + brand + '\'' +
                 ", introduction='" + introduction + '\'' +
-                ", coverImg='" + coverImg + '\'' +
+                ", coverImg='" + img + '\'' +
                 ", company=" + company +
                 ", load='" + load + '\'' +
                 ", axis='" + axis + '\'' +
