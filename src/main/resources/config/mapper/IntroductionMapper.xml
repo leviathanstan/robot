@@ -20,8 +20,11 @@
         select * from introduction where id=#{id}
     </select>
 
-    <delete id="delete" parameterType="int">
-        delete from introduction where id=#{id}
+    <delete id="delete">
+        delete from introduction where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
     <insert id="add" parameterType="com.robot.entity.Introduction">

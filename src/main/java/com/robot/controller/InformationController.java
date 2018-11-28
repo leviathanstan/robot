@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
 /**
  * @author asce
  * @date 2018/11/11
@@ -19,6 +22,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class InformationController {
     @Autowired
     private InformationService informationService;
+
+    //@PermissionsCheck(access = "user")
+    @ResponseBody
+    @RequestMapping(value = "/getSubscribe", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getSubscribe(HttpSession session){
+        return informationService.getIndexSubscribe(session);
+    }
 
     /**
      * 获取行业动态具体内容
@@ -276,14 +286,14 @@ public class InformationController {
 
     /**
      * 删除文章
-     * @param id
+     * @param ids
      * @return
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
     @RequestMapping(value = "deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String deleteInformation(@RequestParam String id){
-        return informationService.deleteInformation(id);
+    public String deleteInformation(@RequestParam List<Integer> ids){
+        return informationService.deleteInformation(ids);
     }
 
     /**

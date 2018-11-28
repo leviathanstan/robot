@@ -174,7 +174,7 @@ public class SurveyService {
      * @param
      * @return
      */
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public String updateQuestion(Question question){
         String result = validateQuestion(question);
         if (!result.equals("success")){
@@ -197,14 +197,29 @@ public class SurveyService {
      * @param
      * @return
      */
+    @Transactional
     public String updateSurvey(Survey survey){
         String result = validateSurvey(survey);
         if (!result.equals("success")){
             return GsonUtil.getErrorJson(result);
         }
-        if(surveyDao.updateSurvey(survey)!=1){
-            return GsonUtil.getErrorJson("修改失败");
+        survey.setUpdateTime(LocalDateTime.now().toString());
+        surveyDao.deleteSurveyCategory(survey.getId());
+        Map<String,String> map = new HashMap<>();
+        map.put("surveyId", survey.getId()+"");
+        if(survey.getCategoryIds()!=null){
+            for(Integer categoryId:survey.getCategoryIds()){
+                map.put("categoryId",categoryId+"");
+                surveyDao.addSurveyCategory(map);
+            }
         }
+        if(survey.getQuestions()!=null){
+            for(Question question:survey.getQuestions()){
+                question.setSurveyId(survey.getId());
+                updateQuestion(question);
+            }
+        }
+        surveyDao.updateSurvey(survey);
         return GsonUtil.getSuccessJson();
     }
 
@@ -245,13 +260,6 @@ public class SurveyService {
         String result = validateSurvey(survey);
         if (!result.equals("success")){
             return GsonUtil.getErrorJson(result);
-        }
-        for(Question question:survey.getQuestions()) {
-            question.setSurveyId(0);
-            result = validateQuestion(question);
-            if (!result.equals("success")){
-                return GsonUtil.getErrorJson(result);
-            }
         }
         User user = (User) session.getAttribute("user");
         // TODO: 2018/11/27  
@@ -360,6 +368,15 @@ public class SurveyService {
         if(survey.getStatus()!=0&&survey.getStatus()!=1){
             return "发布状态不和法";
         }
+        if(survey.getQuestions()!=null){
+            String result;
+            for(Question question:survey.getQuestions()){
+                result = validateQuestion(question);
+                if(!result.equals("success")){
+                    return result;
+                }
+            }
+        }
         return "success";
     }
 
@@ -390,16 +407,15 @@ public class SurveyService {
         if(question.getPage()==null){
             return "页数不能为空";
         }
-        if(question.getSurveyId()==null){
-            return "没有关联问卷";
-        }
         if(question.getTitle()==null){
             return "标题不能为空";
         }
-        for(Choice choice:question.getChoices()){
-            result = validateChoice(choice);
-            if(!result.equals("success")){
-                return result;
+        if(question.getChoices()!=null){
+            for(Choice choice:question.getChoices()){
+                result = validateChoice(choice);
+                if(!result.equals("success")){
+                    return result;
+                }
             }
         }
         return "success";

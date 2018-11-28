@@ -9,6 +9,7 @@ import com.robot.util.GsonUtil;
 import com.robot.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -188,14 +189,15 @@ public class IntroductionService {
 
     /**
      * 删除专家、高校、协会成员
-     * @param id
+     * @param ids
      * @return
      */
-    public String deleteIntroduction(String id){
-        int infoId;
-        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
-        if(1!=introductionDao.delete(infoId))
-            return GsonUtil.getErrorJson();
+    @Transactional
+    public String deleteIntroduction(List<Integer> ids){
+        int count = ids.size();
+        if(count!=introductionDao.delete(ids)){
+            throw new RuntimeException();
+        }
         return GsonUtil.getSuccessJson();
     }
 

@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +30,43 @@ public class UserService {
      */
     ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 
+    /**
+     * 删除订阅
+     * @author asce
+     * @date 2018/11/28
+     * @param
+     * @return
+     */
+    public String deleteSubscribe(int categoryId,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        Map<String,Integer> map = new HashMap<>();
+        map.put("userId",user.getId());
+        map.put("categoryId",categoryId);
+        if(userDao.deleteSubscribe(map)!=1){
+            return GsonUtil.getErrorJson("你没有这个订阅");
+        }
+        return GsonUtil.getSuccessJson();
+    }
 
+    /**
+     * 订阅
+     * @author asce
+     * @date 2018/11/28
+     * @param
+     * @return
+     */
+    public String addSubscribe(int categoryId, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        Map<String,Integer> map = new HashMap<>();
+        map.put("userId",user.getId());
+        map.put("categoryId",categoryId);
+        Integer dbRecord = userDao.selectSubscribeInfo(map);
+        if(dbRecord!=null){
+            return GsonUtil.getErrorJson("你已订阅过");
+        }
+        userDao.addSubscribe(map);
+        return GsonUtil.getSuccessJson();
+    }
 
     /**
      * 搜索用户

@@ -3,9 +3,11 @@ package com.robot.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.InformationDao;
+import com.robot.dao.UserDao;
 import com.robot.dto.RelatedReadingDto;
 import com.robot.entity.Detail;
 import com.robot.entity.RobotNews;
+import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import com.robot.util.ValidateUtil;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -25,6 +28,8 @@ public class InformationService {
 
     @Autowired
     private InformationDao informationDao;
+    @Autowired
+    private UserDao userDao;
 
     /**
      * information类别
@@ -80,6 +85,8 @@ public class InformationService {
      */
     private final int PAGE_LENGTH = 12;
 
+    private final int SUBSCRIBE_LENGTH = 15;
+
     //******************************************管理********************************************//
 
     /**
@@ -106,17 +113,15 @@ public class InformationService {
     }
     /**
      * 删除文章
-     * @param id
+     * @param ids
      * @return
      */
     @Transactional
-    public String deleteInformation(String id){
-        int infoId;
-        if((infoId = CommonUtil.formatPageNum(id)) == 0)return GsonUtil.getErrorJson();
+    public String deleteInformation(List<Integer> ids){
+        int count = ids.size();
         try{
-            System.out.println(infoId);
-            informationDao.deleteContent(infoId);
-            if(1!=informationDao.deleteInformation(infoId)){
+            informationDao.deleteContent(ids);
+            if(count!=informationDao.deleteInformation(ids)){
                 throw new RuntimeException();
             }
         }catch (Exception e){
@@ -286,6 +291,37 @@ public class InformationService {
         categoryIds.clear();
         return countMap;
     }
+    //******************************************订阅内容********************************************//
+    /**
+     * 获取订阅内容
+     * @author asce
+     * @date 2018/11/28
+     * @param
+     * @return
+     */
+    public String getIndexSubscribe(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        ArrayList<RobotNews> information = new ArrayList<>();
+        ArrayList<Integer> categoryIds = userDao.getUserSubscribe(user.getId());
+        int average = SUBSCRIBE_LENGTH / categoryIds.size();
+        int remainder = SUBSCRIBE_LENGTH % categoryIds.size();
+        Map<String,Integer> map = new HashMap<>();
+        if(categoryIds!=null){
+            for(int i = 0;i<categoryIds.size();i++){
+                int categoryId = categoryIds.get(i);
+                if(i==0){
+                    map.put("number",average+remainder);
+                }else{
+                    map.put("number",average);
+                }
+                map.put("categoryId", categoryId);
+                information.addAll(informationDao.getIndexInformation(map));
+            }
+        }
+        CommonUtil.formateDateTimeToDate(information);
+        return GsonUtil.getSuccessJson(information);
+    }
+
     //******************************************协会********************************************//
 
     /**
@@ -313,7 +349,7 @@ public class InformationService {
     }
 
     /**
-     * 获取行业动态的前八条
+     * 获取首页行业动态
      *
      * @return
      * @author hua

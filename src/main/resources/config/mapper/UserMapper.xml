@@ -48,4 +48,20 @@
 			</otherwise>
 		</choose>
 	</select>
+	<!--订阅-->
+	<insert id="addSubscribe" parameterType="map">
+		insert into subscribe (user_id,category_id) values (#{userId},#{categoryId});
+	</insert>
+	<!--取消订阅-->
+	<delete id="deleteSubscribe" parameterType="map">
+		delete from subscribe where user_id=#{userId} and category_id=#{categoryId};
+	</delete>
+	<!--查看是否订阅-->
+	<select id="selectSubscribeInfo" parameterType="map" resultType="java.lang.Integer">
+		select id from subscribe where user_id=#{userId} and category_id=#{categoryId}
+	</select>
+	<!--查看所有订阅-->
+	<select id="getUserSubscribe" parameterType="int" resultType="int">
+		select category_id from subscribe where user_id=#{user_id};
+	</select>
 </mapper>

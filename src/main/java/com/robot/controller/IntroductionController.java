@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author asce
@@ -88,14 +91,14 @@ public class IntroductionController {
 
     /**
      * 删除专家，高校，协会会员
-     * @param id
+     * @param ids
      * @return
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
     @RequestMapping(value = "manager/deleteIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String deleteIntroduction(String id){
-        return introductionService.deleteIntroduction(id);
+    public String deleteIntroduction(@RequestParam List<Integer> ids){
+        return introductionService.deleteIntroduction(ids);
     }
 
     /**

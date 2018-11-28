@@ -110,11 +110,17 @@
     </select>
     <!--删除正文内容-->
     <delete id="deleteContent" parameterType="int">
-        delete from information_content where information_id=#{id}
+        delete from information_content where information_id in
+                                                            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                                                                #{item}
+                                                            </foreach>
     </delete>
     <!--删除文章-->
-    <delete id="deleteInformation" parameterType="int">
-        delete from information where id=#{id}
+    <delete id="deleteInformation">
+        delete from information where id in
+                                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                                            #{item}
+                                        </foreach>
     </delete>
     <!--添加-->
     <insert id="add" parameterType="com.robot.entity.RobotNews">
