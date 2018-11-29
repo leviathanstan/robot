@@ -6,12 +6,14 @@ import com.robot.entity.Choice;
 import com.robot.entity.Question;
 import com.robot.entity.Survey;
 import com.robot.service.SurveyService;
+import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,14 +36,14 @@ public class SurveyController {
 
     /**
      * 删除问卷
-     * @param id
+     * @param ids
      * @return
      */
     //@PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteSurvey", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String deleteSurvey(int id){
-        return surveyService.deleteSurveyById(id);
+    public String deleteSurvey(@RequestParam List<Integer> ids){
+        return surveyService.deleteSurveyById(ids);
     }
 
     /**
@@ -137,8 +139,8 @@ public class SurveyController {
      */
     @ResponseBody
     @RequestMapping(value = "/addAnswer", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    public String addAnswer(@RequestBody Answer[] answers, HttpServletRequest request){
-        return surveyService.addAnswer(answers, request);
+    public String addAnswer(@RequestBody Map<String,Object> args, HttpServletRequest request){
+        return surveyService.addAnswer(args, request);
     }
     /**
      * 添加选项

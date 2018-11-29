@@ -53,7 +53,33 @@ public class IntroductionService {
     }
     private final int PAGE_LENGTH = 8;
 
+    public PageInfo<Introduction> search(Map<String,String> args){
+        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        int category = CommonUtil.formateParmNum(args.get("categoryId"));
+        IntroductionEnum introductionEnum = getSearchEnum(category);
+        HashMap<String,Object> dataMap = new HashMap();
+        dataMap.put("content",args.get("content"));
+        dataMap.put("categoryId",introductionEnum.getId());
+        //查找
+        PageHelper.startPage(pageNum,PAGE_LENGTH);
+        List<Introduction> introduction = introductionDao.find(dataMap);
+        PageInfo<Introduction> pageInfo = new PageInfo<>(introduction);
+        for (Introduction information : introduction) {
+            information.setIntroduction(CommonUtil.getPreview(information.getIntroduction()));
+        }
+        return pageInfo;
+    }
 
+
+    private IntroductionEnum getSearchEnum(int option){
+        IntroductionEnum[] searchEnums = IntroductionEnum.values();
+        for(int i = 0; i< searchEnums.length;i++){
+            if (searchEnums[i].getId()==option){
+                return searchEnums[i];
+            }
+        }
+        return IntroductionEnum.EXPERT;
+    }
     /**
      * 获取专家具体信息
      * @author hua

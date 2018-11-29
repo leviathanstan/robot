@@ -13,7 +13,7 @@
     </select>
 
     <select id="getIntroductionList" parameterType="int" resultMap="introductionMap">
-        select id, name from introduction where category_id=#{categoryId}
+        select id, name, content from introduction where category_id=#{categoryId}
     </select>
 
     <select id="findIntroductionInfo" parameterType="int" resultMap="introductionMap">
@@ -45,5 +45,9 @@
 
     <select id="findIntroductionById" parameterType="int" resultType="java.lang.String">
         select name from introduction where id=#{id}
+    </select>
+
+    <select id="find" parameterType="map" resultMap="introductionMap">
+        select id, name, content from introduction where category_id=#{categoryId} and (locate(#{content},name)>0 or locate(#{content},content)>0)
     </select>
 </mapper>

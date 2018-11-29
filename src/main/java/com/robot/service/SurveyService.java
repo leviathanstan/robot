@@ -96,19 +96,21 @@ public class SurveyService {
      * @return
      */
     @Transactional
-    public String deleteSurveyById(int id){
-        int sum = 0, num = 0;
-        Survey survey = surveyDao.getSurveyInfo(id);
-        for(Question  question:survey.getQuestions()){
-            num += question.getChoices().size() + 1;
-            sum += surveyDao.deleteChoiceByQuestion(question.getId());
-            sum += surveyDao.deleteQuestionById(question.getId());
-        }
-        num += survey.getCategoryIds().size();
-        sum += surveyDao.deleteSurveyCategory(id);
-        sum += surveyDao.deleteSurveyById(id);
-        if (sum != num + 1){
-            throw new RuntimeException();
+    public String deleteSurveyById(List<Integer> ids){
+        for(int id:ids){
+            int sum = 0, num = 0;
+            Survey survey = surveyDao.getSurveyInfo(id);
+            for(Question  question:survey.getQuestions()){
+                num += question.getChoices().size() + 1;
+                sum += surveyDao.deleteChoiceByQuestion(question.getId());
+                sum += surveyDao.deleteQuestionById(question.getId());
+            }
+            num += survey.getCategoryIds().size();
+            sum += surveyDao.deleteSurveyCategory(id);
+            sum += surveyDao.deleteSurveyById(id);
+            if (sum != num + 1){
+                throw new RuntimeException();
+            }
         }
         return GsonUtil.getSuccessJson();
     }
@@ -306,12 +308,18 @@ public class SurveyService {
 
     /**
      * 回答问题
-     * @param answers
+     * @param args
      * @param request
      * @return
      */
     @Transactional(rollbackForClassName="RuntimeException")
-    public String addAnswer(Answer[] answers, HttpServletRequest request){
+    public String addAnswer(Map<String,Object> args, HttpServletRequest request){
+        ArrayList<Answer> answers = new ArrayList<>();
+        ArrayList arrayList = (ArrayList)args.get("questions");
+        int surveyId = ((Double) args.get("surveyId")).intValue();
+        for(Object answer:arrayList){
+            answers.add(GsonUtil.getObjectFromJson(answer.toString(),Answer.class));
+        }
         String ip = AccessUtil.getIpAddress(request);
         int sum = 0;
         for(Answer answer:answers){
@@ -322,13 +330,12 @@ public class SurveyService {
                 sum += answerDao.addTextAnswer(answer);
             }
         }
-        int surveyId = surveyDao.getSurveyIdByQuestion(answers[0].getQuestionId());
         HashMap<String,String> map = new HashMap<>();
         map.put("ip",ip);
         map.put("surveyId",surveyId+"");
         map.put("answerTime",LocalDateTime.now().toString());
         sum += answerDao.addRecord(map);
-        if(sum!=answers.length+1){
+        if(sum!=answers.size()+1){
             throw new RuntimeException();
         }
         return GsonUtil.getSuccessJson();

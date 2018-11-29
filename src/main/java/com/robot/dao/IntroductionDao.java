@@ -19,4 +19,5 @@ public interface IntroductionDao {
     int add(Introduction introduction);
     int update(Introduction introduction);
     String findIntroductionById(int id);
+    ArrayList<Introduction> find(Map<String,Object> args);
 }

@@ -291,7 +291,7 @@ public class InformationController {
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
-    @RequestMapping(value = "deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/manager/deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteInformation(@RequestParam List<Integer> ids){
         return informationService.deleteInformation(ids);
     }
@@ -303,7 +303,7 @@ public class InformationController {
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
-    @RequestMapping(value = "updateInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/manager/updateInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateInformation(RobotNews robotNews){
         return informationService.updateInformation(robotNews);
     }
@@ -315,7 +315,7 @@ public class InformationController {
      */
    // @PermissionsCheck(access = "manager")
     @ResponseBody
-    @RequestMapping(value = "addInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/manager/addInformation", method = RequestMethod.POST)
     public String addInformation(RobotNews robotNews){
         return informationService.addInformation(robotNews);
     }

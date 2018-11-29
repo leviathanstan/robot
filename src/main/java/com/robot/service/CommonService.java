@@ -28,7 +28,7 @@ public class CommonService {
     ConferenceService conferenceService;
 
     private enum SearchEnum {
-        INFORMATION(1),PRODUCT(2);
+        INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
         private final int number;
 
         SearchEnum(int number) {
@@ -101,10 +101,11 @@ public class CommonService {
                 break;
             case PRODUCT:
                 map.put("results",productService.searchProduct(args));
-
+                break;
+            case INTRODUCTION:
+                map.put("results",introductionService.search(args));
                 break;
             default:
-
                 break;
         }
 

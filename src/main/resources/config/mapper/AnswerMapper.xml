@@ -13,7 +13,7 @@
     </insert>
     <!--回答用户记录-->
     <insert id="addRecord" parameterType="map">
-        insert into answer_record (ip,survey_id,answer_id) values (#{ip},#{surveyId},#{answerId});
+        insert into answer_record (ip,survey_id,answer_time) values (#{ip},#{surveyId},#{answerTime})
     </insert>
     <!--文字回答统计-->
     <select id="getTextAnswerCount" parameterType="int" resultType="String">

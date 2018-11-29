@@ -141,6 +141,7 @@ public class CommonUtil {
     }
 
     public static String formateDbTime(String dbTime){
+        if(dbTime==null) return null;
         if (dbTime.endsWith("00:00:00.0")){
             LocalDateTime time = LocalDateTime.parse(dbTime,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             return time.toLocalDate().toString();

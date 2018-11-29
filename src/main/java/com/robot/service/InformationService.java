@@ -214,9 +214,6 @@ public class InformationService {
         if (categoryIds.size()==0){
             categoryIds.add(category);
         }
-        for(int testI:categoryIds){
-            System.out.println(testI);
-        }
         //由于泛型，另外封装一个map
         HashMap<String,Object> dataMap = new HashMap();
         dataMap.put("content",args.get("content"));

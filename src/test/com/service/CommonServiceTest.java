@@ -165,5 +165,10 @@ public class CommonServiceTest {
         System.out.println(position.getJobArea());
     }
 
-
+    @Test
+    public void testParsea(){
+        Double dou = 1.0;
+        int i =  dou.intValue();
+        System.out.println(i);
+    }
 }
