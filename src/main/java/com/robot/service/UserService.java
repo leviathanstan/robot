@@ -8,9 +8,7 @@ import com.robot.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -121,7 +119,7 @@ public class UserService {
         session.setAttribute("registerUser",user);
         String code = CharacterUtil.getRandomString(5);
         try {
-            SendEmailUtil.sendEmail(mailSender,user.getEmail(), code);
+            EmailUtil.sendEmail(mailSender,user.getEmail(), code);
         }catch (Exception e){
             e.printStackTrace();
             return GsonUtil.getErrorJson("邮件发送失败！");
@@ -176,7 +174,7 @@ public class UserService {
         }else{
             String code = CharacterUtil.getRandomString(5);
             try {
-                SendEmailUtil.sendEmail(mailSender,email, code);
+                EmailUtil.sendEmail(mailSender,email, code);
             }catch (Exception e){
                 e.printStackTrace();
                 return GsonUtil.getErrorJson("邮件发送失败！");

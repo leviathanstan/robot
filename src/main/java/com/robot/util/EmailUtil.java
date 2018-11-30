@@ -3,7 +3,7 @@ package com.robot.util;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-public class SendEmailUtil {
+public class EmailUtil {
 
     public static void sendEmail(JavaMailSender javaMailSender, String email, String code) throws Exception{
         SimpleMailMessage message = new SimpleMailMessage();//消息构造器

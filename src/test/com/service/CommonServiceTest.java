@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -170,5 +171,12 @@ public class CommonServiceTest {
         Double dou = 1.0;
         int i =  dou.intValue();
         System.out.println(i);
+    }
+
+    @Test
+    public void path(){
+        LocalDate data = LocalDate.now();
+        String path = data.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+        System.out.println(path);
     }
 }

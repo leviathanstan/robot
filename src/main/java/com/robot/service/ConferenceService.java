@@ -170,7 +170,7 @@ public class ConferenceService {
             msg.setResult("姓名不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getName().matches(Constant.USERNAMEREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getName().matches(Constant.USER_NAME_REGULAR_EXPRESSION))) {
             msg.setResult("姓名格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -190,7 +190,7 @@ public class ConferenceService {
             msg.setResult("手机号码不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getPhone().matches(Constant.PHONEREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getPhone().matches(Constant.PHONE_REGULAR_EXPRESSION))) {
             msg.setResult("手机号码格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -198,7 +198,7 @@ public class ConferenceService {
             msg.setResult("微信号不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getWeChat().matches(Constant.USERWECHATREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getWeChat().matches(Constant.USER_WECHAT_REGULAR_EXPRESSION))) {
             msg.setResult("微信号格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -206,7 +206,7 @@ public class ConferenceService {
             msg.setResult("公司名不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getCompanyName().matches(Constant.USERCOMPANYNAMEREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getCompanyName().matches(Constant.USER_COMPANYNAME_REGULAR_EXPRESSION))) {
             msg.setResult("公司名格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -214,7 +214,7 @@ public class ConferenceService {
             msg.setResult("公司名不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getCompanyName().matches(Constant.USERCOMPANYNAMEREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getCompanyName().matches(Constant.ADDRESS_REGULAR_EXPRESSION))) {
             msg.setResult("公司名格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -222,7 +222,7 @@ public class ConferenceService {
             msg.setResult("公司地址不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getCompanyAddress().matches(Constant.ADDRESSREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getCompanyAddress().matches(Constant.ADDRESS_REGULAR_EXPRESSION))) {
             msg.setResult("公司地址格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -230,7 +230,7 @@ public class ConferenceService {
             msg.setResult("职位不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getPosition().matches(Constant.USERPOSITIONREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getPosition().matches(Constant.USER_POSITION_REGULAR_EXPRESSION))) {
             msg.setResult("职位格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
@@ -238,7 +238,7 @@ public class ConferenceService {
             msg.setResult("邮箱不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getEmail().matches(Constant.EMAILREGULAREXPRESSION))) {
+        } else if (!(registrationForm.getEmail().matches(Constant.EMAIL_REGULAR_EXPRESSION))) {
             msg.setResult("邮箱格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);

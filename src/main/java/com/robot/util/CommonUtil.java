@@ -3,11 +3,16 @@ package com.robot.util;
 import com.robot.entity.Detail;
 import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +22,11 @@ import java.util.regex.Pattern;
  * @date 2018/9/20
  */
 public class CommonUtil {
+
+
+    public static String getUUID(){
+        return String.valueOf(UUID.randomUUID()).replaceAll("-", "");
+    }
 
     /**
      * 格式化页码
@@ -213,5 +223,100 @@ public class CommonUtil {
             return true;
         }
         return false;
+    }
+    /**
+     * 上传图片
+     * @author asce
+     * @date 2018/11/30
+     * @param
+     * @return
+     */
+    public static List<String> saveImg(MultipartFile[] files){
+        if (files == null||files.length == 0){
+            return null;
+        }
+        ArrayList<String> paths = new ArrayList<>();
+        String path = null;
+        for(MultipartFile file:files) {
+            try {
+                //获取文件名作为保存到服务器的文件名称
+                if (!file.isEmpty() && file.getSize() > 0) {
+                    String filename = file.getOriginalFilename();
+                    if (!FileUtil.validatePicture(filename)) {
+                        continue;
+                    }
+                    String type = filename.substring(filename.lastIndexOf(".") + 1);    //获取文件后缀名称
+                    String imgName = CommonUtil.getUUID() + "." + type;
+                    //每月新建一个文件夹存放
+                    LocalDate data = LocalDate.now();
+                    String mkdir = data.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+                    File tempMkdir = new File(Constant.IMG_PATH + mkdir);
+                    if (tempMkdir.exists()) {
+                        if (!tempMkdir.isDirectory()) {
+                            tempMkdir.mkdir();
+                        }
+                    } else {
+                        tempMkdir.mkdir();
+                    }
+                    //保存
+                    path = Constant.IMG_PATH + mkdir + File.separator + imgName;
+                    File saveFile = new File(path);
+                    file.transferTo(saveFile);
+                    paths.add(path);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return null;
+            }
+        }
+        return paths;
+    }
+
+    /**
+     * 上传文档
+     * @author asce
+     * @date 2018/11/30
+     * @param
+     * @return
+     */
+    public static ArrayList<String> saveFile(MultipartFile[] files){
+        if (files == null||files.length == 0){
+            return null;
+        }
+        ArrayList<String> paths = null;
+        String path = null;
+        for(MultipartFile file:files) {
+            try {
+                //获取文件名作为保存到服务器的文件名称
+                if (!file.isEmpty() && file.getSize() > 0) {
+                    String filename = file.getOriginalFilename();
+                    if (!FileUtil.validateDoc(filename)) {
+                        continue;
+                    }
+                    String type = filename.substring(filename.lastIndexOf(".") + 1);    //获取文件后缀名称
+                    String imgName = CommonUtil.getUUID() + "." + type;
+                    //每月新建一个文件夹存放
+                    LocalDate data = LocalDate.now();
+                    String mkdir = data.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+                    File tempMkdir = new File(Constant.FILE_PATH + mkdir);
+                    if (tempMkdir.exists()) {
+                        if (!tempMkdir.isDirectory()) {
+                            tempMkdir.mkdir();
+                        }
+                    } else {
+                        tempMkdir.mkdir();
+                    }
+                    //保存
+                    path = Constant.FILE_PATH + mkdir + File.separator + imgName;
+                    File saveFile = new File(path);
+                    file.transferTo(saveFile);
+                    paths.add(path);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return null;
+            }
+        }
+        return paths;
     }
 }

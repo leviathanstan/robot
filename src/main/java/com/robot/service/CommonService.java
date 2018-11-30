@@ -1,11 +1,18 @@
 package com.robot.service;
 
 import com.robot.util.CommonUtil;
+import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -126,5 +133,44 @@ public class CommonService {
             }
         }
         return SearchEnum.INFORMATION;
+    }
+    /**
+     * 上传图片
+     * @author asce
+     * @date 2018/11/30
+     * @param
+     * @return
+     */
+    public String uploadImg(MultipartFile[] imgs){
+        if(imgs == null || imgs.length == 0){
+            return GsonUtil.getErrorJson("没有选择图片");
+        }else{
+            //返回结果
+            List<String> path;
+            if ((path = CommonUtil.saveImg(imgs)).size()!=0){
+                return GsonUtil.getSuccessJson(path);
+            }
+        }
+        return GsonUtil.getErrorJson("上传失败");
+    }
+
+     /**
+     * 上传文件
+     * @author asce
+     * @date 2018/11/30
+     * @param
+     * @return
+     */
+    public String uploadFile(MultipartFile[] files){
+        if(files == null || files.length == 0){
+            return GsonUtil.getErrorJson("没有选择文件");
+        }else{
+            //返回结果
+            List<String> path;
+            if ((path = CommonUtil.saveFile(files)).size()!=0){
+                return GsonUtil.getSuccessJson(path);
+            }
+        }
+        return GsonUtil.getErrorJson("上传失败");
     }
 }
