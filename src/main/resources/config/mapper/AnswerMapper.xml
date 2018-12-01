@@ -27,4 +27,17 @@
     <select id="getAnswerCount" parameterType="int" resultType="int">
         select count(id) from answer_record where survey_id=#{surveyId}
     </select>
+    <!--删除回答记录-->
+    <delete id="deleteAnswerRecord" parameterType="int">
+        delete from answer_record where survey_id=#{surveyId}
+    </delete>
+    <!--删除文字回答-->
+    <delete id="deleteTextAnswer" parameterType="int">
+        delete from text_answers where question_id=#{questionId}
+    </delete>
+    <!--删除选项回答-->
+    <delete id="deleteChoiceAnswer" parameterType="int">
+        delete from choice_answer where choice_id=#{choiceId}
+    </delete>
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.robot.controller;
 
 import com.robot.schedule.ScheduleTask;
+import com.robot.scrapy.SpiderManager;
 import com.robot.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ import java.util.HashMap;
 public class CommonController {
     @Autowired
     CommonService commonService;
+    @Autowired
+    ScheduleTask scheduleTask;
 
     @ResponseBody
     @RequestMapping(value = "/getIndex",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
@@ -44,5 +47,12 @@ public class CommonController {
     @ResponseBody
     public String uploadFile(@RequestParam("files") MultipartFile[] file) throws Exception{
         return commonService.uploadFile(file);
+    }
+
+    @RequestMapping(value = "/testSpider",method = RequestMethod.GET)
+    @ResponseBody
+    public String testSpider(){
+        scheduleTask.runSpider();
+        return "success";
     }
 }

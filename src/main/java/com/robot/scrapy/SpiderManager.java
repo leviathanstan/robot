@@ -16,14 +16,26 @@ public class SpiderManager {
 
     private static final String OFWEEK_PROJECT = "OfWeek";
     private static final String GDROBOT_PROJECT = "GDRobot";
+    private static final String GDEI_PROJECT = "GDei";
+    private static final String GDSTC_PROJECT = "GDstc";
+    private static final String GZII_PROJECT = "GZii";
+    private static final String ROBOTCHINA_PROJECT = "RobotChina";
 
     private static List<String> GDRobot;
     private static List<String> OfWeek;
+    private static List<String> GDei;
+    private static List<String> GDstc;
+    private static List<String> GZii;
+    private static List<String> RobotChina;
 
     public static Map<String, List<String>> getParamMap(){
         Map<String, List<String>> paramMap = new HashMap<>();
         paramMap.put(OFWEEK_PROJECT, OfWeek);
         paramMap.put(GDROBOT_PROJECT,GDRobot);
+        paramMap.put(GDEI_PROJECT,GDei);
+        paramMap.put(GDSTC_PROJECT,GDstc);
+        paramMap.put(GZII_PROJECT,GZii);
+        paramMap.put(ROBOTCHINA_PROJECT,RobotChina);
         return paramMap;
     }
 
@@ -54,5 +66,41 @@ public class SpiderManager {
     @Value("#{'${OfWeekModels}'.split(',')}")
     public void setOfWeek(List<String> ofWeek) {
         OfWeek = ofWeek;
+    }
+
+    public static List<String> getGDei() {
+        return GDei;
+    }
+
+    @Value("#{'${GDeiModels}'.split(',')}")
+    public static void setGDei(List<String> GDei) {
+        SpiderManager.GDei = GDei;
+    }
+
+    public static List<String> getGDstc() {
+        return GDstc;
+    }
+
+    @Value("#{'${GDstcModels}'.split(',')}")
+    public static void setGDstc(List<String> GDstc) {
+        SpiderManager.GDstc = GDstc;
+    }
+
+    public static List<String> getGZii() {
+        return GZii;
+    }
+
+    @Value("#{'${GZiiModels}'.split(',')}")
+    public static void setGZii(List<String> GZii) {
+        SpiderManager.GZii = GZii;
+    }
+
+    public static List<String> getRobotChina() {
+        return RobotChina;
+    }
+
+    @Value("#{'${RobotChinaModels}'.split(',')}")
+    public static void setRobotChina(List<String> robotChina) {
+        RobotChina = robotChina;
     }
 }

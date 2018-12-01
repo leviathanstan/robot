@@ -19,10 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author asce
@@ -98,19 +95,18 @@ public class SurveyService {
     @Transactional
     public String deleteSurveyById(List<Integer> ids){
         for(int id:ids){
-            int sum = 0, num = 0;
             Survey survey = surveyDao.getSurveyInfo(id);
             for(Question  question:survey.getQuestions()){
-                num += question.getChoices().size() + 1;
-                sum += surveyDao.deleteChoiceByQuestion(question.getId());
-                sum += surveyDao.deleteQuestionById(question.getId());
+                for(Choice choice:question.getChoices()){
+                    answerDao.deleteChoiceAnswer(choice.getId());
+                }
+                surveyDao.deleteChoiceByQuestion(question.getId());
+                answerDao.deleteTextAnswer(question.getId());
+                surveyDao.deleteQuestionById(question.getId());
             }
-            num += survey.getCategoryIds().size();
-            sum += surveyDao.deleteSurveyCategory(id);
-            sum += surveyDao.deleteSurveyById(id);
-            if (sum != num + 1){
-                throw new RuntimeException();
-            }
+            surveyDao.deleteSurveyCategory(id);
+            answerDao.deleteAnswerRecord(id);
+            surveyDao.deleteSurveyById(id);
         }
         return GsonUtil.getSuccessJson();
     }
@@ -153,6 +149,7 @@ public class SurveyService {
      * @param
      * @return
      */
+    @Transactional
     public String updateChoice(Choice[] choices){
         int sum = 0;
         for(Choice choice:choices){
@@ -183,8 +180,10 @@ public class SurveyService {
             return GsonUtil.getErrorJson(result);
         }
         int n1 = surveyDao.updateQuestion(question);
-        for(Choice choice:question.getChoices()){
-            n1 += surveyDao.updateChoice(choice);
+        if(question.getChoices()!=null){
+            for(Choice choice:question.getChoices()){
+                n1 += surveyDao.updateChoice(choice);
+            }
         }
         if(n1!=(question.getChoices().size()+1)){
             throw new RuntimeException();
@@ -199,13 +198,18 @@ public class SurveyService {
      * @param
      * @return
      */
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public String updateSurvey(Survey survey){
         String result = validateSurvey(survey);
         if (!result.equals("success")){
             return GsonUtil.getErrorJson(result);
         }
+        Survey dbSurvey = surveyDao.getSurveyInfo(survey.getId());
+        if (dbSurvey==null){
+            return GsonUtil.getErrorJson("没有此问卷");
+        }
         survey.setUpdateTime(LocalDateTime.now().toString());
+        //更新问卷群体
         surveyDao.deleteSurveyCategory(survey.getId());
         Map<String,String> map = new HashMap<>();
         map.put("surveyId", survey.getId()+"");
@@ -215,11 +219,49 @@ public class SurveyService {
                 surveyDao.addSurveyCategory(map);
             }
         }
-        if(survey.getQuestions()!=null){
-            for(Question question:survey.getQuestions()){
-                question.setSurveyId(survey.getId());
-                updateQuestion(question);
+        //更新问题
+        Question question;
+        Question dbQuestion = null;
+        Choice dbChoice = null;
+        ArrayList<Question> dbQuestions = dbSurvey.getQuestions();
+        for(int i = 0;i < survey.getQuestions().size();i++){
+            question = survey.getQuestions().get(i);
+            question.setSurveyId(survey.getId());
+            surveyDao.updateQuestion(question);
+            //获取数据库记录的对应问题,question不是final,无法使用lambda
+            for(Question dbQ:dbQuestions){
+                if(dbQ.getId()==question.getId()){
+                    dbQuestion = dbQ;
+                    break;
+                }else{
+                    throw new RuntimeException();
+                }
             }
+            //更新选项
+            for(int j = 0;j<question.getChoices().size();j++){
+                surveyDao.updateChoice(question.getChoices().get(j));
+                //移除发送参数中没有的选项
+                for(Choice c:dbQuestion.getChoices()){
+                    if (c.getId()==question.getChoices().get(j).getId()){
+                        dbChoice = c;
+                    }
+                }
+                if(dbChoice!=null){
+                    dbQuestion.getChoices().remove(dbChoice);
+                    dbChoice = null;
+                }
+            }
+            for(Choice c:dbQuestion.getChoices()){
+                surveyDao.deleteChoiceById(c.getId());
+            }
+            //移除发送参数中没有的问题
+            if(dbQuestion!=null){
+                dbQuestions.remove(dbQuestion);
+                dbQuestion = null;
+            }
+        }
+        for(Question q:dbSurvey.getQuestions()){
+            deleteQuestionById(q.getId());
         }
         surveyDao.updateSurvey(survey);
         return GsonUtil.getSuccessJson();
@@ -257,7 +299,7 @@ public class SurveyService {
      * @param
      * @return
      */
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public String addSurvey(Survey survey, HttpSession session){
         String result = validateSurvey(survey);
         if (!result.equals("success")){
@@ -267,9 +309,23 @@ public class SurveyService {
         // TODO: 2018/11/27  
         survey.setUserId(1);//user.getId());
         survey.setCreateTime(LocalDateTime.now().toString());
+        if(!addSurvey(survey)) {
+            return GsonUtil.getErrorJson();
+        }
+        return GsonUtil.getSuccessJson(survey.getId());
+    }
+    /**
+     * 新建问卷，更新问卷，添加问卷公用
+     * @author asce
+     * @date 2018/12/1
+     * @param
+     * @return
+     */
+    @Transactional
+    public boolean addSurvey(Survey survey){
         int sum = 0;
         if (surveyDao.addSurvey(survey)!=1){
-            return GsonUtil.getErrorJson("创建失败");
+            return false;
         }
         Map<String,String> map = new HashMap<>();
         map.put("surveyId", survey.getId()+"");
@@ -284,7 +340,7 @@ public class SurveyService {
             question.setSurveyId(survey.getId());
             addQuestion(question);
         }
-        return GsonUtil.getSuccessJson(survey.getId());
+        return true;
     }
     /**
      * 添加题目
@@ -363,6 +419,9 @@ public class SurveyService {
      * @return
      */
     private String validateSurvey(Survey survey){
+        if (survey==null){
+            return "没有问卷";
+        }
         if (survey.getTitle()==null){
             return "标题不能为空";
         }
@@ -396,6 +455,9 @@ public class SurveyService {
      */
     private String validateQuestion(Question question){
         String result;
+        if(question==null){
+            return "没有问题";
+        }
         if (question.getSerialNumber()==null){
             return "序号不能为空";
         }
@@ -435,6 +497,9 @@ public class SurveyService {
      * @return
      */
     private String validateChoice(Choice choice){
+        if(choice==null){
+            return "没有选项";
+        }
         if(choice.getSerialNumber()==null){
             return "序号不能为空";
         }

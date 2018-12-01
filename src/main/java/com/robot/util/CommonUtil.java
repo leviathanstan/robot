@@ -103,8 +103,8 @@ public class CommonUtil {
      */
     public static ArrayList<Detail> getAbsolutePath(ArrayList<Detail> content){
         for(Detail str:content) {
-            str.setContent(str.getContent().replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources/robot"));
-            str.setContent(str.getContent().replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources/robot"));
+            str.setContent(str.getContent().replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources"));
+            str.setContent(str.getContent().replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources"));
         }
         return content;
     }
@@ -114,8 +114,8 @@ public class CommonUtil {
      * @return
      */
     public static String getAbsolutePath(String content){
-        content = content.replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources/robot");
-        content = content.replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources/robot");
+        content = content.replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources");
+        content = content.replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources");
         return content;
     }
     /**
@@ -170,7 +170,7 @@ public class CommonUtil {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content.get(0).getContent());
         if (matcher.find())
-            return Constant.HOST_ADDRESS+"/resources/robot/img/"+matcher.group(1);
+            return Constant.HOST_ADDRESS+"/resources/img/"+matcher.group(1);
         return null;
     }
     /**
@@ -262,6 +262,7 @@ public class CommonUtil {
                     path = Constant.IMG_PATH + mkdir + File.separator + imgName;
                     File saveFile = new File(path);
                     file.transferTo(saveFile);
+                    path = Constant.IMG_ACCESS_PATH + mkdir + "/" + imgName;
                     paths.add(path);
                 }
             } catch (Exception ex) {
@@ -294,7 +295,7 @@ public class CommonUtil {
                         continue;
                     }
                     String type = filename.substring(filename.lastIndexOf(".") + 1);    //获取文件后缀名称
-                    String imgName = CommonUtil.getUUID() + "." + type;
+                    String fileName = CommonUtil.getUUID() + "." + type;
                     //每月新建一个文件夹存放
                     LocalDate data = LocalDate.now();
                     String mkdir = data.format(DateTimeFormatter.ofPattern("yyyy-MM"));
@@ -307,9 +308,10 @@ public class CommonUtil {
                         tempMkdir.mkdir();
                     }
                     //保存
-                    path = Constant.FILE_PATH + mkdir + File.separator + imgName;
+                    path = Constant.FILE_PATH + mkdir + File.separator + fileName;
                     File saveFile = new File(path);
                     file.transferTo(saveFile);
+                    path = Constant.FILE_ACCESS_PATH + mkdir + "/" + fileName;
                     paths.add(path);
                 }
             } catch (Exception ex) {

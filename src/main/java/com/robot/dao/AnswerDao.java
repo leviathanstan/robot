@@ -16,5 +16,7 @@ public interface AnswerDao {
     //ArrayList<String> getTextAnswerCount(int questionId);
     int getChoiceAnswerCount(int choiceId);
     int getAnswerCount(int questionId);
-
+    int deleteAnswerRecord(int surveyId);
+    int deleteTextAnswer(int questionId);
+    int deleteChoiceAnswer(int choiceId);
 }

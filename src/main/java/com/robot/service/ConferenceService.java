@@ -206,7 +206,7 @@ public class ConferenceService {
             msg.setResult("公司名不能为空");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);
-        } else if (!(registrationForm.getCompanyName().matches(Constant.USER_COMPANYNAME_REGULAR_EXPRESSION))) {
+        } else if (!(registrationForm.getCompanyName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION))) {
             msg.setResult("公司名格式出错");
             msg.setMessage(registrationForm);
             return GsonUtil.getErrorJson(msg);

@@ -1,9 +1,6 @@
 package com.service;
 
-import com.robot.entity.Area;
-import com.robot.entity.Position;
-import com.robot.entity.Question;
-import com.robot.entity.RobotNews;
+import com.robot.entity.*;
 import com.robot.scrapy.SpiderManager;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
@@ -178,5 +175,32 @@ public class CommonServiceTest {
         LocalDate data = LocalDate.now();
         String path = data.format(DateTimeFormatter.ofPattern("yyyy-MM"));
         System.out.println(path);
+    }
+
+    @Test
+    public void testRemove(){
+        Survey survey = new Survey();
+        Survey dbSurvey = new Survey();
+
+        ArrayList<Question> questions = new ArrayList<>();
+        Question question = new Question();
+        question.setId(1);
+        Question question1 = new Question();
+        question1.setId(2);
+        questions.add(question);
+        questions.add(question1);
+        survey.setQuestions(questions);
+
+        ArrayList<Question> question2s = new ArrayList<>();
+        Question question2 = new Question();
+        question2.setId(2);
+        question2s.add(question2);
+        dbSurvey.setQuestions(question2s);
+
+        //survey.getQuestions().removeIf(s->s.getId()==question2.getId());
+
+        System.out.println(survey);
+        System.out.println(dbSurvey);
+
     }
 }

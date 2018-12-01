@@ -50,7 +50,7 @@
 
     <!--添加问卷-->
     <insert id="addSurvey" parameterType="com.robot.entity.Survey" useGeneratedKeys="true" keyProperty="id">
-        insert into survey (user_id, title, remark, create_time,template_type,status) values (#{userId},#{title},#{remark},#{createTime},#{templateType},#{status});
+        insert into survey (user_id, title, remark, create_time, update_time, template_type,status) values (#{userId},#{title},#{remark},#{createTime},#{createTime},#{templateType},#{status});
     </insert>
     <!--添加问卷关联-->
     <insert id="addSurveyCategory" parameterType="map">
@@ -99,7 +99,7 @@
     </update>
     <!--更新问题-->
     <update id="updateQuestion" parameterType="com.robot.entity.Question">
-        select questions set id=#{id}
+        update questions set id=#{id}
         <if test="title!=null and title.trim().length()>0">
             ,title=#{title}
         </if>
@@ -128,7 +128,7 @@
     </update>
     <!--更新选项-->
     <update id="updateChoice" parameterType="com.robot.entity.Choice">
-        update choices set update_time=#{updateTime}
+        update choices set id=#{id}
         <if test="serialNumber!=null">
             , serial_number=#{serialNumber}
         </if>

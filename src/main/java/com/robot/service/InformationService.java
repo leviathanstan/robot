@@ -99,7 +99,9 @@ public class InformationService {
         robotNews.setPostDate(LocalDateTime.now().toString());
         if(1!=informationDao.add(robotNews))
             return GsonUtil.getErrorJson();
-
+        if(robotNews.getContent()==null){
+            return GsonUtil.getErrorJson("正文内容不能为空");
+        }
         for(Detail detail:robotNews.getContent()){
             HashMap map = new HashMap();
             map.put("id",robotNews.getId());

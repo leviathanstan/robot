@@ -21,7 +21,7 @@ public class Constant {
     public static String USER_NAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String PHONE_REGULAR_EXPRESSION = "^[0-9]{11}$";
     public static String USER_WECHAT_REGULAR_EXPRESSION = "^[a-zA-Z0-9\u4E00-\u9FA5]{3,10}$";
-    public static String USER_COMPANYNAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
+    public static String USER_COMPANY_NAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String ADDRESS_REGULAR_EXPRESSION = "^[a-zA-Z0-9\u4E00-\u9FA5]{0,20}$";
     public static String USER_POSITION_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String EMAIL_REGULAR_EXPRESSION = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
@@ -54,8 +54,12 @@ public class Constant {
 //    }.getRootPath();
 
     //图片存放地址
-    public static final String IMG_PATH =  "E:\\Apache\\Apache24\\htdocs\\face\\" + "img" + File.separator;
+    public static final String IMG_PATH =  "C:\\data\\resources\\robot\\img" + File.separator;
+    //图片访问地址
+    public static final String IMG_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
     //文件存放地址
-    public static final String FILE_PATH =  "E:\\Apache\\Apache24\\htdocs\\face\\" + "file" + File.separator;
+    public static final String FILE_PATH =  "C:\\data\\resources\\robot\\file" + File.separator;
+    //文件访问地址
+    public static final String FILE_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
 
 }
