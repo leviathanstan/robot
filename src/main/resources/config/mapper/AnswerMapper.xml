@@ -37,7 +37,7 @@
     </delete>
     <!--删除选项回答-->
     <delete id="deleteChoiceAnswer" parameterType="int">
-        delete from choice_answer where choice_id=#{choiceId}
+        delete from choice_answers where choice_id=#{choiceId}
     </delete>
 
 </mapper>

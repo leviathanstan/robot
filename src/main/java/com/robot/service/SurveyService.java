@@ -227,23 +227,40 @@ public class SurveyService {
         for(int i = 0;i < survey.getQuestions().size();i++){
             question = survey.getQuestions().get(i);
             question.setSurveyId(survey.getId());
-            surveyDao.updateQuestion(question);
+            if(question.getId()!=null) {
+                surveyDao.updateQuestion(question);
+            }else{
+                addQuestion(question);
+                continue;   //增加题目，跳过后续判断
+            }
             //获取数据库记录的对应问题,question不是final,无法使用lambda
-            for(Question dbQ:dbQuestions){
-                if(dbQ.getId()==question.getId()){
-                    dbQuestion = dbQ;
-                    break;
-                }else{
-                    throw new RuntimeException();
+            if(dbQuestions!=null){
+                for(Question dbQ:dbQuestions){
+                    if(dbQ.getId()==question.getId()){
+                        dbQuestion = dbQ;
+                        break;
+                    }
+                }
+                //移除发送参数中没有的问题
+                if(dbQuestion!=null){
+                    dbQuestions.remove(dbQuestion);
+                    dbQuestion = null;
                 }
             }
             //更新选项
             for(int j = 0;j<question.getChoices().size();j++){
-                surveyDao.updateChoice(question.getChoices().get(j));
+                if(question.getChoices().get(j).getId()!=null){
+                    surveyDao.updateChoice(question.getChoices().get(j));
+                }else{
+                    question.getChoices().get(j).setQuestionId(question.getId());
+                    surveyDao.addChoice(question.getChoices().get(j));
+                }
                 //移除发送参数中没有的选项
-                for(Choice c:dbQuestion.getChoices()){
-                    if (c.getId()==question.getChoices().get(j).getId()){
-                        dbChoice = c;
+                if(dbQuestion!=null){
+                    for(Choice c:dbQuestion.getChoices()){
+                        if (c.getId()==question.getChoices().get(j).getId()){
+                            dbChoice = c;
+                        }
                     }
                 }
                 if(dbChoice!=null){
@@ -251,17 +268,16 @@ public class SurveyService {
                     dbChoice = null;
                 }
             }
-            for(Choice c:dbQuestion.getChoices()){
-                surveyDao.deleteChoiceById(c.getId());
-            }
-            //移除发送参数中没有的问题
             if(dbQuestion!=null){
-                dbQuestions.remove(dbQuestion);
-                dbQuestion = null;
+                for(Choice c:dbQuestion.getChoices()){
+                    surveyDao.deleteChoiceById(c.getId());
+                }
             }
         }
-        for(Question q:dbSurvey.getQuestions()){
-            deleteQuestionById(q.getId());
+        if(dbQuestions!=null){
+            for(Question q:dbQuestions){
+                deleteQuestionById(q.getId());
+            }
         }
         surveyDao.updateSurvey(survey);
         return GsonUtil.getSuccessJson();
@@ -309,6 +325,7 @@ public class SurveyService {
         // TODO: 2018/11/27  
         survey.setUserId(1);//user.getId());
         survey.setCreateTime(LocalDateTime.now().toString());
+        survey.setUpdateTime(LocalDateTime.now().toString());
         if(!addSurvey(survey)) {
             return GsonUtil.getErrorJson();
         }

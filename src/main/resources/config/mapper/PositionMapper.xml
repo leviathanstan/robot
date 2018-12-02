@@ -55,6 +55,7 @@
                                                                                                                                                                                       </foreach>
                                                                                                                               )
                                                                                                               </if>
+                                                                                                        order by create_time desc
     </select>
     <!--详情-->
     <select id="getPositionInfo" parameterType="int" resultMap="positionDetail">
