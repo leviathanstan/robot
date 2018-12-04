@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,18 @@ public class UserService {
      * 定时清除session,可考虑数据库或redis实现
      */
     ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
+
+
+    public String getAllSubscribe(){
+        ArrayList<Map> map = userDao.getAllSubscribe();
+        return GsonUtil.getSuccessJson(map);
+    }
+
+    public String getSubscribeList(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        ArrayList<Map> map = userDao.getUserSubscribeInfo(user.getId());
+        return GsonUtil.getSuccessJson(map);
+    }
 
     /**
      * 删除订阅
@@ -84,7 +97,7 @@ public class UserService {
     /**
      * @param user
      * @return
-     * @function用户登录
+     * @function 用户登录
      */
     public String login(User user, HttpSession session) {
         User dbUser = null;

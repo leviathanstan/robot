@@ -1015,4 +1015,29 @@ public class InformationService {
 //        ArrayList<RobotNews> articles = informationDao.getIndexInformation(map);
 //        return articles;
 //    }
+
+    /**
+     * 获取资讯具体信息【安卓】
+     * @author asce
+     * @date 2018/12/4
+     * @param
+     * @return
+     */
+    public String getInformationDetail(int id){
+        RobotNews information = informationDao.findInformationInfo(id);
+        if (null == information)
+            return GsonUtil.getErrorJson();
+        information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
+        information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
+        //相关
+        RelatedReadingDto relatedReadingDto = new RelatedReadingDto();
+        relatedReadingDto.setKeywords(informationDao.findRelatedKeyword(id));
+        relatedReadingDto.setInformation(informationDao.findRelatedInformation(id));
+        Map<String,Object> dataMap = new HashMap();
+        dataMap.put("information", information);
+        dataMap.put("related", relatedReadingDto);
+        return GsonUtil.getSuccessJson(dataMap);
+    }
+
+
 }

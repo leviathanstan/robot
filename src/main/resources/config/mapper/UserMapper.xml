@@ -64,4 +64,12 @@
 	<select id="getUserSubscribe" parameterType="int" resultType="int">
 		select category_id from subscribe where user_id=#{user_id};
 	</select>
+	<!--查看所有订阅（附订阅信息）-->
+	<select id="getUserSubscribeInfo" parameterType="int" resultType="map">
+		select category_id,category from subscribe left join category_id on category_id.id=category_id where user_id=#{user_id}
+	</select>
+	<!--查看所有分类-->
+	<select id="getAllSubscribe" resultType="map">
+		select id,category from category_id;
+	</select>
 </mapper>

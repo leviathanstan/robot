@@ -2,8 +2,10 @@ package com.robot.dao;
 
 import com.robot.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.aspectj.weaver.ArrayReferenceType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public interface UserDao {
@@ -16,5 +18,6 @@ public interface UserDao {
     int deleteSubscribe(Map<String,Integer> map);
     Integer selectSubscribeInfo(Map<String,Integer> map);
     ArrayList<Integer> getUserSubscribe(int userId);
-
+    ArrayList<Map> getUserSubscribeInfo(int userId);
+    ArrayList<Map> getAllSubscribe();
 }
