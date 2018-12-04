@@ -21,14 +21,27 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //@PermissionsCheck(access = "user")
+    @ResponseBody
+    @RequestMapping(value = "/getAllSubscribe", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getAllSubscribe(){
+        return userService.getAllSubscribe();
+    }
+
+    @PermissionsCheck(access = "user")
+    @ResponseBody
+    @RequestMapping(value = "/getSubscribeList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getSubscribeList(HttpSession session){
+        return userService.getSubscribeList(session);
+    }
+
+    @PermissionsCheck(access = "user")
     @ResponseBody
     @RequestMapping(value = "/deleteSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteSubscribe(@RequestParam int categoryId,HttpSession session){
         return userService.deleteSubscribe(categoryId,session);
     }
 
-    //@PermissionsCheck(access = "user")
+    @PermissionsCheck(access = "user")
     @ResponseBody
     @RequestMapping(value = "/addSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addSubscribe(@RequestParam int categoryId,HttpSession session){

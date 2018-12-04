@@ -5,10 +5,7 @@ import com.robot.entity.RobotNews;
 import com.robot.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,6 +19,9 @@ import java.util.List;
 public class InformationController {
     @Autowired
     private InformationService informationService;
+
+
+
 
     //@PermissionsCheck(access = "user")
     @ResponseBody
@@ -319,4 +319,12 @@ public class InformationController {
     public String addInformation(RobotNews robotNews){
         return informationService.addInformation(robotNews);
     }
+
+    //@PermissionsCheck(access = "user")
+    @ResponseBody
+    @RequestMapping(value = "/getInformationInfo", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getInformationInfo(int id){
+        return informationService.getInformationDetail(id);
+    }
+
 }
