@@ -12,6 +12,7 @@ import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,36 @@ public class ProductService {
         return productDao.getSearchCount(content);
     }
 
+    public String deleteProduct(int id){
+        int result = productDao.deleteProduct(id);
+        if (result==1){
+            return GsonUtil.getSuccessJson();
+        }
+        return GsonUtil.getErrorJson();
+    }
+
+    public String updateProduct(Product product){
+        int result = productDao.updateProduct(product);
+        if (result==1){
+            return GsonUtil.getSuccessJson();
+        }
+        return GsonUtil.getErrorJson();
+    }
+
+    /**
+     * 添加商品
+     * @author asce
+     * @date 2018/12/6
+     * @param
+     * @return
+     */
+    public String addProduct(Product product){
+        int result = productDao.addProduct(product);
+        if (result==1){
+            return GsonUtil.getSuccessJson(product);
+        }
+        return GsonUtil.getErrorJson();
+    }
     /**
      * 搜索产品
      * @author asce
@@ -46,7 +77,7 @@ public class ProductService {
     }
 
     /**
-     * 筛选,查找产品
+     * 产品
      * @author asce
      * @date 2018/9/22
      * @param args

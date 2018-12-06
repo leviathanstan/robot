@@ -1,10 +1,13 @@
 package com.robot.controller;
 
+import com.robot.annotation.PermissionsCheck;
+import com.robot.entity.Product;
 import com.robot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
@@ -19,6 +22,27 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    //@PermissionsCheck
+    @ResponseBody
+    @RequestMapping(value = "/manager/deleteProduct", method = RequestMethod.POST)
+    public String deleteProduct(int id){
+        return productService.deleteProduct(id);
+    }
+
+    //@PermissionsCheck
+    @ResponseBody
+    @RequestMapping(value = "/manager/updateProduct", method = RequestMethod.POST)
+    public String updateProduct(Product product){
+        return productService.updateProduct(product);
+    }
+
+    //@PermissionsCheck
+    @ResponseBody
+    @RequestMapping(value = "/manager/addProduct", method = RequestMethod.POST)
+    public String addProduct(Product product){
+        return productService.addProduct(product);
+    }
 
     /**
      * 查找产品

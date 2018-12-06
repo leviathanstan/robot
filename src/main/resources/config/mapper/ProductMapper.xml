@@ -6,8 +6,18 @@
     <resultMap id="productMap" type="com.robot.entity.Product" autoMapping="true">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="lastUpdateTime" column="pro_last_up_time"/>
         <result property="img" column="cover"/>
+        <result property="summary" column="product_summary"/>
+        <result property="introduction" column="product_introduction"/>
+        <result property="pattern" column="product_pattern"/>
+        <result property="load" column="product_load"/>
+        <result property="axis" column="product_axis"/>
+        <result property="type" column="product_type"/>
+        <result property="brand" column="pro_brand"/>
+        <result property="residence" column="residence"/>
+        <result property="format" column="pro_format"/>
+        <result property="effectTime" column="pro_effect_time"/>
+        <result property="lastUpdateTime" column="pro_last_up_time"/>
     </resultMap>
     <!-- 首页产品 -->
     <select id="getProductLibrary" resultMap="productMap">
@@ -15,7 +25,7 @@
     </select>
     <!--搜索-->
     <select id="findProductIf" parameterType="map" resultMap="productMap">
-        select * from product_library where 1=1
+        select name,cover,pro_last_up_time from product_library where 1=1
         <if test="name!=null and name.trim().length()>0">
             and locate(#{content},name)>0 or local(#{content},product_introduction)>0
         </if>
@@ -27,4 +37,60 @@
             and (locate(#{content},name)>0 or locate(#{content},product_introduction)>0)
         </if>
     </select>
+    <select id="getProductInfo" parameterType="int" resultMap="productMap">
+        select * from product_library where id=#{id}
+    </select>
+    <!--添加产品-->
+    <insert id="addProduct" parameterType="com.robot.entity.Product" useGeneratedKeys="true" keyProperty="id">
+        insert into product_library(cover,product_summary,product_introduction,product_pattern,product_load,product_axis,product_type,pro_brand,residence,pro_format,pro_effect_time,pro_last_up_time)
+          values(#{img},#{summary},#{introduction},#{pattern},#{load},#{axis},#{type},#{brand},#{residence},#{format},#{effectTime},#{lastUpdateTime})
+    </insert>
+    <!--删除产品-->
+    <delete id="deleteProduct" parameterType="int">
+        delete from product_library where id=#{id}
+    </delete>
+    <!--修改产品-->
+    <update id="updateProduct" parameterType="com.robot.entity.Product">
+        update product_library set id=#{id}
+        <if test="name!=null and namge.trim().length()>0">
+            , name=#{name}
+        </if>
+        <if test="img!=null and img.trim().length()>0">
+            , cover = #{img}
+        </if>
+        <if test="summary!=null and summary.trim().length()>0">
+            , product_summary = #{summary}
+        </if>
+        <if test="introduction!=null and introduction.trim().length()>0">
+            , product_introduction = #{introduction}
+        </if>
+        <if test="pattern!=null and pattern.trim().length()>0">
+            , product_pattern = #{pattern}
+        </if>
+        <if test="load!=null and load.trim().length()>0">
+            , product_load = #{load}
+        </if>
+        <if test="axis!=null and axis.trim().length()>0">
+            , product_axis = #{axis}
+        </if>
+        <if test="type!=null and type.trim().length()>0">
+            , product_type = #{type}
+        </if>
+        <if test="brand!=null and brand.trim().length()>0">
+            , pro_brand = #{brand}
+        </if>
+        <if test="residence!=null and residence.trim().length()>0">
+            , residence = #{residence}
+        </if>
+        <if test="format!=null and format.trim().length()>0">
+            , pro_format = #{format}
+        </if>
+        <if test="effectTime!=null and effectTime.trim().length()>0">
+            , pro_effect_time = #{effectTime}
+        </if>
+        <if test="lastUpdateTime!=null and lastUpdateTime.trim().length()>0">
+            , pro_last_up_time = #{lastUpdateTime}
+        </if>
+        where id=#{id}
+    </update>
 </mapper>

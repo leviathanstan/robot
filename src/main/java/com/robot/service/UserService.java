@@ -29,12 +29,53 @@ public class UserService {
      */
     ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 
+    /**
+     * 判断用户权限
+     * @author asce
+     * @date 2018/12/5
+     * @param
+     * @return
+     */
+    public String getPermission(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        Integer rank = (Integer) session.getAttribute("rank");
+        if(user!=null){
+            int rankNum;
+            switch (rank){
+                case 2:
+                    rankNum = 2;
+                    break;
+                case 3:
+                    rankNum = 3;
+                    break;
+                default :
+                    rankNum = 1;
+                    break;
+            }
+            return GsonUtil.getSuccessJson(rankNum);
+        }else{
+            return GsonUtil.getSuccessJson(0);
+        }
+    }
 
+    /**
+     * 得到所有订阅标签
+     * @author asce
+     * @date 2018/12/5
+     * @param
+     * @return
+     */
     public String getAllSubscribe(){
         ArrayList<Map> map = userDao.getAllSubscribe();
         return GsonUtil.getSuccessJson(map);
     }
-
+    /**
+     * 得到订阅内容列表
+     * @author asce
+     * @date 2018/12/5
+     * @param
+     * @return
+     */
     public String getSubscribeList(HttpSession session){
         User user = (User) session.getAttribute("user");
         ArrayList<Map> map = userDao.getUserSubscribeInfo(user.getId());
@@ -106,8 +147,16 @@ public class UserService {
             return GsonUtil.getErrorJson("密码或账号错误");
         }else{
             session.setAttribute("user",dbUser);
-            if(dbUser.getRank()==1){    //管理员
-                session.setAttribute("rank", 1);
+            switch (dbUser.getRank()){
+                case 2:
+                    session.setAttribute("rank", 2);
+                    break;
+                case 3:
+                    session.setAttribute("rank",3);
+                    break;
+                default:
+                    session.setAttribute("rank", 1);
+                    break;
             }
             return GsonUtil.getSuccessJson(dbUser);
         }

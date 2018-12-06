@@ -21,9 +21,7 @@ public class InformationController {
     private InformationService informationService;
 
 
-
-
-    //@PermissionsCheck(access = "user")
+    @PermissionsCheck(access = "user")
     @ResponseBody
     @RequestMapping(value = "/getSubscribe", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getSubscribe(HttpSession session){

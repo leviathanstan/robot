@@ -1,6 +1,7 @@
 package com.robot.interceptor;
 
 import com.robot.annotation.PermissionsCheck;
+import com.robot.entity.User;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -46,12 +47,22 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
         if (methodPermission!=null) {//检测注解
             if(methodPermission.access().equals("manager")){
                 Integer rank = (Integer) request.getSession().getAttribute("rank");
-                if (rank==null||rank!=1){
+                if (rank==null||rank!=3){
                     handle(request,response);
+                    return false;
                 }
-                return false;
             }else if(methodPermission.access().equals("organizers")){
-
+                Integer rank = (Integer) request.getSession().getAttribute("rank");
+                if (rank==null||(rank!=2&&rank!=3)){
+                    handle(request,response);
+                    return false;
+                }
+            }else if(methodPermission.access().equals("user")){
+                User user = (User) request.getSession().getAttribute("user");
+                if (user==null){
+                    handle(request,response);
+                    return false;
+                }
             }
 
         }
@@ -67,7 +78,7 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
     }
 
     public boolean handle(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        response.sendRedirect(request.getContextPath()+"/404.jsp");
+        response.sendRedirect(request.getContextPath()+"/503.jsp");
         return false;
     }
 }

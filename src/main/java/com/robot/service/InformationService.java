@@ -302,10 +302,10 @@ public class InformationService {
         User user = (User) session.getAttribute("user");
         ArrayList<RobotNews> information = new ArrayList<>();
         ArrayList<Integer> categoryIds = userDao.getUserSubscribe(user.getId());
-        int average = SUBSCRIBE_LENGTH / categoryIds.size();
-        int remainder = SUBSCRIBE_LENGTH % categoryIds.size();
         Map<String,Integer> map = new HashMap<>();
-        if(categoryIds!=null){
+        if(categoryIds!=null&&categoryIds.size()!=0){
+            int average = SUBSCRIBE_LENGTH / categoryIds.size();
+            int remainder = SUBSCRIBE_LENGTH % categoryIds.size();
             for(int i = 0;i<categoryIds.size();i++){
                 int categoryId = categoryIds.get(i);
                 if(i==0){
@@ -316,6 +316,8 @@ public class InformationService {
                 map.put("categoryId", categoryId);
                 information.addAll(informationDao.getIndexInformation(map));
             }
+        }else{
+            return GsonUtil.getSuccessJson();
         }
         CommonUtil.formateDateTimeToDate(information);
         return GsonUtil.getSuccessJson(information);

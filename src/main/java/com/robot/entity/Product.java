@@ -1,7 +1,5 @@
 package com.robot.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * 产品
@@ -11,10 +9,15 @@ import java.time.LocalDateTime;
 public class Product {
 
     private Integer id;
-    private String name;
     private int price;
+    private String name;
     private String brand;
     private String introduction;
+    private String summary;     //总结
+    private String pattern;     //模式
+    private String type;        //种类
+    private String residence;   //地区
+    private String format;
     private String img;
     private Company company;
     private String load;     //负载
@@ -120,11 +123,50 @@ public class Product {
         this.brand = brand;
     }
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getResidence() {
+        return residence;
+    }
+
+    public void setResidence(String residence) {
+        this.residence = residence;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", price=" + price +
                 ", brand='" + brand + '\'' +
                 ", introduction='" + introduction + '\'' +

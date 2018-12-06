@@ -22,6 +22,12 @@ public class UserController {
     private UserService userService;
 
     @ResponseBody
+    @RequestMapping(value = "getPermission", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getPermission(HttpSession session){
+        return userService.getPermission(session);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/getAllSubscribe", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getAllSubscribe(){
         return userService.getAllSubscribe();
