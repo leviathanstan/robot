@@ -10,11 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
@@ -202,5 +205,18 @@ public class CommonServiceTest {
         System.out.println(survey);
         System.out.println(dbSurvey);
 
+    }
+
+    @Test
+    public void getLastMonths() {
+        Date date = new Date();
+        System.out.println(date);
+        int i = 3;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-rr");
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.MONTH, -i);
+        Date m = c.getTime();
+        System.out.println(m);
     }
 }
