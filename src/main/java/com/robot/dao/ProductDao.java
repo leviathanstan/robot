@@ -17,6 +17,6 @@ public interface ProductDao {
     ArrayList<Product> getProductLibrary();
     int getSearchCount(String content);
     int addProduct(Product product);
-    int deleteProduct(int id);
+    int deleteProduct(List<Integer> id);
     int updateProduct(Product product);
 }

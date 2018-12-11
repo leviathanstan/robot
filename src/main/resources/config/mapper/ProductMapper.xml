@@ -46,8 +46,11 @@
           values(#{img},#{summary},#{introduction},#{pattern},#{load},#{axis},#{type},#{brand},#{residence},#{format},#{effectTime},#{lastUpdateTime})
     </insert>
     <!--删除产品-->
-    <delete id="deleteProduct" parameterType="int">
-        delete from product_library where id=#{id}
+    <delete id="deleteProduct">
+        delete from product_library where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
     <!--修改产品-->
     <update id="updateProduct" parameterType="com.robot.entity.Product">

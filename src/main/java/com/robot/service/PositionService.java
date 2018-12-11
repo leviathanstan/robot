@@ -112,7 +112,7 @@ public class PositionService {
     public String getLevelArea(String parentId){
         ArrayList<Area> areas;
         if (CommonUtil.isNullOrEmpty(parentId)||!CommonUtil.simpleMatch(Constant.RULE_NUMBER,parentId)){
-            areas = positionDao.getAreas(0);
+            areas = positionDao.getAreas(1);
         }else {
             areas = positionDao.getAreas(Integer.parseInt(parentId));
         }
@@ -128,7 +128,7 @@ public class PositionService {
     public String getLevelIndustry(String parentId){
         ArrayList<Industry> industries;
         if (CommonUtil.isNullOrEmpty(parentId)||!CommonUtil.simpleMatch(Constant.RULE_NUMBER,parentId)){
-            industries = positionDao.getIndustry(0);
+            industries = positionDao.getIndustry(1);
         }else {
             industries = positionDao.getIndustry(Integer.parseInt(parentId));
         }

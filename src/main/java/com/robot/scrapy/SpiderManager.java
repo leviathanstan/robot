@@ -36,6 +36,12 @@ public class SpiderManager {
         paramMap.put(GDSTC_PROJECT,GDstc);
         paramMap.put(GZII_PROJECT,GZii);
         paramMap.put(ROBOTCHINA_PROJECT,RobotChina);
+        System.out.println(OfWeek);
+        System.out.println(GDRobot);
+        System.out.println(GDei);
+        System.out.println(GDstc);
+        System.out.println(GZii);
+        System.out.println(RobotChina);
         return paramMap;
     }
 
@@ -44,7 +50,8 @@ public class SpiderManager {
         List<SpiderStatus> spiderStatuses = new ArrayList<>();
         for (String project : paramMap.keySet()){
             for(String spider : paramMap.get(project)){
-                spiderStatuses.add(Spider.runSpider(project, spider));
+                if (spider!=null&&!spider.equals(""))
+                    spiderStatuses.add(Spider.runSpider(project, spider));
             }
         }
         return spiderStatuses;
@@ -68,39 +75,39 @@ public class SpiderManager {
         OfWeek = ofWeek;
     }
 
-    public static List<String> getGDei() {
+    public List<String> getGDei() {
         return GDei;
     }
 
     @Value("#{'${GDeiModels}'.split(',')}")
-    public static void setGDei(List<String> GDei) {
+    public void setGDei(List<String> GDei) {
         SpiderManager.GDei = GDei;
     }
 
-    public static List<String> getGDstc() {
+    public List<String> getGDstc() {
         return GDstc;
     }
 
     @Value("#{'${GDstcModels}'.split(',')}")
-    public static void setGDstc(List<String> GDstc) {
+    public void setGDstc(List<String> GDstc) {
         SpiderManager.GDstc = GDstc;
     }
 
-    public static List<String> getGZii() {
+    public List<String> getGZii() {
         return GZii;
     }
 
     @Value("#{'${GZiiModels}'.split(',')}")
-    public static void setGZii(List<String> GZii) {
+    public void setGZii(List<String> GZii) {
         SpiderManager.GZii = GZii;
     }
 
-    public static List<String> getRobotChina() {
+    public List<String> getRobotChina() {
         return RobotChina;
     }
 
     @Value("#{'${RobotChinaModels}'.split(',')}")
-    public static void setRobotChina(List<String> robotChina) {
+    public void setRobotChina(List<String> robotChina) {
         RobotChina = robotChina;
     }
 }

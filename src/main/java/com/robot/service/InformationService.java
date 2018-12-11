@@ -52,7 +52,7 @@ public class InformationService {
      * 首页information数量
      */
     private enum NumberEnum {
-        INFORMATION_NUMBER(8), ASSOCIATION_NUMBER(13), COMPANY_NUMBER(12), PRODUCT_NUMBER(14), KNOWLEDGE(14), EXPERT(14);
+        INFORMATION_NUMBER(15), ASSOCIATION_NUMBER(15), COMPANY_NUMBER(15), PRODUCT_NUMBER(15), KNOWLEDGE(15), EXPERT(15);
         private final int number;
 
         NumberEnum(int number) {

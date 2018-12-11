@@ -21,7 +21,7 @@ public class ExceptionResolver {
     public String handle(Exception e){
         e.printStackTrace();
         if (e instanceof NullPointerException){
-            return GsonUtil.getErrorJson("这里是控制针错误，请找后台菜鸡处理");
+            return GsonUtil.getErrorJson("这里是空指针错误，请找后台菜鸡处理");
         }
         if (e instanceof HttpRequestMethodNotSupportedException){
             return GsonUtil.getErrorJson("HTTP method error!");

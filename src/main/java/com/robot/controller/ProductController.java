@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +27,8 @@ public class ProductController {
     //@PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteProduct", method = RequestMethod.POST)
-    public String deleteProduct(int id){
-        return productService.deleteProduct(id);
+    public String deleteProduct(@RequestParam List<Integer> ids){
+        return productService.deleteProduct(ids);
     }
 
     //@PermissionsCheck

@@ -74,11 +74,11 @@
     <select id="getAreas" resultMap="areaMap" parameterType="int">
         select id,name from region where 1=1
         <choose>
-            <when test="_parameter!=0">
+            <when test="_parameter!=1">
                 and parent_id=#{parentId}
             </when>
             <otherwise>
-                and parent_id is null
+                and parent_id=1
             </otherwise>
         </choose>
     </select>
@@ -86,11 +86,11 @@
     <select id="getIndustry" resultMap="industryMap" parameterType="int">
         select id,name from industry_category where 1=1
         <choose>
-            <when test="_parameter!=0">
+            <when test="_parameter!=1">
                 and parent_id=#{parentId}
             </when>
             <otherwise>
-                and parent_id is null
+                and parent_id=1
             </otherwise>
         </choose>
     </select>

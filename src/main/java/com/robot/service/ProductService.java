@@ -31,8 +31,8 @@ public class ProductService {
         return productDao.getSearchCount(content);
     }
 
-    public String deleteProduct(int id){
-        int result = productDao.deleteProduct(id);
+    public String deleteProduct(List<Integer> ids){
+        int result = productDao.deleteProduct(ids);
         if (result==1){
             return GsonUtil.getSuccessJson();
         }
