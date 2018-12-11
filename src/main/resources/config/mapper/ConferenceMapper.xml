@@ -61,5 +61,36 @@
     <delete id="deleteConference" parameterType="int">
         delete conference where id=#{id}
     </delete>
+    <!--搜索展会和会议-->
+    <select id="findConference" resultMap="conferenceMap" parameterType="map">
+        select * from conference where 1=1
+        <if test="content !=null and content.trim().length()>0 ">
+            and locate(#{content},title)>0
+        </if>
+        <if test="categoryId !=null ">
+            and conference_type = #{categoryId} order by hold_time
+        </if>
+    </select>
 
+    <!--搜索已举办过的展会和会议-->
+    <select id="findConferenceHadHold" resultMap="conferenceMap" parameterType="map">
+        select * from conference where 1=1
+        <if test="content !=null and content.trim().length()>0 ">
+            and locate(#{content},title)>0
+        </if>
+        <if test="categoryId !=null ">
+            and conference_type = #{categoryId}  and hold_time &lt; NOW()
+        </if>
+    </select>
+
+    <!--搜索未举办过的展会和会议-->
+    <select id="findConferenceHadNotHold" resultMap="conferenceMap" parameterType="map">
+        select * from conference where 1=1
+        <if test="content !=null and content.trim().length()>0 ">
+            and locate(#{content},title)>0
+        </if>
+        <if test="categoryId !=null ">
+            and conference_type = #{categoryId}  and hold_time >= NOW()
+        </if>
+    </select>
 </mapper>

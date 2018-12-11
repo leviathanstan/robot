@@ -5,6 +5,7 @@ import com.robot.dao.CompanyDao;
 import com.robot.dao.ConferenceDao;
 import com.robot.entity.Conference;
 import com.robot.entity.RegistrationForm;
+import com.robot.entity.RobotNews;
 import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.github.pagehelper.PageHelper;
@@ -31,127 +33,145 @@ public class ConferenceService {
     private ConferenceDao conferenceDao;
 
     private final int PAGE_LENGTH = 15;
+
     /**
      * 首页会议
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public ArrayList<Conference> getIndexConference(){
+    public ArrayList<Conference> getIndexConference() {
         ArrayList<Conference> conferences = conferenceDao.getIndexConference(0);
         return conferences;
     }
+
     /**
      * 首页展会
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public ArrayList<Conference> getIndexMetting(){
+    public ArrayList<Conference> getIndexMetting() {
         ArrayList<Conference> conferences = conferenceDao.getIndexConference(1);
         return conferences;
     }
+
     /**
      * 展会列表
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public String getConferenceList(String page){
+    public String getConferenceList(String page) {
         int pageNum = CommonUtil.formatPageNum(page);
         PageHelper.startPage(pageNum, PAGE_LENGTH);
         List<Conference> conferences = conferenceDao.getConferenceList(0);
         PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
         return GsonUtil.getSuccessJson(pageInfo);
     }
+
     /**
      * 展会列表
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public String getMettingList(String page){
+    public String getMettingList(String page) {
         int pageNum = CommonUtil.formatPageNum(page);
         PageHelper.startPage(pageNum, PAGE_LENGTH);
         List<Conference> conferences = conferenceDao.getConferenceList(1);
         PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
         return GsonUtil.getSuccessJson(pageInfo);
     }
+
     /**
      * 即将举办
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public String getHoldingConferences(){
+    public String getHoldingConferences() {
         ArrayList<Conference> conferences = conferenceDao.getHoldingConference();
         return GsonUtil.getSuccessJson(conferences);
     }
+
     /**
      * 往期会议
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public String getPassConference(){
+    public String getPassConference() {
         ArrayList<Conference> conferences = conferenceDao.getPassConference();
         return GsonUtil.getSuccessJson(conferences);
     }
+
     /**
      * 增加会议
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public String addConference(Conference conference, HttpSession session){
+    public String addConference(Conference conference, HttpSession session) {
         User user = (User) session.getAttribute("user");
         conference.setUserId(user.getId());
-        if (conferenceDao.addConference(conference)!=1){
+        if (conferenceDao.addConference(conference) != 1) {
             return GsonUtil.getErrorJson();
         }
         return GsonUtil.getSuccessJson();
     }
+
     /**
      * 更新会议
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public String updateConference(Conference conference,HttpSession session){
+    public String updateConference(Conference conference, HttpSession session) {
         Conference dbConference = conferenceDao.getInfo(conference.getId());
         User user = (User) session.getAttribute("user");
-        if (dbConference.getUserId()!=user.getId()){
+        if (dbConference.getUserId() != user.getId()) {
             return GsonUtil.getErrorJson();
         }
-        if (conferenceDao.updateConference(conference)!=1){
+        if (conferenceDao.updateConference(conference) != 1) {
             return GsonUtil.getErrorJson();
         }
         return GsonUtil.getSuccessJson();
     }
+
     /**
      * 删除会议
-     * @author asce
-     * @date 2018/11/22
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/22
      */
-    public String deleteConference(int id,HttpSession session){
+    public String deleteConference(int id, HttpSession session) {
         Conference dbConferences = conferenceDao.getInfo(id);
         User user = (User) session.getAttribute("user");
-        if(dbConferences.getUserId()!=user.getId()){
-            if ((int)session.getAttribute("rank")!=1){
+        if (dbConferences.getUserId() != user.getId()) {
+            if ((int) session.getAttribute("rank") != 1) {
                 return GsonUtil.getErrorJson();
             }
         }
-        if(conferenceDao.deleteConference(id)!=1){
+        if (conferenceDao.deleteConference(id) != 1) {
             return GsonUtil.getErrorJson();
         }
         return GsonUtil.getSuccessJson();
@@ -246,5 +266,41 @@ public class ConferenceService {
             conferenceDao.addForm(registrationForm);
             return GsonUtil.getSuccessJson("成功提交");
         }
+    }
+
+    /*
+    查找展会和会议
+     */
+    public String findConference(HashMap<String, String> args) {
+        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+        int categoryId = CommonUtil.formateParmNum(args.get("categoryId"));
+        int timeType = CommonUtil.formatPageNum(args.get("timeType"));
+        System.out.println(timeType);
+        HashMap<String, Object> dataMap = new HashMap<>();
+        dataMap.put("content", args.get("content"));
+        dataMap.put("categoryId", categoryId);
+        List<Conference> conferences = null;
+        switch (timeType) {
+            case 1:
+                PageHelper.startPage(pageNum, PAGE_LENGTH);
+                conferences = conferenceDao.findConference(dataMap);
+                break;
+            case 2:
+                PageHelper.startPage(pageNum, PAGE_LENGTH);
+                conferences = conferenceDao.findConferenceHadNotHold(dataMap);
+                break;
+            case 3:
+                PageHelper.startPage(pageNum, PAGE_LENGTH);
+                conferences = conferenceDao.findConferenceHadHold(dataMap);
+            default:
+                break;
+        }
+
+        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
+        for (Conference conference : conferences) {
+            conference.setIntroduction(CommonUtil.getPreview(conference.getIntroduction()));
+            conference.setHoldTime(CommonUtil.formateDbTime(conference.getHoldTime()));
+        }
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 }

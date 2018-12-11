@@ -5,6 +5,7 @@ import com.robot.entity.RegistrationForm;
 import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Ning
@@ -21,4 +22,7 @@ public interface ConferenceDao {
     int addConference(Conference conference);
     int updateConference(Conference conference);
     int deleteConference(int id);
+    ArrayList<Conference> findConference(HashMap<String,Object> args);
+    ArrayList<Conference> findConferenceHadHold(HashMap<String,Object> args);
+    ArrayList<Conference> findConferenceHadNotHold(HashMap<String,Object> args);
 }
