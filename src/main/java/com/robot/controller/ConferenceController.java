@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 
 /**
@@ -65,5 +66,11 @@ public class ConferenceController {
     @RequestMapping(value = "/attend", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String writeForm(RegistrationForm registrationForm){
             return conferenceService.enroll(registrationForm);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findConference",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findConference(@RequestParam HashMap args){
+        return conferenceService.findConference(args);
     }
 }
