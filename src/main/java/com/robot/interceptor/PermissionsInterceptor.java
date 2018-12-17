@@ -2,6 +2,7 @@ package com.robot.interceptor;
 
 import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.User;
+import com.robot.enums.PermissionsModel;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -45,19 +46,19 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
         //获取方法上的注解
         PermissionsCheck methodPermission = method.getMethodAnnotation(PermissionsCheck.class);
         if (methodPermission!=null) {//检测注解
-            if(methodPermission.access().equals("manager")){
+            if(methodPermission.access() == PermissionsModel.MANAGER){
                 Integer rank = (Integer) request.getSession().getAttribute("rank");
                 if (rank==null||rank!=3){
                     handle(request,response);
                     return false;
                 }
-            }else if(methodPermission.access().equals("organizers")){
+            }else if(methodPermission.access() == PermissionsModel.ORGANIZER){
                 Integer rank = (Integer) request.getSession().getAttribute("rank");
                 if (rank==null||(rank!=2&&rank!=3)){
                     handle(request,response);
                     return false;
                 }
-            }else if(methodPermission.access().equals("user")){
+            }else if(methodPermission.access() == PermissionsModel.USER){
                 User user = (User) request.getSession().getAttribute("user");
                 if (user==null){
                     handle(request,response);

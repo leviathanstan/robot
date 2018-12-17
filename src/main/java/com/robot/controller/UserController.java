@@ -3,6 +3,7 @@ package com.robot.controller;
 import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.User;
 
+import com.robot.enums.PermissionsModel;
 import com.robot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,21 +34,21 @@ public class UserController {
         return userService.getAllSubscribe();
     }
 
-    @PermissionsCheck(access = "user")
+    @PermissionsCheck(access = PermissionsModel.USER)
     @ResponseBody
     @RequestMapping(value = "/getSubscribeList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getSubscribeList(HttpSession session){
         return userService.getSubscribeList(session);
     }
 
-    @PermissionsCheck(access = "user")
+    @PermissionsCheck(access = PermissionsModel.USER)
     @ResponseBody
     @RequestMapping(value = "/deleteSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteSubscribe(@RequestParam int categoryId,HttpSession session){
         return userService.deleteSubscribe(categoryId,session);
     }
 
-    @PermissionsCheck(access = "user")
+    @PermissionsCheck(access = PermissionsModel.USER)
     @ResponseBody
     @RequestMapping(value = "/addSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addSubscribe(@RequestParam int categoryId,HttpSession session){

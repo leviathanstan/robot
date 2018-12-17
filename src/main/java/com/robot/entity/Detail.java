@@ -24,4 +24,12 @@ public class Detail {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "Detail{" +
+                "page=" + page +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

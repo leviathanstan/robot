@@ -2,6 +2,7 @@ package com.robot.controller;
 
 import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.Product;
+import com.robot.enums.PermissionsModel;
 import com.robot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,21 +27,21 @@ public class ProductController {
 
     //@PermissionsCheck
     @ResponseBody
-    @RequestMapping(value = "/manager/deleteProduct", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/deleteProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteProduct(@RequestParam List<Integer> ids){
         return productService.deleteProduct(ids);
     }
 
     //@PermissionsCheck
     @ResponseBody
-    @RequestMapping(value = "/manager/updateProduct", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/updateProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateProduct(Product product){
         return productService.updateProduct(product);
     }
 
     //@PermissionsCheck
     @ResponseBody
-    @RequestMapping(value = "/manager/addProduct", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/addProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addProduct(Product product){
         return productService.addProduct(product);
     }
@@ -54,7 +55,7 @@ public class ProductController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/getProductList", method = RequestMethod.POST)
+    @RequestMapping(value = "/getProductList", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String getProduct(Map<String,String> args, String pageNum){
         return productService.getProductList(args,pageNum);
     }
@@ -66,7 +67,7 @@ public class ProductController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value= "/getProductInfo", method = RequestMethod.GET)
+    @RequestMapping(value= "/getProductInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getProduct(String id){
         return productService.getProductInfo(id);
     }

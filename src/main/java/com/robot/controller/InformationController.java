@@ -2,6 +2,7 @@ package com.robot.controller;
 
 import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.RobotNews;
+import com.robot.enums.PermissionsModel;
 import com.robot.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class InformationController {
     private InformationService informationService;
 
 
-    @PermissionsCheck(access = "user")
+    @PermissionsCheck(access = PermissionsModel.USER)
     @ResponseBody
     @RequestMapping(value = "/getSubscribe", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getSubscribe(HttpSession session){
@@ -287,7 +288,7 @@ public class InformationController {
      * @param ids
      * @return
      */
-   // @PermissionsCheck(access = "manager")
+   // @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteInformation(@RequestParam List<Integer> ids){
@@ -299,7 +300,7 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-   // @PermissionsCheck(access = "manager")
+   // @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/updateInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateInformation(RobotNews robotNews){
@@ -311,14 +312,13 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-   // @PermissionsCheck(access = "manager")
+   // @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/addInformation", method = RequestMethod.POST)
     public String addInformation(RobotNews robotNews){
         return informationService.addInformation(robotNews);
     }
 
-    //@PermissionsCheck(access = "user")
     @ResponseBody
     @RequestMapping(value = "/getInformationInfo", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String getInformationInfo(int id){

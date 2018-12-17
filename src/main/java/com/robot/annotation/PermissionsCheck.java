@@ -1,5 +1,7 @@
 package com.robot.annotation;
 
+import com.robot.enums.PermissionsModel;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,6 +14,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface PermissionsCheck {
-    String access() default "manager";
-    enum access{MANAGER,ORGANIZER,USER}     //MANAGER:超级管理员，ORGANIZER:主办方
+    PermissionsModel access() default PermissionsModel.MANAGER;
 }

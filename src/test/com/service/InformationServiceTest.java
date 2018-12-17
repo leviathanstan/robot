@@ -2,7 +2,9 @@ package com.service;
 
 import com.robot.dao.InformationDao;
 
+import com.robot.entity.RobotNews;
 import com.robot.schedule.ScheduleTask;
+import com.robot.service.InformationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @WebAppConfiguration("src/main/resources")
@@ -21,6 +24,8 @@ public class InformationServiceTest {
     private InformationDao informationDao;
     @Autowired
     private ScheduleTask scheduleTask;
+    @Autowired
+    private InformationService informationService;
 
     @Test
     public void testList(){
@@ -29,6 +34,7 @@ public class InformationServiceTest {
 
     @Test
     public void testS(){
-        scheduleTask.runSpider();
+        ArrayList<RobotNews> robotNews = informationService.getCompanyNews();
+        robotNews.forEach(c-> System.out.println(c));
     }
 }
