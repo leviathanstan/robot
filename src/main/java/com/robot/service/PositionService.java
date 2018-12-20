@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author asce
@@ -31,9 +28,9 @@ public class PositionService {
     private final int PAGE_LENGTH = 15;
 
     @Transactional
-    public String deletePosition(int positionId){
-        positionDao.deletePositionRegion(positionId);
-        positionDao.deletePosition(positionId);
+    public String deletePosition(List<Integer> ids){
+        positionDao.deletePositionRegion(ids);
+        positionDao.deletePosition(ids);
         return GsonUtil.getSuccessJson();
     }
 
@@ -42,7 +39,9 @@ public class PositionService {
         positionDao.updatePosition(position);
         Map<String,String> map = new HashMap<>();
         map.put("positionId",position.getId()+"");
-        positionDao.deletePositionRegion(position.getId());
+        List<Integer> list = new ArrayList<>();
+        list.add(position.getId());
+        positionDao.deletePositionRegion(list);
         for(int regionId:regionIds) {
             map.put("regionId",regionId+"");
             positionDao.addPositionRegion(map);

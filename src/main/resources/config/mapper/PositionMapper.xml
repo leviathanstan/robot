@@ -149,9 +149,15 @@
     </update>
     <!--删除招聘-->
     <delete id="deletePosition" parameterType="int">
-        delete from positions where id=#{id}
+        delete from positions where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
     <delete id="deletePositionRegion" parameterType="int">
-        delete from region_relation where position_id=#{positionId}
+        delete from region_relation where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 </mapper>

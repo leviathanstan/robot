@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author asce
@@ -49,8 +50,8 @@ public class PositionController {
     //@PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "manager/deletePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String deletePosition(int id){
-        return positionService.deletePosition(id);
+    public String deletePosition(@RequestParam List<Integer> ids){
+        return positionService.deletePosition(ids);
     }
 
     //@PermissionsCheck

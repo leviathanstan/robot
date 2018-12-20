@@ -420,7 +420,7 @@ public class InformationService {
     public ArrayList<RobotNews> findPolicyTop() {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.INFORMATION_NUMBER.getNumber());
-        map.put("categoryId", InformationEnum.INDUSTRY_INFORMATION.getId());
+        map.put("categoryId", InformationEnum.POLICY_INFORMATION.getId());
         ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
         for (RobotNews robotNews : informations) {
             robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));

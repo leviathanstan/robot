@@ -64,7 +64,7 @@ public class IntroductionController {
     @ResponseBody
     @RequestMapping(value = "getUniversityList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getUniversityList(String pageNum){
-        return introductionService.getExpertList(pageNum);
+        return introductionService.getUniversityList(pageNum);
     }
 
     /**

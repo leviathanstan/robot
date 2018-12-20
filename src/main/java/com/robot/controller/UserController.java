@@ -8,6 +8,8 @@ import com.robot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 
 import javax.servlet.http.HttpSession;
 
@@ -53,6 +55,12 @@ public class UserController {
     @RequestMapping(value = "/addSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addSubscribe(@RequestParam int categoryId,HttpSession session){
         return userService.addSubscribe(categoryId,session);
+    }
+
+    @PermissionsCheck(access = PermissionsModel.USER)
+    @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
+    public String loginOut(){
+        return "login-out";
     }
 
     /**
