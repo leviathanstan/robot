@@ -89,7 +89,7 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getHotSpotInfo",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getHotspotInfo",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
     public String getHostSpotList(String id){
         return informationService.findHotInfo(id);
     }
