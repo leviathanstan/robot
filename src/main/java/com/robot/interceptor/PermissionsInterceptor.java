@@ -6,6 +6,7 @@ import com.robot.enums.PermissionsModel;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -78,8 +79,8 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    public boolean handle(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        response.sendRedirect(request.getContextPath()+"/503.jsp");
+    public boolean handle(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException {
+        request.getRequestDispatcher("/404.jsp").forward(request,response);
         return false;
     }
 }

@@ -25,21 +25,21 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteProduct(@RequestParam List<Integer> ids){
         return productService.deleteProduct(ids);
     }
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/updateProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateProduct(Product product){
         return productService.updateProduct(product);
     }
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/addProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addProduct(Product product){

@@ -202,10 +202,8 @@ public class IntroductionService {
     /**
      * 获得具体成员信息
      */
-    public String getMemberInfo(String id){
-        int infoId;
-        if ((infoId=CommonUtil.formatPageNum(id))==0)   return GsonUtil.getErrorJson();
-        Introduction member = introductionDao.findIntroductionInfo(infoId);
+    public String getMemberInfo(int id){
+        Introduction member = introductionDao.findIntroductionInfo(id);
         if(member==null){
             return GsonUtil.getErrorJson();
         }

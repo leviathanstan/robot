@@ -47,21 +47,21 @@ public class PositionController {
         return positionService.getLevelIndustry(parentId);
     }
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "manager/deletePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deletePosition(@RequestParam List<Integer> ids){
         return positionService.deletePosition(ids);
     }
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "manager/updatePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updatePosition(Position position, int[] regionIds){
         return positionService.updatePosition(position,regionIds);
     }
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "manager/addPosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addPosition(Position position, @RequestParam int[] regionIds){

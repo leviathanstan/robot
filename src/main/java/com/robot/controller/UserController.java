@@ -70,7 +70,7 @@ public class UserController {
      * @param
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/find", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String findUser(User user,String pageNum){

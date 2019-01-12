@@ -27,7 +27,7 @@ public class SurveyController {
     @Autowired
     SurveyService surveyService;
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/search", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String search(@RequestParam Map<String,String> args,HttpSession session){
@@ -39,7 +39,7 @@ public class SurveyController {
      * @param ids
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteSurvey", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteSurvey(@RequestParam List<Integer> ids){
@@ -51,7 +51,7 @@ public class SurveyController {
      * @param id
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteQuestion", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String deleteQuestion(int id){
@@ -63,7 +63,7 @@ public class SurveyController {
      * @param id
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteChoice", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteChoice(int id){
@@ -75,7 +75,7 @@ public class SurveyController {
      * @param choice
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/updateChoice", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateChoice(@RequestBody Choice[] choice){
@@ -87,7 +87,7 @@ public class SurveyController {
      * @param question
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/updateQuestion", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateQuestion(@RequestBody Question question){
@@ -99,7 +99,7 @@ public class SurveyController {
      * @param survey
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/updateSurvey", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateSurvey(@RequestBody Survey survey){
@@ -111,7 +111,7 @@ public class SurveyController {
      * @param session
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @RequestMapping(value = "/manager/addSurvey", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String addSurvey(@RequestBody Survey survey, HttpSession session){
@@ -123,7 +123,7 @@ public class SurveyController {
      * @param question
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/addQuestion", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addQuestion(@RequestBody Question question){
@@ -149,7 +149,7 @@ public class SurveyController {
      * @param
      * @return
      */
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/addChoice", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String addChoices(@RequestBody Choice[] choices){

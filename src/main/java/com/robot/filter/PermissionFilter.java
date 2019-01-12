@@ -57,7 +57,7 @@ public class PermissionFilter implements Filter {
 
 			}else{
 				httpRequest.getSession().invalidate();//session失效
-				wrapper.sendRedirect(((HttpServletRequest) request).getContextPath()+"/jsp/404.jsp");
+				request.getRequestDispatcher("/404.jsp").forward(request,response);
 				return;
 			}
 		}

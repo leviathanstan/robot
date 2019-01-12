@@ -23,21 +23,21 @@ public class ConferenceController {
     @Autowired
     private ConferenceService conferenceService;
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/deleteConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteConference(int id, HttpSession session){
         return conferenceService.deleteConference(id, session);
     }
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/updateConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateConference(Conference conference,HttpSession session){
         return conferenceService.updateConference(conference,session);
     }
 
-    //@PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/addConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addConference(Conference conference,HttpSession session){

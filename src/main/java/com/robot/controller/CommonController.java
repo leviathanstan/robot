@@ -49,10 +49,4 @@ public class CommonController {
         return commonService.uploadFile(file);
     }
 
-    @RequestMapping(value = "/testSpider",method = RequestMethod.GET)
-    @ResponseBody
-    public String testSpider(){
-        scheduleTask.runSpider();
-        return "success";
-    }
 }

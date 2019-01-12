@@ -288,7 +288,7 @@ public class InformationController {
      * @param ids
      * @return
      */
-   // @PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteInformation(@RequestParam List<Integer> ids){
@@ -300,7 +300,7 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-   // @PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/updateInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateInformation(RobotNews robotNews){
@@ -312,7 +312,7 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-   // @PermissionsCheck
+    @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/addInformation", method = RequestMethod.POST)
     public String addInformation(RobotNews robotNews){
