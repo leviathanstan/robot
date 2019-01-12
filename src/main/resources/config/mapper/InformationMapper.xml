@@ -135,13 +135,12 @@
     </insert>
     <!--修改-->
     <update id="update" parameterType="com.robot.entity.RobotNews">
-        update information id=#{id}
+        update information
         <set>
-            <if test="img!=null">,cover=#{img}</if>
-            <if test="title!=null">,title=#{title}</if>
-            <if test="readGuide!=null">,guide=#{readGuide}</if>
-            <if test="source!=null">,source=#{source}</if>
-            <if test="categoryId!=null">,category_id=#{categoryId}</if>
+            <if test="img!=null">cover=#{img},</if>
+            <if test="title!=null">title=#{title},</if>
+            <if test="readGuide!=null">guide=#{readGuide},</if>
+            <if test="source!=null">source=#{source},</if>
         </set>
         where id=#{id}
     </update>
@@ -150,4 +149,8 @@
         update information content=#{content} where information_id=#{informationId} and page=#{page}
     </update>
 
+    <!--浏览数递增-->
+    <update id="addCount" parameterType="Integer">
+        update information set view_count = ((select view_count from (select view_count from information where id = #{id})i1) + 1) where id = #{id};
+    </update>
 </mapper>

@@ -166,11 +166,13 @@ public class CommonUtil {
      * @return
      */
     public static String getFirstImgFromContent(ArrayList<Detail> content){
-        String regex = "src=\"/static/img/(.*?)\"";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(content.get(0).getContent());
-        if (matcher.find())
-            return Constant.HOST_ADDRESS+"/resources/img/"+matcher.group(1);
+        if(content.size()!=0) {
+            String regex = "src=\"/static/img/(.*?)\"";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(content.get(0).getContent());
+            if (matcher.find())
+                return Constant.HOST_ADDRESS + "/resources/img/" + matcher.group(1);
+        }
         return null;
     }
     /**

@@ -19,4 +19,5 @@ public interface ProductDao {
     int addProduct(Product product);
     int deleteProduct(List<Integer> id);
     int updateProduct(Product product);
+    List<String> findHotProduct();
 }

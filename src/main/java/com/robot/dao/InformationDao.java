@@ -32,5 +32,6 @@ public interface InformationDao {
     int update(RobotNews robotNews );
     int updateContent(Map<String,String> map);
     String findInformationById(int id);
+    int addCount(int id);
 
 }

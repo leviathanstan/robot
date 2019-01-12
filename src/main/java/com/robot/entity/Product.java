@@ -25,6 +25,7 @@ public class Product {
     private String imgs;     //多张图片通过‘;’分割
     private String effectTime;
     private String lastUpdateTime;
+    private Integer viewCount;
 
 
     public Integer getId() {
@@ -161,6 +162,14 @@ public class Product {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
     @Override

@@ -38,7 +38,7 @@ public class InformationController {
      */
     @ResponseBody
     @RequestMapping(value = "/findInformationInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findInformationInfo(int id){
+    public String findInformationInfo(String id){
         return informationService.findInformationInfo(id);
     }
 
@@ -314,7 +314,7 @@ public class InformationController {
      */
     @PermissionsCheck
     @ResponseBody
-    @RequestMapping(value = "/manager/addInformation", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/addInformation", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String addInformation(RobotNews robotNews){
         return informationService.addInformation(robotNews);
     }
