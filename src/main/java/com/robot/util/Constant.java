@@ -54,11 +54,11 @@ public class Constant {
 //    }.getRootPath();
 
     //图片存放地址
-    public static final String IMG_PATH =  "C:\\data\\resources\\robot\\img" + File.separator;
+    public static final String IMG_PATH =  "C:\\data\\resources\\img" + File.separator;
     //图片访问地址
     public static final String IMG_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
     //文件存放地址
-    public static final String FILE_PATH =  "C:\\data\\resources\\robot\\file" + File.separator;
+    public static final String FILE_PATH =  "C:\\data\\resources\\file" + File.separator;
     //文件访问地址
     public static final String FILE_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
 
