@@ -33,5 +33,6 @@ public interface InformationDao {
     int updateContent(Map<String,String> map);
     String findInformationById(int id);
     int addCount(int id);
+    ArrayList<RobotNews> findRelatedHot();
 
 }

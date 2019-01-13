@@ -45,14 +45,9 @@
     <select id="getContentOfInfo" resultMap="contentMap" parameterType="map">
         select * from information_content where information_id=#{informationId,jdbcType=INTEGER}
     </select>
-    <!--首页行业报告
-    <select id="getIndexReport" parameterType="int" resultMap="">
-
-    </select>
-    -->
     <!--首页技术研讨-->
     <select id="getIndexDiscuss" parameterType="int" resultMap="discussMap">
-        select id, cover, title from technique_discuss limit 6
+        select id, cover, title from technique_discuss limit 20
     </select>
     <!--搜索-->
     <select id="find" resultMap="informationDetail" parameterType="map">
@@ -148,9 +143,13 @@
     <update id="updateContent" parameterType="map">
         update information content=#{content} where information_id=#{informationId} and page=#{page}
     </update>
-
     <!--浏览数递增-->
     <update id="addCount" parameterType="Integer">
         update information set view_count = ((select view_count from (select view_count from information where id = #{id})i1) + 1) where id = #{id};
     </update>
+    <!--查找相关热点-->
+    <select id="findRelatedHot" resultMap="informationMap">
+        select id,title from (select * from information where category_id = 6 or category_id = 7 or category_id = 12)t1 order by view_count desc limit 10;
+    </select>
+    
 </mapper>

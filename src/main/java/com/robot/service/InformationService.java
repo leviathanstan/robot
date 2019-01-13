@@ -1078,5 +1078,15 @@ public class InformationService {
         return GsonUtil.getSuccessJson(dataMap);
     }
 
+    /**
+     * 查找相关热点
+     * @author chen
+     * @date 2019/1/13
+     * @return
+     */
+    public String findRelatedHot(){
+        ArrayList<RobotNews> informations = informationDao.findRelatedHot();
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class,"postDate","img","url","viewCount","content","source","readGuide","categoryId"),informations);
+    }
 
 }

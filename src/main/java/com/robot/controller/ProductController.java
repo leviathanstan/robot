@@ -73,6 +73,7 @@ public class ProductController {
     }
 
     /**
+     * 获取热门产品
      * @author chen
      * @date 2019/1/13
      * @return
