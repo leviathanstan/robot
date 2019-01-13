@@ -141,7 +141,7 @@
     </update>
     <!--修改内容-->
     <update id="updateContent" parameterType="map">
-        update information content=#{content} where information_id=#{informationId} and page=#{page}
+        update information_content set content=#{content} where information_id=#{informationId} and page=#{page}
     </update>
     <!--浏览数递增-->
     <update id="addCount" parameterType="Integer">

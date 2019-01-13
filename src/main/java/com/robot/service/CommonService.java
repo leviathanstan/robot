@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.dao.InformationDao;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
@@ -33,6 +34,8 @@ public class CommonService {
     PositionService positionService;
     @Autowired
     ConferenceService conferenceService;
+    @Autowired
+    InformationDao informationDao;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
@@ -173,4 +176,5 @@ public class CommonService {
         }
         return GsonUtil.getErrorJson("上传失败");
     }
+
 }
