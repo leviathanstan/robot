@@ -118,4 +118,14 @@ public class ProductService {
         return productDao.getProductLibrary();
     }
 
+    /**
+     * 查找热门产品
+     * @author chen
+     * @date 2019/1/13
+     * @return
+     */
+    public String findHotProduct(){
+         ArrayList<Product> products = productDao.findHotProduct();
+         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class, "price", "brand","introduction","company","load","axis","imgs","effectTime","lastUpdateTime","summary","pattern","type","residence","format","viewCount","img"),products);
+    }
 }

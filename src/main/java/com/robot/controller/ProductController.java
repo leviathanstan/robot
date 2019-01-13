@@ -71,4 +71,15 @@ public class ProductController {
     public String getProduct(String id){
         return productService.getProductInfo(id);
     }
+
+    /**
+     * @author chen
+     * @date 2019/1/13
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getHotProduct",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findHotProduct(){
+        return productService.findHotProduct();
+    }
 }

@@ -97,7 +97,7 @@
         where id=#{id}
     </update>
     <!--搜索热门产品-->
-    <select id="findHotProduct" resultType="java.lang.String">
-        select name from product_library order by view_count desc limit 10;
+    <select id="findHotProduct" resultMap="productMap">
+        select id,name from product_library order by view_count desc limit 10;
     </select>
 </mapper>
