@@ -1151,9 +1151,9 @@ public class InformationService {
      * @date 2019/1/13
      * @return
      */
-    public String findRelatedHot(){
+    public ArrayList<RobotNews> findRelatedHot(){
         ArrayList<RobotNews> informations = informationDao.findRelatedHot();
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class,"postDate","img","url","viewCount","content","source","readGuide","categoryId"),informations);
+        return informations;
     }
 
 }
