@@ -95,6 +95,41 @@ public class InformationController {
     }
 
     /**
+     * 获取资讯热点列表
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findHotspotByPage",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
+    public String findHotspotByPage(Integer pageNum){
+        return informationService.findHotspotByPage(pageNum);
+    }
+
+    /**
+     * 获取分页显示的行业报告
+     * @author chen
+     * @date 2019/1/13
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findReportList",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
+    public String findReportList(Integer pageNum){
+        return informationService.findReportList(pageNum);
+    }
+
+    /**
+     * 获取行业报告具体内容
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findReportInfo",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
+    public String findReportInfo(Integer id){
+        return informationService.findReportInfo(id);
+    }
+
+    /**
      * 专家智点列表
      * @param pageNum
      * @return
@@ -166,7 +201,7 @@ public class InformationController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAssociationNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getAssociationNewsInfo(String id){
+    public String getAssociationNewsInfo(int id){
         return informationService.getAssociationNewsInfo(id);
     }
 

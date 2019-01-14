@@ -1,17 +1,12 @@
 package com.robot.service;
 
-import com.robot.dao.InformationDao;
 import com.robot.util.CommonUtil;
-import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +29,6 @@ public class CommonService {
     PositionService positionService;
     @Autowired
     ConferenceService conferenceService;
-    @Autowired
-    InformationDao informationDao;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
@@ -73,7 +66,7 @@ public class CommonService {
         dataMap.put("companyDynamics", informationService.getCompanyDynamics());
         //资讯
         dataMap.put("hotspot",informationService.getIndexHot());
-        //dataMap.put("report",informationService.getIndexReport());
+        dataMap.put("report",informationService.findReportTop());
         //技术
         //dataMap.put("case",technologyService.getIndexCase());
         dataMap.put("basic",informationService.getIndexBasic());

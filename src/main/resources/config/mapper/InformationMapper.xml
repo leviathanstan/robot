@@ -18,6 +18,23 @@
         <result column="content" property="content"/>
         <result column="page" property="page"/>
     </resultMap>
+    <resultMap id="reportMap" type="com.robot.entity.Report">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="title" column="title"/>
+        <result property="cover" column="cover"/>
+        <result property="delivery" column="delivery"/>
+        <result property="firstPostDate" column="first_post_date"/>
+        <result property="newPostDate" column="new_post_date"/>
+        <result property="editor" column="editor"/>
+        <result property="industry" column="industry"/>
+        <result property="guide" column="guide"/>
+        <result property="graphNum" column="graph_num"/>
+        <result property="reportPage" column="report_page"/>
+        <result property="reportNum" column="report_num"/>
+        <result property="production" column="production"/>
+        <result property="url" column="url"/>
+    </resultMap>
     <!--技术研讨-->
     <resultMap id="discussMap" type="com.robot.entity.RobotNews">
         <id property="id" column="id"/>
@@ -63,14 +80,14 @@
         </if>
     </select>
     <!-- 搜索统计-->
-    <select id="searchCount" resultType="int" parameterType="java.lang.String">
+    <select id="searchCount" resultType="java.lang.Integer" parameterType="java.lang.String">
         select count(id) from information where 1=1
         <if test="_parameter!=null and _parameter.trim().length()>0">
             and locate(#{content},title)>0 or id in(select distinct information_id from information_content where locate(#{content},content)>0)
         </if>
     </select>
     <!-- 搜索某些类别下结果总数-->
-    <select id="searchCategoryCount" resultType="int" parameterType="map">
+    <select id="searchCategoryCount" resultType="java.lang.Integer" parameterType="map">
         select count(id) from information where category_id in
           <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
             #{item}
@@ -87,6 +104,9 @@
     <!-- 相关关键字-->
     <select id="findRelatedKeyword" parameterType="int" resultType="java.lang.String">
         select keyword from keyword where id in (select keyword_id from keyword_information where information_id=#{informationId})
+    </select>
+    <select id="findRepRelatedKeyword" parameterType="int" resultType="java.lang.String">
+        select keyword from keyword where id in (select keyword_id from keyword_information where report_id = #{reportId})
     </select>
     <!-- 相关information-->
     <select id="findRelatedInformation" parameterType="int" resultMap="informationMap">
@@ -151,5 +171,16 @@
     <select id="findRelatedHot" resultMap="informationMap">
         select id,title from (select * from information where category_id = 6 or category_id = 7 or category_id = 12)t1 order by view_count desc limit 10;
     </select>
-    
+    <!--首页行业报告-->
+    <select id="findReportTop" resultMap="reportMap">
+        select id,cover,title,new_post_date from industry_report order by new_post_date desc limit 12
+    </select>
+    <!--行业报告列表-->
+    <select id="findReportList" resultMap="reportMap">
+        select id,cover,title,guide,new_post_date from industry_report order by new_post_date desc
+    </select>
+    <!--行业报告详情-->
+    <select id="findReportInfo" resultMap="reportMap">
+        select * from industry_report where id = #{id}
+    </select>
 </mapper>

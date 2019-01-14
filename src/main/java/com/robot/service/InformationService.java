@@ -6,6 +6,7 @@ import com.robot.dao.InformationDao;
 import com.robot.dao.UserDao;
 import com.robot.dto.RelatedReadingDto;
 import com.robot.entity.Detail;
+import com.robot.entity.Report;
 import com.robot.entity.RobotNews;
 import com.robot.entity.User;
 import com.robot.util.CommonUtil;
@@ -472,6 +473,23 @@ public class InformationService {
     }
 
     /**
+     * 资讯热点列表
+     * @param Num
+     * @return
+     */
+    public String findHotspotByPage(Integer Num) {
+        int pageNum = CommonUtil.formatPageNum(Num + "");
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<RobotNews> informations = informationDao.getInformationList(InformationEnum.CONSULTING_FOCUS.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
+        for (RobotNews information : informations) {
+            information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
+            information.setContent(CommonUtil.getPreview(information.getContent()));
+        }
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
+    }
+
+    /**
      * 资讯热点具体内容
      * @param id
      * @return
@@ -496,6 +514,57 @@ public class InformationService {
         dataMap.put("related", relatedReadingDto);
         return GsonUtil.getSuccessJson(dataMap);
     }
+
+    /**
+     * 首页行业报告
+     * @author chen
+     * @date 2019/1/13
+     * @return
+     */
+    public ArrayList<Report> findReportTop(){
+        ArrayList<Report> reports = informationDao.findReportTop();
+        for(Report report:reports){
+            report.setNewPostDate(CommonUtil.getDate(report.getNewPostDate()));
+        }
+        return reports;
+    }
+
+    /**
+     * 行业报告列表
+     * @author chen
+     * @date 2019/1/13
+     * @param num
+     * @return
+     */
+    public String findReportList(Integer num){
+        int pageNum = CommonUtil.formatPageNum(num + "");
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        ArrayList<Report> reports = informationDao.findReportList();
+        PageInfo<Report> pageInfo = new PageInfo<>(reports);
+        for(Report report:reports){
+            report.setNewPostDate(CommonUtil.getDate(report.getNewPostDate()));
+        }
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Report.class,"url","industry","production","editor","firstPostDate","delivery","reportPage","reportNum","graphNum","content","keywords"),pageInfo);
+
+    }
+
+    /**
+     * 行业报告详情
+     * @author chen
+     * @date 2019/1/13
+     * @param id
+     * @return
+     */
+    public String findReportInfo(int id){
+        Report report = informationDao.findReportInfo(id);
+        if(report == null)
+            return GsonUtil.getErrorJson();
+        report.setNewPostDate(CommonUtil.getDate(report.getNewPostDate()));
+        report.setFirstPostDate(CommonUtil.getDate(report.getFirstPostDate()));
+        ArrayList<String> keywords = informationDao.findRepRelatedKeyword(id);
+        report.setKeywords(keywords);
+        return GsonUtil.getSuccessJson(report);
+    }
     //******************************************协会********************************************//
 
     /**
@@ -506,19 +575,17 @@ public class InformationService {
      * @author hua
      * @date 2018/10/11
      */
-    public String getAssociationNewsInfo(String id) {
-        int infoId;
-        if ((infoId = CommonUtil.formatPageNum(id)) == 0) return GsonUtil.getErrorJson();
-        RobotNews information = informationDao.findInformationInfo(infoId);
+    public String getAssociationNewsInfo(int id) {
+        RobotNews information = informationDao.findInformationInfo(id);
         if (information != null) {
-            if(1 != informationDao.addCount(infoId)) {
+            if(1 != informationDao.addCount(id)) {
                 throw new RuntimeException();
             }
             information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
             information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
             RelatedReadingDto relatedReadingDto = new RelatedReadingDto();
-            relatedReadingDto.setKeywords(informationDao.findRelatedKeyword(infoId));
-            relatedReadingDto.setInformation(informationDao.findRelatedInformation(infoId));
+            relatedReadingDto.setKeywords(informationDao.findRelatedKeyword(id));
+            relatedReadingDto.setInformation(informationDao.findRelatedInformation(id));
             Map<String,Object> dataMap = new HashMap();
             dataMap.put("information", information);
             dataMap.put("related", relatedReadingDto);
