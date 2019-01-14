@@ -228,7 +228,7 @@ public class InformationService {
         List<RobotNews> informations = informationDao.find(dataMap);
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
         for (RobotNews information : informations) {
-            information.setContent(CommonUtil.getPreview(information.getContent()));
+            information.setReadGuide(CommonUtil.getPreview(information.getContent()).get(0).getContent());
             information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
         }
         return pageInfo;
@@ -562,8 +562,12 @@ public class InformationService {
         report.setPostDate(CommonUtil.getDate(report.getPostDate()));
         report.setFirstPostDate(CommonUtil.getDate(report.getFirstPostDate()));
         ArrayList<String> keywords = informationDao.findRepRelatedKeyword(id);
-        report.setKeywords(keywords);
-        return GsonUtil.getSuccessJson(report);
+        RelatedReadingDto relatedReadingDto = new RelatedReadingDto();
+        relatedReadingDto.setKeywords(keywords);
+        Map<String,Object> dataMap = new HashMap();
+        dataMap.put("information", report);
+        dataMap.put("related", relatedReadingDto);
+        return GsonUtil.getSuccessJson(dataMap);
     }
     //******************************************协会********************************************//
 

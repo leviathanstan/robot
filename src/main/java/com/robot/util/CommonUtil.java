@@ -82,7 +82,7 @@ public class CommonUtil {
      * @return
      */
     public static ArrayList<Detail> getPreview(ArrayList<Detail> content){
-        if (content==null)  return null;
+        if (content.size()==0)  return null;
         content.get(0).setContent(content.get(0).getContent().replaceAll(Constant.RULE_PREVIEW,""));
         return content;
     }
