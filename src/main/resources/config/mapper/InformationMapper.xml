@@ -22,10 +22,10 @@
         <id property="id" column="id"/>
         <result property="content" column="content"/>
         <result property="title" column="title"/>
-        <result property="cover" column="cover"/>
+        <result property="img" column="cover"/>
         <result property="delivery" column="delivery"/>
         <result property="firstPostDate" column="first_post_date"/>
-        <result property="newPostDate" column="new_post_date"/>
+        <result property="postDate" column="new_post_date"/>
         <result property="editor" column="editor"/>
         <result property="industry" column="industry"/>
         <result property="guide" column="guide"/>

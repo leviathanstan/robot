@@ -524,7 +524,7 @@ public class InformationService {
     public ArrayList<Report> findReportTop(){
         ArrayList<Report> reports = informationDao.findReportTop();
         for(Report report:reports){
-            report.setNewPostDate(CommonUtil.getDate(report.getNewPostDate()));
+            report.setPostDate(CommonUtil.getDate(report.getPostDate()));
         }
         return reports;
     }
@@ -542,7 +542,7 @@ public class InformationService {
         ArrayList<Report> reports = informationDao.findReportList();
         PageInfo<Report> pageInfo = new PageInfo<>(reports);
         for(Report report:reports){
-            report.setNewPostDate(CommonUtil.getDate(report.getNewPostDate()));
+            report.setPostDate(CommonUtil.getDate(report.getPostDate()));
         }
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Report.class,"url","industry","production","editor","firstPostDate","delivery","reportPage","reportNum","graphNum","content","keywords"),pageInfo);
 
@@ -559,7 +559,7 @@ public class InformationService {
         Report report = informationDao.findReportInfo(id);
         if(report == null)
             return GsonUtil.getErrorJson();
-        report.setNewPostDate(CommonUtil.getDate(report.getNewPostDate()));
+        report.setPostDate(CommonUtil.getDate(report.getPostDate()));
         report.setFirstPostDate(CommonUtil.getDate(report.getFirstPostDate()));
         ArrayList<String> keywords = informationDao.findRepRelatedKeyword(id);
         report.setKeywords(keywords);

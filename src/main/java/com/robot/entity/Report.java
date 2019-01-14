@@ -12,13 +12,13 @@ public class Report {
     private Integer id;
     private String url;
     private String guide;//导读
-    private String cover;
+    private String img;
     private String title;
     private String industry;//所属行业
     private String production;//出品单位
     private String editor;//报告主编
     private String firstPostDate;//首次出版时间
-    private String newPostDate;//最新修订时间
+    private String postDate;//最新修订时间
     private String delivery;//交付方式
     private String reportPage;//报告页码
     private String reportNum;//报告字数
@@ -48,14 +48,6 @@ public class Report {
 
     public void setGuide(String guide) {
         this.guide = guide;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
     }
 
     public String getTitle() {
@@ -98,12 +90,20 @@ public class Report {
         this.firstPostDate = firstPostDate;
     }
 
-    public String getNewPostDate() {
-        return newPostDate;
+    public String getImg() {
+        return img;
     }
 
-    public void setNewPostDate(String newPostDate) {
-        this.newPostDate = newPostDate;
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
     }
 
     public String getDelivery() {
@@ -160,13 +160,13 @@ public class Report {
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", guide='" + guide + '\'' +
-                ", cover='" + cover + '\'' +
+                ", cover='" + img + '\'' +
                 ", title='" + title + '\'' +
                 ", industry='" + industry + '\'' +
                 ", production='" + production + '\'' +
                 ", editor='" + editor + '\'' +
                 ", first_post_date='" + firstPostDate + '\'' +
-                ", new_post_date='" + newPostDate + '\'' +
+                ", new_post_date='" + postDate + '\'' +
                 ", delivery='" + delivery + '\'' +
                 ", report_page='" + reportPage + '\'' +
                 ", report_num='" + reportNum + '\'' +
