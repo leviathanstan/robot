@@ -104,6 +104,8 @@ public class ProductService {
         if (!CommonUtil.simpleMatch(Constant.RULE_NUMBER,idStr))
             return GsonUtil.getErrorJson();
         int id = Integer.parseInt(idStr);
+        if(1!=productDao.addProCount(id))
+            return GsonUtil.getErrorJson();
         Product product = productDao.getProductInfo(id);
         return GsonUtil.getSuccessJson(product);
     }

@@ -31,7 +31,7 @@
         </if>
     </select>
     <!--搜索统计-->
-    <select id="getSearchCount" parameterType="java.lang.String" resultType="int">
+    <select id="getSearchCount" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(id) from product_library where 1=1
         <if test="_parameter!=null and _parameter.trim().length()>0">
             and (locate(#{content},name)>0 or locate(#{content},product_introduction)>0)
@@ -100,4 +100,8 @@
     <select id="findHotProduct" resultMap="productMap">
         select id,name from product_library order by view_count desc limit 10;
     </select>
+    <!--浏览数增加-->
+    <update id="addProCount" parameterType="Integer">
+        update  product_library set view_count = ((select view_count from (select view_count from product_library where id = #{id})p1)+1) where id = #{id};
+    </update>
 </mapper>
