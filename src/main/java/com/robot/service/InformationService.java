@@ -227,8 +227,9 @@ public class InformationService {
         PageHelper.startPage(pageNum,PAGE_LENGTH);
         List<RobotNews> informations = informationDao.find(dataMap);
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
+
         for (RobotNews information : informations) {
-            information.setReadGuide(CommonUtil.getPreview(information.getContent()).get(0).getContent());
+            information.setReadGuide(CommonUtil.getPreview(information.getContent().get(0).getContent()));
             information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
         }
         return pageInfo;
@@ -1158,6 +1159,29 @@ public class InformationService {
     public ArrayList<RobotNews> findRelatedHot(){
         ArrayList<RobotNews> informations = informationDao.findRelatedHot();
         return informations;
+    }
+
+    /**
+     * 查找相关热点详情
+     * @param id
+     * @return
+     */
+    public String findRelatedHotInfo(int id){
+        RobotNews information = informationDao.findInformationInfo(id);
+        if (information == null) {
+            return GsonUtil.getErrorJson();
+        }
+        if(1 != informationDao.addCount(id))
+            throw new RuntimeException();
+        information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
+        information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
+        RelatedReadingDto relatedReadingDto = new RelatedReadingDto();
+        relatedReadingDto.setKeywords(informationDao.findRelatedKeyword(id));
+        relatedReadingDto.setInformation(informationDao.findRelatedInformation(id));
+        Map<String,Object> dataMap = new HashMap();
+        dataMap.put("information", information);
+        dataMap.put("related", relatedReadingDto);
+        return GsonUtil.getSuccessJson(dataMap);
     }
 
 }

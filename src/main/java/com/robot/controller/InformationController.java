@@ -360,4 +360,14 @@ public class InformationController {
         return informationService.getInformationDetail(id);
     }
 
+    /**
+     * 获取相关热点详细信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findRelatedHotInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String findRelatedHotInfo(int id){
+        return informationService.findRelatedHotInfo(id);
+    }
 }
