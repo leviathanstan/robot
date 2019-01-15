@@ -3,6 +3,7 @@ package com.robot.scrapy;
 import com.google.gson.reflect.TypeToken;
 import com.robot.bean.SpiderStatus;
 import com.robot.util.GsonUtil;
+import com.robot.util.LogHelper;
 import com.robot.util.PostUrlUtil;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class Spider {
     public static SpiderStatus listprojects()  {
         String url = baseUrl + "/listprojects.json";
         String result = PostUrlUtil.sendGet(url, null);
-        System.out.println(result);
+        LogHelper.scheduleTaskLog.info(result);
         return  getStatus(result);
     }
 
