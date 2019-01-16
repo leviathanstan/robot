@@ -37,7 +37,8 @@ public class InformationService {
      */
     private enum InformationEnum {
         PRODUCT_NEWS(1), PRODUCT_RECOMMEND(2), PRODUCT_EVALUATE(3), BASIC_KNOWLEDGE(4), ENTERPRISE_NEWS(5), INDUSTRY_INFORMATION(6),
-        POLICY_INFORMATION(7), MEMBER_NEWS(8), NOTICE(9), ASSOCIATION_NEWS(10), EXPERT_WISDOM(11), CONSULTING_FOCUS(12);
+        POLICY_INFORMATION(7), MEMBER_NEWS(8), NOTICE(9), ASSOCIATION_NEWS(10), EXPERT_WISDOM(11), CONSULTING_FOCUS(12),NEWS_HOTSPOT_DAY(20),
+        NEWS_HOTSPOT_WEEK(21),NEWS_HOTSPOT_MONTH(22),EDUCATION_TRAIN(23);
         private final int id;
 
         InformationEnum(int id) {
@@ -695,6 +696,63 @@ public class InformationService {
         dataMap.put("related", relatedReadingDto);
         return GsonUtil.getSuccessJson(dataMap);
     }
+
+    /**
+     * 首页教育培训
+     * @author chen
+     * @date 2019/1/16
+     * @return
+     */
+    public List<RobotNews> getEducationTrain() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
+        map.put("categoryId", InformationEnum.EDUCATION_TRAIN.getId());
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        CommonUtil.formateDateTimeToDate(informations);
+        return informations;
+    }
+
+    /**
+     * 教育培训列表
+     * @author chen
+     * @date 2019/1/13
+     * @param page
+     * @return
+     */
+    public String getEducationTrainList(String page) {
+        int pageNum = CommonUtil.formatPageNum(page);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<RobotNews> notices = informationDao.getInformationList(InformationEnum.EDUCATION_TRAIN.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(notices);
+        for (RobotNews notice : notices) {
+            notice.setPostDate(CommonUtil.formateDbTime(notice.getPostDate()));
+        }
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    /**
+     * 教育培训详细信息
+     * @author chen
+     * @date 2019/1/13
+     * @param id
+     * @return
+     */
+    public String getEducationTrainInfo(int id) {
+        RobotNews information = informationDao.findInformationInfo(id);
+        if (information == null)
+            return GsonUtil.getErrorJson();
+        if(1 != informationDao.addCount(id))
+            throw new RuntimeException();
+        information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
+        information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
+        RelatedReadingDto relatedReadingDto = new RelatedReadingDto();
+        relatedReadingDto.setKeywords(informationDao.findRelatedKeyword(id));
+        relatedReadingDto.setInformation(informationDao.findRelatedInformation(id));
+        Map<String,Object> dataMap = new HashMap();
+        dataMap.put("information", information);
+        dataMap.put("related", relatedReadingDto);
+        return GsonUtil.getSuccessJson(dataMap);
+    }
     //******************************************企业********************************************//
 
     /**
@@ -1088,17 +1146,7 @@ public class InformationService {
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
     }
 
-    //************************行业报告**********************************************//
-    /**
-     * 首页行业报告
-     * @author hua
-     * @date 2018/9/27
-     * @return
-     */
-//    public ArrayList<RobotNews> getIndexReport(){
-//        ArrayList<RobotNews> reports = informationDao.(map);
-//        return reports;
-//    }
+
 
     //************************技术研讨**********************************************//
     /**

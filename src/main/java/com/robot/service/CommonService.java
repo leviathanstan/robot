@@ -71,6 +71,7 @@ public class CommonService {
         //dataMap.put("case",technologyService.getIndexCase());
         dataMap.put("basic",informationService.getIndexBasic());
         dataMap.put("science",informationService.getIndexDiscuss());
+        dataMap.put("educationTrain",informationService.getEducationTrain());
         //产品
         dataMap.put("productEvaluation", informationService.getIndexEvaluate());
         dataMap.put("productLibrary", productService.getProductLibrary());

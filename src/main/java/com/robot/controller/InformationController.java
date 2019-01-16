@@ -239,6 +239,28 @@ public class InformationController {
     }
 
     /**
+     * 教育培训列表
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getEducationTrainList",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getEducationTrainList(String pageNum){
+        return informationService.getEducationTrainList(pageNum);
+    }
+
+    /**
+     * 教育培训具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getEducationTrainInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getEducationTrainInfo(int id){
+        return informationService.getEducationTrainInfo(id);
+    }
+
+    /**
      * 基础知识列表
      * @return
      */
