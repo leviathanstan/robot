@@ -83,7 +83,7 @@ public class CommonService {
         dataMap.put("conference",conferenceService.getIndexConference());
         dataMap.put("metting", conferenceService.getIndexMetting());
         //相关热点
-        dataMap.put("relatedHot",informationService.findRelatedHot());
+        dataMap.put("relatedHot",informationService.findIndexRelatedHot());
         return GsonUtil.getSuccessJson(dataMap);
     }
 
@@ -172,5 +172,6 @@ public class CommonService {
         }
         return GsonUtil.getErrorJson("上传失败");
     }
+
 
 }

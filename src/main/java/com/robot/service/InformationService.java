@@ -1199,12 +1199,12 @@ public class InformationService {
     }
 
     /**
-     * 查找相关热点
+     * 查找首页相关热点
      * @author chen
      * @date 2019/1/13
      * @return
      */
-    public ArrayList<RobotNews> findRelatedHot(){
+    public ArrayList<RobotNews> findIndexRelatedHot(){
         ArrayList<RobotNews> informations = informationDao.findRelatedHot();
         return informations;
     }
@@ -1230,6 +1230,32 @@ public class InformationService {
         dataMap.put("information", information);
         dataMap.put("related", relatedReadingDto);
         return GsonUtil.getSuccessJson(dataMap);
+    }
+
+
+    /**
+     * 获取首页新闻热点
+     * @author chen
+     * @date 2019/1/16
+     * @return
+     */
+    public String getIndexNewsHotSpot() {
+        Map<String, Integer> map = new HashMap<>();
+        Map<String,List<RobotNews>> results = new HashMap<>();
+        map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
+        map.put("categoryId", InformationEnum.NEWS_HOTSPOT_DAY.getId());
+        ArrayList<RobotNews> result1 = informationDao.getIndexInformation(map);
+        map.put("categoryId", InformationEnum.NEWS_HOTSPOT_WEEK.getId());
+        ArrayList<RobotNews> result2 = informationDao.getIndexInformation(map);
+        map.put("categoryId", InformationEnum.NEWS_HOTSPOT_MONTH.getId());
+        ArrayList<RobotNews> result3 = informationDao.getIndexInformation(map);
+        CommonUtil.formateDateTimeToDate(result1);
+        CommonUtil.formateDateTimeToDate(result2);
+        CommonUtil.formateDateTimeToDate(result3);
+        results.put("newsHotSpotDay",result1);
+        results.put("newsHotSpotWeek",result2);
+        results.put("newsHotSpotMonth",result3);
+        return GsonUtil.getSuccessJson(results);
     }
 
 }

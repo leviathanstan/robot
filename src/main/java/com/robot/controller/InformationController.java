@@ -388,8 +388,29 @@ public class InformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/findRelatedHotInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findRelatedHotInfo(int id){
+    @RequestMapping(value = "/getRelatedHotInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getRelatedHotInfo(int id){
+        return informationService.findRelatedHotInfo(id);
+    }
+
+    /**
+     * 获取首页新闻热点
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIndexNewsHotSpot",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getIndexNewsHotSpot(){
+        return informationService.getIndexNewsHotSpot();
+    }
+
+    /**
+     * 获取新闻热点详细信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getNewsHotSpotInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getNewsHotSpotInfo(int id){
         return informationService.findRelatedHotInfo(id);
     }
 }
