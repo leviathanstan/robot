@@ -9,7 +9,7 @@ public class Conference {
 
     private Integer id;
     private Integer userId;
-    private String img;
+    private String coverImg;
     private String title;
     private String holdTime;
     private String address;
@@ -25,12 +25,12 @@ public class Conference {
         this.id = id;
     }
 
-    public String getImg() {
-        return img;
+    public String getCoverImg() {
+        return coverImg;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
     }
 
     public String getTitle() {
@@ -93,7 +93,7 @@ public class Conference {
     public String toString() {
         return "Conference{" +
                 "id=" + id +
-                ", coverImg='" + img + '\'' +
+                ", coverImg='" + coverImg + '\'' +
                 ", title='" + title + '\'' +
                 ", holdTime=" + holdTime +
                 ", address='" + address + '\'' +

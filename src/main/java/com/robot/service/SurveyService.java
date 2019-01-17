@@ -101,6 +101,7 @@ public class SurveyService {
                     answerDao.deleteChoiceAnswer(choice.getId());
                 }
                 surveyDao.deleteChoiceByQuestion(question.getId());
+                //for()
                 answerDao.deleteTextAnswer(question.getId());
                 surveyDao.deleteQuestionById(question.getId());
             }
