@@ -83,6 +83,10 @@
     <select id="getQuestionChoices" parameterType="map" resultMap="choiceMap">
         select * from choices where question_id = #{questionId,jdbcType=INTEGER}
     </select>
+    <!--获取某个选项-->
+    <select id="getChoice" parameterType="int" resultMap="choiceMap">
+        select * from choices where id = #{id}
+    </select>
     <!-- 更新问卷-->
     <update id="updateSurvey" parameterType="com.robot.entity.Survey">
         update survey set update_time=#{updateTime}

@@ -230,7 +230,9 @@ public class InformationService {
         PageInfo<RobotNews> pageInfo = new PageInfo<>(informations);
 
         for (RobotNews information : informations) {
-            information.setReadGuide(CommonUtil.getPreview(information.getContent().get(0).getContent()));
+            if (information.getContent().size() != 0){
+                information.setReadGuide(CommonUtil.getPreview(information.getContent().get(0).getContent()));
+            }
             information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
         }
         return pageInfo;

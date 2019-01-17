@@ -29,7 +29,7 @@ public class ExceptionResolver {
         if (e instanceof MissingServletRequestParameterException){
             return GsonUtil.getErrorJson("参数错误");
         }
-        return GsonUtil.getErrorJson("服务器繁忙，请稍后再试");
+        return GsonUtil.getErrorJson(e.getMessage());
     }
 
 

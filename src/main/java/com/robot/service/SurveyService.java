@@ -180,6 +180,39 @@ public class SurveyService {
         if (!result.equals("success")){
             return GsonUtil.getErrorJson(result);
         }
+        if (question.getPrecedentChoiceId() != null){
+            Choice choice = surveyDao.getChoice(question.getPrecedentChoiceId());
+            if (choice != null){
+                Question q = surveyDao.getQuestionInfo(choice.getQuestionId());
+                //防止题目相互关联选项
+                if (q.getPrecedentQuestionId() != null){
+                    for(Choice c:question.getChoices()){
+                        if (c.getId() == q.getPrecedentChoiceId()){
+                            return GsonUtil.getErrorJson("不能相互关联");
+                        }
+                    }
+                }
+                if (q.getSurveyId() != question.getSurveyId()){
+                    return GsonUtil.getErrorJson("关联问卷无效");
+                }
+            } else{
+                return GsonUtil.getErrorJson("关联选项无效");
+            }
+        }
+        if (question.getPrecedentQuestionId() != null){
+            Question q = surveyDao.getQuestionInfo(question.getPrecedentQuestionId());
+            if (q != null){
+                //防止题目间相互关联
+                if (q.getPrecedentQuestionId() == question.getId()){
+                    return GsonUtil.getErrorJson("题目间不能相互关联");
+                }
+                if (q.getSurveyId() != question.getSurveyId()){
+                    return GsonUtil.getErrorJson("关联问卷无效");
+                }
+            } else{
+                return GsonUtil.getErrorJson("关联题目无效");
+            }
+        }
         int n1 = surveyDao.updateQuestion(question);
         if(question.getChoices()!=null){
             for(Choice choice:question.getChoices()){
@@ -369,6 +402,28 @@ public class SurveyService {
      */
     @Transactional(rollbackForClassName="RuntimeException",propagation = Propagation.REQUIRED)
     public String addQuestion(Question question){
+        //判断前置选项是否符合，数据库不做外键关联
+        if (question.getPrecedentChoiceId() != null){
+            Choice choice = surveyDao.getChoice(question.getPrecedentChoiceId());
+            if (choice != null){
+                Question q = surveyDao.getQuestionInfo(choice.getQuestionId());
+                if (q.getSurveyId() != question.getSurveyId()){
+                    return GsonUtil.getErrorJson("关联问卷无效");
+                }
+            } else{
+                return GsonUtil.getErrorJson("关联选项无效");
+            }
+        }
+        if (question.getPrecedentQuestionId() != null){
+            Question q = surveyDao.getQuestionInfo(question.getPrecedentQuestionId());
+            if (q != null){
+                if (q.getSurveyId() != question.getSurveyId()){
+                    return GsonUtil.getErrorJson("关联问卷无效");
+                }
+            } else{
+                return GsonUtil.getErrorJson("关联题目无效");
+            }
+        }
         int n1 = surveyDao.addQuestion(question);
         for(Choice choice:question.getChoices()){
             choice.setQuestionId(question.getId());
