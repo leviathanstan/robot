@@ -18,6 +18,7 @@ public interface InformationDao {
     RobotNews findInformationInfo(int id);
     ArrayList<RobotNews> getInformationList(int categoryId);
     ArrayList<RobotNews> getIndexInformation(Map<String,Integer> map);
+    ArrayList<RobotNews> getIndexInformationWithContent(Map<String,Integer> map);
     ArrayList<RobotNews> getIndexCover(Map<String,Integer> map);
     ArrayList<RobotNews> find(HashMap<String,Object> args);
     int searchCount(String content);

@@ -371,9 +371,9 @@ public class InformationService {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.INFORMATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.INDUSTRY_INFORMATION.getId());
-        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        ArrayList<RobotNews> informations = informationDao.getIndexInformationWithContent(map);
         for (RobotNews robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -434,9 +434,9 @@ public class InformationService {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.INFORMATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.POLICY_INFORMATION.getId());
-        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        ArrayList<RobotNews> informations = informationDao.getIndexInformationWithContent(map);
         for (RobotNews robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -629,9 +629,9 @@ public class InformationService {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.ASSOCIATION_NEWS.getId());
-        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        ArrayList<RobotNews> informations = informationDao.getIndexInformationWithContent(map);
         for (RobotNews robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -646,9 +646,9 @@ public class InformationService {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.NOTICE.getId());
-        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        ArrayList<RobotNews> informations = informationDao.getIndexInformationWithContent(map);
         for (RobotNews robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;

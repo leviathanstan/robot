@@ -42,6 +42,10 @@
         <result property="postDate" column="post_date"/>
         <result property="img" column="cover"/>
     </resultMap>
+    <!--首页资讯【带内容】-->
+    <select id="getIndexInformationWithContent" parameterType="map" resultMap="informationDetail">
+        select id,title,post_date,cover from information where category_id=#{categoryId} order by post_date desc limit #{number}
+    </select>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">
         select id,title,post_date,cover from information where category_id=#{categoryId} order by post_date desc limit #{number}
