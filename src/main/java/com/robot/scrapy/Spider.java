@@ -26,9 +26,7 @@ public class Spider {
         Map<String, String> params = new HashMap<>();
         params.put("project", project);
         params.put("spider", spider);
-        System.out.println("url:" + url);
         String result = PostUrlUtil.sendPost(url, params, "utf-8");
-        System.out.println(result);
         return getStatus(result);
     }
 

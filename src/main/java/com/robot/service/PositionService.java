@@ -69,8 +69,8 @@ public class PositionService {
      * @param
      * @return
      */
-    public String getIndex(){
-        return GsonUtil.getSuccessJson(positionDao.getIndex());
+    public ArrayList<Position> getIndex(){
+        return positionDao.getIndex();
     }
 
     /**

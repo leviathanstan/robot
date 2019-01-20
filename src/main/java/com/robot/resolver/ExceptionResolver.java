@@ -21,13 +21,13 @@ public class ExceptionResolver {
     public String handle(Exception e){
         e.printStackTrace();
         if (e instanceof NullPointerException){
-            return GsonUtil.getErrorJson("这里是空指针错误，请找后台菜鸡处理");
+            return GsonUtil.getErrorJson("This is a NullPointerException, please find a Back-end weak chicken to deal with  it");
         }
         if (e instanceof HttpRequestMethodNotSupportedException){
             return GsonUtil.getErrorJson("HTTP method error!");
         }
         if (e instanceof MissingServletRequestParameterException){
-            return GsonUtil.getErrorJson("参数错误");
+            return GsonUtil.getErrorJson("parameter error");
         }
         return GsonUtil.getErrorJson(e.getMessage());
     }

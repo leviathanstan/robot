@@ -1,6 +1,7 @@
 package com.robot.scrapy;
 
 import com.robot.bean.SpiderStatus;
+import com.robot.util.LogHelper;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,12 +37,6 @@ public class SpiderManager {
         paramMap.put(GDSTC_PROJECT,GDstc);
         paramMap.put(GZII_PROJECT,GZii);
         paramMap.put(ROBOTCHINA_PROJECT,RobotChina);
-        System.out.println(OfWeek);
-        System.out.println(GDRobot);
-        System.out.println(GDei);
-        System.out.println(GDstc);
-        System.out.println(GZii);
-        System.out.println(RobotChina);
         return paramMap;
     }
 
@@ -50,8 +45,10 @@ public class SpiderManager {
         List<SpiderStatus> spiderStatuses = new ArrayList<>();
         for (String project : paramMap.keySet()){
             for(String spider : paramMap.get(project)){
-                if (spider!=null&&!spider.equals(""))
+                if (spider!=null&&!spider.equals("")) {
+                    LogHelper.scheduleTaskLog.info("开始调用" + project + "->" + spider);
                     spiderStatuses.add(Spider.runSpider(project, spider));
+                }
             }
         }
         return spiderStatuses;
