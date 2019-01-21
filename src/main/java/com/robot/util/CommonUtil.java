@@ -1,5 +1,6 @@
 package com.robot.util;
 
+import com.robot.dto.InformationDto;
 import com.robot.entity.Detail;
 import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
@@ -162,6 +163,15 @@ public class CommonUtil {
             information.setPostDate(getDate(information.getPostDate()));
         }
     }
+    /**
+     * 时间格式化（informationController）--首页
+     * @param informations
+     */
+    public static void formateDateTimeToDate(List<InformationDto> informations){
+        for(InformationDto information:informations){
+            information.setPostDate(getDate(information.getPostDate()));
+        }
+    }
 
     public static String formateDbTime(String dbTime){
         if(dbTime==null) return null;
@@ -183,6 +193,21 @@ public class CommonUtil {
             String regex = "src=\"/static/img/(.*?)\"";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(content.get(0).getContent());
+            if (matcher.find())
+                return Constant.HOST_ADDRESS + "/resources/img/" + matcher.group(1);
+        }
+        return null;
+    }
+    /**
+     * 从正文内容中获取第一张图片路径
+     * @param content
+     * @return
+     */
+    public static String getFirstImgFromContent(String content){
+        if(content != null) {
+            String regex = "src=\"/static/img/(.*?)\"";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(content);
             if (matcher.find())
                 return Constant.HOST_ADDRESS + "/resources/img/" + matcher.group(1);
         }

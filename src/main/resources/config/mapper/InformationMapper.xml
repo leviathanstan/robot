@@ -14,6 +14,13 @@
     <resultMap id="informationDetail" type="com.robot.entity.RobotNews" extends="informationMap">
         <collection property="content" column="{informationId=id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Detail" select="getContentOfInfo"/>
     </resultMap>
+    <resultMap id="informationDto" type="com.robot.dto.InformationDto">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="postDate" column="post_date"/>
+        <result property="img" column="cover"/>
+        <result property="content" column="content"/>
+    </resultMap>
     <resultMap id="contentMap" type="com.robot.entity.Detail">
         <result column="content" property="content"/>
         <result column="page" property="page"/>
@@ -43,8 +50,8 @@
         <result property="img" column="cover"/>
     </resultMap>
     <!--首页资讯【带内容】-->
-    <select id="getIndexInformationWithContent" parameterType="map" resultMap="informationDetail">
-        select id,title,post_date,cover from information where category_id=#{categoryId} order by post_date desc limit #{number}
+    <select id="getIndexInformationWithContent" parameterType="map" resultMap="informationDto">
+        select id,title,post_date,cover,content from information,information_content where category_id=#{categoryId} and information_id=id and page=1 order by post_date desc limit #{number}
     </select>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">

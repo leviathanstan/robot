@@ -19,9 +19,9 @@
         <result property="effectTime" column="pro_effect_time"/>
         <result property="lastUpdateTime" column="pro_last_up_time"/>
     </resultMap>
-    <!-- 首页产品 -->
+    <!-- 首页产品  order by pro_last_up_time desc暂时去掉-->
     <select id="getProductLibrary" resultMap="productMap">
-        select id, name, pro_last_up_time, cover from product_library order by pro_last_up_time desc limit 0, 16;
+        select id, name, pro_last_up_time, cover from product_library limit 0, 16;
     </select>
     <!--搜索-->
     <select id="findProductIf" parameterType="map" resultMap="productMap">

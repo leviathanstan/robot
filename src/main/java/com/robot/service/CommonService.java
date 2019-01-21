@@ -86,44 +86,37 @@ public class CommonService {
 //        dataMap.put("metting", conferenceService.getIndexMetting());
 //        //相关热点
 //        dataMap.put("relatedHot",informationService.findIndexRelatedHot());
-        final CountDownLatch countDownLatch = new CountDownLatch(4);
+        final CountDownLatch countDownLatch = new CountDownLatch(3);
         new Thread(()->run1(dataMap,countDownLatch)).start();
         new Thread(()->run2(dataMap,countDownLatch)).start();
         new Thread(()->run3(dataMap,countDownLatch)).start();
-        new Thread(()->run4(dataMap,countDownLatch)).start();
         countDownLatch.await();
         CommonUtil.getTime(null);
         return GsonUtil.getSuccessJson(dataMap);
     }
 
     private void run1(Map<String,Object> dataMap,CountDownLatch countDownLatch){
-        CommonUtil.getTime(1);
+        long t1=System.currentTimeMillis();
         try {
+            //原机器人协会
             dataMap.put("news",informationService.getIndexAssociationNews());
             dataMap.put("members",introductionService.getIndexMember());
             dataMap.put("notices",informationService.getIndexNotice());
             dataMap.put("expertArts",informationService.getIndexExpertArt());
+            dataMap.put("information1",informationService.findInformationTop());
+            dataMap.put("policy",informationService.findPolicyTop());
+            dataMap.put("school",introductionService.getIndexUniversity());
+            dataMap.put("experts",introductionService.getIndexExpert());
         } finally {
             countDownLatch.countDown();
         }
-        CommonUtil.getTime(1);
+        System.out.println((t1-System.currentTimeMillis())/1000 + " " + 1);
     }
 
     private void run2(Map<String,Object> dataMap,CountDownLatch countDownLatch){
-        CommonUtil.getTime(2);
+        long t1=System.currentTimeMillis();
         try {
-            dataMap.put("information1",informationService.findInformationTop());
-            dataMap.put("policy",informationService.findPolicyTop());
-            dataMap.put("expertArts",informationService.getIndexExpertArt());
-        } finally {
-            countDownLatch.countDown();
-        }
-        CommonUtil.getTime(2);
-    }
-
-    private void run3(Map<String,Object> dataMap,CountDownLatch countDownLatch){
-        CommonUtil.getTime(3);
-        try {
+            //企业
             dataMap.put("companyNews", informationService.getCompanyNews());
             dataMap.put("companyBrand", companyService.getCompanyBrand());
             dataMap.put("companyDynamics", informationService.getCompanyDynamics());
@@ -138,13 +131,13 @@ public class CommonService {
         } finally {
             countDownLatch.countDown();
         }
-        CommonUtil.getTime(3);
+        System.out.println((t1-System.currentTimeMillis())/1000 + " " + 2);
     }
 
-    private void run4(Map<String,Object> dataMap,CountDownLatch countDownLatch){
-        CommonUtil.getTime(4);
-        //产品
+    private void run3(Map<String,Object> dataMap,CountDownLatch countDownLatch){
+        long t1=System.currentTimeMillis();
         try {
+            //产品
             dataMap.put("productEvaluation", informationService.getIndexEvaluate());
             dataMap.put("productLibrary", productService.getProductLibrary());
             dataMap.put("productNews",informationService.getIndexProductNews());
@@ -159,7 +152,7 @@ public class CommonService {
         } finally {
             countDownLatch.countDown();
         }
-        CommonUtil.getTime(4);
+        System.out.println((t1-System.currentTimeMillis())/1000 + " " + 3);
     }
 
     /**
