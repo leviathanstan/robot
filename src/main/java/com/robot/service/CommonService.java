@@ -114,7 +114,8 @@ public class CommonService {
         try {
             dataMap.put("information1",informationService.findInformationTop());
             dataMap.put("policy",informationService.findPolicyTop());
-            dataMap.put("expertArts",informationService.getIndexExpertArt());
+            dataMap.put("experts",introductionService.getIndexExpert());
+            dataMap.put("school",introductionService.getIndexUniversity());
         } finally {
             countDownLatch.countDown();
         }
