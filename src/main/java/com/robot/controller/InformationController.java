@@ -341,6 +341,28 @@ public class InformationController {
     }
 
     /**
+     * 技术研讨列表
+     * @param pageNum
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getDiscussList",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getDiscussList(String pageNum){
+        return informationService.getDiscussList(pageNum);
+    }
+
+    /**
+     * 技术研讨具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getDiscussInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getDiscussInfo(int id){
+        return informationService.getDiscussInfo(id);
+    }
+
+    /**
      * 删除文章
      * @param ids
      * @return

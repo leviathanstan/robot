@@ -27,6 +27,8 @@ public interface InformationDao {
     List<String> findRelatedKeyword(int informationId);
     List<RobotNews> findRelatedInformation(int informationId);
     ArrayList<RobotNews> getIndexDiscuss();
+    ArrayList<RobotNews> getDiscussList();
+    RobotNews getDiscussInfo(int id);
 
     int deleteInformation(List<Integer> ids);
     int deleteContent(List<Integer> ids);

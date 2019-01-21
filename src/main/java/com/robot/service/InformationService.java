@@ -1163,6 +1163,44 @@ public class InformationService {
         return discuss;
     }
 
+    /**
+     * 技术研讨列表
+     * @author chen
+     * @date 2019/1/21
+     * @param pageNum
+     * @return
+     */
+    public String getDiscussList(String pageNum){
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page, PAGE_LENGTH);
+        ArrayList<RobotNews> discussList = informationDao.getDiscussList();
+        for (RobotNews robotNews : discussList) {
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
+        }
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(discussList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    /**
+     * 技术研讨具体信息
+     * @author chen
+     * @date 2019/1/21
+     * @param id
+     * @return
+     */
+    public String getDiscussInfo(int id){
+        RobotNews discuss = informationDao.getDiscussInfo(id);
+        if (discuss == null)
+            return GsonUtil.getErrorJson();
+        if(1 != informationDao.addCount(id))
+            throw new RuntimeException();
+
+        RelatedReadingDto relatedReadingDto = new RelatedReadingDto();
+        Map<String,Object> dataMap = new HashMap();
+        dataMap.put("information", discuss);
+        dataMap.put("related", relatedReadingDto);
+        return GsonUtil.getSuccessJson(dataMap);
+    }
     //************************案列库************************************************//
     /**
      * 首页案列库

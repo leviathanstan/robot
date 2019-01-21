@@ -48,6 +48,8 @@
         <result property="title" column="title"/>
         <result property="postDate" column="post_date"/>
         <result property="img" column="cover"/>
+        <result property="readGuide" column="guide"/>
+        <result property="url" column="mp4_url"/>
     </resultMap>
     <!--首页资讯【带内容】-->
     <select id="getIndexInformationWithContent" parameterType="map" resultMap="informationDto">
@@ -77,6 +79,15 @@
     <select id="getIndexDiscuss" parameterType="int" resultMap="discussMap">
         select id, cover, title from technique_discuss limit 20
     </select>
+    <!--技术研讨列表-->
+    <select id="getDiscussList" resultMap="discussMap">
+        select id,cover,title,guide from technique_discuss
+    </select>
+    <!--技术研讨具体信息-->
+    <select id="getDiscussInfo" parameterType="Integer" resultMap="discussMap">
+        select * from technique_discuss where id = #{id};
+    </select>
+
     <!--搜索-->
     <select id="find" resultMap="informationDetail" parameterType="map">
         select * from information where 1=1
