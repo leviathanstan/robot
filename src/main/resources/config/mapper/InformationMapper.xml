@@ -14,13 +14,6 @@
     <resultMap id="informationDetail" type="com.robot.entity.RobotNews" extends="informationMap">
         <collection property="content" column="{informationId=id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Detail" select="getContentOfInfo"/>
     </resultMap>
-    <resultMap id="informationDto" type="com.robot.dto.InformationDto">
-        <id property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="postDate" column="post_date"/>
-        <result property="img" column="cover"/>
-        <result property="content" column="content"/>
-    </resultMap>
     <resultMap id="contentMap" type="com.robot.entity.Detail">
         <result column="content" property="content"/>
         <result column="page" property="page"/>
@@ -49,10 +42,6 @@
         <result property="postDate" column="post_date"/>
         <result property="img" column="cover"/>
     </resultMap>
-    <!--首页资讯【带内容】-->
-    <select id="getIndexInformationWithContent" parameterType="map" resultMap="informationDto">
-        select id,title,post_date,cover,content from information,information_content where category_id=#{categoryId} and information_id=id and page=1 order by post_date desc limit #{number}
-    </select>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">
         select id,title,post_date,cover from information where category_id=#{categoryId} order by post_date desc limit #{number}
@@ -85,9 +74,9 @@
         </if>
         <if test="categoryIds !=null and categoryIds.size()!=0">
             and category_id in
-            <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
-                #{item}
-            </foreach>
+                            <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
+                                #{item}
+                            </foreach>
         </if>
     </select>
     <!-- 搜索统计-->
@@ -100,16 +89,16 @@
     <!-- 搜索某些类别下结果总数-->
     <select id="searchCategoryCount" resultType="java.lang.Integer" parameterType="map">
         select count(id) from information where category_id in
-        <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
+          <foreach item="item" index="index" collection="categoryIds" open="(" separator="," close=")">
             #{item}
-        </foreach>
+          </foreach>
         <if test="content!=null and content.trim().length()>0">
             and (locate(#{content},title)>0 or
-            id in(
-            select distinct information_id from information_content where
-            locate(#{content},content)>0
-            )
-            )
+                                              id in(
+                                                    select distinct information_id from information_content where
+                                                                                                                  locate(#{content},content)>0
+                                                    )
+                )
         </if>
     </select>
     <!-- 相关关键字-->
@@ -137,16 +126,16 @@
     <!--删除正文内容-->
     <delete id="deleteContent" parameterType="int">
         delete from information_content where information_id in
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+                                                            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                                                                #{item}
+                                                            </foreach>
     </delete>
     <!--删除文章-->
     <delete id="deleteInformation">
         delete from information where id in
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+                                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                                            #{item}
+                                        </foreach>
     </delete>
     <!--添加-->
     <insert id="add" parameterType="com.robot.entity.RobotNews">

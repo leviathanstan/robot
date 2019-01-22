@@ -2,7 +2,6 @@ package com.robot.dao;
 
 import java.util.ArrayList;
 
-import com.robot.dto.InformationDto;
 import com.robot.entity.Report;
 import com.robot.entity.RobotNews;
 
@@ -19,7 +18,6 @@ public interface InformationDao {
     RobotNews findInformationInfo(int id);
     ArrayList<RobotNews> getInformationList(int categoryId);
     ArrayList<RobotNews> getIndexInformation(Map<String,Integer> map);
-    ArrayList<InformationDto> getIndexInformationWithContent(Map<String,Integer> map);
     ArrayList<RobotNews> getIndexCover(Map<String,Integer> map);
     ArrayList<RobotNews> find(HashMap<String,Object> args);
     int searchCount(String content);

@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.InformationDao;
 import com.robot.dao.UserDao;
-import com.robot.dto.InformationDto;
 import com.robot.dto.RelatedReadingDto;
 import com.robot.entity.Detail;
 import com.robot.entity.Report;
@@ -368,13 +367,13 @@ public class InformationService {
      * @author hua
      * @date 2018/10/17
      */
-    public ArrayList<InformationDto> findInformationTop() {
+    public ArrayList<RobotNews> findInformationTop() {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.INFORMATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.INDUSTRY_INFORMATION.getId());
-        ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
-        for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        for (RobotNews robotNews : informations) {
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -431,13 +430,13 @@ public class InformationService {
      * @author hua
      * @date 2018/10/22
      */
-    public ArrayList<InformationDto> findPolicyTop() {
+    public ArrayList<RobotNews> findPolicyTop() {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.INFORMATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.POLICY_INFORMATION.getId());
-        ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
-        for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        for (RobotNews robotNews : informations) {
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -626,13 +625,13 @@ public class InformationService {
      *
      * @return
      */
-    public List<InformationDto> getIndexAssociationNews() {
+    public List<RobotNews> getIndexAssociationNews() {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.ASSOCIATION_NEWS.getId());
-        ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
-        for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        for (RobotNews robotNews : informations) {
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -643,13 +642,13 @@ public class InformationService {
      *
      * @return
      */
-    public List<InformationDto> getIndexNotice() {
+    public List<RobotNews> getIndexNotice() {
         Map<String, Integer> map = new HashMap<>();
         map.put("number", NumberEnum.ASSOCIATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.NOTICE.getId());
-        ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
-        for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+        ArrayList<RobotNews> informations = informationDao.getIndexInformation(map);
+        for (RobotNews robotNews : informations) {
+            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;

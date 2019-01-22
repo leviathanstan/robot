@@ -1,19 +1,16 @@
 package com.robot.util;
 
-import com.robot.dto.InformationDto;
 import com.robot.entity.Detail;
 import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -26,17 +23,6 @@ import java.util.regex.Pattern;
  */
 public class CommonUtil {
 
-    public static void getTime(String flag){
-        Calendar c = Calendar.getInstance();
-        String date = new SimpleDateFormat("HH:mm:ss.S").format(c.getTime());
-        System.out.println(date + " " + flag);
-    }
-
-    public static void getTime(int flag){
-        Calendar c = Calendar.getInstance();
-        String date = new SimpleDateFormat("HH:mm:ss.S").format(c.getTime());
-        System.out.println(date + " " + flag);
-    }
 
     public static String getUUID(){
         return String.valueOf(UUID.randomUUID()).replaceAll("-", "");
@@ -163,15 +149,6 @@ public class CommonUtil {
             information.setPostDate(getDate(information.getPostDate()));
         }
     }
-    /**
-     * 时间格式化（informationController）--首页
-     * @param informations
-     */
-    public static void formateDateTimeToDate(List<InformationDto> informations){
-        for(InformationDto information:informations){
-            information.setPostDate(getDate(information.getPostDate()));
-        }
-    }
 
     public static String formateDbTime(String dbTime){
         if(dbTime==null) return null;
@@ -193,21 +170,6 @@ public class CommonUtil {
             String regex = "src=\"/static/img/(.*?)\"";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(content.get(0).getContent());
-            if (matcher.find())
-                return Constant.HOST_ADDRESS + "/resources/img/" + matcher.group(1);
-        }
-        return null;
-    }
-    /**
-     * 从正文内容中获取第一张图片路径
-     * @param content
-     * @return
-     */
-    public static String getFirstImgFromContent(String content){
-        if(content != null) {
-            String regex = "src=\"/static/img/(.*?)\"";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(content);
             if (matcher.find())
                 return Constant.HOST_ADDRESS + "/resources/img/" + matcher.group(1);
         }
