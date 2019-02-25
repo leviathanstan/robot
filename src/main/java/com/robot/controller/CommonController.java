@@ -34,7 +34,7 @@ public class CommonController {
 
     @ResponseBody
     @RequestMapping(value = "/getIndex",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getIndex(){
+    public String getIndex() throws InterruptedException{
         return commonService.getIndex();
     }
 

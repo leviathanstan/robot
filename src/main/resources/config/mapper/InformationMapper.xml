@@ -14,6 +14,13 @@
     <resultMap id="informationDetail" type="com.robot.entity.RobotNews" extends="informationMap">
         <collection property="content" column="{informationId=id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Detail" select="getContentOfInfo"/>
     </resultMap>
+    <resultMap id="informationDto" type="com.robot.dto.InformationDto">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="postDate" column="post_date"/>
+        <result property="img" column="cover"/>
+        <result property="content" column="content"/>
+    </resultMap>
     <resultMap id="contentMap" type="com.robot.entity.Detail">
         <result column="content" property="content"/>
         <result column="page" property="page"/>
@@ -78,6 +85,7 @@
                                 #{item}
                             </foreach>
         </if>
+      order by post_date desc
     </select>
     <!-- 搜索统计-->
     <select id="searchCount" resultType="java.lang.Integer" parameterType="java.lang.String">
@@ -119,7 +127,10 @@
                                                         )
     </select>
 
-
+    <!--首页资讯【带内容】-->
+    <select id="getIndexInformationWithContent" parameterType="map" resultMap="informationDto">
+        select id,title,post_date,cover,content from information,information_content where category_id=#{categoryId} and information_id=id and page=1 order by post_date desc limit #{number}
+    </select>
     <select id="findInformationById" parameterType="int" resultType="java.lang.String">
         select title from information where id=#{id}
     </select>

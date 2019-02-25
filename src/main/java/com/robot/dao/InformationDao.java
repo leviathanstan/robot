@@ -2,6 +2,7 @@ package com.robot.dao;
 
 import java.util.ArrayList;
 
+import com.robot.dto.InformationDto;
 import com.robot.entity.Report;
 import com.robot.entity.RobotNews;
 
@@ -25,7 +26,7 @@ public interface InformationDao {
     List<String> findRelatedKeyword(int informationId);
     List<RobotNews> findRelatedInformation(int informationId);
     ArrayList<RobotNews> getIndexDiscuss();
-
+    ArrayList<InformationDto> getIndexInformationWithContent(Map<String,Integer> map);
     int deleteInformation(List<Integer> ids);
     int deleteContent(List<Integer> ids);
     int add(RobotNews robotNews);
