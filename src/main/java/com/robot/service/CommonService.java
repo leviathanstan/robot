@@ -52,8 +52,8 @@ public class CommonService {
      */
     public String getIndex() throws InterruptedException{
         Map<String,Object> dataMap = new HashMap<>();
-        //原机器人协会
-        CommonUtil.getTime(null);
+//        //原机器人协会
+//        CommonUtil.getTime(null);
 //        dataMap.put("news",informationService.getIndexAssociationNews());
 //        dataMap.put("members",introductionService.getIndexMember());
 //        dataMap.put("notices",informationService.getIndexNotice());
