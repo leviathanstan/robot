@@ -39,7 +39,7 @@
 
          <Logger name="scheduleTask" level="all" additivity="true">
             <AppenderRef ref="scheduleTask" />
-             <AppenderRef ref="Console" />
+             <!--<AppenderRef ref="Console" />-->
          </Logger>
 
         <Root level="info">

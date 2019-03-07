@@ -20,6 +20,7 @@
         <result property="postDate" column="post_date"/>
         <result property="img" column="cover"/>
         <result property="content" column="content"/>
+        <result property="link" column="url"/>
     </resultMap>
     <resultMap id="contentMap" type="com.robot.entity.Detail">
         <result column="content" property="content"/>
@@ -71,7 +72,7 @@
     </select>
     <!--首页技术研讨-->
     <select id="getIndexDiscuss" parameterType="int" resultMap="discussMap">
-        select id, cover, title from technique_discuss limit 20
+        select id, cover, title  from technique_discuss limit 20
     </select>
     <!--搜索-->
     <select id="find" resultMap="informationDetail" parameterType="map">
@@ -129,7 +130,7 @@
 
     <!--首页资讯【带内容】-->
     <select id="getIndexInformationWithContent" parameterType="map" resultMap="informationDto">
-        select id,title,post_date,cover,content from information,information_content where category_id=#{categoryId} and information_id=id and page=1 order by post_date desc limit #{number}
+        select a.id,title,post_date,cover,content,url from information a,information_content where category_id=#{categoryId} and information_id=a.id and page=1 order by post_date desc limit #{number}
     </select>
     <select id="findInformationById" parameterType="int" resultType="java.lang.String">
         select title from information where id=#{id}
