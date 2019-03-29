@@ -24,6 +24,8 @@ public class Report {
     private String reportNum;//报告字数
     private String graphNum;//图表数量
     private String content;
+    private String source;//来源
+    private String viewCount;//浏览量
     private ArrayList<String> keywords;
 
     public Integer getId() {
@@ -152,6 +154,22 @@ public class Report {
 
     public void setKeywords(ArrayList<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(String viewCount) {
+        this.viewCount = viewCount;
     }
 
     @Override

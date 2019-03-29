@@ -42,6 +42,7 @@
         <result property="reportNum" column="report_num"/>
         <result property="production" column="production"/>
         <result property="url" column="url"/>
+        <result property="viewCount" column="view_count"/>
     </resultMap>
     <!--技术研讨-->
     <resultMap id="discussMap" type="com.robot.entity.RobotNews">
@@ -189,10 +190,13 @@
     </select>
     <!--行业报告列表-->
     <select id="findReportList" resultMap="reportMap">
-        select id,cover,title,guide,new_post_date from industry_report order by new_post_date desc
+        select id,cover,title,guide,new_post_date,view_count from industry_report order by new_post_date desc
     </select>
     <!--行业报告详情-->
     <select id="findReportInfo" resultMap="reportMap">
         select * from industry_report where id = #{id}
     </select>
+    <update id="addCountRep" parameterType="Integer">
+        update industry_report set view_count = ((select view_count from (select view_count from industry_report where id = #{id})i1) + 1) where id = #{id};
+    </update>
 </mapper>

@@ -571,6 +571,8 @@ public class InformationService {
         Report report = informationDao.findReportInfo(id);
         if(report == null)
             return GsonUtil.getErrorJson();
+        if(1!=informationDao.addCountRep(id))
+            throw new RuntimeException();
         report.setPostDate(CommonUtil.getDate(report.getPostDate()));
         report.setFirstPostDate(CommonUtil.getDate(report.getFirstPostDate()));
         ArrayList<String> keywords = informationDao.findRepRelatedKeyword(id);
