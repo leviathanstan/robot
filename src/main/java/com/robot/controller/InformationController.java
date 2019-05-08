@@ -280,7 +280,6 @@ public class InformationController {
         return informationService.getBasicInfo(id);
     }
 
-
     /***
      * 产品评测列表
      * @return
@@ -413,27 +412,5 @@ public class InformationController {
     @RequestMapping(value = "/getNewsHotSpotInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String getNewsHotSpotInfo(int id){
         return informationService.findRelatedHotInfo(id);
-    }
-
-    /**
-     * 获取技术研讨列表
-     * @param pageNum
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getIndexDiscussList",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getIndexDiscussList(String pageNum){
-        return informationService.getIndexDiscussList(pageNum);
-    }
-
-    /**
-     * 获取技术研讨具体信息
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getIndexDiscussInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getIndexDiscussInfo(String id){
-        return informationService.getBasicInfo(id);
     }
 }
