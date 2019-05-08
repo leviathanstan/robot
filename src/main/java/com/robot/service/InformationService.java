@@ -38,7 +38,8 @@ public class InformationService {
      */
     private enum InformationEnum {
         PRODUCT_NEWS(1), PRODUCT_RECOMMEND(2), PRODUCT_EVALUATE(3), BASIC_KNOWLEDGE(4), ENTERPRISE_NEWS(5), INDUSTRY_INFORMATION(6),
-        POLICY_INFORMATION(7), MEMBER_NEWS(8), NOTICE(9), ASSOCIATION_NEWS(10), EXPERT_WISDOM(11), CONSULTING_FOCUS(12),NEWS_HOTSPOT_DAY(20),
+        POLICY_INFORMATION(7), MEMBER_NEWS(8), NOTICE(9), ASSOCIATION_NEWS(10), EXPERT_WISDOM(11), CONSULTING_FOCUS(12),
+        TECHNIQUE_DISCUSS(15),NEWS_HOTSPOT_DAY(20),
         NEWS_HOTSPOT_WEEK(21),NEWS_HOTSPOT_MONTH(22),EDUCATION_TRAIN(23);
         private final int id;
 
@@ -914,6 +915,7 @@ public class InformationService {
     public String getBasicInfo(String id) {
         int infoId;
         if ((infoId = CommonUtil.formatPageNum(id)) == 0) return GsonUtil.getErrorJson();
+        System.out.println("hh" + infoId);
         RobotNews information = informationDao.findInformationInfo(infoId);
         if (information == null)
             return GsonUtil.getErrorJson();
@@ -1169,10 +1171,31 @@ public class InformationService {
      * @return
      */
     public ArrayList<RobotNews> getIndexDiscuss(){
-        ArrayList<RobotNews> discuss = informationDao.getIndexDiscuss();
-        return discuss;
+        Map<String, Integer> map = new HashMap<>();
+        map.put("number", NumberEnum.KNOWLEDGE.getNumber());
+        map.put("categoryId", InformationEnum.TECHNIQUE_DISCUSS.getId());
+        ArrayList<RobotNews> basices = informationDao.getIndexInformation(map);
+        if (CommonUtil.judgeCover(basices, CoverEnum.KNOWLEDGE_NUMBER.getNumber())) {
+            map.put("number", CoverEnum.KNOWLEDGE_NUMBER.getNumber());
+            basices.addAll(informationDao.getIndexCover(map));
+        }
+        CommonUtil.formateDateTimeToDate(basices);
+        return basices;
     }
 
+    /**
+     * 技术研讨列表
+     */
+    public String getIndexDiscussList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page, PAGE_LENGTH);
+        ArrayList<RobotNews> companyNewsList = informationDao.getInformationList(InformationEnum.TECHNIQUE_DISCUSS.getId());
+        for (RobotNews robotNews : companyNewsList) {
+            robotNews.setPostDate(CommonUtil.formateDbTime(robotNews.getPostDate()));
+        }
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(companyNewsList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
     //************************案列库************************************************//
     /**
      * 首页案列库
