@@ -2,65 +2,94 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.robot.dao.UserDao">
 
-	<!-- 注册 -->
+    <!-- 注册 -->
     <insert id="register" parameterType="com.robot.entity.User">
 		insert into user(id,username,password,email)value(null,#{username},#{password},#{email})
 	</insert>
-	<!-- 登录 -->
-	<select id="login" parameterType="com.robot.entity.User"
-			resultType="com.robot.entity.User">
+    <!-- 登录 -->
+    <select id="login" parameterType="com.robot.entity.User"
+            resultType="com.robot.entity.User">
 		select id,username,email,rank from user where username=#{username} and password=#{password}
 	</select>
-	<!--重置密码-->
-	<update id="resetPassword" parameterType="java.lang.String" >
+    <!--重置密码-->
+    <update id="resetPassword" parameterType="java.lang.String">
         update user set password=#{password} where email=#{email}
     </update>
-	<!--用户搜索-->
-	<select id="find" parameterType="com.robot.entity.User" resultType="com.robot.entity.User">
-		select username,email from user where 1=1
-		<if test="id !=null and id.trim().length()>0 ">
-			and id=#{id}
-		</if>
-		<if test="username !=null and username.trim().length()>0 ">
-			and locate(#{username},username)>0
-		</if>
-		<if test="email !=null and email.trim().length()>0 ">
-			and locate(#{email},email)>0
-		</if>
-		<if test="phone !=null and phone.trim().length()>0 ">
-			and locate(#{phone},phone)>0
-		</if>
-		<choose>
-			<when test="rank !=null">
-				and  rank =#{rank}
-			</when>
-			<otherwise>
-				and rank = 0
-			</otherwise>
-		</choose>
-	</select>
-	<!--订阅-->
-	<insert id="addSubscribe" parameterType="map">
+    <!--用户搜索-->
+    <select id="find" parameterType="com.robot.entity.User" resultType="com.robot.entity.User">
+        select username,email from user where 1=1
+        <if test="id !=null and id.trim().length()>0 ">
+            and id=#{id}
+        </if>
+        <if test="username !=null and username.trim().length()>0 ">
+            and locate(#{username},username)>0
+        </if>
+        <if test="email !=null and email.trim().length()>0 ">
+            and locate(#{email},email)>0
+        </if>
+        <if test="phone !=null and phone.trim().length()>0 ">
+            and locate(#{phone},phone)>0
+        </if>
+        <choose>
+            <when test="rank !=null">
+                and rank =#{rank}
+            </when>
+            <otherwise>
+                and rank = 0
+            </otherwise>
+        </choose>
+    </select>
+    <!--订阅-->
+    <insert id="addSubscribe" parameterType="map">
 		insert into subscribe (user_id,category_id) values (#{userId},#{categoryId});
 	</insert>
-	<!--取消订阅-->
-	<delete id="deleteSubscribe" parameterType="map">
+    <!--取消订阅-->
+    <delete id="deleteSubscribe" parameterType="map">
 		delete from subscribe where user_id=#{userId} and category_id=#{categoryId};
 	</delete>
-	<!--查看是否订阅-->
-	<select id="selectSubscribeInfo" parameterType="map" resultType="java.lang.Integer">
+    <!--查看是否订阅-->
+    <select id="selectSubscribeInfo" parameterType="map" resultType="java.lang.Integer">
 		select id from subscribe where user_id=#{userId} and category_id=#{categoryId}
 	</select>
-	<!--查看所有订阅-->
-	<select id="getUserSubscribe" parameterType="int" resultType="int">
+    <!--查看所有订阅-->
+    <select id="getUserSubscribe" parameterType="int" resultType="int">
 		select category_id from subscribe where user_id=#{user_id};
 	</select>
-	<!--查看所有订阅（附订阅信息）-->
-	<select id="getUserSubscribeInfo" parameterType="int" resultType="map">
+    <!--查看所有订阅（附订阅信息）-->
+    <select id="getUserSubscribeInfo" parameterType="int" resultType="map">
 		select category_id,category from subscribe left join category_id on category_id.id=category_id where user_id=#{user_id}
 	</select>
-	<!--查看所有分类-->
-	<select id="getAllSubscribe" resultType="map">
+    <!--查看所有分类-->
+    <select id="getAllSubscribe" resultType="map">
 		select id,category from category_id;
 	</select>
+
+    <!--插入协会基本信息-->
+    <insert id="insertMemberInfo" parameterType="com.robot.entity.Member">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	  	insert into enterprise(id, enterprise_name, enterprise_type, enterprise_scale, location, registered_capital, registered_date, authentication_data, authentication_data_url, management_model, management_scope, main_camp, main_application, developing, cooperative_partner, main_customer) values (null, #{enterpriseName}, #{enterpriseType}, #{enterpriseScale}, #{location}, #{registeredCapital}, #{registeredDate}, #{authenticationData}, #{authenticationDataUrl}, #{managementModel}, #{managementScope}, #{mainCamp}, #{mainApplication}, #{developing}, #{cooperativePartner}, #{mainCustomer});
+	</insert>
+
+    <insert id="insertMemberContact" parameterType="com.robot.entity.Member">
+        insert into contact_enterprise(id, enterprise_id, postal_code, contact_number, fax, email, contact_address, contacts, department, post, qq, wechat) values (null, #{id}, #{postalCode}, #{contactNumber}, #{fax}, #{email}, #{contactAddress}, #{contacts}, #{department}, #{post}, #{qq}, #{wechat});
+    </insert>
+
+    <insert id="insertMemberProduct" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into product_enterprise
+        (id, enterprise_id, brand, version, application_area, application_industry, application_scenario)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{null},
+            #{item.brand},
+            #{item.version},
+            #{item.applicationArea},
+            #{item.applicationIndustry},
+            #{item.applicationScenario}
+            )
+        </foreach>
+    </insert>
+
 </mapper>

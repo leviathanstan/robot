@@ -1,11 +1,14 @@
 package com.robot.dao;
 
+import com.robot.entity.Member;
+import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.aspectj.weaver.ArrayReferenceType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface UserDao {
@@ -20,4 +23,7 @@ public interface UserDao {
     ArrayList<Integer> getUserSubscribe(int userId);
     ArrayList<Map> getUserSubscribeInfo(int userId);
     ArrayList<Map> getAllSubscribe();
+    int insertMemberInfo(Member member);
+    int insertMemberContact(Member member);
+    int insertMemberProduct(List<RepresentativeWork> representativeWorks);
 }

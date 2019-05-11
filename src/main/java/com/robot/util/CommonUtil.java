@@ -12,56 +12,56 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * 工具类
+ *
  * @author asce
  * @date 2018/9/20
  */
 public class CommonUtil {
 
-    public static void getTime(String flag){
+    public static void getTime(String flag) {
         Calendar c = Calendar.getInstance();
         String date = new SimpleDateFormat("HH:mm:ss.S").format(c.getTime());
         System.out.println(date + " " + flag);
     }
 
-    public static void getTime(int flag){
+    public static void getTime(int flag) {
         Calendar c = Calendar.getInstance();
         String date = new SimpleDateFormat("HH:mm:ss.S").format(c.getTime());
         System.out.println(date + " " + flag);
     }
 
 
-    public static String getUUID(){
+    public static String getUUID() {
         return String.valueOf(UUID.randomUUID()).replaceAll("-", "");
     }
 
     /**
      * 格式化页码
+     *
      * @param pageNumStr
      * @return
      */
-    public static int formatPageNum(String pageNumStr){
+    public static int formatPageNum(String pageNumStr) {
         int pageNum = 1;
-        if (simpleMatch(Constant.RULE_NUMBER,pageNumStr))
+        if (simpleMatch(Constant.RULE_NUMBER, pageNumStr))
             return Integer.parseInt(pageNumStr);
         return pageNum;
     }
 
     /**
      * 是否为数字
+     *
      * @param parm
      * @return
      */
-    public static int formateParmNum(String parm){
-        if(!simpleMatch(Constant.RULE_NUMBER,parm)){
+    public static int formateParmNum(String parm) {
+        if (!simpleMatch(Constant.RULE_NUMBER, parm)) {
             return 0;
         }
         return Integer.parseInt(parm);
@@ -69,20 +69,23 @@ public class CommonUtil {
 
     /**
      * 是否为空
+     *
      * @param str
      * @return
      */
-    public static boolean isNullOrEmpty(String str){
-        return (str==null||str.equals("")) ? true : false;
+    public static boolean isNullOrEmpty(String str) {
+        return (str == null || str.equals("")) ? true : false;
     }
+
     /**
      * 简单匹配
+     *
      * @param rule
      * @param content
      * @return
      */
-    public static boolean simpleMatch(String rule, String content){
-        if (content==null||content.trim().length()==0)
+    public static boolean simpleMatch(String rule, String content) {
+        if (content == null || content.trim().length() == 0)
             return false;
         Pattern pattern = Pattern.compile(rule);
         Matcher matcher = pattern.matcher(content);
@@ -90,106 +93,145 @@ public class CommonUtil {
     }
 
     /**
-     *  文字预览
-     * @author asce
-     * @date 2018/10/18
-     * @param
+     * 判断是否包含
+     *
+     * @param sentence
+     * @param keywords
      * @return
      */
-    public static ArrayList<Detail> getPreview(ArrayList<Detail> content){
-        if (content.size()==0)  return null;
-        content.get(0).setContent(content.get(0).getContent().replaceAll(Constant.RULE_PREVIEW,""));
+    public static boolean isContains(String sentence, String[] keywords) {
+        int tag = 0;
+        String[] sentences = sentence.split("、");
+        for (String tinySentence : sentences) {
+            for (String keyword : keywords) {
+                if (keyword.equals(tinySentence) || keyword == tinySentence) {
+                    tag++;
+                    break;
+                }
+            }
+        }
+        if (tag != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 文字预览
+     *
+     * @param
+     * @return
+     * @author asce
+     * @date 2018/10/18
+     */
+    public static ArrayList<Detail> getPreview(ArrayList<Detail> content) {
+        if (content.size() == 0) return null;
+        content.get(0).setContent(content.get(0).getContent().replaceAll(Constant.RULE_PREVIEW, ""));
         return content;
     }
+
     /**
-     *  文字预览
-     * @author asce
-     * @date 2018/10/18
+     * 文字预览
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/10/18
      */
-    public static String getPreview(String content){
-        return content==null?null:content.replaceAll(Constant.RULE_PREVIEW,"");
+    public static String getPreview(String content) {
+        return content == null ? null : content.replaceAll(Constant.RULE_PREVIEW, "");
     }
+
     /**
      * 将相对路径替换为绝对路径
+     *
      * @param content
      * @return
      */
-    public static ArrayList<Detail> getAbsolutePath(ArrayList<Detail> content){
-        for(Detail str:content) {
+    public static ArrayList<Detail> getAbsolutePath(ArrayList<Detail> content) {
+        for (Detail str : content) {
             str.setContent(str.getContent().replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources"));
             str.setContent(str.getContent().replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources"));
         }
         return content;
     }
+
     /**
      * 将相对路径替换为绝对路径
+     *
      * @param content
      * @return
      */
-    public static String getAbsolutePath(String content){
+    public static String getAbsolutePath(String content) {
         content = content.replaceAll("src=\"/static", "src=\"" + Constant.HOST_ADDRESS + "/resources");
         content = content.replaceAll("href=\"/static", "href=\"" + Constant.HOST_ADDRESS + "/resources");
         return content;
     }
+
     /**
      * 将datetime转为date格式
+     *
      * @param oldDate
      * @return
      */
-    public static String getDate(String oldDate){
-        if(oldDate != null){
+    public static String getDate(String oldDate) {
+        if (oldDate != null) {
             try {
-                LocalDateTime time = LocalDateTime.parse(oldDate,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+                LocalDateTime time = LocalDateTime.parse(oldDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
                 return time.toLocalDate().toString();
-            }catch (DateTimeParseException e){
+            } catch (DateTimeParseException e) {
                 e.printStackTrace();
                 return oldDate;
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return oldDate;
             }
-        }else{
+        } else {
             return null;
         }
     }
 
     /**
      * 时间格式化（informationController）--首页
+     *
      * @param informations
      */
-    public static void formateDateTimeToDate(ArrayList<RobotNews> informations){
-        for(RobotNews information:informations){
+    public static void formateDateTimeToDate(ArrayList<RobotNews> informations) {
+        for (RobotNews information : informations) {
             information.setPostDate(getDate(information.getPostDate()));
         }
     }
+
     /**
      * 时间格式化（informationController）--首页
+     *
      * @param informations
      */
-    public static void formateDateTimeToDate(List<InformationDto> informations){
-        for(InformationDto information:informations){
+    public static void formateDateTimeToDate(List<InformationDto> informations) {
+        for (InformationDto information : informations) {
             information.setPostDate(getDate(information.getPostDate()));
         }
     }
-    public static String formateDbTime(String dbTime){
-        if(dbTime==null) return null;
-        if (dbTime.endsWith("00:00:00.0")){
-            LocalDateTime time = LocalDateTime.parse(dbTime,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+
+    public static String formateDbTime(String dbTime) {
+        if (dbTime == null) return null;
+        if (dbTime.endsWith("00:00:00.0")) {
+            LocalDateTime time = LocalDateTime.parse(dbTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             return time.toLocalDate().toString();
         }
-        return dbTime.substring(0,16);
+        return dbTime.substring(0, 16);
     }
 
 
     /**
      * 从正文内容中获取第一张图片路径
+     *
      * @param content
      * @return
      */
-    public static String getFirstImgFromContent(ArrayList<Detail> content){
-        if(content.size()!=0) {
+    public static String getFirstImgFromContent(ArrayList<Detail> content) {
+        if (content.size() != 0) {
             String regex = "src=\"/static/img/(.*?)\"";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(content.get(0).getContent());
@@ -198,13 +240,15 @@ public class CommonUtil {
         }
         return null;
     }
+
     /**
      * 从正文内容中获取第一张图片路径
+     *
      * @param content
      * @return
      */
-    public static String getFirstImgFromContent(String content){
-        if(content != null) {
+    public static String getFirstImgFromContent(String content) {
+        if (content != null) {
             String regex = "src=\"/static/img/(.*?)\"";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(content);
@@ -213,12 +257,14 @@ public class CommonUtil {
         }
         return null;
     }
+
     /**
      * 获取本机ip地址（补全http://)
-     * @author asce
-     * @date 2018/10/26
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/10/26
      */
     public static String getLocalIp() {
         // 获取操作系统类型
@@ -246,38 +292,41 @@ public class CommonUtil {
 
     /**
      * 判断封面图片数量是否符合要求，不符合则从列表删除原有封面图片的对象
+     *
      * @param news
      * @param least
      * @return
      */
-    public static boolean judgeCover(ArrayList<RobotNews> news,int least){
+    public static boolean judgeCover(ArrayList<RobotNews> news, int least) {
         int count = 0;
-        for (RobotNews robotNews:news){
-            if (robotNews.getImg()!=null&&!robotNews.getImg().equals("")){
-                if(++count>=3)  break;
+        for (RobotNews robotNews : news) {
+            if (robotNews.getImg() != null && !robotNews.getImg().equals("")) {
+                if (++count >= 3) break;
             }
         }
-        if (count < least){
+        if (count < least) {
             //主要是防止重复，有可能超出要求的数量，让前端自行处理
-            news.removeIf(discuss -> discuss.getImg()!=null);
+            news.removeIf(discuss -> discuss.getImg() != null);
             return true;
         }
         return false;
     }
+
     /**
      * 上传图片
-     * @author asce
-     * @date 2018/11/30
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/30
      */
-    public static List<String> saveImg(MultipartFile[] files){
-        if (files == null||files.length == 0){
+    public static List<String> saveImg(MultipartFile[] files) {
+        if (files == null || files.length == 0) {
             return null;
         }
         ArrayList<String> paths = new ArrayList<>();
         String path = null;
-        for(MultipartFile file:files) {
+        for (MultipartFile file : files) {
             try {
                 //获取文件名作为保存到服务器的文件名称
                 if (!file.isEmpty() && file.getSize() > 0) {
@@ -315,18 +364,19 @@ public class CommonUtil {
 
     /**
      * 上传文档
-     * @author asce
-     * @date 2018/11/30
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/30
      */
-    public static ArrayList<String> saveFile(MultipartFile[] files){
-        if (files == null||files.length == 0){
+    public static ArrayList<String> saveFile(MultipartFile[] files) {
+        if (files == null || files.length == 0) {
             return null;
         }
         ArrayList<String> paths = null;
         String path = null;
-        for(MultipartFile file:files) {
+        for (MultipartFile file : files) {
             try {
                 //获取文件名作为保存到服务器的文件名称
                 if (!file.isEmpty() && file.getSize() > 0) {
@@ -360,5 +410,35 @@ public class CommonUtil {
             }
         }
         return paths;
+    }
+
+    /**
+     * 上传会员信息
+     * @param file
+     * @return
+     */
+    public static String uploadMember(MultipartFile file, String fileType) {
+        String fileName = file.getOriginalFilename();
+        if (!fileName.endsWith(".zip")) {
+            return GsonUtil.getErrorJson("格式不支持");
+        } else {
+            String fileNameByMD5 = FileUtil.getFileHash(fileName);
+            FileUtil.zipUpload(fileNameByMD5, file, fileType);
+            return fileNameByMD5;
+        }
+    }
+
+    /**
+     * Date转换为字符串
+     *
+     * @param date    日期
+     * @param pattern 日期格式
+     * @return
+     */
+    public static String convertToString(Date date, String pattern) {
+        if (date == null)
+            return "";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
     }
 }

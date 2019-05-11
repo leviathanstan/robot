@@ -1,6 +1,8 @@
 package com.robot.controller;
 
 import com.robot.annotation.PermissionsCheck;
+import com.robot.entity.Member;
+import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
 
 import com.robot.enums.PermissionsModel;
@@ -8,10 +10,13 @@ import com.robot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author hua
@@ -25,56 +30,57 @@ public class UserController {
     private UserService userService;
 
     @ResponseBody
-    @RequestMapping(value = "getPermission", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getPermission(HttpSession session){
+    @RequestMapping(value = "getPermission", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getPermission(HttpSession session) {
         return userService.getPermission(session);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAllSubscribe", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getAllSubscribe(){
+    public String getAllSubscribe() {
         return userService.getAllSubscribe();
     }
 
     @PermissionsCheck(access = PermissionsModel.USER)
     @ResponseBody
     @RequestMapping(value = "/getSubscribeList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getSubscribeList(HttpSession session){
+    public String getSubscribeList(HttpSession session) {
         return userService.getSubscribeList(session);
     }
 
     @PermissionsCheck(access = PermissionsModel.USER)
     @ResponseBody
     @RequestMapping(value = "/deleteSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String deleteSubscribe(@RequestParam int categoryId,HttpSession session){
-        return userService.deleteSubscribe(categoryId,session);
+    public String deleteSubscribe(@RequestParam int categoryId, HttpSession session) {
+        return userService.deleteSubscribe(categoryId, session);
     }
 
     @PermissionsCheck(access = PermissionsModel.USER)
     @ResponseBody
     @RequestMapping(value = "/addSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String addSubscribe(@RequestParam int categoryId,HttpSession session){
-        return userService.addSubscribe(categoryId,session);
+    public String addSubscribe(@RequestParam int categoryId, HttpSession session) {
+        return userService.addSubscribe(categoryId, session);
     }
 
     @PermissionsCheck(access = PermissionsModel.USER)
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
-    public String loginOut(){
+    public String loginOut() {
         return "login-out";
     }
 
     /**
      * 用户搜索
-     * @author asce
-     * @date 2018/11/15
+     *
      * @param
      * @return
+     * @author asce
+     * @date 2018/11/15
      */
     @PermissionsCheck
     @ResponseBody
     @RequestMapping(value = "/manager/find", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findUser(User user,String pageNum){
-        return userService.findUser(user,pageNum);
+    public String findUser(User user, String pageNum) {
+        return userService.findUser(user, pageNum);
     }
 
     /**
@@ -111,9 +117,9 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "register",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    public String validateRegister(@RequestParam(value = "checkCode") String checkCode,HttpSession session){
-        return userService.register(checkCode,session);
+    @RequestMapping(value = "register", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String validateRegister(@RequestParam(value = "checkCode") String checkCode, HttpSession session) {
+        return userService.register(checkCode, session);
     }
 
     /**
@@ -149,6 +155,33 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String resetPassword(String password, HttpSession session) {
-        return userService.resetPassword(password,session);
+        return userService.resetPassword(password, session);
+    }
+
+
+    /**
+     * 注册会员
+     *
+     * @param member
+     * @param authenticationDatas
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "insertNewMember", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String insertNewMember(HttpSession session, Member member, @RequestParam(value = "authenticationDatas") MultipartFile authenticationDatas) {
+        return userService.insertNewMember(session, member, authenticationDatas);
+    }
+
+    /**
+     * 填写会员的产品
+     *
+     * @param
+     * @param representativeWork
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "insertRepresentativeWork", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String insertRepresentativeWorkR(HttpSession session, RepresentativeWork[] representativeWork) {
+        return userService.insertRepresentativeWork(session, representativeWork);
     }
 }
