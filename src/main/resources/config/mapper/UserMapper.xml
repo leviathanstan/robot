@@ -2,10 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.robot.dao.UserDao">
 
+    <resultMap id="members" type="com.robot.entity.Member">
+        <id column="id" property="id"/>
+        <result column="enterprise_id" property="enterpriseId"/>
+        <result column="member_rank" property="memberRank"/>
+        <result column="member_name" property="memberName"/>
+        <result column="member_type" property="memberType"/>
+        <result column="contact" property="contact"/>
+        <result column="member_number" property="memberNumber"/>
+        <result column="member_identifier" property="memberIdentifier"/>
+        <result column="contact_info" property="contactInfo"/>
+        <result column="contact_info_url" property="contactInfoUrl"/>
+        <result column="association_approval" property="associationApproval"/>
+        <result column="unit_approval" property="unitApproval"/>
+        <result column="enterprise_name" property="enterpriseName"/>
+        <result column="enterprise_type" property="enterpriseType"/>
+        <result column="enterprise_scale" property="enterpriseScale"/>
+        <result column="location" property="location"/>
+        <result column="registered_capital" property="registeredCapital"/>
+        <result column="registered_date" property="registeredDate"/>
+        <result column="authentication_data" property="authenticationData"/>
+        <result column="authentication_data_url" property="authenticationDataUrl"/>
+        <result column="management_model" property="managementModel"/>
+        <result column="management_scope" property="managementScope"/>
+        <result column="main_camp" property="mainCamp"/>
+        <result column="main_application" property="mainApplication"/>
+        <result column="developing" property="developing"/>
+        <result column="cooperative_partner" property="cooperativePartner"/>
+        <result column="main_customer" property="mainCustomer"/>
+        <result column="postal_code" property="postalCode"/>
+        <result column="contact_number" property="contactNumber"/>
+        <result column="fax" property="fax"/>
+        <result column="email" property="email"/>
+        <result column="contact_address" property="contactAddress"/>
+        <result column="contacts" property="contacts"/>
+        <result column="department" property="department"/>
+        <result column="post" property="post"/>
+        <result column="qq" property="qq"/>
+        <result column="wechat" property="wechat"/>
+    </resultMap>
+
     <!-- 注册 -->
     <insert id="register" parameterType="com.robot.entity.User">
-		insert into user(id,username,password,email)value(null,#{username},#{password},#{email})
-	</insert>
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user(id,username,password,email, phone
+        <if test="memberId != null">
+            , member_id, status
+        </if>
+        )value(null,#{username},#{password},#{email}, #{phone}
+        <if test="memberId != null">
+            , #{memberId}, #{status}
+        </if>
+        )
+    </insert>
     <!-- 登录 -->
     <select id="login" parameterType="com.robot.entity.User"
             resultType="com.robot.entity.User">
@@ -39,6 +90,11 @@
             </otherwise>
         </choose>
     </select>
+
+    <select id="isExist" parameterType="com.robot.entity.User" resultType="java.lang.Integer">
+        select count(*) from user where username = #{username} or email = #{email};
+    </select>
+
     <!--订阅-->
     <insert id="addSubscribe" parameterType="map">
 		insert into subscribe (user_id,category_id) values (#{userId},#{categoryId});
@@ -66,11 +122,16 @@
 
     <!--插入协会基本信息-->
     <insert id="insertMemberInfo" parameterType="com.robot.entity.Member">
-        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+        <selectKey keyProperty="enterpriseId" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-	  	insert into enterprise(id, enterprise_name, enterprise_type, enterprise_scale, location, registered_capital, registered_date, authentication_data, authentication_data_url, management_model, management_scope, main_camp, main_application, developing, cooperative_partner, main_customer) values (null, #{enterpriseName}, #{enterpriseType}, #{enterpriseScale}, #{location}, #{registeredCapital}, #{registeredDate}, #{authenticationData}, #{authenticationDataUrl}, #{managementModel}, #{managementScope}, #{mainCamp}, #{mainApplication}, #{developing}, #{cooperativePartner}, #{mainCustomer});
-	</insert>
+        insert into enterprise(id, enterprise_name, enterprise_type, enterprise_scale, location, registered_capital,
+        registered_date, authentication_data, authentication_data_url, management_model, management_scope, main_camp,
+        main_application, developing, cooperative_partner, main_customer) values (null, #{enterpriseName},
+        #{enterpriseType}, #{enterpriseScale}, #{location}, #{registeredCapital}, #{registeredDate},
+        #{authenticationData}, #{authenticationDataUrl}, #{managementModel}, #{managementScope}, #{mainCamp},
+        #{mainApplication}, #{developing}, #{cooperativePartner}, #{mainCustomer});
+    </insert>
 
     <insert id="insertMemberContact" parameterType="com.robot.entity.Member">
         insert into contact_enterprise(id, enterprise_id, postal_code, contact_number, fax, email, contact_address, contacts, department, post, qq, wechat) values (null, #{id}, #{postalCode}, #{contactNumber}, #{fax}, #{email}, #{contactAddress}, #{contacts}, #{department}, #{post}, #{qq}, #{wechat});
@@ -92,4 +153,31 @@
         </foreach>
     </insert>
 
+    <insert id="insertMember" parameterType="com.robot.entity.Member">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into member_info (id, member_name, member_type, contact, member_number, contact_info, contact_info_url)
+        values (null, #{memberName}, #{memberType}, #{contact}, #{memberNumber}, #{contactInfo}, #{contactInfoUrl});
+    </insert>
+
+    <select id="isExistMember" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from member_info where member_name = #{enterpriseName};
+    </select>
+
+    <insert id="insertMemberUser" parameterType="com.robot.entity.User">
+        insert into member_user (id, user_id, enterprise_id) values (null, #{id}, #{enterpriseId});
+    </insert>
+
+    <select id="getMemberInfo" resultMap="members">
+        select m.id, e.id as enterprise_id, m.member_rank, m.member_name, m.member_type, m.contact, m.member_number, m.member_identifier, m.contact_info, m.contact_info_url, m.association_approval, m.unit_approval, e.enterprise_name, e.enterprise_type, e.enterprise_scale, e.location, e.registered_capital, e.registered_date, e.authentication_data, e.authentication_data_url, e.management_model, e.management_scope, e.main_camp, e.main_application, e.developing, e.cooperative_partner, e.main_customer, c.postal_code, c.contact_number, c.fax, c.email, c.contact_address, c.contacts, c.department, c.post, c.qq, c.wechat from member_info m, contact_enterprise c, enterprise e where e.member_id = m.id and c.enterprise_id = e.id;
+    </select>
+
+    <update id="judgeMember" parameterType="com.robot.entity.Member">
+        update member_info set member_rank = #{memberRank}, member_identifier = #{memberIdentifier}, association_approval = #{associationApproval} where id=#{email}
+    </update>
+
+    <update id="judgeUser" parameterType="java.lang.String">
+        update user set status = #{status} where role = 3 and enterprise_id = #{enterpriseId};
+    </update>
 </mapper>

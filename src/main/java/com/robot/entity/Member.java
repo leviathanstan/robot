@@ -1,7 +1,6 @@
 package com.robot.entity;
 
 import java.util.Date;
-import java.util.List;
 
 public class Member {
 
@@ -9,6 +8,7 @@ public class Member {
     public static final String[] MANAGEMENT_MODEL = {"制造商", "贸易商"}; //经营模式
 
     private Integer id;
+    private Integer enterpriseId;
     private String memberRank; //会员等级
     private String memberName; //单位全称
     private String memberType; //单位类型
@@ -16,6 +16,9 @@ public class Member {
     private String memberNumber; //会员编号
     private String memberIdentifier; //会员证号
     private String contactInfo; //联络人资料
+
+    private String contactInfoUrl; //联络人资料hash
+
     private String associationApproval; //协会审批意见
     private String unitApproval; //入会单位意见
 
@@ -326,6 +329,22 @@ public class Member {
 
     public void setWechat(String wechat) {
         this.wechat = wechat;
+    }
+
+    public String getContactInfoUrl() {
+        return contactInfoUrl;
+    }
+
+    public void setContactInfoUrl(String contactInfoUrl) {
+        this.contactInfoUrl = contactInfoUrl;
+    }
+
+    public Integer getEnterpriseId() {
+        return enterpriseId;
+    }
+
+    public void setEnterpriseId(Integer enterpriseId) {
+        this.enterpriseId = enterpriseId;
     }
 
     @Override

@@ -26,4 +26,11 @@ public interface UserDao {
     int insertMemberInfo(Member member);
     int insertMemberContact(Member member);
     int insertMemberProduct(List<RepresentativeWork> representativeWorks);
+    int isExist(User user);
+    int insertMember(Member member);
+    int isExistMember(String enterpriseName);
+    int insertMemberUser(User user);
+    ArrayList<Member> getMemberInfo();
+    int judgeMember(Member member);
+    int judgeUser(@Param("memberId") String memberId, @Param("status") String status);
 }

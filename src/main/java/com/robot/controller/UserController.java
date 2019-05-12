@@ -168,8 +168,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "insertNewMember", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String insertNewMember(HttpSession session, Member member, @RequestParam(value = "authenticationDatas") MultipartFile authenticationDatas) {
-        return userService.insertNewMember(session, member, authenticationDatas);
+    public String insertNewMember(HttpSession session, Member member, @RequestParam(value = "authenticationDatas") MultipartFile authenticationDatas, @RequestParam(value = "contactInfoDatas") MultipartFile contactInfoDatas) {
+        return userService.insertNewMember(session, member, authenticationDatas, contactInfoDatas);
     }
 
     /**
@@ -181,7 +181,45 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "insertRepresentativeWork", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String insertRepresentativeWorkR(HttpSession session, RepresentativeWork[] representativeWork) {
+    public String insertRepresentativeWork(HttpSession session, RepresentativeWork[] representativeWork) {
         return userService.insertRepresentativeWork(session, representativeWork);
+    }
+
+    /**
+     * 插入会员用户
+     *
+     * @param user
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "insertMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String insertMemberUser(User user) {
+        return userService.insertMemberUser(user);
+    }
+
+
+    /**
+     * 查看会员
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getMemberList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberInfo() {
+        return userService.getMemberInfo();
+    }
+
+
+    /**
+     * 判断会员通过
+     *
+     * @param member
+     * @param status
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "judgeMember", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String judgeMember(Member member, String status) {
+        return userService.judgeMember(member, status);
     }
 }

@@ -15,6 +15,13 @@ public class User {
     public static final Integer STATUS_ACCESS = 2;
     public static final Integer STATUS_FAIL = 3;
 
+    public static final Integer ROLE_SUPER = 1;      //超级管理员 1
+    public static final Integer ROLE_MANAGER = 2;   //管理员 2
+    public static final Integer ROLE_ASSOCIATION = 3;   //协会 3
+    public static final Integer ROLE_MEMBER = 4;    //会员 4
+    public static final Integer ROLE_MEMBER_NORMAL = 5; //会员普通成员
+    public static final Integer ROLE_NORMAL = 6;    //普通人 6
+
     private Integer id;
     private String username;
     private String password;
@@ -22,8 +29,8 @@ public class User {
     private String email;
     private Integer rank;
     private List<Permission> permissions;
-    private Role role;
-    private Integer memberId;
+    private Integer role;
+    private Integer enterpriseId;
     private Integer status;
 
     public Integer getId() {
@@ -82,22 +89,21 @@ public class User {
         this.permissions = permissions;
     }
 
-    public Role getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Integer getEnterpriseId() {
+        return enterpriseId;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setEnterpriseId(Integer enterpriseId) {
+        this.enterpriseId = enterpriseId;
     }
-
 
     public Integer getStatus() {
         return status;
@@ -106,6 +112,7 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
 
     @Override
     public String toString() {
