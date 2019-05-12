@@ -1,11 +1,13 @@
 package com.robot.controller;
 
+import com.robot.annotation.Authority;
 import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.Member;
 import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
 
 import com.robot.enums.PermissionsModel;
+import com.robot.enums.Role;
 import com.robot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -158,7 +160,6 @@ public class UserController {
         return userService.resetPassword(password, session);
     }
 
-
     /**
      * 注册会员
      *
@@ -176,12 +177,11 @@ public class UserController {
      * 填写会员的产品
      *
      * @param
-     * @param representativeWork
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "insertRepresentativeWork", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String insertRepresentativeWork(HttpSession session, RepresentativeWork[] representativeWork) {
+    public String insertRepresentativeWork(HttpSession session, RepresentativeWork representativeWork) {
         return userService.insertRepresentativeWork(session, representativeWork);
     }
 
@@ -191,6 +191,7 @@ public class UserController {
      * @param user
      * @return
      */
+//    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "insertMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String insertMemberUser(User user) {
@@ -203,6 +204,7 @@ public class UserController {
      *
      * @return
      */
+//    @Authority(role = Role.ASSOCIATION)
     @ResponseBody
     @RequestMapping(value = "getMemberList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getMemberInfo() {
@@ -217,8 +219,9 @@ public class UserController {
      * @param status
      * @return
      */
+//    @Authority(role = Role.ASSOCIATION)
     @ResponseBody
-    @RequestMapping(value = "judgeMember", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "judgeMember", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String judgeMember(Member member, String status) {
         return userService.judgeMember(member, status);
     }

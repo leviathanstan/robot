@@ -351,6 +351,7 @@ public class Member {
     public String toString() {
         return "Member{" +
                 "id=" + id +
+                ", enterpriseId=" + enterpriseId +
                 ", memberRank='" + memberRank + '\'' +
                 ", memberName='" + memberName + '\'' +
                 ", memberType='" + memberType + '\'' +
@@ -358,6 +359,7 @@ public class Member {
                 ", memberNumber='" + memberNumber + '\'' +
                 ", memberIdentifier='" + memberIdentifier + '\'' +
                 ", contactInfo='" + contactInfo + '\'' +
+                ", contactInfoUrl='" + contactInfoUrl + '\'' +
                 ", associationApproval='" + associationApproval + '\'' +
                 ", unitApproval='" + unitApproval + '\'' +
                 ", enterpriseName='" + enterpriseName + '\'' +

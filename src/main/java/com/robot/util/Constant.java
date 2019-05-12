@@ -68,5 +68,8 @@ public class Constant {
     public static final String MEMBER_AUTHENTICATIONDATA_PATH = "C:\\data\\member\\authenticationData" + File.separator;
     //会员认证访问地址
     public static final String MEMBER_AUTHENTICATIONDATA_ACCESS_PATH = HOST_ADDRESS + "/member/authenticationData/";
-
+    //联络人资料认证存放地址
+    public static final String MEMBER_CONTACTINFODATAS_PATH = "C:\\data\\member\\contactInfoDatas" + File.separator;
+    //联络人资料认证访问地址
+    public static final String MEMBER_CONTACTINFODATAS_ACCESS_PATH = HOST_ADDRESS + "/member/contactInfoDatas/";
 }

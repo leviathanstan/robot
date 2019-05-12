@@ -125,25 +125,26 @@
         <selectKey keyProperty="enterpriseId" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into enterprise(id, enterprise_name, enterprise_type, enterprise_scale, location, registered_capital,
+        insert into enterprise(id, member_id, enterprise_name, enterprise_type, enterprise_scale, location, registered_capital,
         registered_date, authentication_data, authentication_data_url, management_model, management_scope, main_camp,
-        main_application, developing, cooperative_partner, main_customer) values (null, #{enterpriseName},
+        main_application, developing, cooperative_partner, main_customer) values (null, #{id}, #{enterpriseName},
         #{enterpriseType}, #{enterpriseScale}, #{location}, #{registeredCapital}, #{registeredDate},
         #{authenticationData}, #{authenticationDataUrl}, #{managementModel}, #{managementScope}, #{mainCamp},
         #{mainApplication}, #{developing}, #{cooperativePartner}, #{mainCustomer});
     </insert>
 
     <insert id="insertMemberContact" parameterType="com.robot.entity.Member">
-        insert into contact_enterprise(id, enterprise_id, postal_code, contact_number, fax, email, contact_address, contacts, department, post, qq, wechat) values (null, #{id}, #{postalCode}, #{contactNumber}, #{fax}, #{email}, #{contactAddress}, #{contacts}, #{department}, #{post}, #{qq}, #{wechat});
+        insert into contact_enterprise(id, enterprise_id, postal_code, contact_number, fax, email, contact_address, contacts, department, post, qq, wechat) values (null, #{enterpriseId}, #{postalCode}, #{contactNumber}, #{fax}, #{email}, #{contactAddress}, #{contacts}, #{department}, #{post}, #{qq}, #{wechat});
     </insert>
 
-    <insert id="insertMemberProduct" parameterType="java.util.List" useGeneratedKeys="false">
+    <insert id="insertMemberProducts" parameterType="java.util.List" useGeneratedKeys="false">
         insert into product_enterprise
         (id, enterprise_id, brand, version, application_area, application_industry, application_scenario)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
-            #{null},
+            null,
+            #{item.enterpriseId},
             #{item.brand},
             #{item.version},
             #{item.applicationArea},
@@ -151,6 +152,10 @@
             #{item.applicationScenario}
             )
         </foreach>
+    </insert>
+
+    <insert id="insertMemberProduct" parameterType="com.robot.entity.RepresentativeWork">
+        insert into product_enterprise (id, enterprise_id, brand, version, application_area, application_industry, application_scenario) value (null, #{enterpriseId}, #{brand}, #{version}, #{applicationArea}, #{applicationIndustry}, #{applicationScenario});
     </insert>
 
     <insert id="insertMember" parameterType="com.robot.entity.Member">
@@ -174,10 +179,10 @@
     </select>
 
     <update id="judgeMember" parameterType="com.robot.entity.Member">
-        update member_info set member_rank = #{memberRank}, member_identifier = #{memberIdentifier}, association_approval = #{associationApproval} where id=#{email}
+        update member_info set member_rank = #{memberRank}, member_identifier = #{memberIdentifier}, association_approval = #{associationApproval} where id=#{id}
     </update>
 
     <update id="judgeUser" parameterType="java.lang.String">
-        update user set status = #{status} where role = 3 and enterprise_id = #{enterpriseId};
+        update user set status = #{status} where role = 4 and enterprise_id = #{enterpriseId};
     </update>
 </mapper>

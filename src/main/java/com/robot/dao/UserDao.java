@@ -25,12 +25,13 @@ public interface UserDao {
     ArrayList<Map> getAllSubscribe();
     int insertMemberInfo(Member member);
     int insertMemberContact(Member member);
-    int insertMemberProduct(List<RepresentativeWork> representativeWorks);
+    int insertMemberProducts(List<RepresentativeWork> representativeWorks);
+    int insertMemberProduct(RepresentativeWork representativeWork);
     int isExist(User user);
     int insertMember(Member member);
     int isExistMember(String enterpriseName);
     int insertMemberUser(User user);
     ArrayList<Member> getMemberInfo();
     int judgeMember(Member member);
-    int judgeUser(@Param("memberId") String memberId, @Param("status") String status);
+    int judgeUser(@Param("enterpriseId") String enterpriseId, @Param("status") String status);
 }
