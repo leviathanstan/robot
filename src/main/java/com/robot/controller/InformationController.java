@@ -64,7 +64,7 @@ public class InformationController {
      */
     @ResponseBody
     @RequestMapping(value = "/findPolicyInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String findPolicyInf(int id){
+    public String findPolicyInf(Integer id){
         return informationService.findPolicyInfo(id);
     }
 
@@ -201,7 +201,7 @@ public class InformationController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAssociationNewsInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getAssociationNewsInfo(int id){
+    public String getAssociationNewsInfo(Integer id){
         return informationService.getAssociationNewsInfo(id);
     }
 
@@ -256,7 +256,7 @@ public class InformationController {
      */
     @ResponseBody
     @RequestMapping(value = "getEducationTrainInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getEducationTrainInfo(int id){
+    public String getEducationTrainInfo(Integer id){
         return informationService.getEducationTrainInfo(id);
     }
 
@@ -378,7 +378,7 @@ public class InformationController {
 
     @ResponseBody
     @RequestMapping(value = "/getInformationInfo", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getInformationInfo(int id){
+    public String getInformationInfo(Integer id){
         return informationService.getInformationDetail(id);
     }
 
@@ -389,7 +389,7 @@ public class InformationController {
      */
     @ResponseBody
     @RequestMapping(value = "/getRelatedHotInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getRelatedHotInfo(int id){
+    public String getRelatedHotInfo(Integer id){
         return informationService.findRelatedHotInfo(id);
     }
 
@@ -410,7 +410,7 @@ public class InformationController {
      */
     @ResponseBody
     @RequestMapping(value = "/getNewsHotSpotInfo",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getNewsHotSpotInfo(int id){
+    public String getNewsHotSpotInfo(Integer id){
         return informationService.findRelatedHotInfo(id);
     }
 }

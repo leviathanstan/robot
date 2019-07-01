@@ -443,9 +443,9 @@ public class InformationService {
         map.put("number", NumberEnum.INFORMATION_NUMBER.getNumber());
         map.put("categoryId", InformationEnum.POLICY_INFORMATION.getId());
         ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
-        for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
-        }
+//        for (InformationDto robotNews : informations) {
+//            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+//        }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
     }
