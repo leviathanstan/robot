@@ -2,10 +2,7 @@ package com.service;
 
 import com.robot.entity.*;
 import com.robot.scrapy.SpiderManager;
-import com.robot.util.CommonUtil;
-import com.robot.util.FileUtil;
-import com.robot.util.GsonUtil;
-import com.robot.util.Md5Util;
+import com.robot.util.*;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.poi.util.IOUtils;
 import org.junit.Test;
@@ -44,5 +41,10 @@ public class CommonServiceTest {
         FileInputStream input = new FileInputStream(file);
 
         MultipartFile multipartFile =new MockMultipartFile("file", file.getName(), "text/plain", IOUtils.toByteArray(input));
+    }
+
+    @Test
+    public void testMatch(){
+        System.out.println("巨轮大大".matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION));
     }
 }

@@ -60,7 +60,7 @@
     <!-- 登录 -->
     <select id="login" parameterType="com.robot.entity.User"
             resultType="com.robot.entity.User">
-		select id,username,email,rank from user where username=#{username} and password=#{password}
+		select id,username,email,role from user where username=#{username} and password=#{password}
 	</select>
     <!--重置密码-->
     <update id="resetPassword" parameterType="java.lang.String">

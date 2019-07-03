@@ -1,8 +1,8 @@
 package com.robot.controller;
 
-import com.robot.annotation.PermissionsCheck;
+import com.robot.annotation.Authority;
 import com.robot.entity.Product;
-import com.robot.enums.PermissionsModel;
+import com.robot.enums.Role;
 import com.robot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,21 +25,21 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PermissionsCheck
+    @Authority(role = Role.MANAGER)
     @ResponseBody
     @RequestMapping(value = "/manager/deleteProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteProduct(@RequestParam List<Integer> ids){
         return productService.deleteProduct(ids);
     }
 
-    @PermissionsCheck
+    @Authority(role = Role.MANAGER)
     @ResponseBody
     @RequestMapping(value = "/manager/updateProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateProduct(Product product){
         return productService.updateProduct(product);
     }
 
-    @PermissionsCheck
+    @Authority(role = Role.MANAGER)
     @ResponseBody
     @RequestMapping(value = "/manager/addProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addProduct(Product product){

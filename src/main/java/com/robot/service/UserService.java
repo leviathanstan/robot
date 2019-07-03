@@ -49,21 +49,9 @@ public class UserService {
      */
     public String getPermission(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Integer rank = (Integer) session.getAttribute("rank");
+        Integer role = (Integer) session.getAttribute("role");
         if (user != null) {
-            int rankNum;
-            switch (rank) {
-                case 2:
-                    rankNum = 2;
-                    break;
-                case 3:
-                    rankNum = 3;
-                    break;
-                default:
-                    rankNum = 1;
-                    break;
-            }
-            return GsonUtil.getSuccessJson(rankNum);
+            return GsonUtil.getSuccessJson(role);
         } else {
             return GsonUtil.getSuccessJson(0);
         }
@@ -164,15 +152,15 @@ public class UserService {
             return GsonUtil.getErrorJson("密码或账号错误");
         } else {
             session.setAttribute("user", dbUser);
-            switch (dbUser.getRank()) {
-                case 2:
-                    session.setAttribute("rank", 2);
+            switch (dbUser.getRole()) {
+                case 1:
+                    session.setAttribute("role", User.ROLE_SUPER);
                     break;
-                case 3:
-                    session.setAttribute("rank", 3);
+                case 2:
+                    session.setAttribute("role", User.ROLE_MANAGER);
                     break;
                 default:
-                    session.setAttribute("rank", 1);
+                    session.setAttribute("role", User.ROLE_NORMAL);
                     break;
             }
             return GsonUtil.getSuccessJson(dbUser);
@@ -439,6 +427,7 @@ public class UserService {
         if (enterpriseId == null) {
             return GsonUtil.getErrorJson("服务器错误");
         }
+        System.out.println(representativeWork.getBrand());
         if (representativeWork.getBrand() == null || "".equals(representativeWork.getBrand())) {
             return GsonUtil.getErrorJson("品牌格式不正确");
         }
@@ -468,7 +457,7 @@ public class UserService {
         }
         if (userDao.isExist(user) != 0) {
             return GsonUtil.getErrorJson("用户已存在");
-        }
+    }
         user.setStatus(User.STATUS_ACCESS);
         user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
         userDao.register(user);

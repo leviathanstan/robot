@@ -1,7 +1,8 @@
 package com.robot.controller;
 
-import com.robot.annotation.PermissionsCheck;
+import com.robot.annotation.Authority;
 import com.robot.entity.Position;
+import com.robot.enums.Role;
 import com.robot.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,21 +48,21 @@ public class PositionController {
         return positionService.getLevelIndustry(parentId);
     }
 
-    @PermissionsCheck
+    @Authority(role = Role.SUPER)
     @ResponseBody
     @RequestMapping(value = "manager/deletePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deletePosition(@RequestParam List<Integer> ids){
         return positionService.deletePosition(ids);
     }
 
-    @PermissionsCheck
+    @Authority(role = Role.SUPER)
     @ResponseBody
     @RequestMapping(value = "manager/updatePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updatePosition(Position position, int[] regionIds){
         return positionService.updatePosition(position,regionIds);
     }
 
-    @PermissionsCheck
+    @Authority(role = Role.SUPER)
     @ResponseBody
     @RequestMapping(value = "manager/addPosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addPosition(Position position, @RequestParam int[] regionIds){

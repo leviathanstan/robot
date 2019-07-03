@@ -1,8 +1,9 @@
 package com.robot.controller;
 
-import com.robot.annotation.PermissionsCheck;
+import com.robot.annotation.Authority;
 import com.robot.entity.Conference;
 import com.robot.entity.RegistrationForm;
+import com.robot.enums.Role;
 import com.robot.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,21 +24,21 @@ public class ConferenceController {
     @Autowired
     private ConferenceService conferenceService;
 
-    @PermissionsCheck
+    @Authority(role = Role.SUPER)
     @ResponseBody
     @RequestMapping(value = "/deleteConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteConference(int id, HttpSession session){
         return conferenceService.deleteConference(id, session);
     }
 
-    @PermissionsCheck
+    @Authority(role = Role.SUPER)
     @ResponseBody
     @RequestMapping(value = "/updateConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateConference(Conference conference,HttpSession session){
         return conferenceService.updateConference(conference,session);
     }
 
-    @PermissionsCheck
+    @Authority(role = Role.SUPER)
     @ResponseBody
     @RequestMapping(value = "/addConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addConference(Conference conference,HttpSession session){

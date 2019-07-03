@@ -1,7 +1,8 @@
 package com.robot.controller;
 
-import com.robot.annotation.PermissionsCheck;
+import com.robot.annotation.Authority;
 import com.robot.entity.Introduction;
+import com.robot.enums.Role;
 import com.robot.service.IntroductionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -94,7 +95,7 @@ public class IntroductionController {
      * @param ids
      * @return
      */
-    @PermissionsCheck
+    @Authority(role = Role.MANAGER)
     @ResponseBody
     @RequestMapping(value = "manager/deleteIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteIntroduction(@RequestParam List<Integer> ids){
@@ -106,7 +107,7 @@ public class IntroductionController {
      * @param introduction
      * @return
      */
-    @PermissionsCheck
+    @Authority(role = Role.MANAGER)
     @ResponseBody
     @RequestMapping(value = "manager/updateIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateIntroduction(Introduction introduction){
@@ -117,7 +118,7 @@ public class IntroductionController {
      * @param introduction
      * @return
      */
-    @PermissionsCheck
+    @Authority(role = Role.MANAGER)
     @ResponseBody
     @RequestMapping(value = "manager/addIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addIntroduction(Introduction introduction){

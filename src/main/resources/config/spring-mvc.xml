@@ -56,7 +56,7 @@
 
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.robot.interceptor.PermissionsInterceptor"/>
+            <bean class="com.robot.interceptor.AuthorityInterceptor"/>
         </mvc:interceptor>
 
     </mvc:interceptors>

@@ -1,24 +1,18 @@
 package com.robot.controller;
 
 import com.robot.annotation.Authority;
-import com.robot.annotation.PermissionsCheck;
 import com.robot.entity.Member;
 import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
 
-import com.robot.enums.PermissionsModel;
 import com.robot.enums.Role;
 import com.robot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author hua
@@ -43,28 +37,28 @@ public class UserController {
         return userService.getAllSubscribe();
     }
 
-    @PermissionsCheck(access = PermissionsModel.USER)
+    @Authority(role = Role.NORMAL)
     @ResponseBody
     @RequestMapping(value = "/getSubscribeList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getSubscribeList(HttpSession session) {
         return userService.getSubscribeList(session);
     }
 
-    @PermissionsCheck(access = PermissionsModel.USER)
+    @Authority(role = Role.NORMAL)
     @ResponseBody
     @RequestMapping(value = "/deleteSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteSubscribe(@RequestParam int categoryId, HttpSession session) {
         return userService.deleteSubscribe(categoryId, session);
     }
 
-    @PermissionsCheck(access = PermissionsModel.USER)
+    @Authority(role = Role.NORMAL)
     @ResponseBody
     @RequestMapping(value = "/addSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addSubscribe(@RequestParam int categoryId, HttpSession session) {
         return userService.addSubscribe(categoryId, session);
     }
 
-    @PermissionsCheck(access = PermissionsModel.USER)
+    @Authority(role = Role.NORMAL)
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     public String loginOut() {
         return "login-out";
@@ -78,7 +72,7 @@ public class UserController {
      * @author asce
      * @date 2018/11/15
      */
-    @PermissionsCheck
+    @Authority(role = Role.MANAGER)
     @ResponseBody
     @RequestMapping(value = "/manager/find", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String findUser(User user, String pageNum) {

@@ -27,7 +27,6 @@ public class User {
     private String password;
     private String phone;
     private String email;
-    private Integer rank;
     private List<Permission> permissions;
     private Integer role;
     private Integer enterpriseId;
@@ -73,14 +72,6 @@ public class User {
         this.email = email;
     }
 
-    public Integer getRank() {
-        return rank;
-    }
-
-    public void setRank(Integer rank) {
-        this.rank = rank;
-    }
-
     public List<Permission> getPermissions() {
         return permissions;
     }
@@ -122,9 +113,10 @@ public class User {
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", rank=" + rank +
                 ", permissions=" + permissions +
-                ", role='" + role + '\'' +
+                ", role=" + role +
+                ", enterpriseId=" + enterpriseId +
+                ", status=" + status +
                 '}';
     }
 }
