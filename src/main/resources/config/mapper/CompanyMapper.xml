@@ -6,7 +6,7 @@
 
     <resultMap id="companyArea" type="com.robot.entity.Area">
     <result property="name" column="name"/>
-    <result property="areaCount" column="area_count"/>
+    <!--result property="areaCount" column="area_count"/-->
     </resultMap>
 
     <resultMap id="companyBrand" type="com.robot.entity.Company">
