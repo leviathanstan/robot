@@ -60,6 +60,14 @@ public class ConferenceService {
         return conferences;
     }
 
+    public List<Conference> getOther() {
+        ArrayList<Conference> conferences1 = conferenceDao.getIndexConference(1);
+        ArrayList<Conference> conferences2 = conferenceDao.getIndexConference(0);
+        List<Conference> conferences = new ArrayList<>();
+        conferences.addAll(conferences1);
+        conferences.addAll(conferences2);
+        return conferences;
+    }
     /**
      * 展会列表
      *
@@ -77,14 +85,14 @@ public class ConferenceService {
     }
 
     /**
-     * 展会列表
+     * 会议列表
      *
      * @param
      * @return
      * @author asce
      * @date 2018/11/22
      */
-    public String getMettingList(String page) {
+    public String getMeetingList(String page) {
         int pageNum = CommonUtil.formatPageNum(page);
         PageHelper.startPage(pageNum, PAGE_LENGTH);
         List<Conference> conferences = conferenceDao.getConferenceList(1);

@@ -25,7 +25,9 @@ public interface InformationDao {
     int searchCategoryCount(HashMap<String,Object> args);
     List<String> findRelatedKeyword(int informationId);
     List<RobotNews> findRelatedInformation(int informationId);
-    ArrayList<RobotNews> getIndexDiscuss();
+    ArrayList<InformationDto> getIndexDiscuss();
+    InformationDto getDiscussInfo(int id);
+    List<InformationDto> getDiscussList();
     ArrayList<InformationDto> getIndexInformationWithContent(Map<String,Integer> map);
     int deleteInformation(List<Integer> ids);
     int deleteContent(List<Integer> ids);

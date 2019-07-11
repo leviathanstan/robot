@@ -63,6 +63,12 @@ public class ConferenceController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getMeetingList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMeetingList(String pageNum){
+        return conferenceService.getMeetingList(pageNum);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/attend", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String writeForm(RegistrationForm registrationForm){
             return conferenceService.enroll(registrationForm);

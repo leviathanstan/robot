@@ -45,11 +45,12 @@
         <result property="viewCount" column="view_count"/>
     </resultMap>
     <!--技术研讨-->
-    <resultMap id="discussMap" type="com.robot.entity.RobotNews">
+    <resultMap id="discussMap" type="com.robot.dto.InformationDto">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="postDate" column="post_date"/>
         <result property="img" column="cover"/>
+        <result property="content" column="content"/>
     </resultMap>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">
@@ -72,8 +73,16 @@
         select * from information_content where information_id=#{informationId,jdbcType=INTEGER}
     </select>
     <!--首页技术研讨-->
-    <select id="getIndexDiscuss" parameterType="int" resultMap="discussMap">
+    <select id="getIndexDiscuss"  resultMap="discussMap">
         select id, cover, title  from technique_discuss limit 20
+    </select>
+    <!--技术研讨相关信息-->
+    <select id="getDiscussInfo" parameterType="int" resultMap="discussMap">
+        select  id,cover,title,content from technique_discuss where id = #{id}
+    </select>
+    <!--技术研讨列表-->
+    <select id="getDiscussList"  resultMap="discussMap">
+         select  id,cover,title,content from technique_discuss
     </select>
     <!--搜索-->
     <select id="find" resultMap="informationDetail" parameterType="map">

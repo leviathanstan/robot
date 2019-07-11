@@ -1168,11 +1168,35 @@ public class InformationService {
      * @date 2018/9/27
      * @return
      */
-    public ArrayList<RobotNews> getIndexDiscuss(){
-        ArrayList<RobotNews> discuss = informationDao.getIndexDiscuss();
+    public ArrayList<InformationDto> getIndexDiscuss(){
+        ArrayList<InformationDto> discuss = informationDao.getIndexDiscuss();
         return discuss;
     }
 
+    /**
+     * 获取技术研讨详细信息
+     * @param id
+     * @return
+     */
+    public String getDiscussInfo(Integer id){
+        InformationDto discuss = informationDao.getDiscussInfo(id);
+        if(discuss == null)
+            return GsonUtil.getErrorJson();
+        return GsonUtil.getSuccessJson(discuss);
+    }
+
+    /**
+     * 获取技术研讨列表
+     * @param Num
+     * @return
+     */
+    public String getDiscussList(String Num){
+        int pageNum = CommonUtil.formatPageNum(Num);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<InformationDto> discussList = informationDao.getDiscussList();
+        PageInfo<InformationDto> pageInfo = new PageInfo<>(discussList);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
     //************************案列库************************************************//
     /**
      * 首页案列库

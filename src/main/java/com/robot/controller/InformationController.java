@@ -280,6 +280,27 @@ public class InformationController {
         return informationService.getBasicInfo(id);
     }
 
+    /**
+     * 技术研讨具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getDiscussInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getDiscussInfo(Integer id){
+        return informationService.getDiscussInfo(id);
+    }
+
+    /**
+     * 技术研讨列表
+     * @param num
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getDiscussList",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getDiscussList(String num){
+        return informationService.getDiscussList(num);
+    }
     /***
      * 产品评测列表
      * @return
