@@ -44,6 +44,8 @@ public class ConferenceService {
      */
     public ArrayList<Conference> getIndexConference() {
         ArrayList<Conference> conferences = conferenceDao.getIndexConference(0);
+        for(Conference conference :conferences)
+            conference.setPostDate(CommonUtil.formateDbTime(conference.getPostDate()));
         return conferences;
     }
 
@@ -57,12 +59,18 @@ public class ConferenceService {
      */
     public ArrayList<Conference> getIndexMetting() {
         ArrayList<Conference> conferences = conferenceDao.getIndexConference(1);
+        for(Conference conference :conferences)
+            conference.setPostDate(CommonUtil.formateDbTime(conference.getPostDate()));
         return conferences;
     }
 
+    /**
+     * 首页其他
+     * @return
+     */
     public List<Conference> getOther() {
-        ArrayList<Conference> conferences1 = conferenceDao.getIndexConference(1);
-        ArrayList<Conference> conferences2 = conferenceDao.getIndexConference(0);
+        ArrayList<Conference> conferences1 = getIndexMetting();
+        ArrayList<Conference> conferences2 = getIndexConference();
         List<Conference> conferences = new ArrayList<>();
         conferences.addAll(conferences1);
         conferences.addAll(conferences2);
@@ -307,7 +315,7 @@ public class ConferenceService {
         PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
         for (Conference conference : conferences) {
             conference.setIntroduction(CommonUtil.getPreview(conference.getIntroduction()));
-            conference.setHoldTime(CommonUtil.formateDbTime(conference.getHoldTime()));
+            conference.setPostDate(CommonUtil.formateDbTime(conference.getPostDate()));
         }
         return GsonUtil.getSuccessJson(pageInfo);
     }

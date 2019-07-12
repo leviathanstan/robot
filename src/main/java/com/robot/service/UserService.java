@@ -164,7 +164,7 @@ public class UserService {
             return GsonUtil.getErrorJson("密码或账号错误");
         } else {
             session.setAttribute("user", dbUser);
-            switch (dbUser.getRank()) {
+            switch (dbUser.getRole()) {
                 case 2:
                     session.setAttribute("rank", 2);
                     break;

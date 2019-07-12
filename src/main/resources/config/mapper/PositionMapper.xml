@@ -36,7 +36,7 @@
     </select>
     <!--搜索-->
     <select id="search" resultMap="positionMap" parameterType="map">
-        select positions.id as p_id,i1.name as industry_name,i2.name as industry_position_name from positions left join
+        select *,positions.id as p_id,i1.name as industry_name,i2.name as industry_position_name from positions left join
                                                                                                                         industry_category as i1 on i1.id = industry_id
                                                                                                               left join
                                                                                                                         industry_category as i2 on i2.id = position_category_id

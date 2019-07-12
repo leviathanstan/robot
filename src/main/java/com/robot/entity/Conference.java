@@ -11,7 +11,7 @@ public class Conference {
     private Integer userId;
     private String coverImg;
     private String title;
-    private String holdTime;
+    private String postDate;
     private String address;
     private String host;
     private String introduction;
@@ -41,13 +41,6 @@ public class Conference {
         this.title = title;
     }
 
-    public String getHoldTime() {
-        return holdTime;
-    }
-
-    public void setHoldTime(String holdTime) {
-        this.holdTime = holdTime;
-    }
 
     public String getAddress() {
         return address;
@@ -89,13 +82,20 @@ public class Conference {
         this.userId = userId;
     }
 
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
     @Override
     public String toString() {
         return "Conference{" +
                 "id=" + id +
                 ", coverImg='" + coverImg + '\'' +
                 ", title='" + title + '\'' +
-                ", holdTime=" + holdTime +
+                ", holdTime=" + postDate +
                 ", address='" + address + '\'' +
                 ", host='" + host + '\'' +
                 ", introduction='" + introduction + '\'' +

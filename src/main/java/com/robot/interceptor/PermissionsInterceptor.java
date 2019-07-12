@@ -49,7 +49,7 @@ public class PermissionsInterceptor extends HandlerInterceptorAdapter {
         if (methodPermission!=null) {//检测注解
             if(methodPermission.access() == PermissionsModel.MANAGER){
                 Integer rank = (Integer) request.getSession().getAttribute("rank");
-                if (rank==null||rank!=3){
+                if (rank==null||rank!=2){
                     handle(request,response);
                     return false;
                 }

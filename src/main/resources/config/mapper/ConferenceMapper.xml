@@ -6,7 +6,7 @@
     <resultMap id="conferenceMap" type="com.robot.entity.Conference" autoMapping="true">
         <id column="id" property="id"/>
         <result column="cover" property="coverImg"/>
-        <result column="hold_time" property="holdTime"/>
+        <result column="hold_time" property="postDate"/>
     </resultMap>
     <!--首页-->
     <select id="getIndexConference" resultMap="conferenceMap" parameterType="int">
