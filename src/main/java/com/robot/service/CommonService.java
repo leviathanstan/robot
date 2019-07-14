@@ -146,7 +146,7 @@ public class CommonService {
             dataMap.put("position", positionService.getIndex());
             //会议
             dataMap.put("conference",conferenceService.getIndexConference());
-            dataMap.put("metting", conferenceService.getIndexMetting());
+            dataMap.put("meeting", conferenceService.getIndexMetting());
             dataMap.put("other",conferenceService.getOther());
             //相关热点
             dataMap.put("relatedHot",informationService.findIndexRelatedHot());

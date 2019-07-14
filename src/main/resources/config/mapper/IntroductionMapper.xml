@@ -6,6 +6,7 @@
         <result column="name" property="name"/>
         <result column="content" property="introduction"/>
         <result column="category_id" property="categoryId"/>
+        <result column="post_date" property="postDate"/>
     </resultMap>
 
     <select id="getIndexIntroduction" parameterType="map" resultMap="introductionMap">
@@ -13,7 +14,7 @@
     </select>
 
     <select id="getIntroductionList" parameterType="int" resultMap="introductionMap">
-        select id, name, content from introduction where category_id=#{categoryId}
+        select id, name, content from introduction where category_id=#{categoryId} order by post_date desc
     </select>
 
     <select id="findIntroductionInfo" parameterType="int" resultMap="introductionMap">

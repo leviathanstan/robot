@@ -25,7 +25,7 @@
     </select>
     <!--搜索-->
     <select id="findProductIf" parameterType="map" resultMap="productMap">
-        select name,cover,pro_last_up_time from product_library where 1=1
+        select id,name,cover,pro_last_up_time from product_library where 1=1
         <if test="content!=null and content.trim().length()>0">
             and locate(#{content},name)>0 or locate(#{content},product_introduction)>0
         </if>

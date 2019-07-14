@@ -51,6 +51,18 @@ public class ConferenceController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getHoldingMeeting", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getHoldingMeeting(){
+        return conferenceService.getHoldingMeeting();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getPassMeeting", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getPassMeeting(){
+        return conferenceService.getPassMeeting();
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/getHoldingConferences", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getHoldingConferences(){
         return conferenceService.getHoldingConferences();
@@ -78,5 +90,11 @@ public class ConferenceController {
     @RequestMapping(value = "/findConference",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findConference(@RequestParam HashMap args){
         return conferenceService.findConference(args);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getInfo(int id){
+        return conferenceService.getInfo(id);
     }
 }

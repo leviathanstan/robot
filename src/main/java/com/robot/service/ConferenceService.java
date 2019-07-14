@@ -117,7 +117,7 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getHoldingConferences() {
-        ArrayList<Conference> conferences = conferenceDao.getHoldingConference();
+        ArrayList<Conference> conferences = conferenceDao.getHoldingConference(0);
         return GsonUtil.getSuccessJson(conferences);
     }
 
@@ -130,7 +130,32 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getPassConference() {
-        ArrayList<Conference> conferences = conferenceDao.getPassConference();
+        ArrayList<Conference> conferences = conferenceDao.getPassConference(0);
+        return GsonUtil.getSuccessJson(conferences);
+    }
+    /**
+     * 即将举办
+     *
+     * @param
+     * @return
+     * @author asce
+     * @date 2018/11/22
+     */
+    public String getHoldingMeeting() {
+        ArrayList<Conference> conferences = conferenceDao.getHoldingConference(1);
+        return GsonUtil.getSuccessJson(conferences);
+    }
+
+    /**
+     * 往期会议
+     *
+     * @param
+     * @return
+     * @author asce
+     * @date 2018/11/22
+     */
+    public String getPassMeeting() {
+        ArrayList<Conference> conferences = conferenceDao.getPassConference(1);
         return GsonUtil.getSuccessJson(conferences);
     }
 
@@ -318,5 +343,10 @@ public class ConferenceService {
             conference.setPostDate(CommonUtil.formateDbTime(conference.getPostDate()));
         }
         return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    public String getInfo(int id){
+        Conference conference = conferenceDao.getInfo(id);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Conference.class,"userId","conferenceType"),conference);
     }
 }

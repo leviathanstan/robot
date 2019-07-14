@@ -16,8 +16,8 @@ public interface ConferenceDao {
     ArrayList<Conference> getIndexConference(int type);
     ArrayList<Conference> getConferenceList(int type);
     Conference getInfo(int id);
-    ArrayList<Conference> getHoldingConference();
-    ArrayList<Conference> getPassConference();
+    ArrayList<Conference> getHoldingConference(int type);
+    ArrayList<Conference> getPassConference(int type);
     int addForm(RegistrationForm form);
     int addConference(Conference conference);
     int updateConference(Conference conference);
