@@ -194,16 +194,30 @@ public class UserController {
 
 
     /**
-     * 查看会员
+     * 查看会员列表
      *
      * @return
      */
 //    @Authority(role = Role.ASSOCIATION)
     @ResponseBody
     @RequestMapping(value = "getMemberList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getMemberInfo() {
-        return userService.getMemberInfo();
+    public String getMemberList(String pageNumStr) {
+        return userService.getMemberList(pageNumStr);
     }
+
+    /**
+     * @function 查看会员详情
+     * @author gdrcn
+     * @date 2019/7/15
+     * @param memberId
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "getMemberInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberInfo(Integer memberId) {
+        return userService.getMemberInfo(memberId);
+    }
+
 
 
     /**

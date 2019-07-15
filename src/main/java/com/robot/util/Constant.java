@@ -11,6 +11,7 @@ public class Constant {
 
     public static final int INFORMATION_PAGE_COUNT = 12;    //资讯每页显示条数
     public static final int PRODUCT_PAGE_COUNT = 12;        //产品查找每页显示条数
+    public static final int MEMBER_PAGE_COUTN = 12;         //会员列表的显示条数
 
     //正则规则
     public static String RULE_PHONE = "^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\\d{8}$";

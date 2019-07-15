@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.awt.dnd.peer.DragSourceContextPeer;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -464,9 +465,12 @@ public class UserService {
         return GsonUtil.getSuccessJson("用户添加成功");
     }
 
-    public String getMemberInfo() {
-        ArrayList<Member> members = userDao.getMemberInfo();
-        return GsonUtil.getSuccessJson(members);
+    public String getMemberList(String pageNumStr) {
+        int pageNum = CommonUtil.formatPageNum(pageNumStr);
+        PageHelper.startPage(pageNum,Constant.MEMBER_PAGE_COUTN);
+        ArrayList<Member> members = userDao.getMemberList();
+        PageInfo<Member> pageInfo = new PageInfo<>(members);
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 
     @Transactional
@@ -476,5 +480,10 @@ public class UserService {
         userDao.judgeMember(member);
         userDao.judgeUser(String.valueOf(member.getEnterpriseId()), status);
         return GsonUtil.getSuccessJson("填写完成");
+    }
+
+    public String getMemberInfo(Integer memberId) {
+        ArrayList<Member> memberArrayList = userDao.getMemberInfo(memberId);
+        return GsonUtil.getSuccessJson(memberArrayList);
     }
 }

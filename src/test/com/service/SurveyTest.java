@@ -1,9 +1,11 @@
 package com.service;
 
 import com.robot.dao.PositionDao;
+import com.robot.entity.Member;
 import com.robot.entity.Survey;
 import com.robot.service.PositionService;
 import com.robot.service.SurveyService;
+import com.robot.util.CommonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author asce
@@ -36,4 +41,5 @@ public class SurveyTest {
         System.out.println(positionService.search(map));
         //System.out.println(positionService.getPositionInfo(1));
     }
+
 }
