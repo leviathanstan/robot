@@ -22,11 +22,11 @@
     </select>
     <!--还没举办-->
     <select id="getHoldingConference" resultMap="conferenceMap" parameterType="int">
-        select *, hold_time as holdTime from conference where conference_type = #{type} and hold_time &gt;= NOW();
+        select *, hold_time as holdTime from conference where conference_type = #{type} and hold_time &gt;= NOW()
     </select>
     <!--已经举办-->
     <select id="getPassConference" resultMap="conferenceMap" parameterType="int">
-        select *, hold_time as holdTime from conference where conference_type = #{type} and hold_time &lt; NOW();
+        select *, hold_time as holdTime from conference where conference_type = #{type} and hold_time &lt; NOW()
     </select>
     <!-- 报名-->
     <insert id="addForm" parameterType="com.robot.entity.RegistrationForm">

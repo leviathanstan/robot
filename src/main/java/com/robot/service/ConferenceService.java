@@ -116,9 +116,12 @@ public class ConferenceService {
      * @author asce
      * @date 2018/11/22
      */
-    public String getHoldingConferences() {
+    public String getHoldingConferences(String page) {
+        int pageNum = CommonUtil.formatPageNum(page);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
         ArrayList<Conference> conferences = conferenceDao.getHoldingConference(0);
-        return GsonUtil.getSuccessJson(conferences);
+        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 
     /**
@@ -129,9 +132,12 @@ public class ConferenceService {
      * @author asce
      * @date 2018/11/22
      */
-    public String getPassConference() {
+    public String getPassConference(String page) {
+        int pageNum = CommonUtil.formatPageNum(page);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
         ArrayList<Conference> conferences = conferenceDao.getPassConference(0);
-        return GsonUtil.getSuccessJson(conferences);
+        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
+        return GsonUtil.getSuccessJson(pageInfo);
     }
     /**
      * 即将举办
@@ -141,9 +147,12 @@ public class ConferenceService {
      * @author asce
      * @date 2018/11/22
      */
-    public String getHoldingMeeting() {
+    public String getHoldingMeeting(String page) {
+        int pageNum = CommonUtil.formatPageNum(page);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
         ArrayList<Conference> conferences = conferenceDao.getHoldingConference(1);
-        return GsonUtil.getSuccessJson(conferences);
+        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 
     /**
@@ -154,9 +163,12 @@ public class ConferenceService {
      * @author asce
      * @date 2018/11/22
      */
-    public String getPassMeeting() {
+    public String getPassMeeting(String page) {
+        int pageNum = CommonUtil.formatPageNum(page);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
         ArrayList<Conference> conferences = conferenceDao.getPassConference(1);
-        return GsonUtil.getSuccessJson(conferences);
+        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 
     /**
