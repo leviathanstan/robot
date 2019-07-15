@@ -11,7 +11,8 @@
         <result column="create_time" property="createTime"/>
         <result column="degree_required" property="degreeRequired"/>
         <result column="work_age" property="workAge"/>
-        <collection property="jobArea" column="{positionId=p_id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Position" select="getPositionAreas"/>
+        <collection property="jobArea" column="{positionId=p_id}" javaType="java.util.ArrayList"
+                    ofType="com.robot.entity.Position" select="getPositionAreas"/>
     </resultMap>
     <resultMap id="positionDetail" type="com.robot.entity.Position" extends="positionMap">
         <result column="company_size" property="companySize"/>
@@ -36,26 +37,27 @@
     </select>
     <!--搜索-->
     <select id="search" resultMap="positionMap" parameterType="map">
-        select *,positions.id as p_id,i1.name as industry_name,i2.name as industry_position_name from positions left join
-                                                                                                                        industry_category as i1 on i1.id = industry_id
-                                                                                                              left join
-                                                                                                                        industry_category as i2 on i2.id = position_category_id
-                                                                                                              where 1=1
-                                                                                                              <if test="content!=null and content.trim().length()>0">
-                                                                                                                  and (locate(#{content},position_name) > 0 or locate(#{content},company_name) > 0)
-                                                                                                              </if>
-                                                                                                              <if test="industryId!=null and industryId!=0">
-                                                                                                                  and (industry_id=#{industryId} or position_category_id=#{industryId})
-                                                                                                              </if>
-                                                                                                              <if test="regionIds!=null and regionIds.size()!=0">
-                                                                                                                  and p_id in (
-                                                                                                                              select distinct position_category_id from region_relation where region_id in
-                                                                                                                                                                                      <foreach item="item" index="index" collection="regionIds" open="(" separator="," close=")">
-                                                                                                                                                                                          #{item}
-                                                                                                                                                                                      </foreach>
-                                                                                                                              )
-                                                                                                              </if>
-                                                                                                        order by create_time desc
+        select *,positions.id as p_id,i1.name as industry_name,i2.name as industry_position_name from positions left
+        join
+        industry_category as i1 on i1.id = industry_id
+        left join
+        industry_category as i2 on i2.id = position_category_id
+        where 1=1
+        <if test="content!=null and content.trim().length()>0">
+            and (locate(#{content},position_name) > 0 or locate(#{content},company_name) > 0)
+        </if>
+        <if test="industryId!=null and industryId!=0">
+            and (industry_id=#{industryId} or position_category_id=#{industryId})
+        </if>
+        <if test="regionIds!=null and regionIds.size()!=0">
+            and p_id in (
+            select distinct position_category_id from region_relation where region_id in
+            <foreach item="item" index="index" collection="regionIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            )
+        </if>
+        order by create_time desc
     </select>
     <!--详情-->
     <select id="getPositionInfo" parameterType="int" resultMap="positionDetail">
