@@ -356,7 +356,6 @@ public class SurveyService {
             return GsonUtil.getErrorJson(result);
         }
         User user = (User) session.getAttribute("user");
-        // TODO: 2018/11/27  
         survey.setUserId(1);//user.getId());
         survey.setCreateTime(LocalDateTime.now().toString());
         survey.setUpdateTime(LocalDateTime.now().toString());

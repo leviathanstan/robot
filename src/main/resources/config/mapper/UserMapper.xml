@@ -171,7 +171,7 @@
     </select>
 
     <insert id="insertMemberUser" parameterType="com.robot.entity.User">
-        insert into member_user (id, user_id, enterprise_id) values (null, #{id}, #{enterpriseId});
+        insert into member_user (id, user_id, enterprise_id, role) values (null, #{id}, #{enterpriseId}, #{role});
     </insert>
 
     <select id="getMemberInfo" resultMap="members">

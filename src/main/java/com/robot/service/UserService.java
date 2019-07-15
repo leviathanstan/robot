@@ -457,7 +457,7 @@ public class UserService {
         }
         if (userDao.isExist(user) != 0) {
             return GsonUtil.getErrorJson("用户已存在");
-    }
+        }
         user.setStatus(User.STATUS_ACCESS);
         user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
         userDao.register(user);
@@ -476,5 +476,20 @@ public class UserService {
         userDao.judgeMember(member);
         userDao.judgeUser(String.valueOf(member.getEnterpriseId()), status);
         return GsonUtil.getSuccessJson("填写完成");
+    }
+
+    public String addMemberUser(User user) {
+        if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
+            return GsonUtil.getErrorJson("输入不能为空");
+        }
+        if (!ValidateUtil.isMatchEmail(user.getEmail())) {
+            return GsonUtil.getErrorJson("邮箱格式不正确");
+        }
+        if (userDao.isExist(user) != 0) {
+            return GsonUtil.getErrorJson("用户已存在");
+        }
+        user.setRole(User.ROLE_MEMBER_NORMAL);
+        userDao.insertMemberUser(user);
+        return GsonUtil.getSuccessJson("用户插入成功");
     }
 }
