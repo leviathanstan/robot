@@ -17,10 +17,11 @@ public class User {
 
     public static final Integer ROLE_SUPER = 1;      //超级管理员 1
     public static final Integer ROLE_MANAGER = 2;   //管理员 2
-    public static final Integer ROLE_ASSOCIATION = 3;   //协会 3
-    public static final Integer ROLE_MEMBER = 4;    //会员 4
-    public static final Integer ROLE_MEMBER_NORMAL = 5; //会员普通成员
-    public static final Integer ROLE_NORMAL = 6;    //普通人 6
+    public static final Integer ROLE_ORGANIZER = 3;  //主办方 3
+    public static final Integer ROLE_ASSOCIATION = 4;   //协会 4
+    public static final Integer ROLE_MEMBER = 5;    //会员 5
+    public static final Integer ROLE_MEMBER_NORMAL = 6; //会员普通成员 6
+    public static final Integer ROLE_NORMAL = 7;    //普通人 7
 
     private Integer id;
     private String username;

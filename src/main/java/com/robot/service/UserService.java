@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.awt.dnd.peer.DragSourceContextPeer;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +50,8 @@ public class UserService {
     public String getPermission(HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer role = (Integer) session.getAttribute("role");
+        System.out.println(user);
+        System.out.println(role);
         if (user != null) {
             return GsonUtil.getSuccessJson(role);
         } else {
@@ -160,6 +161,16 @@ public class UserService {
                 case 2:
                     session.setAttribute("role", User.ROLE_MANAGER);
                     break;
+                case 3:
+                    session.setAttribute("role", User.ROLE_ORGANIZER);
+                    break;
+                case 4:
+                    session.setAttribute("role", User.ROLE_ASSOCIATION);
+                    break;
+                case 5:
+                    session.setAttribute("role", User.ROLE_MEMBER);
+                case 6:
+                    session.setAttribute("role", User.ROLE_MEMBER_NORMAL);
                 default:
                     session.setAttribute("role", User.ROLE_NORMAL);
                     break;
@@ -458,19 +469,16 @@ public class UserService {
         }
         if (userDao.isExist(user) != 0) {
             return GsonUtil.getErrorJson("用户已存在");
-    }
+        }
         user.setStatus(User.STATUS_ACCESS);
         user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
         userDao.register(user);
         return GsonUtil.getSuccessJson("用户添加成功");
     }
 
-    public String getMemberList(String pageNumStr) {
-        int pageNum = CommonUtil.formatPageNum(pageNumStr);
-        PageHelper.startPage(pageNum,Constant.MEMBER_PAGE_COUTN);
-        ArrayList<Member> members = userDao.getMemberList();
-        PageInfo<Member> pageInfo = new PageInfo<>(members);
-        return GsonUtil.getSuccessJson(pageInfo);
+    public String getMemberInfo() {
+        ArrayList<Member> members = userDao.getMemberInfo();
+        return GsonUtil.getSuccessJson(members);
     }
 
     @Transactional
@@ -482,8 +490,18 @@ public class UserService {
         return GsonUtil.getSuccessJson("填写完成");
     }
 
-    public String getMemberInfo(Integer memberId) {
-        ArrayList<Member> memberArrayList = userDao.getMemberInfo(memberId);
-        return GsonUtil.getSuccessJson(memberArrayList);
+    public String addMemberUser(User user) {
+        if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
+            return GsonUtil.getErrorJson("输入不能为空");
+        }
+        if (!ValidateUtil.isMatchEmail(user.getEmail())) {
+            return GsonUtil.getErrorJson("邮箱格式不正确");
+        }
+        if (userDao.isExist(user) != 0) {
+            return GsonUtil.getErrorJson("用户已存在");
+        }
+        user.setRole(User.ROLE_MEMBER_NORMAL);
+        userDao.insertMemberUser(user);
+        return GsonUtil.getSuccessJson("用户插入成功");
     }
 }
