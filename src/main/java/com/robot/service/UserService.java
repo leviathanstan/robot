@@ -159,6 +159,16 @@ public class UserService {
                 case 2:
                     session.setAttribute("role", User.ROLE_MANAGER);
                     break;
+                case 3:
+                    session.setAttribute("role", User.ROLE_ORGANIZER);
+                    break;
+                case 4:
+                    session.setAttribute("role", User.ROLE_ASSOCIATION);
+                    break;
+                case 5:
+                    session.setAttribute("role", User.ROLE_MEMBER);
+                case 6:
+                    session.setAttribute("role", User.ROLE_MEMBER_NORMAL);
                 default:
                     session.setAttribute("role", User.ROLE_NORMAL);
                     break;
@@ -464,12 +474,9 @@ public class UserService {
         return GsonUtil.getSuccessJson("用户添加成功");
     }
 
-    public String getMemberList(String pageNumStr) {
-        int pageNum = CommonUtil.formatPageNum(pageNumStr);
-        PageHelper.startPage(pageNum,Constant.MEMBER_PAGE_COUTN);
-        ArrayList<Member> members = userDao.getMemberList();
-        PageInfo<Member> pageInfo = new PageInfo<>(members);
-        return GsonUtil.getSuccessJson(pageInfo);
+    public String getMemberInfo() {
+        ArrayList<Member> members = userDao.getMemberInfo();
+        return GsonUtil.getSuccessJson(members);
     }
 
     @Transactional
@@ -479,11 +486,6 @@ public class UserService {
         userDao.judgeMember(member);
         userDao.judgeUser(String.valueOf(member.getEnterpriseId()), status);
         return GsonUtil.getSuccessJson("填写完成");
-    }
-
-    public String getMemberInfo(Integer memberId) {
-        ArrayList<Member> memberArrayList = userDao.getMemberInfo(memberId);
-        return GsonUtil.getSuccessJson(memberArrayList);
     }
 
     public String addMemberUser(User user) {
