@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.robot.dao.UserDao">
 
-    <resultMap id="members" type="com.robot.entity.Member">
+    <resultMap id="member" type="com.robot.entity.Member">
         <id column="id" property="id"/>
         <result column="enterprise_id" property="enterpriseId"/>
         <result column="member_rank" property="memberRank"/>
@@ -40,6 +40,18 @@
         <result column="post" property="post"/>
         <result column="qq" property="qq"/>
         <result column="wechat" property="wechat"/>
+    </resultMap>
+
+    <resultMap id="members" type="com.robot.entity.Member">
+        <id column="id" property="id"/>
+        <result column="member_name" property="memberName"/>
+    </resultMap>
+
+    <resultMap id="memberStatus" type="com.robot.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="enterprise_id" property="enterpriseId"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <!-- 注册 -->
@@ -174,8 +186,11 @@
         insert into member_user (id, user_id, enterprise_id, role) values (null, #{id}, #{enterpriseId}, #{role});
     </insert>
 
-    <select id="getMemberInfo" resultMap="members">
-        select m.id, e.id as enterprise_id, m.member_rank, m.member_name, m.member_type, m.contact, m.member_number, m.member_identifier, m.contact_info, m.contact_info_url, m.association_approval, m.unit_approval, e.enterprise_name, e.enterprise_type, e.enterprise_scale, e.location, e.registered_capital, e.registered_date, e.authentication_data, e.authentication_data_url, e.management_model, e.management_scope, e.main_camp, e.main_application, e.developing, e.cooperative_partner, e.main_customer, c.postal_code, c.contact_number, c.fax, c.email, c.contact_address, c.contacts, c.department, c.post, c.qq, c.wechat from member_info m, contact_enterprise c, enterprise e where e.member_id = m.id and c.enterprise_id = e.id;
+    <select id="getMemberInfo" parameterType="java.lang.Integer" resultMap="member">
+        select m.id, e.id as enterprise_id, m.member_rank, m.member_name, m.member_type, m.contact, m.member_number, m.member_identifier, m.contact_info, m.contact_info_url, m.association_approval, m.unit_approval, e.enterprise_name, e.enterprise_type, e.enterprise_scale, e.location, e.registered_capital, e.registered_date, e.authentication_data, e.authentication_data_url, e.management_model, e.management_scope, e.main_camp, e.main_application, e.developing, e.cooperative_partner, e.main_customer, c.postal_code, c.contact_number, c.fax, c.email, c.contact_address, c.contacts, c.department, c.post, c.qq, c.wechat from member_info m, contact_enterprise c, enterprise e where e.member_id = #{memberId} and e.member_id = m.id and c.enterprise_id = e.id;
+    </select>
+    <select id="getMemberList" resultMap="members">
+        select m.id, m.member_name from member_info m
     </select>
 
     <update id="judgeMember" parameterType="com.robot.entity.Member">
@@ -185,4 +200,8 @@
     <update id="judgeUser" parameterType="java.lang.String">
         update user set status = #{status} where role = 4 and enterprise_id = #{enterpriseId};
     </update>
+
+    <select id="getMemberListStatus" resultMap="memberStatus">
+        select u.id, u.username, u.enterprise_id, u.status from user u
+    </select>
 </mapper>

@@ -474,9 +474,17 @@ public class UserService {
         return GsonUtil.getSuccessJson("用户添加成功");
     }
 
-    public String getMemberInfo() {
-        ArrayList<Member> members = userDao.getMemberInfo();
-        return GsonUtil.getSuccessJson(members);
+    public String getMemberList(String pageNum) {
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page, PAGE_LENGTH);
+        List<Member> members = userDao.getMemberList();
+        PageInfo<Member> pageInfo = new PageInfo<>(members);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    public String getMemberInfo(Integer memberId) {
+        Member member = userDao.getMemberInfo(memberId);
+        return GsonUtil.getSuccessJson(member);
     }
 
     @Transactional
@@ -501,5 +509,11 @@ public class UserService {
         user.setRole(User.ROLE_MEMBER_NORMAL);
         userDao.insertMemberUser(user);
         return GsonUtil.getSuccessJson("用户插入成功");
+    }
+
+
+    public String getMemberListStatus(String pageNum) {
+        List<User> users = userDao.getMemberListStatus();
+        return GsonUtil.getSuccessJson(users);
     }
 }

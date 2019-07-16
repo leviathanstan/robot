@@ -194,17 +194,54 @@ public class UserController {
 
 
     /**
-     * 查看会员
+     * 查看会员列表
      *
      * @return
      */
 //    @Authority(role = Role.ASSOCIATION)
     @ResponseBody
     @RequestMapping(value = "getMemberList", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getMemberInfo() {
-        return userService.getMemberInfo();
+    public String getMemberList(String pageNum) {
+        return userService.getMemberList(pageNum);
     }
 
+    /**
+     * @param memberId
+     * @return java.lang.String
+     * @function 查看会员详情
+     * @author gdrcn
+     * @date 2019/7/16
+     */
+    @ResponseBody
+    @RequestMapping(value = "getMemberInfo", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberInfo(Integer memberId) {
+        return userService.getMemberInfo(memberId);
+    }
+
+    /**
+     * @param user
+     * @return java.lang.String
+     * @function 添加会员旗下的用户
+     * @author gdrcn
+     * @date 2019/7/6
+     */
+    @ResponseBody
+    @RequestMapping(value = "addMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String addMemberUser(User user) {
+        return userService.addMemberUser(user);
+    }
+
+    /**
+     * @return
+     * @function 展示会员用户的详情
+     * @author gdrcn
+     * @date 2019/7/16
+     */
+    @ResponseBody
+    @RequestMapping(value = "getMemberListStatus", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberListStatus(String pageNum) {
+        return userService.getMemberListStatus(pageNum);
+    }
 
     /**
      * 判断会员通过
@@ -220,17 +257,4 @@ public class UserController {
         return userService.judgeMember(member, status);
     }
 
-    /**
-     *
-     * @function 添加会员旗下的用户
-     * @author gdrcn
-     * @date 2019/7/6
-     * @param user
-     * @return java.lang.String
-     */
-    @ResponseBody
-    @RequestMapping(value = "addMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String addMemberUser(User user){
-        return userService.addMemberUser(user);
-    }
 }

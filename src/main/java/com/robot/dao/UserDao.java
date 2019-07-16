@@ -4,10 +4,8 @@ import com.robot.entity.Member;
 import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
 import org.apache.ibatis.annotations.Param;
-import org.aspectj.weaver.ArrayReferenceType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +29,9 @@ public interface UserDao {
     int insertMember(Member member);
     int isExistMember(String enterpriseName);
     int insertMemberUser(User user);
-    ArrayList<Member> getMemberInfo();
+    Member getMemberInfo(Integer memberId);
     int judgeMember(Member member);
     int judgeUser(@Param("enterpriseId") String enterpriseId, @Param("status") String status);
+    List<Member> getMemberList();
+    List<User> getMemberListStatus();
 }
