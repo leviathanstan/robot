@@ -233,4 +233,18 @@ public class UserController {
     public String judgeMember(Member member, String status) {
         return userService.judgeMember(member, status);
     }
+
+    /**
+     *
+     * @function 添加会员旗下的用户
+     * @author gdrcn
+     * @date 2019/7/6
+     * @param user
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "addMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String addMemberUser(User user){
+        return userService.addMemberUser(user);
+    }
 }

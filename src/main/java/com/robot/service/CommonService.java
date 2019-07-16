@@ -168,7 +168,6 @@ public class CommonService {
         HashMap<String,Object> map = new HashMap<>();
         map.put("informationCount",informationService.getSearchCount(args.get("content")));
         map.put("productCount", productService.getSearchCount(args.get("content")));
-        // TODO: 2018/11/15
         switch (searchEnum) {
             case INFORMATION:
                 map.put("results",informationService.findInformation(args));

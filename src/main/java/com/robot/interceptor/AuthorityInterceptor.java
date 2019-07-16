@@ -82,42 +82,36 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
                                 return false;
                             }
                         }
-                        break;
                         case MANAGER: {
                             if (userRole != User.ROLE_MANAGER) {
                                 response(response);
                                 return false;
                             }
                         }
-                        break;
                         case ASSOCIATION: {
                             if (userRole != User.ROLE_ASSOCIATION) {
                                 response(response);
                                 return false;
                             }
                         }
-                        break;
                         case MEMBER: {
                             if (userRole != User.ROLE_MEMBER) {
                                 response(response);
                                 return false;
                             }
                         }
-                        break;
                         case MEMBER_NORMAL: {
                             if (userRole != User.ROLE_MEMBER_NORMAL) {
                                 response(response);
                                 return false;
                             }
                         }
-                        break;
                         case NORMAL: {
                             if (userRole != User.ROLE_NORMAL) {
                                 response(response);
                                 return false;
                             }
                         }
-                        break;
                     }
                 }
             }

@@ -17,7 +17,6 @@ public class PermissionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        // TODO Auto-generated method stub
         request.setCharacterEncoding("UTF-8");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String url = httpRequest.getRequestURI();
@@ -47,13 +46,11 @@ public class PermissionFilter implements Filter {
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
-        // TODO Auto-generated method stub
         this.config = arg0;
     }
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
         this.config = null;
     }
 }
