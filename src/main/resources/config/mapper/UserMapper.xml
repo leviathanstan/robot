@@ -169,10 +169,10 @@
     </update>
 
     <update id="judgeUser" parameterType="java.lang.String">
-        update user set status = #{status} where role = 4 and enterprise_id = #{enterpriseId};
+        update user set status = #{status} where role = 4 and id = #{id};
     </update>
 
     <select id="getMemberListStatus" resultType="java.util.HashMap">
-        select u.id, u.username, u.status, m.member_mold_id as enterpriseId, m.member_rank as memberRank, m.member_name as memberName, m.member_type as memberType, m.contact, m.member_number as memberNumber, m.member_identifier as memberIdentifier, m.contact_info as contactInfo, m.contact_info_url as contactInfoUrl, m.association_approval as associationApproval, m.member_mold as memberMold from user u, member m, member_user mu where mu.member_id = m.id and mu.user_id = u.id and u.status = 1
+        select u.id, u.username, u.status, m.id as memberId, m.member_mold_id as enterpriseId, m.member_rank as memberRank, m.member_name as memberName, m.member_type as memberType, m.contact, m.member_number as memberNumber, m.member_identifier as memberIdentifier, m.contact_info as contactInfo, m.contact_info_url as contactInfoUrl, m.association_approval as associationApproval, m.member_mold as memberMold from user u, member m, member_user mu where mu.member_id = m.id and mu.user_id = u.id and u.status = 1
     </select>
 </mapper>
