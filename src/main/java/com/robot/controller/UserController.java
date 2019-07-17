@@ -1,6 +1,7 @@
 package com.robot.controller;
 
 import com.robot.annotation.Authority;
+import com.robot.entity.Enterprise;
 import com.robot.entity.Member;
 import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
@@ -58,7 +59,6 @@ public class UserController {
         return userService.addSubscribe(categoryId, session);
     }
 
-    @Authority(role = Role.NORMAL)
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     public String loginOut() {
         return "login-out";
@@ -155,7 +155,7 @@ public class UserController {
     }
 
     /**
-     * 注册会员
+     * 注册企业会员
      *
      * @param member
      * @param authenticationDatas
@@ -163,8 +163,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "insertNewMember", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String insertNewMember(HttpSession session, Member member, @RequestParam(value = "authenticationDatas") MultipartFile authenticationDatas, @RequestParam(value = "contactInfoDatas") MultipartFile contactInfoDatas) {
-        return userService.insertNewMember(session, member, authenticationDatas, contactInfoDatas);
+    public String insertNewMember(HttpSession session, Member member, Enterprise enterprise,  @RequestParam(value = "authenticationDatas") MultipartFile authenticationDatas, @RequestParam(value = "contactInfoDatas") MultipartFile contactInfoDatas) {
+        return userService.insertNewMember(session, member, enterprise, authenticationDatas, contactInfoDatas);
     }
 
     /**
@@ -188,10 +188,9 @@ public class UserController {
 //    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "insertMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String insertMemberUser(User user) {
-        return userService.insertMemberUser(user);
+    public String insertMemberUser(User user, HttpSession session) {
+        return userService.insertMemberUser(user, session);
     }
-
 
     /**
      * 查看会员列表
@@ -227,8 +226,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "addMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String addMemberUser(User user) {
-        return userService.addMemberUser(user);
+    public String addMemberUser(User user, Integer memberId) {
+        return userService.addMemberUser(user, memberId);
     }
 
     /**
@@ -257,4 +256,17 @@ public class UserController {
         return userService.judgeMember(member, status);
     }
 
+    /**
+     * @function 文件下载
+     * @author gdrcn
+     * @date 2019/7/16
+     * @param realFileName
+     * @param tag
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "downloadMemberFile", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String downloadMemberFile(String realFileName, Integer tag){
+        return userService.downloadMemberFile(realFileName, tag);
+    }
 }

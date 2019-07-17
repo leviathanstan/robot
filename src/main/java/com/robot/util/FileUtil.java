@@ -3,8 +3,7 @@ package com.robot.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 
 public class FileUtil {
@@ -45,15 +44,69 @@ public class FileUtil {
 
     /**
      * 上传压缩包
+     *
      * @param name
      * @param file
      */
-    public static void zipUpload(String name, MultipartFile file, String FileUrl){
+    public static void zipUpload(String name, MultipartFile file, String fileUrl) {
         try {
-            file.transferTo(new File(FileUrl + name));
-            System.out.println(FileUrl + name);
+            file.transferTo(new File(fileUrl + name));
+            System.out.println(fileUrl + name);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param src
+     * @param dest
+     * @return void
+     * @function 复制文件
+     * @author gdrcn
+     * @date 2019/7/16
+     */
+    public static void copyFile(String src, String dest) {
+        FileInputStream in = null;
+        FileOutputStream out = null;
+        try {
+            in = new FileInputStream(src);
+            File file = new File(dest);
+            if (!file.exists())
+                file.createNewFile();
+            out = new FileOutputStream(file);
+            int c;
+            byte buffer[] = new byte[1024];
+            while ((c = in.read(buffer)) != -1) {
+                for (int i = 0; i < c; i++)
+                    out.write(buffer[i]);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * @param
+     * @return boolean
+     * @function 判断文件是否存在于文件夹下
+     * @author gdrcn
+     * @date 2019/7/16
+     */
+    public static boolean isExistFile(String fileName, String url) {
+        File file = new File(url + fileName);
+        if (file.exists()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

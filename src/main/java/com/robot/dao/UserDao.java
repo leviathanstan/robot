@@ -1,11 +1,13 @@
 package com.robot.dao;
 
+import com.robot.entity.Enterprise;
 import com.robot.entity.Member;
 import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,17 +23,17 @@ public interface UserDao {
     ArrayList<Integer> getUserSubscribe(int userId);
     ArrayList<Map> getUserSubscribeInfo(int userId);
     ArrayList<Map> getAllSubscribe();
-    int insertMemberInfo(Member member);
-    int insertMemberContact(Member member);
     int insertMemberProducts(List<RepresentativeWork> representativeWorks);
     int insertMemberProduct(RepresentativeWork representativeWork);
     int isExist(User user);
     int insertMember(Member member);
     int isExistMember(String enterpriseName);
-    int insertMemberUser(User user);
-    Member getMemberInfo(Integer memberId);
+    int insertMemberUser(@Param("userId") Integer userId, @Param("memberId") Integer memberId);
+    Map<String, Object> getMemberInfo(Integer memberId);
     int judgeMember(Member member);
     int judgeUser(@Param("enterpriseId") String enterpriseId, @Param("status") String status);
     List<Member> getMemberList();
-    List<User> getMemberListStatus();
+    List<HashMap<String, Object>> getMemberListStatus();
+    int insertEnterpriseInfo(Enterprise enterprise);
+    void insertMemberProxy(User user);
 }
