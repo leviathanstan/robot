@@ -31,7 +31,7 @@ public interface UserDao {
     int insertMemberUser(@Param("userId") Integer userId, @Param("memberId") Integer memberId);
     Map<String, Object> getMemberInfo(Integer memberId);
     int judgeMember(Member member);
-    int judgeUser(@Param("enterpriseId") String enterpriseId, @Param("status") String status);
+    int judgeUser(User user);
     List<Member> getMemberList();
     List<HashMap<String, Object>> getMemberListStatus();
     int insertEnterpriseInfo(Enterprise enterprise);

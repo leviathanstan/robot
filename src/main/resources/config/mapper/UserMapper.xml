@@ -168,7 +168,7 @@
         update member_info set member_rank = #{memberRank}, member_identifier = #{memberIdentifier}, association_approval = #{associationApproval} where id=#{id}
     </update>
 
-    <update id="judgeUser" parameterType="java.lang.String">
+    <update id="judgeUser" parameterType="com.robot.entity.User">
         update user set status = #{status} where role = 4 and id = #{id};
     </update>
 

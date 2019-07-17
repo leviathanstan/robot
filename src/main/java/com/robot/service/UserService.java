@@ -487,11 +487,11 @@ public class UserService {
     }
 
     @Transactional
-    public String judgeMember(Member member, String status) {
-        System.out.println(member);
-        System.out.println(status);
+    public String judgeMember(User user, Member member, Integer userId, Integer memberId, String status) {
+        user.setId(userId);
+        member.setId(memberId);
         userDao.judgeMember(member);
-        userDao.judgeUser(String.valueOf(member.getEnterpriseId()), status);
+        userDao.judgeUser(user);
         return GsonUtil.getSuccessJson("填写完成");
     }
 

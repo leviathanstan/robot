@@ -245,15 +245,14 @@ public class UserController {
     /**
      * 判断会员通过
      *
-     * @param member
      * @param status
      * @return
      */
 //    @Authority(role = Role.ASSOCIATION)
     @ResponseBody
     @RequestMapping(value = "judgeMember", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String judgeMember(Member member, String status) {
-        return userService.judgeMember(member, status);
+    public String judgeMember(User user, Member member, Integer userId, Integer memberId, String status) {
+        return userService.judgeMember(user, member, userId, memberId, status);
     }
 
     /**
