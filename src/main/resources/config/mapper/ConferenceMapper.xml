@@ -35,7 +35,7 @@
 
     <!-- 添加会议-->
     <insert id="addConference" parameterType="com.robot.entity.Conference">
-        insert into conference(title, cover, hold_time, address, user_id, introduction, conference_type) values (#{title},#{coverImg},#{holdTime},#{address},#{userId},#{introduction},#{type})
+        insert into conference(title, cover, hold_time, address, user_id, introduction, conference_type) values (#{title},#{coverImg},#{postDate},#{address},#{userId},#{introduction},#{type})
     </insert>
     <!-- 更新会议-->
     <update id="updateConference" parameterType="com.robot.entity.Conference">
@@ -47,7 +47,7 @@
             ,cover =#{coverImg}
         </if>
         <if test="holdTime!=null and holdTime.trim().length()>0">
-            ,hold_time=#{holdTime}
+            ,hold_time=#{postDate}
         </if>
         <if test="address!=null and address.trim().length()>0">
             ,address = #{address}
