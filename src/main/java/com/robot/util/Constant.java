@@ -4,6 +4,7 @@ import java.io.File;
 
 /**
  * 常量类
+ *
  * @author asce
  * @date 2018/9/20
  */
@@ -14,8 +15,8 @@ public class Constant {
 
     //正则规则
     public static String RULE_PHONE = "^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\\d{8}$";
-    public static String RULE_EMAIL= "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-    public static String RULE_NUMBER  = "^[0-9]*$";
+    public static String RULE_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    public static String RULE_NUMBER = "^[0-9]*$";
     public static String RULE_PREVIEW = "(<(.*?)>)";
 
     public static String USER_NAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
@@ -40,7 +41,7 @@ public class Constant {
 //    }};
     //本机ip
     public static String HOST_ADDRESS = CommonUtil.getLocalIp();
-//    //项目根目录
+    //    //项目根目录
 //    public static final String FILE_PATH =  new Object(){
 //        public  String getRootPath(){
 //            String path=this.getClass().getResource("/").getPath();
@@ -55,21 +56,32 @@ public class Constant {
 //            return path;
 //        }
 //    }.getRootPath();
+    public static final String CLASS_LOADER_PATH = new Object() {
+        public String getPath() {
+            String path = this.getClass().getResource("/").getPath();
+            path = path.replace("classes/", "");
+            return path;
+        }
+    }.getPath();
 
     //图片存放地址
-    public static final String IMG_PATH =  "C:\\data\\resources\\img" + File.separator;
+    public static final String IMG_PATH = "C:\\data\\resources\\img" + File.separator;
     //图片访问地址
     public static final String IMG_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
     //文件存放地址
-    public static final String FILE_PATH =  "C:\\data\\resources\\file" + File.separator;
+    public static final String FILE_PATH = "C:\\data\\resources\\file" + File.separator;
     //文件访问地址
     public static final String FILE_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
     //会员认证存放地址
     public static final String MEMBER_AUTHENTICATIONDATA_PATH = "C:\\data\\member\\authenticationData" + File.separator;
     //会员认证访问地址
-    public static final String MEMBER_AUTHENTICATIONDATA_ACCESS_PATH = HOST_ADDRESS + "/member/authenticationData/";
+    public static final String MEMBER_AUTHENTICATIONDATA_ACCESS_PATH = CLASS_LOADER_PATH + "/dist/tmp/member/authenticationData/";
     //联络人资料认证存放地址
     public static final String MEMBER_CONTACTINFODATAS_PATH = "C:\\data\\member\\contactInfoDatas" + File.separator;
     //联络人资料认证访问地址
-    public static final String MEMBER_CONTACTINFODATAS_ACCESS_PATH = HOST_ADDRESS + "/member/contactInfoDatas/";
+    public static final String MEMBER_CONTACTINFODATAS_ACCESS_PATH = HOST_ADDRESS + "/dist/tmp/member/contactInfoDatas/";
+    //会员认证资料项目访问资源路径
+    public static final String MEMBER_INFO_AUTHENTICATIONDATA_ACCESS_PATH = "/static/tmp/member/authenticationData/";
+    //联络人资料认证项目访问路径
+    public static final String MEMBER_INFO_CONTACTINFODATAS_ACCESS_PATH =  "/static/tmp/member/contactInfoDatas/";
 }

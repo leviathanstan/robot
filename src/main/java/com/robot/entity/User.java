@@ -30,7 +30,6 @@ public class User {
     private String email;
     private List<Permission> permissions;
     private Integer role;
-    private Integer enterpriseId;
     private Integer status;
 
     public Integer getId() {
@@ -89,14 +88,6 @@ public class User {
         this.role = role;
     }
 
-    public Integer getEnterpriseId() {
-        return enterpriseId;
-    }
-
-    public void setEnterpriseId(Integer enterpriseId) {
-        this.enterpriseId = enterpriseId;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -116,7 +107,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", permissions=" + permissions +
                 ", role=" + role +
-                ", enterpriseId=" + enterpriseId +
                 ", status=" + status +
                 '}';
     }

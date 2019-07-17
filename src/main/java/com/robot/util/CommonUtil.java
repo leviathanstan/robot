@@ -7,6 +7,7 @@ import com.robot.entity.RobotNews;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -440,5 +441,29 @@ public class CommonUtil {
             return "";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
+    }
+
+    /**
+     * @function 将类转为一个Map集合
+     * @author gdrcn
+     * @date 2019/7/16
+     * @param obj
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    public static Map<String, Object> objectToMap(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            Field[] declaredFields = obj.getClass().getDeclaredFields();
+            for (Field field : declaredFields) {
+                field.setAccessible(true);
+                map.put(field.getName(), field.get(obj));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+        return map;
     }
 }

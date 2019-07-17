@@ -4,10 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.robot.dao.UserDao;
-import com.robot.entity.Introduction;
-import com.robot.entity.Member;
-import com.robot.entity.RepresentativeWork;
-import com.robot.entity.User;
+import com.robot.entity.*;
 import com.robot.util.*;
 import com.sun.org.apache.regexp.internal.RE;
 import org.apache.tomcat.util.bcel.Const;
@@ -19,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -169,6 +167,7 @@ public class UserService {
                     session.setAttribute("role", User.ROLE_MEMBER);
                 case 6:
                     session.setAttribute("role", User.ROLE_MEMBER_NORMAL);
+                    break;
                 default:
                     session.setAttribute("role", User.ROLE_NORMAL);
                     break;
@@ -193,13 +192,6 @@ public class UserService {
         user1.setEmail(user.getEmail());
         if (userDao.find(user1).size() != 0) {
             return GsonUtil.getErrorJson("邮箱已经注册过");
-        }
-
-        Integer enterpriseId = (Integer) session.getAttribute("enterpriseId");
-        if (enterpriseId != null) {
-            user.setRole(User.ROLE_MEMBER);
-            user.setStatus(User.STATUS_WAIT);
-            user.setEnterpriseId(enterpriseId);
         }
         session.setAttribute("registerUser", user);
         String code = CharacterUtil.getRandomString(5);
@@ -235,10 +227,6 @@ public class UserService {
                 user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
                 Integer userId = userDao.register(user);
                 if (userId != null) {
-
-                    if (user.getEnterpriseId() != null) {
-                        userDao.insertMemberUser(user);
-                    }
                     //两个去除session方案：成功则去除session，不成功过期了也去除
                     session.removeAttribute("emailCode");
                     session.removeAttribute("registerUser");
@@ -323,8 +311,7 @@ public class UserService {
      * @return
      */
     @Transactional
-    public String insertNewMember(HttpSession session, Member member, MultipartFile authenticationDatas, MultipartFile contactInfoDatas) {
-
+    public String insertNewMember(HttpSession session, Member member, Enterprise enterprise, MultipartFile authenticationDatas, MultipartFile contactInfoDatas) {
         if (contactInfoDatas == null) {
             return GsonUtil.getErrorJson("联络人资料不能为空");
         } else {
@@ -333,101 +320,103 @@ public class UserService {
             member.setContactInfoUrl(realNameOfContactInfo);
         }
 
-        if (member.getEnterpriseName() == null || "".equals(member.getEnterpriseName()) || !member.getEnterpriseName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION)) {
+        if (enterprise.getEnterpriseName() == null || "".equals(enterprise.getEnterpriseName()) || !enterprise.getEnterpriseName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("企业名称格式不正确");
         }
 
-        if (userDao.isExistMember(member.getEnterpriseName()) != 0) {
+        if (userDao.isExistMember(enterprise.getEnterpriseName()) != 0) {
             return GsonUtil.getErrorJson("企业已存在");
         }
 
-        member.setMemberNumber(Md5Util.encryptMd5(CommonUtil.convertToString(new Date(), "yyyy-MM-dd")) + member.getEnterpriseName());
+        member.setMemberNumber(Md5Util.encryptMd5(CommonUtil.convertToString(new Date(), "yyyy-MM-dd")) + enterprise.getEnterpriseName());
 
-        member.setMemberName(member.getEnterpriseName()); //会员全称
-        if (member.getEnterpriseType() == null || "".equals(member.getEnterpriseType()) || !CommonUtil.isContains(member.getEnterpriseType(), Member.ENTERPRISE_TYPE)) {
+        member.setMemberName(enterprise.getEnterpriseName()); //会员全称
+        if (enterprise.getEnterpriseType() == null || "".equals(enterprise.getEnterpriseType()) || !CommonUtil.isContains(enterprise.getEnterpriseType(), Member.ENTERPRISE_TYPE)) {
             return GsonUtil.getErrorJson("企业类型格式不正确");
         }
-        member.setMemberType(member.getEnterpriseType()); //会员类型
-        if (member.getEnterpriseScale() == null || "".equals(member.getEnterpriseScale())) {
+        member.setMemberType(enterprise.getEnterpriseType()); //会员类型
+        if(enterprise.getEnterpriseNature() == null || "".equals(enterprise.getEnterpriseNature())){
+            return GsonUtil.getErrorJson("企业性质格式不正确");
+        }
+        if (enterprise.getEnterpriseScale() == null || "".equals(enterprise.getEnterpriseScale())) {
             return GsonUtil.getErrorJson("企业规模格式不正确");
         }
-        if (member.getLocation() == null || "".equals(member.getLocation()) || !member.getLocation().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
+        if (enterprise.getLocation() == null || "".equals(enterprise.getLocation()) || !enterprise.getLocation().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("所在地格式不正确");
         }
-        if (member.getRegisteredCapital() == null || "".equals(member.getRegisteredCapital())) {
+        if (enterprise.getRegisteredCapital() == null || "".equals(enterprise.getRegisteredCapital())) {
             return GsonUtil.getErrorJson("注册资本格式不正确");
         }
-        if (member.getRegisteredDate() == null || "".equals(member.getRegisteredDate())) {
+        if (enterprise.getRegisteredDate() == null || "".equals(enterprise.getRegisteredDate())) {
             return GsonUtil.getErrorJson("注册年份格式不正确");
         }
         if (authenticationDatas == null) {
             return GsonUtil.getErrorJson("资料认证文件不能为空");
         } else {
-            member.setAuthenticationData(authenticationDatas.getOriginalFilename());
+            enterprise.setAuthenticationData(authenticationDatas.getOriginalFilename());
             String realNameOfAuthenticationDatas = CommonUtil.uploadMember(authenticationDatas, Constant.MEMBER_AUTHENTICATIONDATA_PATH);
-            member.setAuthenticationDataUrl(realNameOfAuthenticationDatas);
+            enterprise.setAuthenticationDataUrl(realNameOfAuthenticationDatas);
         }
-        if (member.getManagementModel() == null || "".equals(member.getManagementModel()) || !CommonUtil.isContains(member.getManagementModel(), Member.MANAGEMENT_MODEL)) {
+        if (enterprise.getManagementModel() == null || "".equals(enterprise.getManagementModel()) || !CommonUtil.isContains(enterprise.getManagementModel(), Member.MANAGEMENT_MODEL)) {
             return GsonUtil.getErrorJson("经营模式格式不正确");
         }
-        if (member.getManagementScope() == null || "".equals(member.getManagementScope())) {
+        if (enterprise.getManagementScope() == null || "".equals(enterprise.getManagementScope())) {
             return GsonUtil.getErrorJson("经营范围格式不正确");
         }
-        if (member.getMainCamp() == null || "".equals(member.getMainCamp())) {
+        if (enterprise.getMainCamp() == null || "".equals(enterprise.getMainCamp())) {
             return GsonUtil.getErrorJson("主营行业格式不正确");
         }
-        if (member.getMainApplication() == null || "".equals(member.getMainApplication())) {
+        if (enterprise.getMainApplication() == null || "".equals(enterprise.getMainApplication())) {
             return GsonUtil.getErrorJson("擅长应用格式不正确");
         }
-        if (member.getDeveloping() == null || "".equals(member.getDeveloping())) {
+        if (enterprise.getDeveloping() == null || "".equals(enterprise.getDeveloping())) {
             return GsonUtil.getErrorJson("发展历程格式不正确");
         }
-        if (member.getCooperativePartner() == null || "".equals(member.getCooperativePartner())) {
+        if (enterprise.getCooperativePartner() == null || "".equals(enterprise.getCooperativePartner())) {
             return GsonUtil.getErrorJson("合作伙伴格式不正确");
         }
-        if (member.getMainCustomer() == null || "".equals(member.getMainCustomer())) {
+        if (enterprise.getMainCustomer() == null || "".equals(enterprise.getMainCustomer())) {
             return GsonUtil.getErrorJson("主要客户格式不正确");
         }
-        if (member.getPostalCode() == null || "".equals(member.getPostalCode()) || !member.getPostalCode().matches(Constant.POSTAL_CODE)) {
+        if (enterprise.getPostalCode() == null || "".equals(enterprise.getPostalCode()) || !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
             return GsonUtil.getErrorJson("邮政编码格式不正确");
         }
-        if (member.getContactNumber() == null || "".equals(member.getContactNumber()) || !member.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
+        if (enterprise.getContactNumber() == null || "".equals(enterprise.getContactNumber()) || !enterprise.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("联系电话格式不正确");
         }
-        if (member.getFax() == null || "".equals(member.getFax())) {
+        if (enterprise.getFax() == null || "".equals(enterprise.getFax())) {
             return GsonUtil.getErrorJson("传真格式不正确");
         }
-        if (member.getEmail() == null || "".equals(member.getEmail()) || !member.getEmail().matches(Constant.EMAIL_REGULAR_EXPRESSION)) {
+        if (enterprise.getEmail() == null || "".equals(enterprise.getEmail()) || !enterprise.getEmail().matches(Constant.EMAIL_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("电子邮件格式不正确");
         }
-        if (member.getContactAddress() == null || "".equals(member.getContactAddress()) || !member.getContactAddress().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
+        if (enterprise.getContactAddress() == null || "".equals(enterprise.getContactAddress()) || !enterprise.getContactAddress().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("联系地址格式不正确");
         }
-        if (member.getContacts() == null || "".equals(member.getContacts())) {
+        if (enterprise.getContacts() == null || "".equals(enterprise.getContacts())) {
             return GsonUtil.getErrorJson("联系人格式不正确");
         }
 
-        member.setContact(member.getContacts()); //联络人
+        member.setContact(enterprise.getContacts()); //联络人
 
-        if (member.getDepartment() == null || "".equals(member.getDepartment())) {
+        if (enterprise.getDepartment() == null || "".equals(enterprise.getDepartment())) {
             return GsonUtil.getErrorJson("所在部门格式不正确");
         }
-        if (member.getPost() == null || "".equals(member.getPost())) {
+        if (enterprise.getPost() == null || "".equals(enterprise.getPost())) {
             return GsonUtil.getErrorJson("职务格式不正确");
         }
-        if (member.getQq() == null || "".equals(member.getQq()) || !member.getQq().matches(Constant.QQ)) {
+        if (enterprise.getQq() == null || "".equals(enterprise.getQq()) || !enterprise.getQq().matches(Constant.QQ)) {
             return GsonUtil.getErrorJson("qq格式不正确");
         }
-        if (member.getWechat() == null || "".equals(member.getWechat()) || !member.getWechat().matches(Constant.USER_WECHAT_REGULAR_EXPRESSION)) {
+        if (enterprise.getWechat() == null || "".equals(enterprise.getWechat()) || !enterprise.getWechat().matches(Constant.USER_WECHAT_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("微信格式不正确");
         }
 
-        userDao.insertMember(member); //插入会员
-        userDao.insertMemberInfo(member);   //注册基本信息
-        userDao.insertMemberContact(member);    //注册联系方式
-
-        session.setAttribute("enterpriseId", member.getEnterpriseId());
-        session.setAttribute("memberId", member.getId());
+        userDao.insertEnterpriseInfo(enterprise);   //插入企业信息
+        member.setMemberMold(Member.MEMBER_MOLD_ENTERPRISE);
+        member.setMemberMoldId(enterprise.getId());
+        userDao.insertMember(member); //插入会员信息
+        session.setAttribute("enterpriseId", enterprise.getId());
         return GsonUtil.getSuccessJson("注册成功");
     }
 
@@ -458,19 +447,29 @@ public class UserService {
         return GsonUtil.getSuccessJson("信息填写完毕");
     }
 
-    public String insertMemberUser(User user) {
+    @Transactional
+    public String insertMemberUser(User user, HttpSession session) {
+        Integer memberId = (Integer) session.getAttribute("memberId");
+        if (memberId == null) {
+            return GsonUtil.getErrorJson("网络异常");
+        }
         if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
             return GsonUtil.getErrorJson("输入不能为空");
         }
         if (!ValidateUtil.isMatchEmail(user.getEmail())) {
             return GsonUtil.getErrorJson("邮箱格式不正确");
         }
+        if (!user.getPhone().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
+            return GsonUtil.getErrorJson("手机格式不正确");
+        }
         if (userDao.isExist(user) != 0) {
             return GsonUtil.getErrorJson("用户已存在");
         }
+        user.setRole(User.ROLE_MEMBER);
         user.setStatus(User.STATUS_ACCESS);
         user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
-        userDao.register(user);
+        userDao.insertMemberProxy(user);
+        userDao.insertMemberUser(user.getId(), memberId);
         return GsonUtil.getSuccessJson("用户添加成功");
     }
 
@@ -483,22 +482,25 @@ public class UserService {
     }
 
     public String getMemberInfo(Integer memberId) {
-        Member member = userDao.getMemberInfo(memberId);
+        Map<String, Object> member = userDao.getMemberInfo(memberId);
         return GsonUtil.getSuccessJson(member);
     }
 
     @Transactional
-    public String judgeMember(Member member, String status) {
-        System.out.println(member);
-        System.out.println(status);
+    public String judgeMember(User user, Member member, Integer userId, Integer memberId, String status) {
+        user.setId(userId);
+        member.setId(memberId);
         userDao.judgeMember(member);
-        userDao.judgeUser(String.valueOf(member.getEnterpriseId()), status);
+        userDao.judgeUser(user);
         return GsonUtil.getSuccessJson("填写完成");
     }
 
-    public String addMemberUser(User user) {
+    public String addMemberUser(User user, Integer memberId) {
         if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
             return GsonUtil.getErrorJson("输入不能为空");
+        }
+        if (!user.getPhone().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
+            return GsonUtil.getErrorJson("手机号码格式不正确");
         }
         if (!ValidateUtil.isMatchEmail(user.getEmail())) {
             return GsonUtil.getErrorJson("邮箱格式不正确");
@@ -507,13 +509,48 @@ public class UserService {
             return GsonUtil.getErrorJson("用户已存在");
         }
         user.setRole(User.ROLE_MEMBER_NORMAL);
-        userDao.insertMemberUser(user);
+        userDao.insertMemberProxy(user);
+        userDao.insertMemberUser(user.getId(), memberId);
         return GsonUtil.getSuccessJson("用户插入成功");
     }
 
 
     public String getMemberListStatus(String pageNum) {
-        List<User> users = userDao.getMemberListStatus();
-        return GsonUtil.getSuccessJson(users);
+        int page = CommonUtil.formatPageNum(pageNum);
+        PageHelper.startPage(page, PAGE_LENGTH);
+        List<HashMap<String, Object>> users = userDao.getMemberListStatus();
+        PageInfo<HashMap<String, Object>> pageInfo = new PageInfo<>(users);
+        return GsonUtil.getSuccessJson(pageInfo);
+    }
+
+    public String downloadMemberFile(String realFileName, Integer tag) {
+        String fileTag = null;
+        switch (tag) {
+            case 1:
+                fileTag = Constant.MEMBER_AUTHENTICATIONDATA_PATH;
+                break;
+            case 2:
+                fileTag = Constant.MEMBER_CONTACTINFODATAS_PATH;
+                break;
+        }
+        if (!FileUtil.isExistFile(realFileName, fileTag)) {
+            return GsonUtil.getErrorJson("文件不存在");
+        }
+        String fileTmp = null;
+        String resultPath = null;
+        switch (tag) {
+            case 1:
+                fileTmp = Constant.MEMBER_AUTHENTICATIONDATA_ACCESS_PATH.substring(1, Constant.MEMBER_AUTHENTICATIONDATA_ACCESS_PATH.length());
+                resultPath = Constant.MEMBER_INFO_AUTHENTICATIONDATA_ACCESS_PATH + realFileName;
+                break;
+            case 2:
+                fileTmp = Constant.MEMBER_CONTACTINFODATAS_ACCESS_PATH.substring(1, Constant.MEMBER_CONTACTINFODATAS_ACCESS_PATH.length());
+                resultPath = Constant.MEMBER_INFO_CONTACTINFODATAS_ACCESS_PATH + realFileName;
+                break;
+        }
+        if (!FileUtil.isExistFile(realFileName, fileTmp)) {
+            FileUtil.copyFile(fileTag + realFileName, fileTmp + realFileName);
+        }
+        return GsonUtil.getSuccessJson(resultPath);
     }
 }
