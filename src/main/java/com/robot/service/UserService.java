@@ -487,7 +487,7 @@ public class UserService {
     }
 
     @Transactional
-    public String judgeMember(User user, Member member, Integer userId, Integer memberId, String status) {
+    public String judgeMember(User user, Member member, Integer userId, Integer memberId) {
         user.setId(userId);
         member.setId(memberId);
         userDao.judgeMember(member);
