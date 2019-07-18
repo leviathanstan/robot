@@ -58,17 +58,17 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 
                 Permission permission = annotation.permission();
                 Role role = annotation.role();
-
-                if (permission != null && !"".equals(permission)) {
-                    if (userPermission == null || "".equals(userPermission)) {
-                        response(response);
-                        return false;
-                    }
-                    if (!userPermission.contains(permission)) {
-                        response(response);
-                        return false;
-                    }
-                }
+//
+//                if (permission != null && !"".equals(permission)) {
+//                    if (userPermission == null || "".equals(userPermission)) {
+//                        response(response);
+//                        return false;
+//                    }
+//                    if (!userPermission.contains(permission)) {
+//                        response(response);
+//                        return false;
+//                    }
+//                }
 
                 if (role != null && !"".equals(role)) {
                     if (userRole == null || "".equals(userRole)) {
@@ -82,30 +82,35 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
                                 return false;
                             }
                         }
+                        break;
                         case MANAGER: {
                             if (userRole != User.ROLE_MANAGER) {
                                 response(response);
                                 return false;
                             }
                         }
+                        break;
                         case ASSOCIATION: {
                             if (userRole != User.ROLE_ASSOCIATION) {
                                 response(response);
                                 return false;
                             }
                         }
+                        break;
                         case MEMBER: {
                             if (userRole != User.ROLE_MEMBER) {
                                 response(response);
                                 return false;
                             }
                         }
+                        break;
                         case MEMBER_NORMAL: {
                             if (userRole != User.ROLE_MEMBER_NORMAL) {
                                 response(response);
                                 return false;
                             }
                         }
+                        break;
                         case NORMAL: {
                             if (userRole != User.ROLE_NORMAL) {
                                 response(response);

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -32,7 +33,18 @@ public class ConferenceService {
     @Autowired
     private ConferenceDao conferenceDao;
 
-    private final int PAGE_LENGTH = 15;
+    private final int PAGE_LENGTH = 10;
+
+    private enum ConferenceEnum{
+        MEETING("1"),CONFERENCE("2");
+        private final String type;
+        ConferenceEnum(String type){
+            this.type = type;
+        }
+        public String getType(){
+            return type;
+        }
+    }
 
     /**
      * 首页会议
@@ -76,6 +88,7 @@ public class ConferenceService {
         conferences.addAll(conferences2);
         return conferences;
     }
+
     /**
      * 展会列表
      *
@@ -85,11 +98,11 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getConferenceList(String page) {
-        int pageNum = CommonUtil.formatPageNum(page);
-        PageHelper.startPage(pageNum, PAGE_LENGTH);
-        List<Conference> conferences = conferenceDao.getConferenceList(2);
-        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
-        return GsonUtil.getSuccessJson(pageInfo);
+        HashMap<String,String> map = new HashMap();
+        map.put("pageNum",page);
+        map.put("categoryId",ConferenceEnum.CONFERENCE.getType());
+        map.put("timeType","1");
+        return findConference(map);
     }
 
     /**
@@ -101,11 +114,11 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getMeetingList(String page) {
-        int pageNum = CommonUtil.formatPageNum(page);
-        PageHelper.startPage(pageNum, PAGE_LENGTH);
-        List<Conference> conferences = conferenceDao.getConferenceList(1);
-        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
-        return GsonUtil.getSuccessJson(pageInfo);
+        HashMap<String,String> map = new HashMap();
+        map.put("pageNum",page);
+        map.put("categoryId",ConferenceEnum.MEETING.getType());
+        map.put("timeType","1");
+        return findConference(map);
     }
 
     /**
@@ -117,15 +130,15 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getHoldingConferences(String page) {
-        int pageNum = CommonUtil.formatPageNum(page);
-        PageHelper.startPage(pageNum, PAGE_LENGTH);
-        ArrayList<Conference> conferences = conferenceDao.getHoldingConference(0);
-        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
-        return GsonUtil.getSuccessJson(pageInfo);
+        HashMap<String,String> map = new HashMap();
+        map.put("pageNum",page);
+        map.put("categoryId",ConferenceEnum.CONFERENCE.getType());
+        map.put("timeType","2");
+        return findConference(map);
     }
 
     /**
-     * 往期会议
+     * 往期展会
      *
      * @param
      * @return
@@ -133,12 +146,13 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getPassConference(String page) {
-        int pageNum = CommonUtil.formatPageNum(page);
-        PageHelper.startPage(pageNum, PAGE_LENGTH);
-        ArrayList<Conference> conferences = conferenceDao.getPassConference(0);
-        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
-        return GsonUtil.getSuccessJson(pageInfo);
+        HashMap<String,String> map = new HashMap();
+        map.put("pageNum",page);
+        map.put("categoryId",ConferenceEnum.CONFERENCE.getType());
+        map.put("timeType","3");
+        return findConference(map);
     }
+
     /**
      * 即将举办
      *
@@ -148,11 +162,11 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getHoldingMeeting(String page) {
-        int pageNum = CommonUtil.formatPageNum(page);
-        PageHelper.startPage(pageNum, PAGE_LENGTH);
-        ArrayList<Conference> conferences = conferenceDao.getHoldingConference(1);
-        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
-        return GsonUtil.getSuccessJson(pageInfo);
+        HashMap<String,String> map = new HashMap();
+        map.put("pageNum",page);
+        map.put("categoryId",ConferenceEnum.MEETING.getType());
+        map.put("timeType","2");
+        return findConference(map);
     }
 
     /**
@@ -164,11 +178,11 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public String getPassMeeting(String page) {
-        int pageNum = CommonUtil.formatPageNum(page);
-        PageHelper.startPage(pageNum, PAGE_LENGTH);
-        ArrayList<Conference> conferences = conferenceDao.getPassConference(1);
-        PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
-        return GsonUtil.getSuccessJson(pageInfo);
+        HashMap<String,String> map = new HashMap();
+        map.put("pageNum",page);
+        map.put("categoryId",ConferenceEnum.MEETING.getType());
+        map.put("timeType","3");
+       return findConference(map);
     }
 
     /**
