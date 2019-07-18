@@ -51,6 +51,7 @@
         <result property="postDate" column="post_date"/>
         <result property="img" column="cover"/>
         <result property="content" column="content"/>
+        <result property="viewCount" column="view_count"/>
     </resultMap>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">
