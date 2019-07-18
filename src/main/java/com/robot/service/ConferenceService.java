@@ -43,7 +43,7 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public ArrayList<Conference> getIndexConference() {
-        ArrayList<Conference> conferences = conferenceDao.getIndexConference(0);
+        ArrayList<Conference> conferences = conferenceDao.getIndexConference(1);
         for(Conference conference :conferences)
             conference.setPostDate(CommonUtil.formateDbTime(conference.getPostDate()));
         return conferences;
@@ -58,7 +58,7 @@ public class ConferenceService {
      * @date 2018/11/22
      */
     public ArrayList<Conference> getIndexMetting() {
-        ArrayList<Conference> conferences = conferenceDao.getIndexConference(1);
+        ArrayList<Conference> conferences = conferenceDao.getIndexConference(2);
         for(Conference conference :conferences)
             conference.setPostDate(CommonUtil.formateDbTime(conference.getPostDate()));
         return conferences;
@@ -87,7 +87,7 @@ public class ConferenceService {
     public String getConferenceList(String page) {
         int pageNum = CommonUtil.formatPageNum(page);
         PageHelper.startPage(pageNum, PAGE_LENGTH);
-        List<Conference> conferences = conferenceDao.getConferenceList(0);
+        List<Conference> conferences = conferenceDao.getConferenceList(2);
         PageInfo<Conference> pageInfo = new PageInfo<>(conferences);
         return GsonUtil.getSuccessJson(pageInfo);
     }
