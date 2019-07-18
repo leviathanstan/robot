@@ -1,8 +1,5 @@
 package com.robot.entity;
 
-import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
-
-import java.util.Date;
 
 public class Member {
 

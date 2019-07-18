@@ -26,7 +26,7 @@ public class Constant {
     public static String POSTAL_CODE = "^[\\d]{6}$";
     public static String USER_WECHAT_REGULAR_EXPRESSION = "^[a-zA-Z0-9\\u4e00-\\u9fa5]{3,10}$";
     public static String USER_COMPANY_NAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
-    public static String ADDRESS_REGULAR_EXPRESSION = "^[a-zA-Z0-9\u4E00-\u9FA5]{0,20}$";
+    public static String ADDRESS_REGULAR_EXPRESSION = "^[a-zA-Z0-9\\u4E00-\\u9FA5]{0,20}$";
     public static String USER_POSITION_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String EMAIL_REGULAR_EXPRESSION = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 
