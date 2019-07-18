@@ -1,7 +1,5 @@
 package com.robot.filter;
 
-import com.robot.entity.User;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +7,6 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.robot.entity.User.*;
 
 @SuppressWarnings("unused")
 public class PermissionFilter implements Filter {
@@ -30,6 +27,12 @@ public class PermissionFilter implements Filter {
                 }
                 break;
                 case 2: {
+                }
+                case 3:{
+                }
+                case 4:{
+                }
+                case 5:{
                 }
                 break;
                 default: {

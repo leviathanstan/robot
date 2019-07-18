@@ -12,6 +12,7 @@ public class InformationDto {
     private String img;
     private String content;
     private String link;
+    private Integer viewCount;
 
     public int getId() {
         return id;
@@ -59,6 +60,15 @@ public class InformationDto {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
     @Override
