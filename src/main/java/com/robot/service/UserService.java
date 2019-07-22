@@ -323,6 +323,7 @@ public class UserService {
         }
 
         if (enterprise.getEnterpriseName() == null || "".equals(enterprise.getEnterpriseName()) || !enterprise.getEnterpriseName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION)) {
+            System.out.println(enterprise.getEnterpriseName());
             return GsonUtil.getErrorJson("企业名称格式不正确");
         }
 
