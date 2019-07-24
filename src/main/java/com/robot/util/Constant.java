@@ -26,7 +26,7 @@ public class Constant {
     public static String POSTAL_CODE = "^[\\d]{6}$";
     public static String USER_WECHAT_REGULAR_EXPRESSION = "^[a-zA-Z0-9\\u4e00-\\u9fa5]{3,10}$";
     public static String USER_COMPANY_NAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
-    public static String ADDRESS_REGULAR_EXPRESSION = "^[a-zA-Z0-9\u4E00-\u9FA5]{0,20}$";
+    public static String ADDRESS_REGULAR_EXPRESSION = "^[a-zA-Z0-9\\u4E00-\\u9FA5]{0,20}$";
     public static String USER_POSITION_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String EMAIL_REGULAR_EXPRESSION = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 
@@ -79,9 +79,9 @@ public class Constant {
     //联络人资料认证存放地址
     public static final String MEMBER_CONTACTINFODATAS_PATH = "C:\\data\\member\\contactInfoDatas" + File.separator;
     //联络人资料认证访问地址
-    public static final String MEMBER_CONTACTINFODATAS_ACCESS_PATH = HOST_ADDRESS + "/dist/tmp/member/contactInfoDatas/";
+    public static final String MEMBER_CONTACTINFODATAS_ACCESS_PATH = CLASS_LOADER_PATH + "/dist/tmp/member/contactInfoDatas/";
     //会员认证资料项目访问资源路径
-    public static final String MEMBER_INFO_AUTHENTICATIONDATA_ACCESS_PATH = "/static/tmp/member/authenticationData/";
+    public static final String MEMBER_INFO_AUTHENTICATIONDATA_ACCESS_PATH = "/tmp/member/authenticationData/";
     //联络人资料认证项目访问路径
-    public static final String MEMBER_INFO_CONTACTINFODATAS_ACCESS_PATH =  "/static/tmp/member/contactInfoDatas/";
+    public static final String MEMBER_INFO_CONTACTINFODATAS_ACCESS_PATH =  "/tmp/member/contactInfoDatas/";
 }

@@ -40,4 +40,11 @@ public class SurveyTest {
         System.out.println(FileUtil.isExistFile("32968e4d2ed4f75468914a3da75dd6.zip", Constant.MEMBER_AUTHENTICATIONDATA_PATH));
     }
 
+
+    @Test
+    public void test1(){
+        System.out.println("广东省机器人协会".matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION));
+    }
+
+
 }

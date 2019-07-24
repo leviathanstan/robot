@@ -49,9 +49,11 @@ public class UserService {
         User user = (User) session.getAttribute("user");
         Integer role = (Integer) session.getAttribute("role");
         if (user != null) {
-            return GsonUtil.getSuccessJson(role);
+            return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(User.class, "password", "phone", "email", "permissions"), user);
         } else {
-            return GsonUtil.getSuccessJson(0);
+            user = new User();
+            user.setRole(0);
+            return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(User.class, "password", "phone", "email", "permissions"), user);
         }
     }
 
@@ -321,6 +323,7 @@ public class UserService {
         }
 
         if (enterprise.getEnterpriseName() == null || "".equals(enterprise.getEnterpriseName()) || !enterprise.getEnterpriseName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION)) {
+            System.out.println(enterprise.getEnterpriseName());
             return GsonUtil.getErrorJson("企业名称格式不正确");
         }
 
@@ -487,7 +490,7 @@ public class UserService {
     }
 
     @Transactional
-    public String judgeMember(User user, Member member, Integer userId, Integer memberId, String status) {
+    public String judgeMember(User user, Member member, Integer userId, Integer memberId) {
         user.setId(userId);
         member.setId(memberId);
         userDao.judgeMember(member);

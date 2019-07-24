@@ -161,7 +161,7 @@
     </select>
 
     <select id="getMemberList" resultMap="members">
-        select m.id, m.member_name, m.member_mold, m.member_mold_id from member m
+        select m.id, m.member_name, m.member_mold, m.member_mold_id from member m where m.id in (select member_id from member_user where user_id in (select id from user where `status` = 2));
     </select>
 
     <update id="judgeMember" parameterType="com.robot.entity.Member">

@@ -6,7 +6,7 @@ import com.robot.enums.Role;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+        import java.lang.annotation.Target;
 
 /**
  * Created by Ning on 2019/5/9
