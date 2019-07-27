@@ -18,6 +18,7 @@
         <result property="format" column="pro_format"/>
         <result property="effectTime" column="pro_effect_time"/>
         <result property="lastUpdateTime" column="pro_last_up_time"/>
+        <result property="price" column="pro_price"/>
     </resultMap>
     <!-- 首页产品 -->
     <select id="getProductLibrary" resultMap="productMap">
@@ -25,10 +26,11 @@
     </select>
     <!--搜索-->
     <select id="findProductIf" parameterType="map" resultMap="productMap">
-        select id,name,cover,pro_last_up_time,product_introduction from product_library where 1=1
+        select id,name,cover,pro_last_up_time,product_introduction,pro_price from product_library where 1=1
         <if test="content!=null and content.trim().length()>0">
             and locate(#{content},name)>0 or locate(#{content},product_introduction)>0
         </if>
+        order by pro_last_up_time desc
     </select>
     <!--搜索统计-->
     <select id="getSearchCount" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -42,8 +44,8 @@
     </select>
     <!--添加产品-->
     <insert id="addProduct" parameterType="com.robot.entity.Product" useGeneratedKeys="true" keyProperty="id">
-        insert into product_library(cover,product_summary,product_introduction,product_pattern,product_load,product_axis,product_type,pro_brand,residence,pro_format,pro_effect_time,pro_last_up_time)
-          values(#{img},#{summary},#{introduction},#{pattern},#{load},#{axis},#{type},#{brand},#{residence},#{format},#{effectTime},#{lastUpdateTime})
+        insert into product_library(product_introduction,pro_last_up_time,name,cover)
+          values(#{introduction},#{lastUpdateTime},#{name},#{img})
     </insert>
     <!--删除产品-->
     <delete id="deleteProduct">
@@ -61,35 +63,8 @@
         <if test="img!=null and img.trim().length()>0">
             , cover = #{img}
         </if>
-        <if test="summary!=null and summary.trim().length()>0">
-            , product_summary = #{summary}
-        </if>
         <if test="introduction!=null and introduction.trim().length()>0">
             , product_introduction = #{introduction}
-        </if>
-        <if test="pattern!=null and pattern.trim().length()>0">
-            , product_pattern = #{pattern}
-        </if>
-        <if test="load!=null and load.trim().length()>0">
-            , product_load = #{load}
-        </if>
-        <if test="axis!=null and axis.trim().length()>0">
-            , product_axis = #{axis}
-        </if>
-        <if test="type!=null and type.trim().length()>0">
-            , product_type = #{type}
-        </if>
-        <if test="brand!=null and brand.trim().length()>0">
-            , pro_brand = #{brand}
-        </if>
-        <if test="residence!=null and residence.trim().length()>0">
-            , residence = #{residence}
-        </if>
-        <if test="format!=null and format.trim().length()>0">
-            , pro_format = #{format}
-        </if>
-        <if test="effectTime!=null and effectTime.trim().length()>0">
-            , pro_effect_time = #{effectTime}
         </if>
         <if test="lastUpdateTime!=null and lastUpdateTime.trim().length()>0">
             , pro_last_up_time = #{lastUpdateTime}

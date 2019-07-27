@@ -55,6 +55,7 @@ public class ProductService {
      * @return
      */
     public String addProduct(Product product){
+        product.setLastUpdateTime(CommonUtil.formateDbTime(product.getLastUpdateTime()));
         int result = productDao.addProduct(product);
         if (result==1){
             return GsonUtil.getSuccessJson(product);

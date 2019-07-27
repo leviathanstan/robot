@@ -9,7 +9,7 @@ package com.robot.entity;
 public class Product {
 
     private Integer id;
-    private int price;
+    private String price;
     private String name;
     private String brand;
     private String introduction;
@@ -44,13 +44,7 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
-        return price;
-    }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
 
     public String getIntroduction() {
         return introduction;
@@ -170,6 +164,14 @@ public class Product {
 
     public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     @Override
