@@ -3,6 +3,7 @@ package com.robot.service;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,6 +51,7 @@ public class CommonService {
      * @param
      * @return
      */
+    @Cacheable(value = "index",key = "'index'")
     public String getIndex() throws InterruptedException{
         Map<String,Object> dataMap = new HashMap<>();
 //        //原机器人协会
