@@ -51,7 +51,7 @@ public class CommonService {
      * @param
      * @return
      */
-    @Cacheable(value = "index",key = "'index'")
+   // @Cacheable(value = "index",key = "'index'")
     public String getIndex() throws InterruptedException{
         Map<String,Object> dataMap = new HashMap<>();
 //        //原机器人协会
