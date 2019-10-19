@@ -125,6 +125,28 @@ public class UserService {
     }
 
     /**
+     * 订阅资讯（多个）
+     *
+     * @param categoryIds
+     * @param session
+     * @return
+     * @author chen
+     */
+    public String addSubscribes(List<Integer> categoryIds, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Map<String, Integer> map = new HashMap<>();
+        map.put("userId", user.getId());
+        for (int categoryId : categoryIds) {
+            map.put("categoryId", categoryId);
+            Integer dbRecord = userDao.selectSubscribeInfo(map);
+            if (dbRecord == null) {
+                userDao.addSubscribe(map);
+            }
+        }
+        return GsonUtil.getSuccessJson();
+    }
+
+    /**
      * 搜索用户
      *
      * @param
@@ -338,7 +360,7 @@ public class UserService {
             return GsonUtil.getErrorJson("企业类型格式不正确");
         }
         member.setMemberType(enterprise.getEnterpriseType()); //会员类型
-        if(enterprise.getEnterpriseNature() == null || "".equals(enterprise.getEnterpriseNature())){
+        if (enterprise.getEnterpriseNature() == null || "".equals(enterprise.getEnterpriseNature())) {
             return GsonUtil.getErrorJson("企业性质格式不正确");
         }
         if (enterprise.getEnterpriseScale() == null || "".equals(enterprise.getEnterpriseScale())) {

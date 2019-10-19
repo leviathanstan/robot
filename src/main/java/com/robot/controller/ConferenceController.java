@@ -24,21 +24,21 @@ public class ConferenceController {
     @Autowired
     private ConferenceService conferenceService;
 
-    @Authority(role = Role.SUPER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "/deleteConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteConference(int id, HttpSession session){
         return conferenceService.deleteConference(id, session);
     }
 
-    @Authority(role = Role.SUPER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "/updateConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateConference(Conference conference,HttpSession session){
         return conferenceService.updateConference(conference,session);
     }
 
-    @Authority(role = Role.SUPER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "/addConference", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addConference(Conference conference,HttpSession session){

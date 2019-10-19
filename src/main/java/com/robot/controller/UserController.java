@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author hua
@@ -57,6 +58,13 @@ public class UserController {
     @RequestMapping(value = "/addSubscribe", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addSubscribe(@RequestParam int categoryId, HttpSession session) {
         return userService.addSubscribe(categoryId, session);
+    }
+
+    @Authority(role = Role.NORMAL)
+    @ResponseBody
+    @RequestMapping(value = "/addSubscribes", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String addSubscribes(List<Integer> categoryIds,HttpSession session){
+        return userService.addSubscribes(categoryIds,session);
     }
 
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
