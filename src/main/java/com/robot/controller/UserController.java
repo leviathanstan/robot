@@ -63,7 +63,7 @@ public class UserController {
     @Authority(role = Role.NORMAL)
     @ResponseBody
     @RequestMapping(value = "/addSubscribes", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String addSubscribes(List<Integer> categoryIds,HttpSession session){
+    public String addSubscribes(@RequestParam List<Integer> categoryIds,HttpSession session){
         return userService.addSubscribes(categoryIds,session);
     }
 
