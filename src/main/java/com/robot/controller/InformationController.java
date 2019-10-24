@@ -301,6 +301,29 @@ public class InformationController {
     public String getDiscussList(String num){
         return informationService.getDiscussList(num);
     }
+
+    /**
+     * 案例库具体信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getCaseInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCaseInfo(Integer id){
+        return informationService.getCaseInfo(id);
+    }
+
+    /**
+     * 案例库列表
+     * @param num
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getCaseList",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String getCaseList(String num){
+        return informationService.getCaseList(num);
+    }
+
     /***
      * 产品评测列表
      * @return

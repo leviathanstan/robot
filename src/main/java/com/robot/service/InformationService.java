@@ -39,7 +39,7 @@ public class InformationService {
     private enum InformationEnum {
         PRODUCT_NEWS(1), PRODUCT_RECOMMEND(2), PRODUCT_EVALUATE(3), BASIC_KNOWLEDGE(4), ENTERPRISE_NEWS(5), INDUSTRY_INFORMATION(6),
         POLICY_INFORMATION(7), MEMBER_NEWS(8), NOTICE(9), ASSOCIATION_NEWS(10), EXPERT_WISDOM(11), CONSULTING_FOCUS(12),NEWS_HOTSPOT_DAY(20),
-        NEWS_HOTSPOT_WEEK(21),NEWS_HOTSPOT_MONTH(22),EDUCATION_TRAIN(23);
+        NEWS_HOTSPOT_WEEK(21),NEWS_HOTSPOT_MONTH(22),EDUCATION_TRAIN(23),CASE(24);
         private final int id;
 
         InformationEnum(int id) {
@@ -1204,13 +1204,55 @@ public class InformationService {
      * @date 2018/9/27
      * @return
      */
-//    public ArrayList<RobotNews> getIndexCase(){
-//        Map<String,Integer> map = new HashMap<>();
-//        map.put("number",NumberEnum.EXPERT.getNumber());
-//        map.put("categoryId",InformationEnum.EXPERT_WISDOM.getId());
-//        ArrayList<RobotNews> articles = informationDao.getIndexInformation(map);
-//        return articles;
-//    }
+    public ArrayList<RobotNews> getIndexCase(){
+        Map<String, Integer> map = new HashMap<>();
+        map.put("number", NumberEnum.EXPERT.getNumber());
+        map.put("categoryId", InformationEnum.CASE.getId());
+        ArrayList<RobotNews> articles = informationDao.getIndexInformation(map);
+        CommonUtil.formateDateTimeToDate(articles);
+        return articles;
+    }
+
+    /**
+     * 获取案例库具体信息
+     *
+     * @param infoId
+     * @return
+     */
+    public String getCaseInfo(Integer infoId) {
+        RobotNews information = informationDao.findInformationInfo(infoId);
+        if (null == information)
+            return GsonUtil.getErrorJson();
+        information.setContent(CommonUtil.getAbsolutePath(information.getContent()));
+        information.setPostDate(CommonUtil.formateDbTime(information.getPostDate()));
+        //相关
+        RelatedReadingDto relatedReadingDto = new RelatedReadingDto();
+        relatedReadingDto.setKeywords(informationDao.findRelatedKeyword(infoId));
+        relatedReadingDto.setInformation(informationDao.findRelatedInformation(infoId));
+        Map<String,Object> dataMap = new HashMap();
+        dataMap.put("information", information);
+        dataMap.put("related", relatedReadingDto);
+        return GsonUtil.getSuccessJson(dataMap);
+    }
+
+    /**
+     * 案例库列表
+     *
+     * @param Num
+     * @return
+     */
+    public String getCaseList(String Num) {
+        int pageNum = CommonUtil.formatPageNum(Num);
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<RobotNews> articles = informationDao.getInformationList(InformationEnum.CASE.getId());
+        PageInfo<RobotNews> pageInfo = new PageInfo<>(articles);
+        for (RobotNews article : articles) {
+            article.setContent(CommonUtil.getPreview(article.getContent()));
+            article.setPostDate(CommonUtil.formateDbTime(article.getPostDate()));
+        }
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(RobotNews.class, "url"), pageInfo);
+    }
+
 
     /**
      * 获取资讯具体信息【安卓】

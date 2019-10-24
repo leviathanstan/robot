@@ -126,7 +126,7 @@ public class CommonService {
             dataMap.put("hotspot",informationService.getIndexHot());
             dataMap.put("report",informationService.findReportTop());
             //技术
-            //dataMap.put("case",technologyService.getIndexCase());
+            dataMap.put("case",informationService.getIndexCase());
             dataMap.put("basic",informationService.getIndexBasic());
             dataMap.put("science",informationService.getIndexDiscuss());
             dataMap.put("educationTrain",informationService.getEducationTrain());
