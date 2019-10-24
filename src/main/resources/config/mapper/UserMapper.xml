@@ -65,7 +65,7 @@
                 and role =#{role}
             </when>
             <otherwise>
-                and role = 0
+                and role = 7
             </otherwise>
         </choose>
     </select>
