@@ -99,7 +99,9 @@ public class InformationService {
      */
     @Transactional
     public String addInformation(RobotNews robotNews){
-        robotNews.setPostDate(LocalDateTime.now().toString());
+        if(!ValidateUtil.isMatchDate(robotNews.getPostDate())) {
+            robotNews.setPostDate(LocalDateTime.now().toString());
+        }
         if(1!=informationDao.add(robotNews))
             return GsonUtil.getErrorJson();
         if(robotNews.getContent()==null){

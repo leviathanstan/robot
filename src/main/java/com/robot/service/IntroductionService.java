@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -247,6 +248,9 @@ public class IntroductionService {
         if(ValidateUtil.isInvalidString(introduction.getIntroduction())||ValidateUtil.isInvalidString(introduction.getName())||ValidateUtil.isInvalidString(Integer.toString(introduction.getCategoryId())))
             return GsonUtil.getErrorJson("添加内容不完整");
 
+        if(!ValidateUtil.isMatchDate(introduction.getPostDate())) {
+            introduction.setPostDate(LocalDateTime.now().toString());
+        }
         if(1!=introductionDao.add(introduction))
             return GsonUtil.getErrorJson();
         return GsonUtil.getSuccessJson();

@@ -30,6 +30,7 @@ public class Constant {
     public static String USER_POSITION_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String EMAIL_REGULAR_EXPRESSION = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 
+    public static String DATE = "^(\\d{4})(\\-)(\\d{2})(\\-)(\\d{2})(\\s+)(\\d{2})(\\:)(\\d{2})(\\:)(\\d{2})$";
     //允许上传图片类型
 //    public final static List<String> TYPE_IMG = new ArrayList<String>(){{
 //        add("png");

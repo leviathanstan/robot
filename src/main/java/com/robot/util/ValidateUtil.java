@@ -26,4 +26,10 @@ public class ValidateUtil {
             return true;
         return false;
     }
+
+    public static boolean isMatchDate(String str){
+        if(Pattern.matches(Constant.DATE,str))
+            return true;
+        return false;
+    }
 }

@@ -180,6 +180,7 @@
             <if test="title!=null">title=#{title},</if>
             <if test="readGuide!=null">guide=#{readGuide},</if>
             <if test="source!=null">source=#{source},</if>
+            <if test="postDate!=null">post_date=#{postDate}</if>
         </set>
         where id=#{id}
     </update>
