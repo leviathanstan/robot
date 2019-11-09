@@ -29,7 +29,7 @@ public class ExceptionResolver {
         if (e instanceof MissingServletRequestParameterException){
             return GsonUtil.getErrorJson("parameter error");
         }
-        return GsonUtil.getErrorJson(e.getMessage());
+        return GsonUtil.getErrorJson("error!");
     }
 
 

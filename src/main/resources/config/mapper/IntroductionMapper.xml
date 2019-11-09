@@ -14,7 +14,7 @@
     </select>
 
     <select id="getIntroductionList" parameterType="int" resultMap="introductionMap">
-        select id, name, content from introduction where category_id=#{categoryId} order by post_date desc
+        select id, name, content from introduction where category_id=#{categoryId} order by post_date
     </select>
 
     <select id="findIntroductionInfo" parameterType="int" resultMap="introductionMap">
@@ -39,7 +39,7 @@
         update introduction
         <set>
             <if test="name!=null">name=#{name},</if>
-            <if test="introduction!=null">content=#{introduction}</if>
+            <if test="introduction!=null">content=#{introduction},</if>
             <if test="postDate!=null">post_date=#{postDate}</if>
         </set>
         where id=#{id}
