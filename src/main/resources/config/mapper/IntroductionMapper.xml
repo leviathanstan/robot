@@ -30,9 +30,6 @@
 
     <insert id="add" parameterType="com.robot.entity.Introduction">
         insert into introduction(name,content,category_id,post_date) values(#{name},#{introduction},#{categoryId},#{postDate})
-        <selectKey resultType="java.lang.Integer" keyProperty="id">
-            SELECT @@IDENTITY AS ID
-        </selectKey>
     </insert>
 
     <update id="update" parameterType="com.robot.entity.Introduction">
@@ -50,6 +47,6 @@
     </select>
 
     <select id="find" parameterType="map" resultMap="introductionMap">
-        select id, name, content from introduction where category_id=#{categoryId} and (locate(#{content},name)>0 or locate(#{content},content)>0) order by post_date
+        select id, name, content,post_date from introduction where category_id=#{categoryId} and (locate(#{content},name)>0 or locate(#{content},content)>0) order by post_date
     </select>
 </mapper>
