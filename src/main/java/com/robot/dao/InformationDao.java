@@ -43,4 +43,5 @@ public interface InformationDao {
     Report  findReportInfo(int id);
     ArrayList<String> findRepRelatedKeyword(int reportId);
     int addCountRep(int id);
+    int addCountDis(int id);
 }

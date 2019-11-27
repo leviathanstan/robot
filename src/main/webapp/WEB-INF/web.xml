@@ -80,25 +80,25 @@
         </init-param>
     </filter>
     <!-- 页面拦截-->
-    <filter>
-        <filter-name>PermissionFilter</filter-name>
-        <filter-class>com.robot.filter.PermissionFilter</filter-class>
-        <init-param>
-            <param-name>redirectPath</param-name>
-            <param-value>/login.jsp</param-value>
-        </init-param>
-        <init-param>
-            <param-name>noFilterPath</param-name><!-- 不过滤页面 -->
-            <param-value>login.jsp;logout.jsp</param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>PermissionFilter</filter-name>-->
+        <!--<filter-class>com.robot.filter.PermissionFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>redirectPath</param-name>-->
+            <!--<param-value>/login.jsp</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>noFilterPath</param-name>&lt;!&ndash; 不过滤页面 &ndash;&gt;-->
+            <!--<param-value>login.jsp;logout.jsp</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
     <filter-mapping>
         <filter-name>CharacterEncoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>PermissionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>PermissionFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 </web-app>

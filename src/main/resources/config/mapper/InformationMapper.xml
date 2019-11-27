@@ -80,11 +80,14 @@
     </select>
     <!--技术研讨相关信息-->
     <select id="getDiscussInfo" parameterType="int" resultMap="discussMap">
-        select  id,cover,title,content from technique_discuss where id = #{id}
+        select * from technique_discuss where id = #{id}
     </select>
+    <update id="addCountDis" parameterType="Integer">
+        update technique_discuss set view_count = view_count + 1 where id = #{id};
+    </update>
     <!--技术研讨列表-->
     <select id="getDiscussList"  resultMap="discussMap">
-         select  id,cover,title,content from technique_discuss
+         select * from technique_discuss
     </select>
     <!--搜索-->
     <select id="find" resultMap="informationDetail" parameterType="map">
@@ -190,7 +193,7 @@
     </update>
     <!--浏览数递增-->
     <update id="addCount" parameterType="Integer">
-        update information set view_count = ((select view_count from (select view_count from information where id = #{id})i1) + 1) where id = #{id};
+        update information set view_count =  view_count + 1 where id = #{id};
     </update>
     <!--查找相关热点-->
     <select id="findRelatedHot" resultMap="informationMap">
@@ -209,6 +212,6 @@
         select * from industry_report where id = #{id}
     </select>
     <update id="addCountRep" parameterType="Integer">
-        update industry_report set view_count = ((select view_count from (select view_count from industry_report where id = #{id})i1) + 1) where id = #{id};
+        update industry_report set view_count = view_count + 1 where id = #{id};
     </update>
 </mapper>

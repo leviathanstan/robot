@@ -1182,6 +1182,9 @@ public class InformationService {
      */
     public String getDiscussInfo(Integer id){
         InformationDto discuss = informationDao.getDiscussInfo(id);
+        discuss.setPostDate(CommonUtil.formateDbTime(discuss.getPostDate()));
+        if(1 != informationDao.addCountDis(id))
+            throw new RuntimeException();
         if(discuss == null)
             return GsonUtil.getErrorJson();
         return GsonUtil.getSuccessJson(discuss);
@@ -1196,6 +1199,9 @@ public class InformationService {
         int pageNum = CommonUtil.formatPageNum(Num);
         PageHelper.startPage(pageNum, PAGE_LENGTH);
         List<InformationDto> discussList = informationDao.getDiscussList();
+        for(InformationDto informationDto:discussList){
+            informationDto.setPostDate(CommonUtil.formateDbTime(informationDto.getPostDate()));
+        }
         PageInfo<InformationDto> pageInfo = new PageInfo<>(discussList);
         return GsonUtil.getSuccessJson(pageInfo);
     }
