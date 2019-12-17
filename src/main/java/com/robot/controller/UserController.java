@@ -9,11 +9,15 @@ import com.robot.entity.User;
 import com.robot.enums.Role;
 import com.robot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -80,7 +84,7 @@ public class UserController {
      * @author asce
      * @date 2018/11/15
      */
-    @Authority(role = Role.MANAGER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "/manager/find", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String findUser(User user, String pageNum) {
@@ -160,6 +164,11 @@ public class UserController {
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String resetPassword(String password, HttpSession session) {
         return userService.resetPassword(password, session);
+    }
+
+    @InitBinder
+    public void init(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.robot.dao;
 
 import com.robot.entity.Product;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,4 +22,8 @@ public interface ProductDao {
     int updateProduct(Product product);
     ArrayList<Product> findHotProduct();
     int addProCount(int id);
+    ArrayList<Product> selectProductByIds(List<Integer> ids);
+    int insertMemberProduct(@Param("productId")int productId,@Param("userId")int userId);
+    List<Integer> selectMemberProduct(int userId);
+    void deleteMemberProduct(List<Integer> ids);
 }

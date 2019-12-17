@@ -101,6 +101,12 @@
                                 #{item}
                             </foreach>
         </if>
+        <if test="ids !=null and ids.size()!=0">
+            and id in
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
       order by post_date desc
     </select>
     <!-- 搜索统计-->
@@ -214,4 +220,19 @@
     <update id="addCountRep" parameterType="Integer">
         update industry_report set view_count = view_count + 1 where id = #{id};
     </update>
+    <!--添加会员资讯-->
+    <insert id="insertMemberInformation" >
+        insert into member_information(information_id,user_id) values(#{informationId},#{userId})
+    </insert>
+    <!---删除会员资讯-->
+    <delete id="deleteMemberInformation">
+        delete from member_information where information_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <!--搜索某会员管理的资讯id-->
+    <select id="selectMemberInformation" resultType="java.lang.Integer">
+        select information_id from member_information where user_id=#{userId}
+    </select>
 </mapper>

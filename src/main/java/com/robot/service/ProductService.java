@@ -5,12 +5,16 @@ import com.github.pagehelper.PageInfo;
 
 import com.robot.dao.ProductDao;
 import com.robot.entity.Product;
+import com.robot.entity.User;
+import com.robot.enums.Role;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -31,7 +35,9 @@ public class ProductService {
         return productDao.getSearchCount(content);
     }
 
+    @Transactional
     public String deleteProduct(List<Integer> ids){
+        productDao.deleteMemberProduct(ids);
         int result = productDao.deleteProduct(ids);
         if (result==1){
             return GsonUtil.getSuccessJson();
@@ -54,9 +60,11 @@ public class ProductService {
      * @param
      * @return
      */
-    public String addProduct(Product product){
+    @Transactional
+    public String addProduct(Product product,User user){
         product.setLastUpdateTime(CommonUtil.formateDbTime(product.getLastUpdateTime()));
         int result = productDao.addProduct(product);
+        productDao.insertMemberProduct(product.getId(),user.getId());
         if (result==1){
             return GsonUtil.getSuccessJson(product);
         }
@@ -71,8 +79,19 @@ public class ProductService {
      */
     public PageInfo<Product> searchProduct(Map<String,String> args){
         int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
-        PageHelper.startPage(pageNum,Constant.PRODUCT_PAGE_COUNT);
-        List<Product> products = productDao.findProductIf(args);
+        int userRole = CommonUtil.formateParmNum(args.get("userRole"));
+        int userId = CommonUtil.formateParmNum(args.get("userId"));
+        List<Product> products = new ArrayList<>();
+        if(userRole == User.ROLE_MANAGER) {
+            PageHelper.startPage(pageNum, Constant.PRODUCT_PAGE_COUNT);
+            products = productDao.findProductIf(args);
+        }else{
+            List<Integer> ids = productDao.selectMemberProduct(userId);
+            if(ids.size() > 0) {
+                PageHelper.startPage(pageNum, Constant.PRODUCT_PAGE_COUNT);
+                products = productDao.selectProductByIds(ids);
+            }
+        }
         PageInfo<Product> pageInfo = new PageInfo<>(products);
         return pageInfo;
     }
