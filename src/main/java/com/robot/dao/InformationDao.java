@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.robot.dto.InformationDto;
 import com.robot.entity.Report;
 import com.robot.entity.RobotNews;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,4 +45,7 @@ public interface InformationDao {
     ArrayList<String> findRepRelatedKeyword(int reportId);
     int addCountRep(int id);
     int addCountDis(int id);
+    List<Integer> selectMemberInformation(int userId);
+    void deleteMemberInformation(List<Integer> ids);
+    void insertMemberInformation(@Param("informationId")int informationId, @Param("userId")int userId);
 }

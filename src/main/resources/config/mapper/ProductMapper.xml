@@ -43,9 +43,12 @@
         select * from product_library where id=#{id}
     </select>
     <!--添加产品-->
-    <insert id="addProduct" parameterType="com.robot.entity.Product" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addProduct" parameterType="com.robot.entity.Product"  keyProperty="id">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select @@identity
+        </selectKey>
         insert into product_library(product_introduction,pro_last_up_time,name,cover)
-          values(#{introduction},#{lastUpdateTime},#{name},#{img})
+        values(#{introduction},#{lastUpdateTime},#{name},#{img})
     </insert>
     <!--删除产品-->
     <delete id="deleteProduct">
@@ -79,4 +82,25 @@
     <update id="addProCount" parameterType="Integer">
         update  product_library set view_count = ((select view_count from (select view_count from product_library where id = #{id})p1)+1) where id = #{id};
     </update>
+    <select id="selectProductByIds" resultMap="productMap">
+        select id,name,cover,pro_last_up_time,product_introduction,pro_price from product_library where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <!--添加会员产品-->
+    <insert id="insertMemberProduct" >
+        insert into member_product(product_id,user_id) values(#{productId},#{userId})
+    </insert>
+    <!---删除会员产品-->
+    <delete id="deleteMemberProduct">
+        delete from member_product where product_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <!--搜索某会员管理的产品id-->
+    <select id="selectMemberProduct" resultType="java.lang.Integer">
+        select product_id from member_product where user_id=#{userId}
+    </select>
 </mapper>

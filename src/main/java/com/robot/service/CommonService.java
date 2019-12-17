@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,13 +164,17 @@ public class CommonService {
      * @param args
      * @return
      */
-    public String find(HashMap<String,String> args) {
+    public String find(HashMap<String,String> args,User user) {
         String channel = args.get("channel");
         int channelOption = CommonUtil.formateParmNum(channel);
         SearchEnum searchEnum = getSearchEnum(channelOption);
         HashMap<String,Object> map = new HashMap<>();
         map.put("informationCount",informationService.getSearchCount(args.get("content")));
         map.put("productCount", productService.getSearchCount(args.get("content")));
+        if(user != null) {
+            args.put("userRole", user.getRole().toString());
+            args.put("userId",user.getId().toString());
+        }
         switch (searchEnum) {
             case INFORMATION:
                 map.put("results",informationService.findInformation(args));

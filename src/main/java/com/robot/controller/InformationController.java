@@ -2,6 +2,7 @@ package com.robot.controller;
 
 import com.robot.annotation.Authority;
 import com.robot.entity.RobotNews;
+import com.robot.entity.User;
 import com.robot.enums.Role;
 import com.robot.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -389,7 +390,7 @@ public class InformationController {
      * @param ids
      * @return
      */
-    @Authority(role = Role.MANAGER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "/manager/deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteInformation(@RequestParam List<Integer> ids){
@@ -401,7 +402,7 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-    @Authority(role = Role.MANAGER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "/manager/updateInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateInformation(RobotNews robotNews){
@@ -413,11 +414,11 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-    @Authority(role = Role.MANAGER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "/manager/addInformation", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    public String addInformation(RobotNews robotNews){
-        return informationService.addInformation(robotNews);
+    public String addInformation(@SessionAttribute("user") User user, RobotNews robotNews){
+        return informationService.addInformation(robotNews,user);
     }
 
     @ResponseBody

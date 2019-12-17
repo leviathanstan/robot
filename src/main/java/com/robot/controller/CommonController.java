@@ -1,6 +1,7 @@
 package com.robot.controller;
 
 import com.robot.bean.SpiderStatus;
+import com.robot.entity.User;
 import com.robot.schedule.ScheduleTask;
 import com.robot.scrapy.Spider;
 import com.robot.scrapy.SpiderManager;
@@ -8,12 +9,10 @@ import com.robot.service.CommonService;
 import com.robot.util.LogHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
@@ -40,8 +39,9 @@ public class CommonController {
 
     @ResponseBody
     @RequestMapping(value = "/search", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String search(@RequestParam HashMap args){
-        return commonService.find(args);
+    public String search(HttpSession session, @RequestParam HashMap args){
+        User user = (User) session.getAttribute("user");
+        return commonService.find(args,user);
     }
 
     @RequestMapping(value="/uploadImg",method = {RequestMethod.POST})
