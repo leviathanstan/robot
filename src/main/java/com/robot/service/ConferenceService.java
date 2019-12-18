@@ -20,6 +20,7 @@ import java.util.Map;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 
@@ -193,12 +194,15 @@ public class ConferenceService {
      * @author asce
      * @date 2018/11/22
      */
+    @Transactional
     public String addConference(Conference conference, HttpSession session) {
         User user = (User) session.getAttribute("user");
         conference.setUserId(user.getId());
         if (conferenceDao.addConference(conference) != 1) {
             return GsonUtil.getErrorJson();
         }
+        int id = conference.getId();
+        conferenceDao.insertMemberConference(id,user.getId());
         return GsonUtil.getSuccessJson();
     }
 
@@ -230,14 +234,9 @@ public class ConferenceService {
      * @author asce
      * @date 2018/11/22
      */
+    @Transactional
     public String deleteConference(int id, HttpSession session) {
-        Conference dbConferences = conferenceDao.getInfo(id);
-        User user = (User) session.getAttribute("user");
-        if (dbConferences.getUserId() != user.getId()) {
-            if ((int) session.getAttribute("rank") != 1) {
-                return GsonUtil.getErrorJson();
-            }
-        }
+        conferenceDao.deleteMemberConference(id);
         if (conferenceDao.deleteConference(id) != 1) {
             return GsonUtil.getErrorJson();
         }
@@ -342,10 +341,17 @@ public class ConferenceService {
         int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
         int categoryId = CommonUtil.formateParmNum(args.get("categoryId"));
         int timeType = CommonUtil.formatPageNum(args.get("timeType"));
-        System.out.println(timeType);
         HashMap<String, Object> dataMap = new HashMap<>();
         dataMap.put("content", args.get("content"));
         dataMap.put("categoryId", categoryId);
+
+        //根据权限查找
+        int userRole = CommonUtil.formateParmNum(args.get("userRole"));
+        int userId = CommonUtil.formateParmNum(args.get("userId"));
+        if (userRole != User.ROLE_MANAGER && userRole != 0) {
+            List<Integer> ids = conferenceDao.selectMemberConference(userId);
+            dataMap.put("ids", ids);
+        }
         List<Conference> conferences = null;
         switch (timeType) {
             case 1:

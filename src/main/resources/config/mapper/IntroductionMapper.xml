@@ -30,6 +30,9 @@
 
     <insert id="add" parameterType="com.robot.entity.Introduction">
         insert into introduction(name,content,category_id,post_date) values(#{name},#{introduction},#{categoryId},#{postDate})
+        <selectKey resultType="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
     </insert>
 
     <update id="update" parameterType="com.robot.entity.Introduction">
@@ -47,6 +50,28 @@
     </select>
 
     <select id="find" parameterType="map" resultMap="introductionMap">
-        select id, name, content,post_date from introduction where category_id=#{categoryId} and (locate(#{content},name)>0 or locate(#{content},content)>0) order by post_date
+        select id, name, content,post_date from introduction where category_id=#{categoryId} and (locate(#{content},name)>0 or locate(#{content},content)>0)
+        <if test="ids !=null and ids.size()!=0">
+            and id in
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by post_date
+    </select>
+
+    <insert id="insertMemberIntroduction" >
+        insert into member_introduction(introduction_id,user_id) values(#{introductionId},#{userId})
+    </insert>
+
+    <delete id="deleteMemberIntroduction">
+        delete from member_introduction where introduction_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="selectMemberIntroduction" resultType="java.lang.Integer">
+        select introduction_id from member_introduction  where user_id=#{userId}
     </select>
 </mapper>

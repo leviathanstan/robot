@@ -36,6 +36,9 @@
     <!-- 添加会议-->
     <insert id="addConference" parameterType="com.robot.entity.Conference">
         insert into conference(title, cover, hold_time, address, user_id, introduction, conference_type) values (#{title},#{coverImg},#{postDate},#{address},#{userId},#{introduction},#{type})
+        <selectKey resultType="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
     </insert>
     <!-- 更新会议-->
     <update id="updateConference" parameterType="com.robot.entity.Conference">
@@ -68,8 +71,15 @@
             and locate(#{content},title)>0
         </if>
         <if test="categoryId !=null ">
-            and conference_type = #{categoryId} order by hold_time
+            and conference_type = #{categoryId}
         </if>
+        <if test="ids !=null and ids.size()!=0">
+            and id in
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by hold_time
     </select>
 
     <!--搜索已举办过的展会和会议-->
@@ -79,8 +89,15 @@
             and locate(#{content},title)>0
         </if>
         <if test="categoryId !=null ">
-            and conference_type = #{categoryId}  and hold_time &lt; NOW()
+            and conference_type = #{categoryId}
         </if>
+        <if test="ids !=null and ids.size()!=0">
+            and id in
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and hold_time &lt; NOW()
     </select>
 
     <!--搜索未举办过的展会和会议-->
@@ -90,7 +107,26 @@
             and locate(#{content},title)>0
         </if>
         <if test="categoryId !=null ">
-            and conference_type = #{categoryId}  and hold_time >= NOW()
+            and conference_type = #{categoryId}
         </if>
+        <if test="ids !=null and ids.size()!=0">
+            and id in
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and hold_time >= NOW()
+    </select>
+
+    <insert id="insertMemberConference" >
+        insert into member_conference(conference_id,user_id) values(#{conferenceId},#{userId})
+    </insert>
+
+    <delete id="deleteMemberConference">
+        delete from member_conference where conference_id = #{id}
+    </delete>
+
+    <select id="selectMemberConference" resultType="java.lang.Integer">
+        select conference_id from member_conference  where user_id=#{userId}
     </select>
 </mapper>

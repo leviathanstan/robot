@@ -1,6 +1,7 @@
 package com.robot.dao;
 
 import com.robot.entity.Introduction;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,4 +21,7 @@ public interface IntroductionDao {
     int update(Introduction introduction);
     String findIntroductionById(int id);
     ArrayList<Introduction> find(Map<String,Object> args);
+    List<Integer> selectMemberIntroduction(int userId);
+    void deleteMemberIntroduction(List<Integer> ids);
+    void insertMemberIntroduction(@Param("introductionId")int introductionId, @Param("userId")int userId);
 }

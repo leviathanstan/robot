@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.IntroductionDao;
 import com.robot.entity.Introduction;
+import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
 import com.robot.util.ValidateUtil;
@@ -61,6 +62,15 @@ public class IntroductionService {
         HashMap<String,Object> dataMap = new HashMap();
         dataMap.put("content",args.get("content"));
         dataMap.put("categoryId",introductionEnum.getId());
+
+        //根据权限查找
+        int userRole = CommonUtil.formateParmNum(args.get("userRole"));
+        int userId = CommonUtil.formateParmNum(args.get("userId"));
+        if (userRole != User.ROLE_MANAGER && userRole != 0) {
+            List<Integer> ids = introductionDao.selectMemberIntroduction(userId);
+            dataMap.put("ids", ids);
+        }
+
         //查找
         PageHelper.startPage(pageNum,PAGE_LENGTH);
         List<Introduction> introduction = introductionDao.find(dataMap);
@@ -220,6 +230,7 @@ public class IntroductionService {
     @Transactional
     public String deleteIntroduction(List<Integer> ids){
         int count = ids.size();
+        introductionDao.deleteMemberIntroduction(ids);
         if(count!=introductionDao.delete(ids)){
             throw new RuntimeException();
         }
@@ -244,7 +255,8 @@ public class IntroductionService {
      * @param introduction
      * @return
      */
-    public String addIntroduction(Introduction introduction){
+    @Transactional
+    public String addIntroduction(Introduction introduction,User user){
         if(ValidateUtil.isInvalidString(introduction.getIntroduction())||ValidateUtil.isInvalidString(introduction.getName())||ValidateUtil.isInvalidString(Integer.toString(introduction.getCategoryId())))
             return GsonUtil.getErrorJson("添加内容不完整");
 
@@ -253,6 +265,8 @@ public class IntroductionService {
         }
         if(1!=introductionDao.add(introduction))
             return GsonUtil.getErrorJson();
+        int introductionId = introduction.getId();
+        introductionDao.insertMemberIntroduction(introductionId, user.getId());
         return GsonUtil.getSuccessJson();
     }
 }

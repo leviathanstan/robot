@@ -3,6 +3,7 @@ package com.robot.controller;
 import com.robot.annotation.Authority;
 import com.robot.entity.Conference;
 import com.robot.entity.RegistrationForm;
+import com.robot.entity.User;
 import com.robot.enums.Role;
 import com.robot.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,9 +90,15 @@ public class ConferenceController {
 
     @ResponseBody
     @RequestMapping(value = "/findConference",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findConference(@RequestParam HashMap args){
+    public String findConference(@RequestParam HashMap<String,String> args,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user != null){
+            args.put("userRole",user.getRole().toString());
+            args.put("userId",user.getId().toString());
+        }
         return conferenceService.findConference(args);
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getInfo",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")

@@ -2,14 +2,12 @@ package com.robot.controller;
 
 import com.robot.annotation.Authority;
 import com.robot.entity.Introduction;
+import com.robot.entity.User;
 import com.robot.enums.Role;
 import com.robot.service.IntroductionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -121,7 +119,7 @@ public class IntroductionController {
     @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "manager/addIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String addIntroduction(Introduction introduction){
-        return introductionService.addIntroduction(introduction);
+    public String addIntroduction(@SessionAttribute("user") User user, Introduction introduction){
+        return introductionService.addIntroduction(introduction,user);
     }
 }
