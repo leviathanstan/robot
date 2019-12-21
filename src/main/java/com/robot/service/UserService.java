@@ -2,22 +2,16 @@ package com.robot.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
 import com.robot.dao.UserDao;
 import com.robot.entity.*;
 import com.robot.util.*;
-import com.sun.org.apache.regexp.internal.RE;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +29,7 @@ public class UserService {
     /**
      * 定时清除session,可考虑数据库或redis实现
      */
-    ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
+    private ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 
     /**
      * 判断用户权限
@@ -372,7 +366,7 @@ public class UserService {
         if (enterprise.getRegisteredCapital() == null || "".equals(enterprise.getRegisteredCapital())) {
             return GsonUtil.getErrorJson("注册资本格式不正确");
         }
-        if (enterprise.getRegisteredDate() == null || "".equals(enterprise.getRegisteredDate())) {
+        if (enterprise.getRegisteredDate() == null) {
             return GsonUtil.getErrorJson("注册年份格式不正确");
         }
         if (authenticationDatas == null) {

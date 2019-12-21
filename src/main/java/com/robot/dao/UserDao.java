@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface UserDao {
 
-    int register(User user);
+    Integer register(User user);
     User login(User user);
     int resetPassword(@Param("password") String password, @Param("email") String email);
     ArrayList<User> find(User user);
