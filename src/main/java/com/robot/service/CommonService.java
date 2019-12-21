@@ -94,12 +94,10 @@ public class CommonService {
         new Thread(()->run2(dataMap,countDownLatch)).start();
         new Thread(()->run3(dataMap,countDownLatch)).start();
         countDownLatch.await();
-        CommonUtil.getTime(null);
         return GsonUtil.getSuccessJson(dataMap);
     }
 
     private void run1(Map<String,Object> dataMap,CountDownLatch countDownLatch){
-        long t1=System.currentTimeMillis();
         try {
             //原机器人协会
             dataMap.put("news",informationService.getIndexAssociationNews());
@@ -113,11 +111,9 @@ public class CommonService {
         } finally {
             countDownLatch.countDown();
         }
-        System.out.println((t1-System.currentTimeMillis())/1000 + " " + 1);
     }
 
     private void run2(Map<String,Object> dataMap,CountDownLatch countDownLatch){
-        long t1=System.currentTimeMillis();
         try {
             //企业
             dataMap.put("companyNews", informationService.getCompanyNews());
@@ -134,11 +130,9 @@ public class CommonService {
         } finally {
             countDownLatch.countDown();
         }
-        System.out.println((t1-System.currentTimeMillis())/1000 + " " + 2);
     }
 
     private void run3(Map<String,Object> dataMap,CountDownLatch countDownLatch){
-        long t1=System.currentTimeMillis();
         try {
             //产品
             dataMap.put("productEvaluation", informationService.getIndexEvaluate());
@@ -156,7 +150,6 @@ public class CommonService {
         } finally {
             countDownLatch.countDown();
         }
-        System.out.println((t1-System.currentTimeMillis())/1000 + " " + 3);
     }
 
     /**
