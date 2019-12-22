@@ -1,7 +1,6 @@
 package com.robot.resolver;
 
 import com.robot.util.GsonUtil;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,7 +28,7 @@ public class ExceptionResolver {
         if (e instanceof MissingServletRequestParameterException){
             return GsonUtil.getErrorJson("parameter error");
         }
-        return GsonUtil.getErrorJson("error!");
+        return GsonUtil.getErrorJson(e.toString());
     }
 
 

@@ -1,6 +1,8 @@
 package com.robot.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -9,40 +11,47 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableCaching
-public class RedisCacheConfig {
-    private volatile JedisConnectionFactory mJedisConnectionFactory;
-    private volatile RedisTemplate<String, String> mRedisTemplate;
-    private volatile RedisCacheManager mRedisCacheManager;
+public class RedisCacheConfig extends CachingConfigurerSupport {
 
-    public RedisCacheConfig() {
-        super();
+    @Value("${redis.host}")
+    private String host;
+    @Value("${redis.port}")
+    private int port;
+    @Value("${redis.timeout}")
+    private int timeout;
+
+    @Bean
+    public RedisConnectionFactory factory() {
+        //使用默认地址和端口
+        RedisConnectionFactory factory = new JedisConnectionFactory();
+        return factory;
     }
 
-    public RedisCacheConfig(JedisConnectionFactory mJedisConnectionFactory, RedisTemplate<String, String> mRedisTemplate, RedisCacheManager mRedisCacheManager) {
-        super();
-        this.mJedisConnectionFactory = mJedisConnectionFactory;
-        this.mRedisTemplate = mRedisTemplate;
-        this.mRedisCacheManager = mRedisCacheManager;
+    @Bean
+    public CacheManager cacheManager(RedisTemplate redisTemplate) {
+        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+        //设置缓存过期时间
+        cacheManager.setDefaultExpiration(30);
+        Map<String,Long> expiresMap=new HashMap<>();
+        expiresMap.put("info",10L);
+        cacheManager.setExpires(expiresMap);
+        return cacheManager;
     }
 
-    public JedisConnectionFactory redisConnectionFactory() {
-        return mJedisConnectionFactory;
+    @Bean
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory){
+        //使用 StringRedisSerializer 来序列化，JdkSerializationRedisSerializer or jackson2JsonRedisSerializer
+        StringRedisTemplate template = new StringRedisTemplate(factory);
+        return template;
     }
-
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory cf) {
-        return mRedisTemplate;
-    }
-
-    public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
-        return mRedisCacheManager;
-    }
-
-
 
     @Bean
     public KeyGenerator keyGenerator() {

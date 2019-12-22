@@ -10,7 +10,6 @@
         <!--&lt;!&ndash;将积极加载改为消极加载即按需加载&ndash;&gt;-->
         <!--<setting name="aggressiveLazyLoading" value="false"/>-->
         <!--&lt;!&ndash;开启二级缓存（默认开启）&ndash;&gt;-->
-        <!--<setting name="cacheEnabled" value="true"/>-->
         <!--setting name="logImpl" value="STDOUT_LOGGING" /-->
         <setting name="cacheEnabled" value="true"/>
         <!--打印日志-->
