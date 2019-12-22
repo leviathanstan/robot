@@ -25,8 +25,8 @@ public class TimeStatisticsAop {
 
     }
 
-    @Pointcut("execution (* com.robot.service.*.*(..)) || execution (* com.robot.controller.*.*(..))")//切面范围
-//    @Pointcut("execution (* com.robot.controller.*.*(..))")//切面范围
+//    @Pointcut("execution (* com.robot.service.*.*(..)) || execution (* com.robot.controller.*.*(..))")//切面范围
+    @Pointcut("execution (* com.robot.controller.*.*(..))")//切面范围
     public void access(){
 
     }

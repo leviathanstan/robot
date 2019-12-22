@@ -39,10 +39,10 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     public CacheManager cacheManager(RedisTemplate redisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
         //设置缓存过期时间
-        cacheManager.setDefaultExpiration(30);
-        Map<String,Long> expiresMap=new HashMap<>();
-        expiresMap.put("info",10L);
-        cacheManager.setExpires(expiresMap);
+        cacheManager.setDefaultExpiration(300);
+//        Map<String,Long> expiresMap=new HashMap<>();
+//        expiresMap.put("info",300L);
+//        cacheManager.setExpires(expiresMap);
         return cacheManager;
     }
 

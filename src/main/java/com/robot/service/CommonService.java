@@ -52,7 +52,7 @@ public class CommonService {
      * @param
      * @return
      */
-    //设置sync = true后过期时间无法生效（花费我几个小时找原因，祝福你全家）
+    //设置sync = true后过期时间无法生效
     @Cacheable(value = "info", key = "'index'")//, sync = true)
     public String getIndex() throws InterruptedException{
         Map<String,Object> dataMap = new HashMap<>();
