@@ -240,6 +240,9 @@ public class InformationService {
         int userId = CommonUtil.formateParmNum(args.get("userId"));
         if (userRole != User.ROLE_MANAGER && userRole != 0) {
             List<Integer> ids = informationDao.selectMemberInformation(userId);
+            //如果没有直接返回
+            if(ids.size() == 0)
+                return new PageInfo<>();
             dataMap.put("ids", ids);
         }
 

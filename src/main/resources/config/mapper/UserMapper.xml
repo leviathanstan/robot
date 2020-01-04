@@ -100,6 +100,9 @@
 	</select>
 
     <insert id="insertMember" parameterType="com.robot.entity.Member">
+        <selectKey order="AFTER" resultType="int" keyProperty="id">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
         insert into member (id, member_name, member_type, contact, member_number, contact_info, contact_info_url, member_mold, member_mold_id)
         values (null, #{memberName}, #{memberType}, #{contact}, #{memberNumber}, #{contactInfo}, #{contactInfoUrl}, #{memberMold}, #{memberMoldId});
     </insert>
@@ -161,7 +164,7 @@
     </select>
 
     <select id="getMemberList" resultMap="members">
-        select m.id, m.member_name, m.member_mold, m.member_mold_id from member m where m.id in (select member_id from member_user where user_id in (select id from user where `status` = 2));
+        select m.id, m.member_name, m.member_mold, m.member_mold_id from member m
     </select>
 
     <update id="judgeMember" parameterType="com.robot.entity.Member">
@@ -178,5 +181,9 @@
 
     <select id="getUser" parameterType="int" resultType="com.robot.entity.User">
         select * from user where id = #{id}
+    </select>
+
+    <select id="selectMemberByName" resultType="com.robot.entity.Member">
+        select id,member_name from member
     </select>
 </mapper>

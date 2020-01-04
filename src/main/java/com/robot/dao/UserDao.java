@@ -26,7 +26,7 @@ public interface UserDao {
     int insertMemberProducts(List<RepresentativeWork> representativeWorks);
     int insertMemberProduct(RepresentativeWork representativeWork);
     int isExist(User user);
-    int insertMember(Member member);
+    Member insertMember(Member member);
     int isExistMember(String enterpriseName);
     int insertMemberUser(@Param("userId") Integer userId, @Param("memberId") Integer memberId);
     Map<String, Object> getMemberInfo(Integer memberId);
@@ -36,5 +36,6 @@ public interface UserDao {
     List<HashMap<String, Object>> getMemberListStatus();
     int insertEnterpriseInfo(Enterprise enterprise);
     void insertMemberProxy(User user);
+    Member selectMemberByName(String memberName);
     User getUser(int id);
 }
