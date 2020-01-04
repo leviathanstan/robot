@@ -9,6 +9,7 @@ public class RobotNews {
     private String url;
     private String title;
     private int viewCount;
+    private Integer commentCount;
     private ArrayList<Detail> content;
     private String postDate;
     private String source;
@@ -97,18 +98,16 @@ public class RobotNews {
         this.categoryId = categoryId;
     }
 
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
     @Override
     public String toString() {
-        return "RobotNews{" +
-                "id=" + id +
-                ", url='" + url + '\'' +
-                ", title='" + title + '\'' +
-                ", viewCount=" + viewCount +
-                ", content=" + content +
-                ", postDate='" + postDate + '\'' +
-                ", source='" + source + '\'' +
-                ", readGuide='" + readGuide + '\'' +
-                ", img='" + img + '\'' +
-                '}';
+        return "RobotNews{" + "id=" + id + ", url='" + url + '\'' + ", title='" + title + '\'' + ", viewCount=" + viewCount + ", commentCount=" + commentCount + ", content=" + content + ", postDate='" + postDate + '\'' + ", source='" + source + '\'' + ", readGuide='" + readGuide + '\'' + ", img='" + img + '\'' + ", categoryId=" + categoryId + '}';
     }
 }

@@ -38,4 +38,5 @@ public interface UserDao {
     void insertMemberProxy(User user);
     Member selectMemberByName(String memberName);
     List<Integer> selectUIds(int memberId);
+    User getUser(int id);
 }

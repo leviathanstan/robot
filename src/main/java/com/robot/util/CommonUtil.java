@@ -371,18 +371,18 @@ public class CommonUtil {
      * @author asce
      * @date 2018/11/30
      */
-    public static ArrayList<String> saveFile(MultipartFile[] files) {
+    public static ArrayList<String> saveFile(MultipartFile[] files) throws Exception{
         if (files == null || files.length == 0) {
             return null;
         }
-        ArrayList<String> paths = null;
+        ArrayList<String> paths = new ArrayList<>();
         String path = null;
         for (MultipartFile file : files) {
             try {
                 //获取文件名作为保存到服务器的文件名称
                 if (!file.isEmpty() && file.getSize() > 0) {
                     String filename = file.getOriginalFilename();
-                    if (!FileUtil.validateDoc(filename)) {
+                    if (filename == null || !FileUtil.validateDoc(filename)) {
                         continue;
                     }
                     String type = filename.substring(filename.lastIndexOf(".") + 1);    //获取文件后缀名称
@@ -393,10 +393,10 @@ public class CommonUtil {
                     File tempMkdir = new File(Constant.FILE_PATH + mkdir);
                     if (tempMkdir.exists()) {
                         if (!tempMkdir.isDirectory()) {
-                            tempMkdir.mkdir();
+                            if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
                         }
                     } else {
-                        tempMkdir.mkdir();
+                        if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
                     }
                     //保存
                     path = Constant.FILE_PATH + mkdir + File.separator + fileName;
@@ -407,7 +407,49 @@ public class CommonUtil {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                return null;
+                throw ex;
+            }
+        }
+        return paths;
+    }
+
+    public static ArrayList<String> saveZip(MultipartFile[] files) throws Exception{
+        if (files == null || files.length == 0) {
+            return null;
+        }
+        ArrayList<String> paths = new ArrayList<>();
+        String path = null;
+        for (MultipartFile file : files) {
+            try {
+                //获取文件名作为保存到服务器的文件名称
+                if (!file.isEmpty() && file.getSize() > 0) {
+                    String filename = file.getOriginalFilename();
+                    if (filename == null || !FileUtil.validateZip(filename)) {
+                        continue;
+                    }
+                    String type = filename.substring(filename.lastIndexOf(".") + 1);    //获取文件后缀名称
+                    String fileName = CommonUtil.getUUID() + "." + type;
+                    //每月新建一个文件夹存放
+                    LocalDate data = LocalDate.now();
+                    String mkdir = data.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+                    File tempMkdir = new File(Constant.FILE_PATH + mkdir);
+                    if (tempMkdir.exists()) {
+                        if (!tempMkdir.isDirectory()) {
+                            if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
+                        }
+                    } else {
+                        if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
+                    }
+                    //保存
+                    path = Constant.FILE_PATH + mkdir + File.separator + fileName;
+                    File saveFile = new File(path);
+                    file.transferTo(saveFile);
+                    path = Constant.FILE_ACCESS_PATH + mkdir + "/" + fileName;
+                    paths.add(path);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                throw ex;
             }
         }
         return paths;
@@ -420,6 +462,7 @@ public class CommonUtil {
      */
     public static String uploadMember(MultipartFile file, String fileType) {
         String fileName = file.getOriginalFilename();
+        if (fileName == null)   return GsonUtil.getErrorJson();
         if (!fileName.endsWith(".zip")) {
             return GsonUtil.getErrorJson("格式不支持");
         } else {
