@@ -129,4 +129,19 @@
     <select id="selectMemberConference" resultType="java.lang.Integer">
         select conference_id from member_conference  where user_id=#{userId}
     </select>
+
+    <select id="selectMemberConferenceByUIds" resultType="java.lang.Integer">
+        select conference_id from member_conference where user_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectIndexMemberConference" resultType="com.robot.entity.Conference">
+        select * from conference where conference_type=#{categoryId} and id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+       limit #{number}
+    </select>
 </mapper>

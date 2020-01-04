@@ -37,4 +37,5 @@ public interface UserDao {
     int insertEnterpriseInfo(Enterprise enterprise);
     void insertMemberProxy(User user);
     Member selectMemberByName(String memberName);
+    List<Integer> selectUIds(int memberId);
 }

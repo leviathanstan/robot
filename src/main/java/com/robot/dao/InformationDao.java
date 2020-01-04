@@ -48,4 +48,6 @@ public interface InformationDao {
     List<Integer> selectMemberInformation(int userId);
     void deleteMemberInformation(List<Integer> ids);
     void insertMemberInformation(@Param("informationId")int informationId, @Param("userId")int userId);
+    List<Integer> selectMemberInformationByUIds(List<Integer> userIds);
+    List<RobotNews> selectIndexMemberInformation(@Param("categoryId") int categoryId,@Param("list") List<Integer> informationIds,@Param("number") int number);
 }

@@ -26,4 +26,6 @@ public interface ProductDao {
     int insertMemberProduct(@Param("productId")int productId,@Param("userId")int userId);
     List<Integer> selectMemberProduct(int userId);
     void deleteMemberProduct(List<Integer> ids);
+    List<Integer> selectMemberProductByUIds(List<Integer> userIds);
+    List<Product> selectIndexMemberProduct(@Param("list") List<Integer> informationIds,@Param("number") int number);
 }

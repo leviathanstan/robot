@@ -235,4 +235,19 @@
     <select id="selectMemberInformation" resultType="java.lang.Integer">
         select information_id from member_information where user_id=#{userId}
     </select>
+
+    <select id="selectMemberInformationByUIds" resultType="java.lang.Integer">
+        select information_id from member_information where user_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectIndexMemberInformation" resultType="com.robot.entity.RobotNews">
+         select id,title,post_date,cover from information where category_id=#{categoryId} and id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         order by post_date desc limit #{number}
+    </select>
 </mapper>

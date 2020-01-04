@@ -30,4 +30,6 @@ public interface ConferenceDao {
     List<Integer> selectMemberConference(int userId);
     void deleteMemberConference(int id);
     void insertMemberConference(@Param("conferenceId")int conferenceId, @Param("userId")int userId);
+    List<Integer> selectMemberConferenceByUIds(List<Integer> userIds);
+    List<Conference> selectIndexMemberConference(@Param("categoryId") int categoryId,@Param("list") List<Integer> informationIds,@Param("number") int number);
 }

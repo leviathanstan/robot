@@ -31,6 +31,7 @@ public class CommonController {
     @Autowired
     private SpiderManager spiderManager;
 
+
     @ResponseBody
     @RequestMapping(value = "/getIndex",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String getIndex() throws InterruptedException{
@@ -83,4 +84,9 @@ public class CommonController {
          return "index";
     }
 
+    @RequestMapping(value="/getMemberInfo",method = {RequestMethod.POST})
+    @ResponseBody
+    public String getMemberInfo(int id){
+        return commonService.getMemberInfo(id);
+    }
 }

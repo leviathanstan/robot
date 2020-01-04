@@ -103,4 +103,19 @@
     <select id="selectMemberProduct" resultType="java.lang.Integer">
         select product_id from member_product where user_id=#{userId}
     </select>
+
+    <select id="selectMemberProductByUIds" resultType="java.lang.Integer">
+        select product_id from member_product where user_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectIndexMemberProduct" resultType="com.robot.entity.Product">
+        select id, name, pro_last_up_time, cover from product_library where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by pro_last_up_time desc limit #{number}
+    </select>
 </mapper>

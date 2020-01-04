@@ -179,7 +179,13 @@
         select u.id, u.username, u.status, m.id as memberId, m.member_mold_id as enterpriseId, m.member_rank as memberRank, m.member_name as memberName, m.member_type as memberType, m.contact, m.member_number as memberNumber, m.member_identifier as memberIdentifier, m.contact_info as contactInfo, m.contact_info_url as contactInfoUrl, m.association_approval as associationApproval, m.member_mold as memberMold from user u, member m, member_user mu where mu.member_id = m.id and mu.user_id = u.id and u.status = 1
     </select>
 
+    <!--通过会员单位名查找会员-->
     <select id="selectMemberByName" resultType="com.robot.entity.Member">
-        select id,member_name from member
+        select id,member_name from member where member_name=#{memberName}
+    </select>
+
+    <!--搜索某会员单位的所有会员-->
+    <select id="selectUIds" resultType="java.lang.Integer">
+        select user_id from member_user where member_id = #{memberId}
     </select>
 </mapper>

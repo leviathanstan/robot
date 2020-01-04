@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.entity.Introduction;
 import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
@@ -32,6 +33,8 @@ public class CommonService {
     PositionService positionService;
     @Autowired
     ConferenceService conferenceService;
+    @Autowired
+    MemberService memberService;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
@@ -209,5 +212,13 @@ public class CommonService {
         return GsonUtil.getErrorJson("上传失败");
     }
 
+    /**
+     * 获取会员单位资讯信息等
+     * @param id
+     * @return
+     */
+    public String getMemberInfo(int id){
+        return memberService.getMemberInfo(id);
+    }
 
 }

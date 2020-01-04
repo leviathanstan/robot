@@ -74,4 +74,19 @@
     <select id="selectMemberIntroduction" resultType="java.lang.Integer">
         select introduction_id from member_introduction  where user_id=#{userId}
     </select>
+
+    <select id="selectMemberIntroductionByUIds" resultType="java.lang.Integer">
+        select introduction_id from member_introduction where user_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectIndexMemberIntroduction" resultType="com.robot.entity.Introduction">
+        select id,name,introduction,post_date from introduction where category_id=#{categoryId} and id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by post_date desc limit #{number}
+    </select>
 </mapper>

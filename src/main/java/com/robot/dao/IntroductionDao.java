@@ -24,4 +24,6 @@ public interface IntroductionDao {
     List<Integer> selectMemberIntroduction(int userId);
     void deleteMemberIntroduction(List<Integer> ids);
     void insertMemberIntroduction(@Param("introductionId")int introductionId, @Param("userId")int userId);
+    List<Integer> selectMemberIntroductionByUIds(List<Integer> userIds);
+    List<Introduction> selectIndexMemberIntroduction(@Param("categoryId") int categoryId,@Param("list") List<Integer> informationIds,@Param("number") int number);
 }
