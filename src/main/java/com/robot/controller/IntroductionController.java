@@ -93,7 +93,7 @@ public class IntroductionController {
      * @param ids
      * @return
      */
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "manager/deleteIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteIntroduction(@RequestParam List<Integer> ids){
@@ -105,7 +105,7 @@ public class IntroductionController {
      * @param introduction
      * @return
      */
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "manager/updateIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateIntroduction(Introduction introduction){
@@ -116,7 +116,7 @@ public class IntroductionController {
      * @param introduction
      * @return
      */
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "manager/addIntroduction", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addIntroduction(@SessionAttribute("user") User user, Introduction introduction){

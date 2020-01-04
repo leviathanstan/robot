@@ -390,7 +390,7 @@ public class InformationController {
      * @param ids
      * @return
      */
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "/manager/deleteInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteInformation(@RequestParam List<Integer> ids){
@@ -402,7 +402,7 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "/manager/updateInformation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateInformation(RobotNews robotNews){
@@ -414,7 +414,7 @@ public class InformationController {
      * @param robotNews
      * @return
      */
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "/manager/addInformation", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String addInformation(@SessionAttribute("user") User user, RobotNews robotNews){

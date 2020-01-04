@@ -23,21 +23,21 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "/manager/deleteProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteProduct(@RequestParam List<Integer> ids){
         return productService.deleteProduct(ids);
     }
 
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "/manager/updateProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateProduct(Product product){
         return productService.updateProduct(product);
     }
 
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "/manager/addProduct", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addProduct(@SessionAttribute("user") User user, Product product){
