@@ -36,4 +36,5 @@ public interface UserDao {
     List<HashMap<String, Object>> getMemberListStatus();
     int insertEnterpriseInfo(Enterprise enterprise);
     void insertMemberProxy(User user);
+    Member selectMemberByName(String memberName);
 }

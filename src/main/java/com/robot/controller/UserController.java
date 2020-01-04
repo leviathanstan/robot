@@ -113,8 +113,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/validate", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String register(User user, HttpSession session) {
-        return userService.validate(user, session);
+    public String register(User user, HttpSession session,String memberName) {
+        return userService.validate(user, session,memberName);
     }
 
     /**

@@ -199,13 +199,17 @@ public class UserService {
      * @return
      * @function 用户注册信息判断
      */
-    public String validate(User user, final HttpSession session) {
+    public String validate(User user, final HttpSession session,String memberName) {
         if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
             return GsonUtil.getErrorJson("输入不能为空");
         }
         if (!ValidateUtil.isMatchEmail(user.getEmail())) {
             return GsonUtil.getErrorJson("邮箱格式不正确");
         }
+        Member member = userDao.selectMemberByName(memberName);
+        if(member == null)
+            return GsonUtil.getErrorJson("会员单位未注册");
+        session.setAttribute("memberId",member.getId());
         User user1 = new User();
         user1.setEmail(user.getEmail());
         if (userDao.find(user1).size() != 0) {
@@ -245,6 +249,8 @@ public class UserService {
                 user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
                 Integer userId = userDao.register(user);
                 if (userId != null) {
+                    int memberId = (int) session.getAttribute("memberId");
+                    userDao.insertMemberUser(userId,memberId);
                     //两个去除session方案：成功则去除session，不成功过期了也去除
                     session.removeAttribute("emailCode");
                     session.removeAttribute("registerUser");
@@ -434,8 +440,9 @@ public class UserService {
         userDao.insertEnterpriseInfo(enterprise);   //插入企业信息
         member.setMemberMold(Member.MEMBER_MOLD_ENTERPRISE);
         member.setMemberMoldId(enterprise.getId());
-        userDao.insertMember(member); //插入会员信息
-        session.setAttribute("enterpriseId", enterprise.getId());
+        int memberId =  userDao.insertMember(member); //插入会员信息
+        //session.setAttribute("enterpriseId", enterprise.getId());
+        session.setAttribute("member",memberId);
         return GsonUtil.getSuccessJson("注册成功");
     }
 
@@ -478,9 +485,9 @@ public class UserService {
         if (!ValidateUtil.isMatchEmail(user.getEmail())) {
             return GsonUtil.getErrorJson("邮箱格式不正确");
         }
-        if (!user.getPhone().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
-            return GsonUtil.getErrorJson("手机格式不正确");
-        }
+//        if (!user.getPhone().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
+//            return GsonUtil.getErrorJson("手机格式不正确");
+//        }
         if (userDao.isExist(user) != 0) {
             return GsonUtil.getErrorJson("用户已存在");
         }
@@ -489,6 +496,7 @@ public class UserService {
         user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
         userDao.insertMemberProxy(user);
         userDao.insertMemberUser(user.getId(), memberId);
+
         return GsonUtil.getSuccessJson("用户添加成功");
     }
 
