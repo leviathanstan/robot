@@ -440,9 +440,9 @@ public class UserService {
         userDao.insertEnterpriseInfo(enterprise);   //插入企业信息
         member.setMemberMold(Member.MEMBER_MOLD_ENTERPRISE);
         member.setMemberMoldId(enterprise.getId());
-        int memberId =  userDao.insertMember(member); //插入会员信息
+        Member member1 =  userDao.insertMember(member); //插入会员信息
         //session.setAttribute("enterpriseId", enterprise.getId());
-        session.setAttribute("member",memberId);
+        session.setAttribute("memberId",member1.getId());
         return GsonUtil.getSuccessJson("注册成功");
     }
 
@@ -482,6 +482,7 @@ public class UserService {
         if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
             return GsonUtil.getErrorJson("输入不能为空");
         }
+        System.out.println(user.getEmail());
         if (!ValidateUtil.isMatchEmail(user.getEmail())) {
             return GsonUtil.getErrorJson("邮箱格式不正确");
         }
