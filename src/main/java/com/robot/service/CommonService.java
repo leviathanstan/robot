@@ -196,7 +196,7 @@ public class CommonService {
      * @param
      * @return
      */
-    public String uploadFile(MultipartFile[] files){
+    public String uploadFile(MultipartFile[] files) throws Exception{
         if(files == null || files.length == 0){
             return GsonUtil.getErrorJson("没有选择文件");
         }else{

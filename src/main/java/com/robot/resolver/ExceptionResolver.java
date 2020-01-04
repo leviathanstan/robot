@@ -18,6 +18,7 @@ public class ExceptionResolver {
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public String handle(Exception e){
+        System.out.println(e.toString());
         e.printStackTrace();
         if (e instanceof NullPointerException){
             return GsonUtil.getErrorJson("This is a NullPointerException, please find a Back-end weak chicken to deal with  it");

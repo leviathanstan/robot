@@ -69,6 +69,7 @@ public class TimeStatisticsAop {
     }
 
     private Object returnError(ProceedingJoinPoint point, Exception e) {
+        e.printStackTrace();
         return GsonUtil.getErrorJson(e.getMessage());
     }
 }

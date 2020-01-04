@@ -32,6 +32,8 @@ public class InformationService {
     private InformationDao informationDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private CommentService commentService;
 
     /**
      * information类别
@@ -131,15 +133,11 @@ public class InformationService {
     @Transactional
     public String deleteInformation(List<Integer> ids) {
         int count = ids.size();
-        try {
-            informationDao.deleteMemberInformation(ids);
-            informationDao.deleteContent(ids);
-            if (count != informationDao.deleteInformation(ids)) {
-                throw new RuntimeException();
-            }
-        } catch (Exception e) {
+        commentService.deleteByInformation(ids);
+        informationDao.deleteMemberInformation(ids);
+        informationDao.deleteContent(ids);
+        if (count != informationDao.deleteInformation(ids))
             throw new RuntimeException();
-        }
         return GsonUtil.getSuccessJson();
     }
 

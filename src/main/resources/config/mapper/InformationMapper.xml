@@ -11,6 +11,7 @@
         <result property="viewCount" column="view_count"/>
         <result property="readGuide" column="guide"/>
         <result property="categoryId" column="category_id"/>
+        <association property="commentCount" column="{informationId=id}" javaType="java.lang.Integer" select="getCommentCount"/>
     </resultMap>
     <resultMap id="informationDetail" type="com.robot.entity.RobotNews" extends="informationMap">
         <collection property="content" column="{informationId=id}" javaType="java.util.ArrayList" ofType="com.robot.entity.Detail" select="getContentOfInfo"/>
@@ -54,6 +55,14 @@
         <result property="content" column="content"/>
         <result property="viewCount" column="view_count"/>
     </resultMap>
+
+    <select id="getCommentCount" parameterType="map" resultType="java.lang.Integer">
+        select sum(count1) from (
+            select count(*) as count1 from comment t1, reply t2 where t1.information_id = #{informationId} and t1.id=t2.comment_id
+        union
+            select count(*) from comment where information_id=#{informationId}
+            ) t;
+    </select>
     <!--首页资讯-->
     <select id="getIndexInformation" parameterType="map" resultMap="informationMap">
         select id,title,post_date,cover from information where category_id=#{categoryId} order by post_date desc limit #{number}

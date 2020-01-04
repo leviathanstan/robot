@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.robot.dao.CommentDao">
+
+    <insert id="addBlogComment" parameterType="com.robot.entity.Comment">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        insert into comment(information_id,user_id,comments,time,file) values(#{informationId},#{user.id},#{comments},#{time},#{file})
+    </insert>
+
+    <insert id="addCommentReply" parameterType="com.robot.entity.Reply">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <choose>
+            <when test="fromReplyId==0">
+                insert into reply(comment_id,comments,user_id,time,file) values(#{commentId},#{comments},#{user.id},#{time},#{file})
+            </when>
+            <otherwise>
+                insert into reply(comment_id,reply_id,comments,user_id,time,file) values(#{commentId},#{fromReplyId},#{comments},#{user.id},#{time},#{file})
+            </otherwise>
+        </choose>
+    </insert>
+
+    <select id="getUserIdFromComment" parameterType="int" resultType="int">
+        select user_id from comment where id=#{id}
+    </select>
+
+    <select id="getUserIdFromReply" parameterType="int" resultType="int">
+        select user_id from reply where id=#{id}
+    </select>
+
+    <select id="getCommentByBlog" parameterType="map" resultMap="commentMap">
+        select * from comment where information_id=#{informationId} order by time desc limit #{begin},10
+    </select>
+
+    <select id="getUser" parameterType="map" resultType="com.robot.entity.User">
+        select id, username from user where id = #{userId}
+    </select>
+
+    <resultMap id="commentMap" type="com.robot.entity.Comment" autoMapping="true">
+        <result property="informationId" column="information_id"/>
+        <association property="user" column="{userId=user_id}" javaType="com.robot.entity.User" autoMapping="true" select="getUser"/>
+    </resultMap>
+
+    <select id="getReplyByComment" parameterType="int" resultMap="replyMap">
+        select * from reply where comment_id=#{commentId} order by time desc
+    </select>
+
+    <resultMap id="replyMap" type="com.robot.entity.Reply" autoMapping="true">
+        <result property="commentId" column="comment_id"/>
+        <result property="fromReplyId" column="reply_id"/>
+        <association property="user" column="{userId=user_id}" javaType="com.robot.entity.User" autoMapping="true" select="getUser"/>
+    </resultMap>
+
+    <select id="getCommentReplyCount" parameterType="int" resultType="int">
+        select count(id) from reply where comment_id=#{commentId}
+    </select>
+
+    <delete id="deleteCommentByInformation" parameterType="int">
+        delete from comment where information_id = #{informationId}
+    </delete>
+
+    <delete id="deleteCommentById" parameterType="int">
+        delete from comment where id = #{id}
+    </delete>
+
+    <delete id="deleteReplyByComment" parameterType="int">
+        delete from reply where comment_id = #{commentId}
+    </delete>
+
+    <delete id="deleteReplyById" parameterType="int">
+        delete from reply where id = #{id}
+    </delete>
+
+    <delete id="deleteReplyByInformation" parameterType="int">
+        delete from reply where comment_id in(select id from comment where information_id = #{informationId})
+    </delete>
+</mapper>
