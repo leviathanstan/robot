@@ -1,6 +1,5 @@
 package com.robot.service;
 
-import com.robot.entity.Introduction;
 import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
@@ -13,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -58,7 +58,7 @@ public class CommonService {
     //设置sync = true后过期时间无法生效
     @Cacheable(value = "info", key = "'index'")//, sync = true)
     public String getIndex() throws InterruptedException{
-        Map<String,Object> dataMap = new HashMap<>();
+        Map<String,Object> dataMap = new ConcurrentHashMap<>(35);
         final CountDownLatch countDownLatch = new CountDownLatch(3);
         new Thread(()->run1(dataMap,countDownLatch)).start();
         new Thread(()->run2(dataMap,countDownLatch)).start();
