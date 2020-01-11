@@ -1,6 +1,7 @@
 package com.robot.resolver;
 
 import com.robot.util.GsonUtil;
+import com.robot.util.LogHelper;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,8 +19,8 @@ public class ExceptionResolver {
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public String handle(Exception e){
-        System.out.println(e.toString());
         e.printStackTrace();
+        LogHelper.errorLog.error("又抛异常？", e);
         if (e instanceof NullPointerException){
             return GsonUtil.getErrorJson("This is a NullPointerException, please find a Back-end weak chicken to deal with  it");
         }

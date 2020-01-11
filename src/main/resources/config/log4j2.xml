@@ -3,7 +3,7 @@
     <properties>
         <property name="LOG_HOME">D:/WEB-INF/logs</property>
         <property name="FILE_NAME">scheduleTask</property>
-        <property name="FILE_NAME2">root</property>
+        <property name="FILE_NAME2">error</property>
     </properties>
 
 

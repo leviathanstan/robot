@@ -70,6 +70,7 @@ public class TimeStatisticsAop {
 
     private Object returnError(ProceedingJoinPoint point, Exception e) {
         e.printStackTrace();
+        LogHelper.errorLog.error("又抛异常？", e);
         return GsonUtil.getErrorJson(e.getMessage());
     }
 }
