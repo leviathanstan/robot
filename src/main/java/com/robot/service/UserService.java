@@ -247,8 +247,10 @@ public class UserService {
                 return GsonUtil.getErrorJson("验证码错误");
             } else {
                 user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
-                Integer userId = userDao.register(user);
-                if (userId != null) {
+                 if(userDao.register(user) != 1)
+                     return GsonUtil.getErrorJson();
+                int userId = user.getId();
+                if (userId != 0) {
                     int memberId = (int) session.getAttribute("memberId");
                     userDao.insertMemberUser(userId,memberId);
                     //两个去除session方案：成功则去除session，不成功过期了也去除

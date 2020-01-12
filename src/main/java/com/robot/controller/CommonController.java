@@ -84,7 +84,7 @@ public class CommonController {
          return "index";
     }
 
-    @RequestMapping(value="/getMemberInfo",method = {RequestMethod.POST})
+    @RequestMapping(value="/getMemberInfo",method = {RequestMethod.POST},produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getMemberInfo(int id){
         return commonService.getMemberInfo(id);

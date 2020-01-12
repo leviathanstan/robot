@@ -32,7 +32,7 @@
     <!-- 注册 -->
     <insert id="register" parameterType="com.robot.entity.User">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
+            SELECT LAST_INSERT_ID() AS ID
         </selectKey>
         insert into user(id,username,password,email, phone)value(null,#{username},#{password},#{email}, #{phone})
     </insert>
