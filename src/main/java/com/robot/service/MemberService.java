@@ -7,9 +7,11 @@ import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class MemberService {
@@ -26,11 +28,6 @@ public class MemberService {
     private ProductDao productDao;
     @Autowired
     private InformationService informationService;
-    @Autowired
-    private CompanyService companyService;
-
-    @Autowired
-    private PositionService positionService;
 
     /**
      * information类别
@@ -116,8 +113,9 @@ public class MemberService {
         if (member == null)
             return null;
         List<Integer> userIds = userDao.selectUIds(member.getId());
-        List<Integer> informationIds = informationDao.selectMemberInformationByUIds(userIds);
-        Map<String, Object> dataMap = new HashMap<>();
+        List<Integer> informationIds = null;
+        informationIds = userIds.size() == 0 ? new ArrayList<>():informationDao.selectMemberInformationByUIds(userIds);
+        Map<String,Object> dataMap = new ConcurrentHashMap<>(35);
         if (informationIds.size() != 0) {
             dataMap.put("information1", informationDao.selectIndexMemberInformation(InformationEnum.INDUSTRY_INFORMATION.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
             dataMap.put("news", informationDao.selectIndexMemberInformation(InformationEnum.ASSOCIATION_NEWS.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
@@ -133,27 +131,22 @@ public class MemberService {
             dataMap.put("policy", informationDao.selectIndexMemberInformation(InformationEnum.POLICY_INFORMATION.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
             dataMap.put("case", informationDao.selectIndexMemberInformation(InformationEnum.CASE.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
             dataMap.put("basic", informationDao.selectIndexMemberInformation(InformationEnum.BASIC_KNOWLEDGE.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
-            dataMap.put("science", informationService.getIndexDiscuss());
         }
-        List<Integer> introductionIds = introductionDao.selectMemberIntroductionByUIds(userIds);
+        List<Integer> introductionIds = userIds.size() == 0 ? new ArrayList<>() : introductionDao.selectMemberIntroductionByUIds(userIds);
         if(introductionIds.size() != 0) {
             dataMap.put("school", introductionDao.selectIndexMemberIntroduction(IntroductionEnum.UNIVERSITIES.getId(),introductionIds,IntroductionNumberEnum.UNIVERSITIES.getNumber()));
             dataMap.put("experts", introductionDao.selectIndexMemberIntroduction(IntroductionEnum.EXPERT.getId(),introductionIds,IntroductionNumberEnum.UNIVERSITIES.getNumber()));
             dataMap.put("members",introductionDao.selectIndexMemberIntroduction(IntroductionEnum.MEMBER.getId(),introductionIds,IntroductionNumberEnum.UNIVERSITIES.getNumber()));
         }
-        List<Integer> productIds = productDao.selectMemberProductByUIds(userIds);
+        List<Integer> productIds = userIds.size() == 0 ? new ArrayList<>() : productDao.selectMemberProductByUIds(userIds);
         if(productIds.size() != 0) {
             dataMap.put("productLibrary",productDao.selectIndexMemberProduct(productIds,NumberEnum.PRODUCT_NUMBER.getNumber()));
         }
-        List<Integer> conferenceIds = conferenceDao.selectMemberConferenceByUIds(userIds);
+        List<Integer> conferenceIds = userIds.size() == 0 ? new ArrayList<>() : conferenceDao.selectMemberConferenceByUIds(userIds);
         if(conferenceIds.size() != 0) {
             dataMap.put("conference", conferenceDao.selectIndexMemberConference(Integer.parseInt(ConferenceEnum.CONFERENCE.getType()),conferenceIds,5));
             dataMap.put("meeting",conferenceDao.selectIndexMemberConference(Integer.parseInt(ConferenceEnum.MEETING.getType()),conferenceIds,5));
         }
-        dataMap.put("position", positionService.getIndex());
-        dataMap.put("report", informationService.findReportTop());
-        dataMap.put("companyBrand", companyService.getCompanyBrand());
-        dataMap.put("relatedHot",informationService.findIndexRelatedHot());
         return GsonUtil.getSuccessJson(dataMap);
     }
 }

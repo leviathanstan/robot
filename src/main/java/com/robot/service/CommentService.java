@@ -192,17 +192,14 @@ public class CommentService {
 	 * @return
 	 */
 	public Comment commentConvert(Comment comment){
-
-		if(comment.getComments().length()>200||comment.getComments().length()==0){
+		if(comment == null)	return null;
+		if(comment.getComments() == null || comment.getComments().length()>200 || comment.getComments().length()==0){
 			return null;
 		}
-
 		comment.setComments(HtmlUtils.htmlEscape(comment.getComments()));
-
 		Calendar cal=Calendar.getInstance();
 		SimpleDateFormat date=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		comment.setTime(date.format(cal.getTime()));
-
 		return comment;
 	}
 
@@ -212,15 +209,14 @@ public class CommentService {
 	 * @return
 	 */
 	public Reply replyConvert(Reply reply){
-		if(reply.getComments().length()>200||reply.getComments().length()==0){
+		if (reply == null)	return null;
+		if(reply.getComments() == null || reply.getComments().length()>200 || reply.getComments().length()==0){
 			return null;
 		}
 		reply.setComments(HtmlUtils.htmlEscape(reply.getComments()));
-
 		Calendar cal=Calendar.getInstance();
 		SimpleDateFormat date=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		reply.setTime(date.format(cal.getTime()));
-
 		return reply;
 	}
 }

@@ -35,7 +35,7 @@ public class CommentController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/commentReply",method = RequestMethod.POST)
+    @RequestMapping(value="/commentReply",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String commentReply(MultipartFile mulFile, Reply reply, HttpSession session) throws Exception{
         User user = (User)session.getAttribute("user");
         if (user == null)   return GsonUtil.getErrorJson("还没登录");
@@ -49,7 +49,7 @@ public class CommentController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/addComment",method = RequestMethod.POST)
+    @RequestMapping(value="/addComment",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String blogComment(MultipartFile mulFile, Comment comment, HttpSession session) throws Exception{
         User user = (User)session.getAttribute("user");
         if (user == null)   return GsonUtil.getErrorJson("还没登录");
@@ -62,7 +62,7 @@ public class CommentController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/getReply/{commentId}",method = RequestMethod.GET)
+    @RequestMapping(value="/getReply/{commentId}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String getReply(@PathVariable int commentId, HttpSession session) {
         System.out.println(session.getId());
         return GsonUtil.getSuccessJson(commentService.getReply(commentId));
@@ -75,7 +75,7 @@ public class CommentController {
      * @throws ParseException
      */
     @ResponseBody
-    @RequestMapping(value = "/getComment/{informationId}/{page}")
+    @RequestMapping(value = "/getComment/{informationId}/{page}",produces = "text/html;charset=UTF-8")
     public String getCommentByBlog(@PathVariable int informationId, @PathVariable int page) {
         return GsonUtil.getSuccessJson(commentService.getCommentWithoutReply(informationId,page));
     }
