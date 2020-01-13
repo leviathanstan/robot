@@ -70,9 +70,9 @@ public class Constant {
     //图片访问地址
     public static final String IMG_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
     //文件存放地址
-    public static final String FILE_PATH = "C:\\data\\resources\\file" + File.separator;
+    public static final String FILE_PATH = "C:\\data\\resources\\files" + File.separator;
     //文件访问地址
-    public static final String FILE_ACCESS_PATH = HOST_ADDRESS + "/resources/img/";
+    public static final String FILE_ACCESS_PATH = HOST_ADDRESS + "/resources/files/";
     //会员认证存放地址
     public static final String MEMBER_AUTHENTICATIONDATA_PATH = "C:\\data\\member\\authenticationData" + File.separator;
     //会员认证访问地址

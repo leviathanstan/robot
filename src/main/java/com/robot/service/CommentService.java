@@ -130,7 +130,7 @@ public class CommentService {
 			}
 		}else {	//回复的回复
 			Integer dbUserId = commentDao.getUserIdFromReply(reply.getFromReplyId());
-			//考虑到使用外键做约束时，删除回复时麻烦，在此做关联的判断
+			//考虑到使用外键做约束时，删除回复时麻烦，在此做关联的判断，可直接添加索引（或使用CASCADE约束)
 			if (dbUserId == null)	return GsonUtil.getErrorJson("不存在此条回复");
 			if (dbUserId == userId)	return GsonUtil.getErrorJson("不能自己回复自己");
 		}
@@ -143,7 +143,7 @@ public class CommentService {
 			MultipartFile[] files = new MultipartFile[1];
 			files[0] = file;
 			List<String> path = CommonUtil.saveZip(files);
-			if (path == null || path.size() == 0) return GsonUtil.getErrorJson("文件上传失败");
+			if (path == null || path.size() == 0) return GsonUtil.getErrorJson("文件上传失败！请检查文件格式或稍后再试");
 			reply.setFile(path.get(0));
 		}
 		User user = new User();
@@ -174,7 +174,7 @@ public class CommentService {
 			MultipartFile[] files = new MultipartFile[1];
 			files[0] = file;
 			List<String> path = CommonUtil.saveZip(files);
-			if (path == null || path.size() == 0) return GsonUtil.getErrorJson("文件上传失败");
+			if (path == null || path.size() == 0) return GsonUtil.getErrorJson("文件上传失败！请检查文件格式或稍后再试");
 			comment.setFile(path.get(0));
 		}
 		User user = new User();
