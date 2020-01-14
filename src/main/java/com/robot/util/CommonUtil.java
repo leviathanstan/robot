@@ -393,10 +393,10 @@ public class CommonUtil {
                     File tempMkdir = new File(Constant.FILE_PATH + mkdir);
                     if (tempMkdir.exists()) {
                         if (!tempMkdir.isDirectory()) {
-                            if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
+                            if (!tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
                         }
                     } else {
-                        if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
+                        if (!tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
                     }
                     //保存
                     path = Constant.FILE_PATH + mkdir + File.separator + fileName;
@@ -435,10 +435,10 @@ public class CommonUtil {
                     File tempMkdir = new File(Constant.FILE_PATH + mkdir);
                     if (tempMkdir.exists()) {
                         if (!tempMkdir.isDirectory()) {
-                            if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
+                            if (!tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
                         }
                     } else {
-                        if (tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
+                        if (!tempMkdir.mkdir())  throw new RuntimeException("文件夹创建失败");
                     }
                     //保存
                     path = Constant.FILE_PATH + mkdir + File.separator + fileName;
