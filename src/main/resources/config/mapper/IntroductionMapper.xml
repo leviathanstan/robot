@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id="getIndexIntroduction" parameterType="map" resultMap="introductionMap">
-        select id, name from introduction where category_id=#{categoryId} limit #{number}
+        select id, name from introduction where category_id=#{categoryId} order by post_date limit #{number}
     </select>
 
     <select id="getIntroductionList" parameterType="int" resultMap="introductionMap">
