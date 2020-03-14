@@ -180,7 +180,9 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "insertNewMember", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String insertNewMember(HttpSession session, Member member, Enterprise enterprise,  @RequestParam(value = "authenticationDatas") MultipartFile authenticationDatas, @RequestParam(value = "contactInfoDatas") MultipartFile contactInfoDatas) {
+    public String insertNewMember(HttpSession session, Member member, Enterprise enterprise,
+                                  @RequestParam(value = "authenticationDatas", required = false) MultipartFile authenticationDatas,
+                                  @RequestParam(value = "contactInfoDatas", required = false) MultipartFile contactInfoDatas) {
         return userService.insertNewMember(session, member, enterprise, authenticationDatas, contactInfoDatas);
     }
 

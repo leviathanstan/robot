@@ -3,3 +3,6 @@
 /target/
 /bin/
 robot.iml
+/.settings/
+.classpath
+.factorypath

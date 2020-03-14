@@ -347,7 +347,6 @@ public class UserService {
         }
 
         if (enterprise.getEnterpriseName() == null || "".equals(enterprise.getEnterpriseName()) || !enterprise.getEnterpriseName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION)) {
-            System.out.println(enterprise.getEnterpriseName());
             return GsonUtil.getErrorJson("企业名称格式不正确");
         }
 
@@ -442,9 +441,9 @@ public class UserService {
         userDao.insertEnterpriseInfo(enterprise);   //插入企业信息
         member.setMemberMold(Member.MEMBER_MOLD_ENTERPRISE);
         member.setMemberMoldId(enterprise.getId());
-        Member member1 =  userDao.insertMember(member); //插入会员信息
-        //session.setAttribute("enterpriseId", enterprise.getId());
-        session.setAttribute("memberId",member1.getId());
+        int memberId =  userDao.insertMember(member); //插入会员信息
+        session.setAttribute("enterpriseId", enterprise.getId());
+        session.setAttribute("memberId",memberId);
         return GsonUtil.getSuccessJson("注册成功");
     }
 
@@ -454,7 +453,6 @@ public class UserService {
         if (enterpriseId == null) {
             return GsonUtil.getErrorJson("服务器错误");
         }
-        System.out.println(representativeWork.getBrand());
         if (representativeWork.getBrand() == null || "".equals(representativeWork.getBrand())) {
             return GsonUtil.getErrorJson("品牌格式不正确");
         }
