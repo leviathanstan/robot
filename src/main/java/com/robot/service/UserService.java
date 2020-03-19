@@ -338,9 +338,9 @@ public class UserService {
      */
     @Transactional
     public String insertNewMember(HttpSession session, Member member, Enterprise enterprise, MultipartFile authenticationDatas, MultipartFile contactInfoDatas) {
-        if (contactInfoDatas == null) {
-            return GsonUtil.getErrorJson("联络人资料不能为空");
-        } else {
+        if (contactInfoDatas != null) {
+            //return GsonUtil.getErrorJson("联络人资料不能为空");
+        //} else {
             member.setContactInfo(contactInfoDatas.getOriginalFilename());
             String realNameOfContactInfo = CommonUtil.uploadMember(contactInfoDatas, Constant.MEMBER_CONTACTINFODATAS_PATH);
             member.setContactInfoUrl(realNameOfContactInfo);
@@ -370,12 +370,12 @@ public class UserService {
         if (enterprise.getLocation() == null || "".equals(enterprise.getLocation()) || !enterprise.getLocation().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("所在地格式不正确");
         }
-        if (enterprise.getRegisteredCapital() == null || "".equals(enterprise.getRegisteredCapital())) {
-            return GsonUtil.getErrorJson("注册资本格式不正确");
-        }
-        if (enterprise.getRegisteredDate() == null) {
-            return GsonUtil.getErrorJson("注册年份格式不正确");
-        }
+        //if (enterprise.getRegisteredCapital() == null || "".equals(enterprise.getRegisteredCapital())) {
+            //return GsonUtil.getErrorJson("注册资本格式不正确");
+        //}
+        //if (enterprise.getRegisteredDate() == null) {
+            //return GsonUtil.getErrorJson("注册年份格式不正确");
+        //}
         if (authenticationDatas == null) {
             return GsonUtil.getErrorJson("资料认证文件不能为空");
         } else {
@@ -383,28 +383,28 @@ public class UserService {
             String realNameOfAuthenticationDatas = CommonUtil.uploadMember(authenticationDatas, Constant.MEMBER_AUTHENTICATIONDATA_PATH);
             enterprise.setAuthenticationDataUrl(realNameOfAuthenticationDatas);
         }
-        if (enterprise.getManagementModel() == null || "".equals(enterprise.getManagementModel()) || !CommonUtil.isContains(enterprise.getManagementModel(), Member.MANAGEMENT_MODEL)) {
+        if (enterprise.getManagementModel() != null && !CommonUtil.isContains(enterprise.getManagementModel(), Member.MANAGEMENT_MODEL)) {
             return GsonUtil.getErrorJson("经营模式格式不正确");
         }
-        if (enterprise.getManagementScope() == null || "".equals(enterprise.getManagementScope())) {
-            return GsonUtil.getErrorJson("经营范围格式不正确");
-        }
-        if (enterprise.getMainCamp() == null || "".equals(enterprise.getMainCamp())) {
-            return GsonUtil.getErrorJson("主营行业格式不正确");
-        }
-        if (enterprise.getMainApplication() == null || "".equals(enterprise.getMainApplication())) {
-            return GsonUtil.getErrorJson("擅长应用格式不正确");
-        }
-        if (enterprise.getDeveloping() == null || "".equals(enterprise.getDeveloping())) {
-            return GsonUtil.getErrorJson("发展历程格式不正确");
-        }
-        if (enterprise.getCooperativePartner() == null || "".equals(enterprise.getCooperativePartner())) {
-            return GsonUtil.getErrorJson("合作伙伴格式不正确");
-        }
-        if (enterprise.getMainCustomer() == null || "".equals(enterprise.getMainCustomer())) {
-            return GsonUtil.getErrorJson("主要客户格式不正确");
-        }
-        if (enterprise.getPostalCode() == null || "".equals(enterprise.getPostalCode()) || !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
+        //if (enterprise.getManagementScope() == null || "".equals(enterprise.getManagementScope())) {
+            //eturn GsonUtil.getErrorJson("经营范围格式不正确");
+        //}
+        //if (enterprise.getMainCamp() == null || "".equals(enterprise.getMainCamp())) {
+            //return GsonUtil.getErrorJson("主营行业格式不正确");
+        //}
+        //if (enterprise.getMainApplication() == null || "".equals(enterprise.getMainApplication())) {
+            //return GsonUtil.getErrorJson("擅长应用格式不正确");
+        //}
+        //if (enterprise.getDeveloping() == null || "".equals(enterprise.getDeveloping())) {
+            //return GsonUtil.getErrorJson("发展历程格式不正确");
+        //}
+        //if (enterprise.getCooperativePartner() == null || "".equals(enterprise.getCooperativePartner())) {
+            //return GsonUtil.getErrorJson("合作伙伴格式不正确");
+        //}
+        //if (enterprise.getMainCustomer() == null || "".equals(enterprise.getMainCustomer())) {
+            //return GsonUtil.getErrorJson("主要客户格式不正确");
+        //}
+        if (enterprise.getPostalCode() != null && !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
             return GsonUtil.getErrorJson("邮政编码格式不正确");
         }
         if (enterprise.getContactNumber() == null || "".equals(enterprise.getContactNumber()) || !enterprise.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {

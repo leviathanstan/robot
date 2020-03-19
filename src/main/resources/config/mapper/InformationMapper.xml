@@ -229,6 +229,18 @@
     <update id="addCountRep" parameterType="Integer">
         update industry_report set view_count = view_count + 1 where id = #{id};
     </update>
+    <!--添加行业报告-->
+    <insert id="addReport" parameterType="com.robot.entity.Report">
+        insert into industry_report(url,guide,cover,title,industry,production,editor,first_post_date,new_post_date,delivery,report_page,report_num,graph_num,content,view_count)
+        values(#{url},#{guide},#{img},#{title},#{industry},#{production},#{editor},#{firstPostDate},#{postDate},#{delivery},#{reportPage},#{reportNum},#{graphNum},#{content},#{viewCount})
+        <selectKey resultType="java.lang.Integer" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+    <!--添加会员行业报告-->
+    <insert id="insertMemberReport" >
+        insert into member_report(report_id,user_id) values(#{reportId},#{userId})
+    </insert>
     <!--添加会员资讯-->
     <insert id="insertMemberInformation" >
         insert into member_information(information_id,user_id) values(#{informationId},#{userId})

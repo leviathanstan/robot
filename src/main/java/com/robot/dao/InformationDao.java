@@ -1,12 +1,11 @@
 package com.robot.dao;
 
-import java.util.ArrayList;
-
 import com.robot.dto.InformationDto;
 import com.robot.entity.Report;
 import com.robot.entity.RobotNews;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +41,8 @@ public interface InformationDao {
     ArrayList<Report> findReportTop();
     ArrayList<Report> findReportList();
     Report  findReportInfo(int id);
+    int addReport(Report report);
+    void insertMemberReport(@Param("reportId")int reportId, @Param("userId")int userId);
     ArrayList<String> findRepRelatedKeyword(int reportId);
     int addCountRep(int id);
     int addCountDis(int id);

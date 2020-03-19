@@ -1,6 +1,7 @@
 package com.robot.controller;
 
 import com.robot.annotation.Authority;
+import com.robot.entity.Report;
 import com.robot.entity.RobotNews;
 import com.robot.entity.User;
 import com.robot.enums.Role;
@@ -128,6 +129,20 @@ public class InformationController {
     @RequestMapping(value = "/findReportInfo",method = RequestMethod.GET ,produces = "text/html;charset=UTF-8")
     public String findReportInfo(Integer id){
         return informationService.findReportInfo(id);
+    }
+
+    /**
+     * 增加行业报告
+     * @Author  肖学明
+     * @Date 2020/3/19 21:43 
+     * @param session	
+     * @param report
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/manager/addReport",method = RequestMethod.POST ,produces = "text/html;charset=UTF-8")
+    public String addReport(HttpSession session, Report report) {
+        return informationService.addReport(session, report);
     }
 
     /**

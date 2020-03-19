@@ -35,6 +35,7 @@ public class InformationService {
     @Autowired
     private CommentService commentService;
 
+
     /**
      * information类别
      */
@@ -613,6 +614,28 @@ public class InformationService {
         dataMap.put("related", relatedReadingDto);
         return GsonUtil.getSuccessJson(dataMap);
     }
+
+    public String addReport(HttpSession session, Report report) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return GsonUtil.getErrorJson("未登录");
+        }
+        if (ValidateUtil.isInvalidString(report.getTitle())) {
+            return GsonUtil.getErrorJson("标题不能为空");
+        }
+        if (!ValidateUtil.isMatchDate(report.getFirstPostDate()) || !ValidateUtil.isMatchDate(report.getPostDate())) {
+            return GsonUtil.getErrorJson("日期不符合2020-03-20 20:00:00的格式");
+        }
+        //初始浏览量为0
+        report.setViewCount(0 + "");
+        if (informationDao.addReport(report) != 1) {
+            return GsonUtil.getErrorJson();
+        }
+        int reportId = report.getId();
+        informationDao.insertMemberReport(reportId, user.getId());
+        return GsonUtil.getSuccessJson(report);
+    }
+
     //******************************************协会********************************************//
 
     /**
