@@ -265,6 +265,20 @@
             #{item}
         </foreach>
     </delete>
+    <!--搜索行业报告-->
+    <select id="findReport" resultMap="reportMap" parameterType="map">
+        select * from industry_report where 1=1
+        <if test="content !=null and content.trim().length()>0 ">
+            and (locate(#{content},title)>0 or (locate(#{content},content)>0
+        </if>
+        <if test="ids !=null and ids.size()!=0">
+            and id in
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by post_date desc
+    </select>
     <!--添加会员行业报告-->
     <insert id="insertMemberReport" >
         insert into member_report(report_id,user_id) values(#{reportId},#{userId})
@@ -276,6 +290,10 @@
             #{item}
         </foreach>
     </delete>
+    <!--搜索某会员管理的行业报告id-->
+    <select id="selectMemberReport" resultType="java.lang.Integer">
+        select report_id from member_report where user_id=#{userId}
+    </select>
     <!--添加会员资讯-->
     <insert id="insertMemberInformation" >
         insert into member_information(information_id,user_id) values(#{informationId},#{userId})

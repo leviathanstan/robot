@@ -175,6 +175,22 @@ public class InformationController {
     }
 
     /**
+     * 管理页面下获取行业报告
+     * @Author  xm
+     * @Date 2020/3/20 13:01
+     * @param session
+     * @param pageNum
+     * @param content
+     * @return java.lang.String
+     */
+    @Authority(role = Role.MEMBER_NORMAL)
+    @ResponseBody
+    @RequestMapping(value = "/manager/findReport", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String findReport(HttpSession session, @RequestParam String pageNum, @RequestParam(required = false) String content) {
+        return informationService.findReport(session, pageNum, content);
+    }
+
+    /**
      * 专家智点列表
      * @param pageNum
      * @return

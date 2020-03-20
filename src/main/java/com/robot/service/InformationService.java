@@ -675,6 +675,36 @@ public class InformationService {
         return GsonUtil.getSuccessJson("删除成功");
     }
 
+    public String findReport(HttpSession session, String num, String content) {
+        int pageNum = CommonUtil.formatPageNum(num);
+        User user = (User) session.getAttribute("user");
+
+        //封装查询参数
+        HashMap<String, Object> args = new HashMap();
+        args.put("content", content);
+
+        //根据权限查找
+        int userRole = user.getRole();
+        int userId = user.getId();
+        if (userRole != User.ROLE_MANAGER && userRole != 0) {
+            List<Integer> ids = informationDao.selectMemberReport(userId);
+            //如果没有直接返回
+            if(ids.size() == 0) {
+                return new PageInfo<>();
+            }
+            args.put("ids", ids);
+        }
+
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        ArrayList<Report> reports = informationDao.findReport(args);
+        PageInfo<Report> pageInfo = new PageInfo<>(reports);
+        for (Report report : reports) {
+            report.setPostDate(CommonUtil.getDate(report.getPostDate()));
+        }
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Report.class, "url", "industry", "production", "editor", "firstPostDate", "delivery", "reportPage", "reportNum", "graphNum", "content", "keywords"), pageInfo);
+
+    }
+
     //******************************************协会********************************************//
 
     /**
