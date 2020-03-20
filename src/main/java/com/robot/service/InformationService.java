@@ -620,7 +620,7 @@ public class InformationService {
      * @Author  肖学明
      * @Date 2020/3/20 10:15
      * @param session
- * @param report
+     * @param report
      * @return java.lang.String
      */
     public String addReport(HttpSession session, Report report) {
@@ -656,6 +656,23 @@ public class InformationService {
             return GsonUtil.getErrorJson("要修改的文章不存在");
         }
         return GsonUtil.getSuccessJson("修改成功");
+    }
+
+    /**
+     * 删除行业报告
+     * @Author  xm
+     * @Date 2020/3/20 11:58 
+     * @param ids	
+     * @return java.lang.String
+     */
+    @Transactional
+    public String deleteReport(List<Integer> ids) {
+        int count = ids.size();
+        informationDao.deleteMemberReport(ids);
+        if (count != informationDao.deleteReport(ids)) {
+            throw new RuntimeException();
+        }
+        return GsonUtil.getSuccessJson("删除成功");
     }
 
     //******************************************协会********************************************//

@@ -258,10 +258,24 @@
         </set>
         where id=#{id}
     </update>
+    <!--删除行业报告-->
+    <delete id="deleteReport">
+        delete from industry_report where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
     <!--添加会员行业报告-->
     <insert id="insertMemberReport" >
         insert into member_report(report_id,user_id) values(#{reportId},#{userId})
     </insert>
+    <!---删除会员行业报告-->
+    <delete id="deleteMemberReport">
+        delete from member_report where report_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
     <!--添加会员资讯-->
     <insert id="insertMemberInformation" >
         insert into member_information(information_id,user_id) values(#{informationId},#{userId})

@@ -148,8 +148,8 @@ public class InformationController {
 
     /**
      * 修改行业报告
-     * @Author  肖学明
-     * @Date 2020/3/20 10:35 
+     * @Author  xm
+     * @Date 2020/3/20 10:58 
      * @param report	
      * @return java.lang.String
      */
@@ -158,6 +158,20 @@ public class InformationController {
     @RequestMapping(value = "/manager/updateReport", method = RequestMethod.PUT, produces = "text/html;charset=UTF-8")
     public String updateReport(Report report){
         return informationService.updateReport(report);
+    }
+
+    /**
+     * 删除行业报告
+     * @Author  xm
+     * @Date 2020/3/20 11:15 
+     * @param ids	
+     * @return java.lang.String
+     */
+    @Authority(role = Role.MEMBER_NORMAL)
+    @ResponseBody
+    @RequestMapping(value = "/manager/deleteReport", method = RequestMethod.DELETE, produces = "text/html;charset=UTF-8")
+    public String deleteReport(List<Integer> ids){
+        return informationService.deleteReport(ids);
     }
 
     /**
