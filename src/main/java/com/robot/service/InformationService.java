@@ -150,27 +150,27 @@ public class InformationService {
      */
     @Transactional
     public String updateInformation(RobotNews robotNews) {
-        if (ValidateUtil.isInvalidString(informationDao.findInformationById(robotNews.getId())))
-            return GsonUtil.getErrorJson("修改文章不存在");
-        if (informationDao.update(robotNews) < 1)
-            return GsonUtil.getErrorJson();
-        if (robotNews.getContent() != null && robotNews.getContent().size() != 0) {
-            for (Detail detail : robotNews.getContent()) {
-                HashMap map = new HashMap();
-                if (robotNews.getContent() != null) {
-                    map.put("informationId", robotNews.getId());
-                    map.put("content", detail.getContent());
-                    map.put("page", detail.getPage());
-                    try {
-                        if (1 != informationDao.updateContent(map)) {
+            if (ValidateUtil.isInvalidString(informationDao.findInformationById(robotNews.getId())))
+                return GsonUtil.getErrorJson("修改文章不存在");
+            if (informationDao.update(robotNews) < 1)
+                return GsonUtil.getErrorJson();
+            if (robotNews.getContent() != null && robotNews.getContent().size() != 0) {
+                for (Detail detail : robotNews.getContent()) {
+                    HashMap map = new HashMap();
+                    if (robotNews.getContent() != null) {
+                        map.put("informationId", robotNews.getId());
+                        map.put("content", detail.getContent());
+                        map.put("page", detail.getPage());
+                        try {
+                            if (1 != informationDao.updateContent(map)) {
+                                throw new RuntimeException();
+                            }
+                        } catch (Exception e) {
                             throw new RuntimeException();
                         }
-                    } catch (Exception e) {
-                        throw new RuntimeException();
                     }
                 }
             }
-        }
 
         return GsonUtil.getSuccessJson();
     }
@@ -615,6 +615,14 @@ public class InformationService {
         return GsonUtil.getSuccessJson(dataMap);
     }
 
+    /**
+     * 增加行业报告报告
+     * @Author  肖学明
+     * @Date 2020/3/20 10:15
+     * @param session
+ * @param report
+     * @return java.lang.String
+     */
     public String addReport(HttpSession session, Report report) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
@@ -634,6 +642,20 @@ public class InformationService {
         int reportId = report.getId();
         informationDao.insertMemberReport(reportId, user.getId());
         return GsonUtil.getSuccessJson(report);
+    }
+
+    /**
+     * 修改行业报告
+     * @Author  肖学明
+     * @Date 2020/3/20 10:22
+     * @param report	
+     * @return java.lang.String
+     */
+    public String updateReport(Report report) {
+        if (informationDao.updateReport(report) < 1) {
+            return GsonUtil.getErrorJson("要修改的文章不存在");
+        }
+        return GsonUtil.getSuccessJson("修改成功");
     }
 
     //******************************************协会********************************************//

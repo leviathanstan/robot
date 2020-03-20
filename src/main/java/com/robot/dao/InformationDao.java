@@ -42,6 +42,7 @@ public interface InformationDao {
     ArrayList<Report> findReportList();
     Report  findReportInfo(int id);
     int addReport(Report report);
+    int updateReport(Report report);
     void insertMemberReport(@Param("reportId")int reportId, @Param("userId")int userId);
     ArrayList<String> findRepRelatedKeyword(int reportId);
     int addCountRep(int id);

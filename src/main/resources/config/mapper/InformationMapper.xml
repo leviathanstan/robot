@@ -237,6 +237,27 @@
             SELECT @@IDENTITY AS ID
         </selectKey>
     </insert>
+    <!--修改行业报告-->
+    <update id="updateReport" parameterType="com.robot.entity.Report">
+        update industry_report
+        <set>
+            <if test="url!=null">cover=#{url},</if>
+            <if test="guide!=null">title=#{guide},</if>
+            <if test="cover!=null">guide=#{cover},</if>
+            <if test="title!=null">source=#{title},</if>
+            <if test="industry!=null">post_date=#{industry}</if>
+            <if test="production!=null">post_date=#{production}</if>
+            <if test="editor!=null">post_date=#{editor}</if>
+            <if test="first_post_date!=null">post_date=#{first_post_date}</if>
+            <if test="new_post_date">post_date=#{new_post_date}</if>
+            <if test="delivery!=null">post_date=#{delivery}</if>
+            <if test="report_page!=null">post_date=#{report_page}</if>
+            <if test="report_num!=null">post_date=#{report_num}</if>
+            <if test="graph_num!=null">post_date=#{graph_num}</if>
+            <if test="content!=null">post_date=#{content}</if>
+        </set>
+        where id=#{id}
+    </update>
     <!--添加会员行业报告-->
     <insert id="insertMemberReport" >
         insert into member_report(report_id,user_id) values(#{reportId},#{userId})
