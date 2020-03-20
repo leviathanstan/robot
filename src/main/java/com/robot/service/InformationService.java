@@ -623,6 +623,7 @@ public class InformationService {
      * @param report
      * @return java.lang.String
      */
+    @Transactional
     public String addReport(HttpSession session, Report report) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
@@ -631,13 +632,24 @@ public class InformationService {
         if (ValidateUtil.isInvalidString(report.getTitle())) {
             return GsonUtil.getErrorJson("标题不能为空");
         }
-        if (!ValidateUtil.isMatchDate(report.getFirstPostDate()) || !ValidateUtil.isMatchDate(report.getPostDate())) {
-            return GsonUtil.getErrorJson("日期不符合2020-03-20 20:00:00的格式");
+        //手动把前端传过来的空字符串设为null
+        if ("".equals(report.getFirstPostDate())) {
+            report.setFirstPostDate(null);
+        }
+        if ("".equals(report.getPostDate())) {
+            report.setPostDate(null);
+        }
+        //如果时间不为空则验证格式
+        if (report.getFirstPostDate() != null && !ValidateUtil.isMatchDate(report.getFirstPostDate())) {
+            return GsonUtil.getErrorJson("首次出版时间不符合2020-03-20 20:00:00的格式");
+        }
+        if (report.getPostDate() != null && !ValidateUtil.isMatchDate(report.getPostDate())) {
+            return GsonUtil.getErrorJson("最新修订时间不符合2020-03-20 20:00:00的格式");
         }
         //初始浏览量为0
         report.setViewCount(0 + "");
         if (informationDao.addReport(report) != 1) {
-            return GsonUtil.getErrorJson();
+            return GsonUtil.getErrorJson("增加行业报告失败");
         }
         int reportId = report.getId();
         informationDao.insertMemberReport(reportId, user.getId());
@@ -667,14 +679,20 @@ public class InformationService {
      */
     @Transactional
     public String deleteReport(List<Integer> ids) {
-        int count = ids.size();
         informationDao.deleteMemberReport(ids);
-        if (count != informationDao.deleteReport(ids)) {
-            throw new RuntimeException();
-        }
+        informationDao.deleteReport(ids);
         return GsonUtil.getSuccessJson("删除成功");
     }
 
+    /**
+     * 在管理界面下获取行业报告
+     * @Author  xm
+     * @Date 2020/3/20 13:53
+     * @param session
+     * @param num
+     * @param content
+     * @return com.github.pagehelper.PageInfo<com.robot.entity.Report>
+     */
     public String findReport(HttpSession session, String num, String content) {
         int pageNum = CommonUtil.formatPageNum(num);
         User user = (User) session.getAttribute("user");
@@ -690,7 +708,7 @@ public class InformationService {
             List<Integer> ids = informationDao.selectMemberReport(userId);
             //如果没有直接返回
             if(ids.size() == 0) {
-                return new PageInfo<>();
+                return GsonUtil.getErrorJson("无行业报告");
             }
             args.put("ids", ids);
         }

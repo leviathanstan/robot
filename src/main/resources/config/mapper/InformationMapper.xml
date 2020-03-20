@@ -241,20 +241,20 @@
     <update id="updateReport" parameterType="com.robot.entity.Report">
         update industry_report
         <set>
-            <if test="url!=null">cover=#{url},</if>
-            <if test="guide!=null">title=#{guide},</if>
-            <if test="cover!=null">guide=#{cover},</if>
-            <if test="title!=null">source=#{title},</if>
-            <if test="industry!=null">post_date=#{industry}</if>
-            <if test="production!=null">post_date=#{production}</if>
-            <if test="editor!=null">post_date=#{editor}</if>
-            <if test="first_post_date!=null">post_date=#{first_post_date}</if>
-            <if test="new_post_date">post_date=#{new_post_date}</if>
-            <if test="delivery!=null">post_date=#{delivery}</if>
-            <if test="report_page!=null">post_date=#{report_page}</if>
-            <if test="report_num!=null">post_date=#{report_num}</if>
-            <if test="graph_num!=null">post_date=#{graph_num}</if>
-            <if test="content!=null">post_date=#{content}</if>
+            <if test="url!=null">url=#{url},</if>
+            <if test="guide!=null">guide=#{guide},</if>
+            <if test="img!=null">cover=#{img},</if>
+            <if test="title!=null">title=#{title},</if>
+            <if test="industry!=null">industry=#{industry},</if>
+            <if test="production!=null">production=#{production},</if>
+            <if test="editor!=null">editor=#{editor},</if>
+            <if test="firstPostDate!=null">first_post_date=#{firstPostDate},</if>
+            <if test="postDate">new_post_date=#{postDate},</if>
+            <if test="delivery!=null">delivery=#{delivery},</if>
+            <if test="reportPage!=null">report_page=#{reportPage},</if>
+            <if test="reportNum!=null">report_num=#{reportNum},</if>
+            <if test="graphNum!=null">graph_num=#{graphNum},</if>
+            <if test="content!=null">content=#{content}</if>
         </set>
         where id=#{id}
     </update>
@@ -269,7 +269,7 @@
     <select id="findReport" resultMap="reportMap" parameterType="map">
         select * from industry_report where 1=1
         <if test="content !=null and content.trim().length()>0 ">
-            and (locate(#{content},title)>0 or (locate(#{content},content)>0
+            and (locate(#{content},title)>0 or locate(#{content},content)>0)
         </if>
         <if test="ids !=null and ids.size()!=0">
             and id in
@@ -277,7 +277,7 @@
                 #{item}
             </foreach>
         </if>
-        order by post_date desc
+        order by new_post_date desc
     </select>
     <!--添加会员行业报告-->
     <insert id="insertMemberReport" >

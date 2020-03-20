@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author asce
@@ -155,7 +156,7 @@ public class InformationController {
      */
     @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
-    @RequestMapping(value = "/manager/updateReport", method = RequestMethod.PUT, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/manager/updateReport", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateReport(Report report){
         return informationService.updateReport(report);
     }
@@ -164,14 +165,14 @@ public class InformationController {
      * 删除行业报告
      * @Author  xm
      * @Date 2020/3/20 11:15 
-     * @param ids	
+     * @param map
      * @return java.lang.String
      */
     @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "/manager/deleteReport", method = RequestMethod.DELETE, produces = "text/html;charset=UTF-8")
-    public String deleteReport(List<Integer> ids){
-        return informationService.deleteReport(ids);
+    public String deleteReport(@RequestBody Map<String, List<Integer>> map){
+        return informationService.deleteReport(map.get("ids"));
     }
 
     /**
