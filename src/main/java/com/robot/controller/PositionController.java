@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,24 +49,31 @@ public class PositionController {
         return positionService.getLevelIndustry(parentId);
     }
 
-    @Authority(role = Role.SUPER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "manager/deletePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deletePosition(@RequestParam List<Integer> ids){
         return positionService.deletePosition(ids);
     }
 
-    @Authority(role = Role.SUPER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "manager/updatePosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String updatePosition(Position position, int[] regionIds){
+    public String updatePosition(Position position, @RequestParam List<Integer> regionIds){
         return positionService.updatePosition(position,regionIds);
     }
 
-    @Authority(role = Role.SUPER)
+    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "manager/addPosition", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String addPosition(Position position, @RequestParam int[] regionIds){
-        return positionService.addPosition(position,regionIds);
+    public String addPosition(Position position, @RequestParam List<Integer> regionIds, HttpSession session){
+        return positionService.addPosition(position, regionIds, session);
+    }
+
+    @Authority(role = Role.MEMBER)
+    @ResponseBody
+    @RequestMapping(value = "manager/findPosition", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String addPosition(HttpSession session, @RequestParam Integer pageNum, @RequestParam(required = false) String content){
+        return positionService.findPosition(pageNum, content, session);
     }
 }

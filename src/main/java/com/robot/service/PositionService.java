@@ -6,6 +6,7 @@ import com.robot.dao.PositionDao;
 import com.robot.entity.Area;
 import com.robot.entity.Industry;
 import com.robot.entity.Position;
+import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -30,12 +32,13 @@ public class PositionService {
     @Transactional
     public String deletePosition(List<Integer> ids){
         positionDao.deletePositionRegion(ids);
+        positionDao.deleteMemberPosition(ids);
         positionDao.deletePosition(ids);
         return GsonUtil.getSuccessJson();
     }
 
     @Transactional
-    public String updatePosition(Position position,int[] regionIds){
+    public String updatePosition(Position position,List<Integer> regionIds){
         positionDao.updatePosition(position);
         Map<String,String> map = new HashMap<>();
         map.put("positionId",position.getId()+"");
@@ -50,16 +53,42 @@ public class PositionService {
     }
 
     @Transactional
-    public String addPosition(Position position,int[] regionIds){
+    public String addPosition(Position position, List<Integer> regionIds, HttpSession session){
+        User user = (User) session.getAttribute("user");
         position.setCreateTime(LocalDateTime.now().toString());
         positionDao.addPosition(position);
+        positionDao.insertMemberPosition(position.getId(), user.getId());
         Map<String,String> map = new HashMap<>();
         map.put("positionId",position.getId()+"");
         for(int regionId:regionIds) {
             map.put("regionId",regionId+"");
             positionDao.addPositionRegion(map);
         }
-        return GsonUtil.getSuccessJson();
+        return GsonUtil.getSuccessJson(position.getId());
+    }
+
+    public String findPosition(Integer pageNum, String content, HttpSession session){
+        User user = (User) session.getAttribute("user");
+
+        //封装查询参数
+        HashMap<String, Object> args = new HashMap();
+        args.put("content", content);
+
+        //根据权限查找
+        int userRole = user.getRole();
+        int userId = user.getId();
+        if (userRole != User.ROLE_MANAGER && userRole != 0) {
+            List<Integer> ids = positionDao.selectMemberPosition(userId);
+            //如果没有直接返回
+            if(ids.size() == 0) {
+                return GsonUtil.getErrorJson("无招聘信息");
+            }
+            args.put("ids", ids);
+        }
+        PageHelper.startPage(pageNum, PAGE_LENGTH);
+        List<Position> positions = positionDao.findPosition(args);
+        PageInfo<Position> pageInfo = new PageInfo<>(positions);
+        return GsonUtil.getSuccessJson(pageInfo);
     }
 
     /**

@@ -152,10 +152,10 @@ public class Position {
      * @return
      */
     public void setJobArea(ArrayList<Area> jobArea) {
-        jobArea.sort(Comparator.comparing(Area::getType));
+        jobArea.sort(Comparator.comparing(Area::getId));
         String str = "";
         for(Area area:jobArea){
-            str += area.getName();
+            str += area.getName() + " ";
         }
         areas = str;
         this.jobArea = jobArea;
