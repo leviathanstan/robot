@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.robot.dao.DemandDao">
+    <resultMap id="DemandResultsMap" type="com.robot.entity.Demand">
+        <id column="dmd_id" property="dmdId"/>
+        <result column="dmd_title" property="dmdTitle"/>
+        <result column="dmd_summary" property="dmdSummary"/>
+        <result column="dmd_content" property="dmdContent"/>
+        <result column="dmd_contact" property="dmdContact"/>
+        <result column="dmd_contact_published" property="dmdContactPublished"/>
+        <result column="dmd_time" property="dmdTime"/>
+
+        <association column="user_id" property="user" javaType="com.robot.entity.User" select="getUserById"></association>
+        <association column="dmd_area" property="dmdArea" javaType="com.robot.entity.Area" select="getAreaById"></association>
+        <association column="dmd_category_id" property="dmdCategoryId" javaType="com.robot.entity.DmdCategory" select="getDmdCategory"></association>
+
+    </resultMap>
+
+</mapper>
