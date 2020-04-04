@@ -59,7 +59,6 @@ public class FileUtil {
     public static void zipUpload(String name, MultipartFile file, String fileUrl) {
         try {
             file.transferTo(new File(fileUrl + name));
-            System.out.println(fileUrl + name);
         } catch (IOException e) {
             e.printStackTrace();
         }

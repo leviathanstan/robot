@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.robot.dao.DemandDao">
-  <resultMap id="BaseResultMap" type="com.robot.entity.Demand">
+<mapper namespace="com.robot.dao.BiddingDao">
+  <resultMap id="BaseResultMap" type="com.robot.entity.Bidding">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="enterprise" jdbcType="VARCHAR" property="enterprise" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="contact" jdbcType="VARCHAR" property="contact" />
     <result column="contact_people" jdbcType="VARCHAR" property="contactPeople" />
-    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
-    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="attachment_url" jdbcType="VARCHAR" property="attachmentUrl" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="demand_id" jdbcType="INTEGER" property="demandId" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,25 +70,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, enterprise, content, contact, contact_people, creat_time, deadline, user_id, 
-    `type`
+    id, contact_people, contact, description, attachment_url, user_id, demand_id, `time`
   </sql>
-  <select id="selectByExample" parameterType="com.robot.entity.DemandExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.robot.entity.BiddingExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from demand
+    from bidding
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
-    </if>
-    <!--根据关键词搜索-->
-    <if test="oredCriteria == null">
-      where 1=1
-    </if>
-    <if test="keyword != null and keyword.trim().length()>0 ">
-      and (locate(#{keyword},title)>0 or locate(#{keyword},enterprise)>0)
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause} desc
@@ -107,128 +97,108 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from demand
+    from bidding
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from demand
+    delete from bidding
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.robot.entity.DemandExample">
-    delete from demand
+  <delete id="deleteByExample" parameterType="com.robot.entity.BiddingExample">
+    delete from bidding
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.robot.entity.Demand" useGeneratedKeys="true">
-    insert into demand (title, enterprise, content, 
-      contact, contact_people, creat_time, 
-      deadline, user_id, `type`
-      )
-    values (#{title,jdbcType=VARCHAR}, #{enterprise,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{contact,jdbcType=VARCHAR}, #{contactPeople,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}, 
-      #{deadline,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}
-      )
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.robot.entity.Bidding" useGeneratedKeys="true">
+    insert into bidding (contact_people, contact, description, 
+      attachment_url, user_id, demand_id, 
+      `time`)
+    values (#{contactPeople,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{attachmentUrl,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{demandId,jdbcType=INTEGER}, 
+      #{time,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.robot.entity.Demand" useGeneratedKeys="true">
-    insert into demand
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.robot.entity.Bidding" useGeneratedKeys="true">
+    insert into bidding
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        title,
-      </if>
-      <if test="enterprise != null">
-        enterprise,
-      </if>
-      <if test="content != null">
-        content,
+      <if test="contactPeople != null">
+        contact_people,
       </if>
       <if test="contact != null">
         contact,
       </if>
-      <if test="contactPeople != null">
-        contact_people,
+      <if test="description != null">
+        description,
       </if>
-      <if test="creatTime != null">
-        creat_time,
-      </if>
-      <if test="deadline != null">
-        deadline,
+      <if test="attachmentUrl != null">
+        attachment_url,
       </if>
       <if test="userId != null">
         user_id,
       </if>
-      <if test="type != null">
-        `type`,
+      <if test="demandId != null">
+        demand_id,
+      </if>
+      <if test="time != null">
+        `time`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="enterprise != null">
-        #{enterprise,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
+      <if test="contactPeople != null">
+        #{contactPeople,jdbcType=VARCHAR},
       </if>
       <if test="contact != null">
         #{contact,jdbcType=VARCHAR},
       </if>
-      <if test="contactPeople != null">
-        #{contactPeople,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
-      <if test="creatTime != null">
-        #{creatTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deadline != null">
-        #{deadline,jdbcType=TIMESTAMP},
+      <if test="attachmentUrl != null">
+        #{attachmentUrl,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
+      <if test="demandId != null">
+        #{demandId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.robot.entity.DemandExample" resultType="java.lang.Long">
-    select count(*) from demand
+  <select id="countByExample" parameterType="com.robot.entity.BiddingExample" resultType="java.lang.Long">
+    select count(*) from bidding
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update demand
+    update bidding
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.title != null">
-        title = #{record.title,jdbcType=VARCHAR},
-      </if>
-      <if test="record.enterprise != null">
-        enterprise = #{record.enterprise,jdbcType=VARCHAR},
-      </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=VARCHAR},
+      <if test="record.contactPeople != null">
+        contact_people = #{record.contactPeople,jdbcType=VARCHAR},
       </if>
       <if test="record.contact != null">
         contact = #{record.contact,jdbcType=VARCHAR},
       </if>
-      <if test="record.contactPeople != null">
-        contact_people = #{record.contactPeople,jdbcType=VARCHAR},
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.creatTime != null">
-        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.deadline != null">
-        deadline = #{record.deadline,jdbcType=TIMESTAMP},
+      <if test="record.attachmentUrl != null">
+        attachment_url = #{record.attachmentUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.type != null">
-        `type` = #{record.type,jdbcType=INTEGER},
+      <if test="record.demandId != null">
+        demand_id = #{record.demandId,jdbcType=INTEGER},
+      </if>
+      <if test="record.time != null">
+        `time` = #{record.time,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -236,68 +206,55 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update demand
+    update bidding
     set id = #{record.id,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      enterprise = #{record.enterprise,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=VARCHAR},
-      contact = #{record.contact,jdbcType=VARCHAR},
       contact_people = #{record.contactPeople,jdbcType=VARCHAR},
-      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
-      deadline = #{record.deadline,jdbcType=TIMESTAMP},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      attachment_url = #{record.attachmentUrl,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=INTEGER},
-      `type` = #{record.type,jdbcType=INTEGER}
+      demand_id = #{record.demandId,jdbcType=INTEGER},
+      `time` = #{record.time,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.robot.entity.Demand">
-    update demand
+  <update id="updateByPrimaryKeySelective" parameterType="com.robot.entity.Bidding">
+    update bidding
     <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="enterprise != null">
-        enterprise = #{enterprise,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
+      <if test="contactPeople != null">
+        contact_people = #{contactPeople,jdbcType=VARCHAR},
       </if>
       <if test="contact != null">
         contact = #{contact,jdbcType=VARCHAR},
       </if>
-      <if test="contactPeople != null">
-        contact_people = #{contactPeople,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="creatTime != null">
-        creat_time = #{creatTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deadline != null">
-        deadline = #{deadline,jdbcType=TIMESTAMP},
+      <if test="attachmentUrl != null">
+        attachment_url = #{attachmentUrl,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        `type` = #{type,jdbcType=INTEGER},
+      <if test="demandId != null">
+        demand_id = #{demandId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.robot.entity.Demand">
-    update demand
-    set title = #{title,jdbcType=VARCHAR},
-      enterprise = #{enterprise,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.robot.entity.Bidding">
+    update bidding
+    set contact_people = #{contactPeople,jdbcType=VARCHAR},
       contact = #{contact,jdbcType=VARCHAR},
-      contact_people = #{contactPeople,jdbcType=VARCHAR},
-      creat_time = #{creatTime,jdbcType=TIMESTAMP},
-      deadline = #{deadline,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      attachment_url = #{attachmentUrl,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
-      `type` = #{type,jdbcType=INTEGER}
+      demand_id = #{demandId,jdbcType=INTEGER},
+      `time` = #{time,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectUserDemand" resultType="java.lang.Integer">
-        select id from demand where user_id=#{userId} and type = 1
-    </select>
 </mapper>

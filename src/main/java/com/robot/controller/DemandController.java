@@ -1,17 +1,23 @@
 package com.robot.controller;
 
 import com.robot.annotation.Authority;
+import com.robot.entity.Bidding;
 import com.robot.entity.Demand;
 import com.robot.entity.User;
 import com.robot.enums.Role;
 import com.robot.service.DemandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * create by 聪 on 2018/1/22
@@ -25,103 +31,104 @@ public class DemandController {
 
 
     /**
-     * 获取全部需求的数量
+     * 分页获取需求或供应、搜索
+     * @param
      * @return
      */
-    @RequestMapping(value = "/getAllDemandNums")
+    @RequestMapping(value = "/getAllDemands", method = RequestMethod.GET)
     @ResponseBody
-    public String getAllDemandNums(){
-        return demandService.getAllDemandNums();
-    }
-
-    /**
-     * 获取全部需求
-     * @param currentPage
-     * @return
-     */
-    @RequestMapping(value = "/getAllDemands")
-    @ResponseBody
-    public String getAllDemands(int currentPage){
-        return demandService.getAllDemands(currentPage);
+    public String getAllDemands(int type, int pageNum, String keyword){
+        return demandService.getDemands(type, pageNum, keyword, null);
     }
 
 
     /**
-     * 需求搜索(分页)
-     * @param dmdType
-     * @param dmdCategoryId
-     * @param content
-     * @return
-     */
-    @RequestMapping(value = "/findDemandNums")
-    @ResponseBody
-    public String findDemandNums(int dmdType,int dmdCategoryId,String content){
-        return demandService.findDemandNums(dmdType,dmdCategoryId,content);
-    }
-
-    /**
-     * 需求搜索
-     * @param dmdType
-     * @param dmdCategoryId
-     * @param content
-     * @param currentPage
-     * @return
-     */
-    @RequestMapping(value = "/findDemand")
-    @ResponseBody
-    public String findDemand(int dmdType,int dmdCategoryId,String content,int currentPage){
-        return demandService.findDemand(dmdType,dmdCategoryId,content,currentPage);
-    }
-
-    /**
-     * 获取我的需求数量
+     * 分页获取我的需求或供应、搜索
      * @param
      * @return
      */
     @Authority(role = Role.NORMAL)
-    @RequestMapping(value = "/getUserDemandNums")
+    @RequestMapping(value = "/getUserDemands", method = RequestMethod.GET)
     @ResponseBody
-    public String getUserDemandNums(HttpSession session){
+    public String getUserDemands(HttpSession session, int type, int pageNum, String keyword){
         User user = (User) session.getAttribute("user");
-        return demandService.getUserDemandNums(user.getId());
+        return demandService.getDemands(type, pageNum, keyword, user.getId());
     }
 
     /**
-     * 获取我的需求发布
+     * 查看需求或供应详情
      * @param
      * @return
      */
-    @Authority(role = Role.NORMAL)
-    @RequestMapping(value = "/getUserDemands")
+    @RequestMapping(value = "/getDemand",method = RequestMethod.GET)
     @ResponseBody
-    public String getUserDemands(HttpSession session,int currentPage){
-        User user = (User) session.getAttribute("user");
-        return demandService.getUserDemands(user.getId(),currentPage);
+    public String getDemand(int id){
+        return demandService.getDemand(id);
     }
 
     /**
-     * 需求发布
+     * 发布需求或供应
      * @param demand
      * @return
      */
     @Authority(role = Role.NORMAL)
     @RequestMapping(value = "/saveDemand",method = RequestMethod.POST)
     @ResponseBody
-    public String saveDemand(HttpSession session,Demand demand) {
+    public String saveDemand(HttpSession session, Demand demand) {
         User user = (User) session.getAttribute("user");
-        demand.setUser(user);
+        demand.setUserId(user.getId());
+        demand.setCreatTime(new Date());
         return demandService.saveDemand(demand);
     }
 
     /**
-     * 查看需求详情
-     * @param dmdId
-     * @return
+     * 投标
+     * @Author  xm
+     * @Date 2020/4/2 16:42
+     * @param session
+     * @param bidding
+     * @param attachment
+     * @return java.lang.String
      */
-    @RequestMapping(value = "/getDemand",method = RequestMethod.GET)
+    @Authority(role = Role.NORMAL)
+    @RequestMapping(value = "/bid",method = RequestMethod.POST)
     @ResponseBody
-    public String getDemand(int dmdId){
-        return demandService.getDemand(dmdId);
+    public String bid(HttpSession session, Bidding bidding, @RequestParam MultipartFile attachment) {
+        User user = (User) session.getAttribute("user");
+        bidding.setUserId(user.getId());
+        return demandService.bid(bidding, attachment);
+    }
+
+    /**
+     * 发布需求的人看投标信息
+     * @Author  xm
+     * @Date 2020/4/2 16:45 
+     * @param session	
+     * @param pageNum
+     * @param demandId
+     * @return java.lang.String
+     */
+    @Authority(role = Role.NORMAL)
+    @RequestMapping(value = "/getBid",method = RequestMethod.GET)
+    @ResponseBody
+    public String getBid(HttpSession session, Integer pageNum, @RequestParam(required = false) Integer demandId) {
+        User user = (User) session.getAttribute("user");
+        return demandService.getBid(user.getId(), pageNum, demandId);
+    }
+
+    /**
+     * 下载投标信息的附件
+     * @Author  xm
+     * @Date 2020/4/2 19:14 
+     * @param session	
+     * @param id
+     * @return org.springframework.http.ResponseEntity<byte[]>
+     */
+    @Authority(role = Role.NORMAL)
+    @RequestMapping(value = "/dowmloadAttachment",method = RequestMethod.GET)
+    public ResponseEntity<byte[]> dowmloadAttachment(HttpSession session, Integer id) throws IOException {
+        User user = (User) session.getAttribute("user");
+        return demandService.dowmloadAttachment(user.getId(), id);
     }
 
 }

@@ -719,7 +719,7 @@ public class InformationService {
         for (Report report : reports) {
             report.setPostDate(CommonUtil.getDate(report.getPostDate()));
         }
-        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Report.class, "url", "industry", "production", "editor", "firstPostDate", "delivery", "reportPage", "reportNum", "graphNum", "content", "keywords"), pageInfo);
+        return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Report.class, "viewCount"), pageInfo);
 
     }
 

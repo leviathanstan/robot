@@ -2,142 +2,138 @@ package com.robot.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * create by 聪 on 2018/1/23
+ * demand
+ * @author 
  */
-public class Demand {
+public class Demand implements Serializable {
+    private Integer id;
 
-    private Integer dmdId;  //需求Id
+    /**
+     * 标题
+     */
+    private String title;
 
-    private String dmdTitle;  //需求标题
+    /**
+     * 公司名称
+     */
+    private String enterprise;
 
-    private String dmdSummary;  //需求摘要
+    /**
+     * 内容
+     */
+    private String content;
 
-    private String dmdContent;  //需求内容
+    /**
+     * 联系方式
+     */
+    private String contact;
 
-    private Area dmdArea;  //需求地区
+    /**
+     * 联系人
+     */
+    private String contactPeople;
 
-    private int dmdType;  //需求类型
+    /**
+     * 发布时间
+     */
+    private Date creatTime;
 
-    private DmdCategory dmdCategoryId;  //需求分类
-
-    private String dmdContact;  //联系方式
-
-    private int dmdContactPublished;  //公布联系方式
-
+    /**
+     * 截止时间
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dmdTime;  //需求发布的时间
+    private Date deadline;
 
-    private User user;  //用户
+    private Integer userId;
 
+    /**
+     * 0—供应，1—需求
+     */
+    private Integer type;
 
-    public Integer getDmdId() {
-        return dmdId;
+    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setDmdId(Integer dmdId) {
-        this.dmdId = dmdId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getDmdTitle() {
-        return dmdTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDmdTitle(String dmdTitle) {
-        this.dmdTitle = dmdTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDmdSummary() {
-        return dmdSummary;
+    public String getEnterprise() {
+        return enterprise;
     }
 
-    public void setDmdSummary(String dmdSummary) {
-        this.dmdSummary = dmdSummary;
+    public void setEnterprise(String enterprise) {
+        this.enterprise = enterprise;
     }
 
-    public String getDmdContent() {
-        return dmdContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setDmdContent(String dmdContent) {
-        this.dmdContent = dmdContent;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Area getDmdArea() {
-        return dmdArea;
+    public String getContact() {
+        return contact;
     }
 
-    public void setDmdArea(Area dmdArea) {
-        this.dmdArea = dmdArea;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
-    public int getDmdType() {
-        return dmdType;
+    public String getContactPeople() {
+        return contactPeople;
     }
 
-    public void setDmdType(int dmdType) {
-        this.dmdType = dmdType;
+    public void setContactPeople(String contactPeople) {
+        this.contactPeople = contactPeople;
     }
 
-    public DmdCategory getDmdCategoryId() {
-        return dmdCategoryId;
+    public Date getCreatTime() {
+        return creatTime;
     }
 
-    public void setDmdCategoryId(DmdCategory dmdCategoryId) {
-        this.dmdCategoryId = dmdCategoryId;
+    public void setCreatTime(Date creatTime) {
+        this.creatTime = creatTime;
     }
 
-    public String getDmdContact() {
-        return dmdContact;
+    public Date getDeadline() {
+        return deadline;
     }
 
-    public void setDmdContact(String dmdContact) {
-        this.dmdContact = dmdContact;
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
-    public int getDmdContactPublished() {
-        return dmdContactPublished;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setDmdContactPublished(int dmdContactPublished) {
-        this.dmdContactPublished = dmdContactPublished;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Date getDmdTime() {
-        return dmdTime;
+    public Integer getType() {
+        return type;
     }
 
-    public void setDmdTime(Date dmdTime) {
-        this.dmdTime = dmdTime;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Demand() {
-    }
-
-    @Override
-    public String toString() {
-        return "Demand{" +
-                "dmdId=" + dmdId +
-                ", dmdTitle='" + dmdTitle + '\'' +
-                ", dmdSummary='" + dmdSummary + '\'' +
-                ", dmdContent='" + dmdContent + '\'' +
-                ", dmdArea=" + dmdArea +
-                ", dmdType=" + dmdType +
-                ", dmdCategoryId=" + dmdCategoryId +
-                ", dmdContact='" + dmdContact + '\'' +
-                ", dmdContactPublished=" + dmdContactPublished +
-                ", dmdTime=" + dmdTime +
-                ", accountId=" + user +
-                '}';
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
