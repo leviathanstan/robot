@@ -16,9 +16,10 @@ import java.util.Map;
  */
 public interface PositionDao {
     ArrayList<Position> getIndex();
-    ArrayList<Position> search(HashMap<String,String> map);
+    ArrayList<Position> search(Map map);
     Position getPositionInfo(int id);
     ArrayList<Area> getAreas(int parentId);
+    Area getFatherArea(int id);
     ArrayList<Industry> getIndustry(int parentId);
 
     int addPosition(Position position);

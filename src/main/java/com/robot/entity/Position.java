@@ -1,7 +1,6 @@
 package com.robot.entity;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * 职位
@@ -144,20 +143,8 @@ public class Position {
     public ArrayList<Area> getJobArea() {
         return this.jobArea;
     }
-    /**
-     * 按照地区大小转换为一个字符串
-     * @author asce
-     * @date 2018/11/20
-     * @param
-     * @return
-     */
+
     public void setJobArea(ArrayList<Area> jobArea) {
-        jobArea.sort(Comparator.comparing(Area::getId));
-        String str = "";
-        for(Area area:jobArea){
-            str += area.getName() + " ";
-        }
-        areas = str;
         this.jobArea = jobArea;
     }
 

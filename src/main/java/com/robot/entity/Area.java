@@ -9,7 +9,7 @@ public class Area {
 
     private Integer id;
     private String name;
-    private Integer type;
+    private Integer parentId;
 
     public Integer getId() {
         return id;
@@ -27,12 +27,12 @@ public class Area {
         this.name = name;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Area {
         return "Area{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", type=" + type +
+                ", parentId=" + parentId +
                 '}';
     }
 }

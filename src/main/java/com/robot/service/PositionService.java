@@ -29,6 +29,9 @@ public class PositionService {
 
     private final int PAGE_LENGTH = 15;
 
+    //最顶层地址的id
+    private static final int TOP_AREA_ID = 1;
+
     @Transactional
     public String deletePosition(List<Integer> ids){
         positionDao.deletePositionRegion(ids);
@@ -87,6 +90,8 @@ public class PositionService {
         }
         PageHelper.startPage(pageNum, PAGE_LENGTH);
         List<Position> positions = positionDao.findPosition(args);
+        //设置完整的地址
+        completeArea(positions);
         PageInfo<Position> pageInfo = new PageInfo<>(positions);
         return GsonUtil.getSuccessJson(pageInfo);
     }
@@ -99,7 +104,10 @@ public class PositionService {
      * @return
      */
     public ArrayList<Position> getIndex(){
-        return positionDao.getIndex();
+        ArrayList<Position> positions = positionDao.getIndex();
+        //设置完整的地址
+        completeArea(positions);
+        return positions;
     }
 
     /**
@@ -109,10 +117,12 @@ public class PositionService {
      * @param
      * @return
      */
-    public String search(HashMap<String,String> args){
-        int pageNum = CommonUtil.formatPageNum(args.get("pageNum"));
+    public String search(Map args){
+        int pageNum = CommonUtil.formatPageNum((String) args.get("pageNum"));
         PageHelper.startPage(pageNum, PAGE_LENGTH);
         List<Position> positions = positionDao.search(args);
+        //设置完整的地址
+        completeArea(positions);
         PageInfo<Position> pageInfo = new PageInfo<>(positions);
         return GsonUtil.getSuccessJson(pageInfo);
     }
@@ -125,6 +135,8 @@ public class PositionService {
      */
     public String getPositionInfo(int id){
         Position position = positionDao.getPositionInfo(id);
+        //设置完整的地址
+        completeArea(position);
         if (position==null){
             return GsonUtil.getErrorJson();
         }
@@ -161,6 +173,52 @@ public class PositionService {
             industries = positionDao.getIndustry(Integer.parseInt(parentId));
         }
         return GsonUtil.getSuccessJson(industries);
+    }
+
+    /**
+     * 获取完整地址
+     * @Author  xm
+     * @Date 2020/4/5 18:17
+     * @param position
+     * @return com.robot.entity.Position
+     */
+    public void completeArea(Position position){
+        if (position == null || position.getJobArea() == null || position.getJobArea().isEmpty()) {
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        Area fatherArea;
+        for (Area area : position.getJobArea()) {
+            //不断获取父地址
+            fatherArea = area;
+            //地址名插到最前面
+            sb.insert(0, fatherArea.getName() + "  ");
+            while (fatherArea.getParentId() != TOP_AREA_ID) {
+                fatherArea = positionDao.getFatherArea(fatherArea.getParentId());
+                sb.insert(0, fatherArea.getName());
+            }
+        }
+
+        //设置完整地址
+        position.setAreas(sb.toString());
+    }
+
+    /**
+     *
+     * @Author  xm
+     * @Date 2020/4/5 18:55
+     * @param positions
+     * @return com.robot.entity.Position
+     */
+    public void completeArea(List<Position> positions){
+        if (positions == null || positions.isEmpty()) {
+            return;
+        }
+
+        for (Position position : positions) {
+            completeArea(position);
+        }
     }
 
 }

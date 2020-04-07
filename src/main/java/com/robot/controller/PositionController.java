@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author asce
@@ -27,7 +28,15 @@ public class PositionController {
 
     @ResponseBody
     @RequestMapping(value = "/search", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String search(@RequestParam HashMap args){
+    public String search(@RequestParam(required = false) List<Integer> regionIds,
+                         @RequestParam(required = false) String content,
+                         @RequestParam(required = false) String pageNum,
+                         @RequestParam(required = false) String industryId){
+        Map args = new HashMap();
+        args.put("regionIds", regionIds);
+        args.put("content", content);
+        args.put("pageNum", pageNum);
+        args.put("industryId", industryId);
         return positionService.search(args);
     }
 
