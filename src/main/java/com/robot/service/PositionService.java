@@ -194,7 +194,7 @@ public class PositionService {
             fatherArea = area;
             //地址名插到最前面
             sb.insert(0, fatherArea.getName() + "  ");
-            while (fatherArea.getParentId() != TOP_AREA_ID) {
+            while (fatherArea.getId() != TOP_AREA_ID && fatherArea.getParentId() != TOP_AREA_ID) {
                 fatherArea = positionDao.getFatherArea(fatherArea.getParentId());
                 sb.insert(0, fatherArea.getName());
             }

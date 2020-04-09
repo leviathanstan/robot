@@ -383,7 +383,8 @@ public class UserService {
             String realNameOfAuthenticationDatas = CommonUtil.uploadMember(authenticationDatas, Constant.MEMBER_AUTHENTICATIONDATA_PATH);
             enterprise.setAuthenticationDataUrl(realNameOfAuthenticationDatas);
         }
-        if (enterprise.getManagementModel() != null && !CommonUtil.isContains(enterprise.getManagementModel(), Member.MANAGEMENT_MODEL)) {
+        if (enterprise.getManagementModel() != null && !"".equals(enterprise.getManagementModel())
+                && !CommonUtil.isContains(enterprise.getManagementModel(), Member.MANAGEMENT_MODEL)) {
             return GsonUtil.getErrorJson("经营模式格式不正确");
         }
         //if (enterprise.getManagementScope() == null || "".equals(enterprise.getManagementScope())) {
@@ -404,7 +405,7 @@ public class UserService {
         //if (enterprise.getMainCustomer() == null || "".equals(enterprise.getMainCustomer())) {
             //return GsonUtil.getErrorJson("主要客户格式不正确");
         //}
-        if (enterprise.getPostalCode() != null && !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
+        if (enterprise.getPostalCode() != null && !"".equals(enterprise.getPostalCode()) && !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
             return GsonUtil.getErrorJson("邮政编码格式不正确");
         }
         if (enterprise.getContactNumber() == null || "".equals(enterprise.getContactNumber()) || !enterprise.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {

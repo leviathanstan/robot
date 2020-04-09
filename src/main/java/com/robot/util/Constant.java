@@ -87,5 +87,5 @@ public class Constant {
     public static final String MEMBER_INFO_CONTACTINFODATAS_ACCESS_PATH =  "/tmp/member/contactInfoDatas/";
 
     //投标附件存放位置
-    public static final String BIDDING_ATTACHMENT_PATH = "D:\\WEB-INF" + File.separator;
+    public static final String BIDDING_ATTACHMENT_PATH = "C:\\data\\bidding" + File.separator;
 }
