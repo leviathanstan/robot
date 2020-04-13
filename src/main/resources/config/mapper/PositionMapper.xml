@@ -167,7 +167,7 @@
         </foreach>
     </delete>
     <!--管理界面下搜索招聘-->
-    <select id="findPosition" resultMap="positionMap" parameterType="map">
+    <select id="findPosition" resultMap="positionDetail" parameterType="map">
         select *,positions.id as p_id,i1.name as industry_name,i2.name as industry_position_name from positions left
         join
         industry_category as i1 on i1.id = industry_id

@@ -2,7 +2,6 @@ package com.robot.util;
 
 import com.robot.dto.InformationDto;
 import com.robot.entity.Detail;
-import com.robot.entity.Robot;
 import com.robot.entity.RobotNews;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -179,7 +178,7 @@ public class CommonUtil {
     public static String getDate(String oldDate) {
         if (oldDate != null) {
             try {
-                LocalDateTime time = LocalDateTime.parse(oldDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+                LocalDateTime time = LocalDateTime.parse(oldDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 return time.toLocalDate().toString();
             } catch (DateTimeParseException e) {
                 e.printStackTrace();
@@ -271,19 +270,12 @@ public class CommonUtil {
         // 获取操作系统类型
         String sysType = System.getProperties().getProperty("os.name");
         String ip;
-        if (sysType.toLowerCase().startsWith("win")) {  // 如果是Windows系统，获取本地IP地址
+        // 如果是Windows系统，获取本地IP地址
+        if (sysType.toLowerCase().startsWith("win")) {
             return "http://122.13.4.239";
-//            String localIP = null;
-//            try {
-//                localIP = InetAddress.getLocalHost().getHostAddress();
-//            } catch (UnknownHostException e) {
-//                e.printStackTrace();
-//            }
-//            if (localIP != null) {
-//                return "http://"+localIP;
-//            }
         } else {
-            ip = "http://120.79.30.14:8080"; // Linux
+            // Linux
+            ip = "http://120.79.30.14:8080";
             if (ip != null) {
                 return ip;
             }
