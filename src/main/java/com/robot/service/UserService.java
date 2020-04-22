@@ -337,16 +337,24 @@ public class UserService {
      * @return
      */
     @Transactional
-    public String insertNewMember(HttpSession session, Member member, Enterprise enterprise, MultipartFile authenticationDatas, MultipartFile contactInfoDatas) {
+    public String insertNewMember(HttpSession session, Member member, Enterprise enterprise,
+                                  MultipartFile authenticationDatas, MultipartFile contactInfoDatas) {
+        //检查上传的文件是否是zip
+        if(contactInfoDatas != null && !contactInfoDatas.getOriginalFilename().endsWith(".zip")) {
+            return GsonUtil.getErrorJson("联络人资料只能为zip文件");
+        }
+        if(authenticationDatas != null && !authenticationDatas.getOriginalFilename().endsWith(".zip")) {
+            return GsonUtil.getErrorJson("资料认证只能为zip文件");
+        }
+
         if (contactInfoDatas != null) {
-            //return GsonUtil.getErrorJson("联络人资料不能为空");
-        //} else {
             member.setContactInfo(contactInfoDatas.getOriginalFilename());
             String realNameOfContactInfo = CommonUtil.uploadMember(contactInfoDatas, Constant.MEMBER_CONTACTINFODATAS_PATH);
             member.setContactInfoUrl(realNameOfContactInfo);
         }
 
-        if (enterprise.getEnterpriseName() == null || "".equals(enterprise.getEnterpriseName()) || !enterprise.getEnterpriseName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION)) {
+        if (enterprise.getEnterpriseName() == null || "".equals(enterprise.getEnterpriseName())
+                || !enterprise.getEnterpriseName().matches(Constant.USER_COMPANY_NAME_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("企业名称格式不正确");
         }
 
@@ -354,77 +362,63 @@ public class UserService {
             return GsonUtil.getErrorJson("企业已存在");
         }
 
-        member.setMemberNumber(Md5Util.encryptMd5(CommonUtil.convertToString(new Date(), "yyyy-MM-dd")) + enterprise.getEnterpriseName());
+        member.setMemberNumber(Md5Util.encryptMd5(CommonUtil.convertToString(new Date(), "yyyy-MM-dd"))
+                + enterprise.getEnterpriseName());
 
-        member.setMemberName(enterprise.getEnterpriseName()); //会员全称
-        if (enterprise.getEnterpriseType() == null || "".equals(enterprise.getEnterpriseType()) || !CommonUtil.isContains(enterprise.getEnterpriseType(), Member.ENTERPRISE_TYPE)) {
+        //会员全称
+        member.setMemberName(enterprise.getEnterpriseName());
+        if (enterprise.getEnterpriseType() == null || "".equals(enterprise.getEnterpriseType())
+                || !CommonUtil.isContains(enterprise.getEnterpriseType(), Member.ENTERPRISE_TYPE)) {
             return GsonUtil.getErrorJson("企业类型格式不正确");
         }
-        member.setMemberType(enterprise.getEnterpriseType()); //会员类型
+        //会员类型
+        member.setMemberType(enterprise.getEnterpriseType());
         if (enterprise.getEnterpriseNature() == null || "".equals(enterprise.getEnterpriseNature())) {
             return GsonUtil.getErrorJson("企业性质格式不正确");
         }
         if (enterprise.getEnterpriseScale() == null || "".equals(enterprise.getEnterpriseScale())) {
             return GsonUtil.getErrorJson("企业规模格式不正确");
         }
-        if (enterprise.getLocation() == null || "".equals(enterprise.getLocation()) || !enterprise.getLocation().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
+        if (enterprise.getLocation() == null || "".equals(enterprise.getLocation())) {
             return GsonUtil.getErrorJson("所在地格式不正确");
         }
-        //if (enterprise.getRegisteredCapital() == null || "".equals(enterprise.getRegisteredCapital())) {
-            //return GsonUtil.getErrorJson("注册资本格式不正确");
-        //}
-        //if (enterprise.getRegisteredDate() == null) {
-            //return GsonUtil.getErrorJson("注册年份格式不正确");
-        //}
         if (authenticationDatas == null) {
             return GsonUtil.getErrorJson("资料认证文件不能为空");
         } else {
             enterprise.setAuthenticationData(authenticationDatas.getOriginalFilename());
-            String realNameOfAuthenticationDatas = CommonUtil.uploadMember(authenticationDatas, Constant.MEMBER_AUTHENTICATIONDATA_PATH);
+            String realNameOfAuthenticationDatas = CommonUtil.uploadMember(authenticationDatas,
+                    Constant.MEMBER_AUTHENTICATIONDATA_PATH);
             enterprise.setAuthenticationDataUrl(realNameOfAuthenticationDatas);
         }
         if (enterprise.getManagementModel() != null && !"".equals(enterprise.getManagementModel())
                 && !CommonUtil.isContains(enterprise.getManagementModel(), Member.MANAGEMENT_MODEL)) {
             return GsonUtil.getErrorJson("经营模式格式不正确");
         }
-        //if (enterprise.getManagementScope() == null || "".equals(enterprise.getManagementScope())) {
-            //eturn GsonUtil.getErrorJson("经营范围格式不正确");
-        //}
-        //if (enterprise.getMainCamp() == null || "".equals(enterprise.getMainCamp())) {
-            //return GsonUtil.getErrorJson("主营行业格式不正确");
-        //}
-        //if (enterprise.getMainApplication() == null || "".equals(enterprise.getMainApplication())) {
-            //return GsonUtil.getErrorJson("擅长应用格式不正确");
-        //}
-        //if (enterprise.getDeveloping() == null || "".equals(enterprise.getDeveloping())) {
-            //return GsonUtil.getErrorJson("发展历程格式不正确");
-        //}
-        //if (enterprise.getCooperativePartner() == null || "".equals(enterprise.getCooperativePartner())) {
-            //return GsonUtil.getErrorJson("合作伙伴格式不正确");
-        //}
-        //if (enterprise.getMainCustomer() == null || "".equals(enterprise.getMainCustomer())) {
-            //return GsonUtil.getErrorJson("主要客户格式不正确");
-        //}
-        if (enterprise.getPostalCode() != null && !"".equals(enterprise.getPostalCode()) && !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
+        if (enterprise.getPostalCode() != null && !"".equals(enterprise.getPostalCode())
+                && !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
             return GsonUtil.getErrorJson("邮政编码格式不正确");
         }
-        if (enterprise.getContactNumber() == null || "".equals(enterprise.getContactNumber()) || !enterprise.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
+        if (enterprise.getContactNumber() == null || "".equals(enterprise.getContactNumber())
+                || !enterprise.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("联系电话格式不正确");
         }
         if (enterprise.getFax() == null || "".equals(enterprise.getFax())) {
             return GsonUtil.getErrorJson("传真格式不正确");
         }
-        if (enterprise.getEmail() == null || "".equals(enterprise.getEmail()) || !enterprise.getEmail().matches(Constant.EMAIL_REGULAR_EXPRESSION)) {
+        if (enterprise.getEmail() == null || "".equals(enterprise.getEmail())
+                || !enterprise.getEmail().matches(Constant.EMAIL_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("电子邮件格式不正确");
         }
-        if (enterprise.getContactAddress() == null || "".equals(enterprise.getContactAddress()) || !enterprise.getContactAddress().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
+        if (enterprise.getContactAddress() == null || "".equals(enterprise.getContactAddress())
+                || !enterprise.getContactAddress().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("联系地址格式不正确");
         }
         if (enterprise.getContacts() == null || "".equals(enterprise.getContacts())) {
             return GsonUtil.getErrorJson("联系人格式不正确");
         }
 
-        member.setContact(enterprise.getContacts()); //联络人
+        //联络人
+        member.setContact(enterprise.getContacts());
 
         if (enterprise.getDepartment() == null || "".equals(enterprise.getDepartment())) {
             return GsonUtil.getErrorJson("所在部门格式不正确");
@@ -435,14 +429,17 @@ public class UserService {
         if (enterprise.getQq() == null || "".equals(enterprise.getQq()) || !enterprise.getQq().matches(Constant.QQ)) {
             return GsonUtil.getErrorJson("qq格式不正确");
         }
-        if (enterprise.getWechat() == null || "".equals(enterprise.getWechat()) || !enterprise.getWechat().matches(Constant.USER_WECHAT_REGULAR_EXPRESSION)) {
+        if (enterprise.getWechat() == null || "".equals(enterprise.getWechat())
+                || !enterprise.getWechat().matches(Constant.USER_WECHAT_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("微信格式不正确");
         }
 
-        userDao.insertEnterpriseInfo(enterprise);   //插入企业信息
+        //插入企业信息
+        userDao.insertEnterpriseInfo(enterprise);
         member.setMemberMold(Member.MEMBER_MOLD_ENTERPRISE);
         member.setMemberMoldId(enterprise.getId());
-        int memberId =  userDao.insertMember(member); //插入会员信息
+        //插入会员信息
+        int memberId =  userDao.insertMember(member);
         session.setAttribute("enterpriseId", enterprise.getId());
         session.setAttribute("memberId",memberId);
         return GsonUtil.getSuccessJson("注册成功");

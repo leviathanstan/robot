@@ -80,10 +80,10 @@
 
     <!-- 定期任务配置   -->
     <bean id="scheduleTask" class="com.robot.schedule.ScheduleTask" />
-    <task:scheduled-tasks>
+    <!--<task:scheduled-tasks>
         <task:scheduled ref="scheduleTask" method="runSpider"
-        cron="0 0 3 * * ?" /><!-- 每天凌晨3点执行  -->
-    </task:scheduled-tasks>
+        cron="0 0 3 * * ?" /> 每天凌晨3点执行
+    </task:scheduled-tasks>-->
 
     <!-- aop配置-->
     <aop:aspectj-autoproxy proxy-target-class="true">
