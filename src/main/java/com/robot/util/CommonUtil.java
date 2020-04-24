@@ -454,9 +454,8 @@ public class CommonUtil {
      */
     public static String uploadMember(MultipartFile file, String fileType) {
         String fileName = file.getOriginalFilename();
-        if (fileName == null)   return GsonUtil.getErrorJson();
-        if (!fileName.endsWith(".zip")) {
-            return GsonUtil.getErrorJson("格式不支持");
+        if (fileName == null) {
+            return null;
         } else {
             String fileNameByMD5 = FileUtil.getFileHash(fileName);
             FileUtil.zipUpload(fileNameByMD5, file, fileType);

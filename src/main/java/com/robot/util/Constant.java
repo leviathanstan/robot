@@ -21,12 +21,12 @@ public class Constant {
 
     public static String USER_NAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String PHONE_REGULAR_EXPRESSION = "^[0-9]{11}$";
-    public static String FAX = "^(\\d{3,4}-)?\\d{7,8}$";
-    public static String QQ = "^[1-9][0-9]{4,10}$";
+    public static String FAX = "^(\\d{1,4}-)?(\\d{3,4}-)?\\d{7,8}$";
+    public static String QQ = "^[1-9][0-9]+$";
     public static String POSTAL_CODE = "^[\\d]{6}$";
     public static String USER_WECHAT_REGULAR_EXPRESSION = "^[a-zA-Z0-9\\u4e00-\\u9fa5]{3,10}$";
     public static String USER_COMPANY_NAME_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
-    public static String ADDRESS_REGULAR_EXPRESSION = "^[a-zA-Z0-9\\u4E00-\\u9FA5]{0,20}$";
+    public static String ADDRESS_REGULAR_EXPRESSION = "^[a-zA-Z0-9\\u4E00-\\u9FA5]+$";
     public static String USER_POSITION_REGULAR_EXPRESSION = "^[a-zA-Z\\u4e00-\\u9fa5]+$";
     public static String EMAIL_REGULAR_EXPRESSION = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 

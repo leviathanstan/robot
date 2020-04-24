@@ -339,13 +339,6 @@ public class UserService {
     @Transactional
     public String insertNewMember(HttpSession session, Member member, Enterprise enterprise,
                                   MultipartFile authenticationDatas, MultipartFile contactInfoDatas) {
-        //检查上传的文件是否是zip
-        if(contactInfoDatas != null && !contactInfoDatas.getOriginalFilename().endsWith(".zip")) {
-            return GsonUtil.getErrorJson("联络人资料只能为zip文件");
-        }
-        if(authenticationDatas != null && !authenticationDatas.getOriginalFilename().endsWith(".zip")) {
-            return GsonUtil.getErrorJson("资料认证只能为zip文件");
-        }
 
         if (contactInfoDatas != null) {
             member.setContactInfo(contactInfoDatas.getOriginalFilename());
@@ -374,13 +367,13 @@ public class UserService {
         //会员类型
         member.setMemberType(enterprise.getEnterpriseType());
         if (enterprise.getEnterpriseNature() == null || "".equals(enterprise.getEnterpriseNature())) {
-            return GsonUtil.getErrorJson("企业性质格式不正确");
+            return GsonUtil.getErrorJson("企业性质不能为空");
         }
         if (enterprise.getEnterpriseScale() == null || "".equals(enterprise.getEnterpriseScale())) {
-            return GsonUtil.getErrorJson("企业规模格式不正确");
+            return GsonUtil.getErrorJson("企业规模不能为空");
         }
         if (enterprise.getLocation() == null || "".equals(enterprise.getLocation())) {
-            return GsonUtil.getErrorJson("所在地格式不正确");
+            return GsonUtil.getErrorJson("所在地格式不能为空");
         }
         if (authenticationDatas == null) {
             return GsonUtil.getErrorJson("资料认证文件不能为空");
@@ -402,36 +395,35 @@ public class UserService {
                 || !enterprise.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("联系电话格式不正确");
         }
-        if (enterprise.getFax() == null || "".equals(enterprise.getFax())) {
+        if (enterprise.getFax() != null && !"".equals(enterprise.getFax())
+                && !enterprise.getFax().matches(Constant.FAX)) {
             return GsonUtil.getErrorJson("传真格式不正确");
         }
         if (enterprise.getEmail() == null || "".equals(enterprise.getEmail())
                 || !enterprise.getEmail().matches(Constant.EMAIL_REGULAR_EXPRESSION)) {
             return GsonUtil.getErrorJson("电子邮件格式不正确");
         }
-        if (enterprise.getContactAddress() == null || "".equals(enterprise.getContactAddress())
-                || !enterprise.getContactAddress().matches(Constant.ADDRESS_REGULAR_EXPRESSION)) {
-            return GsonUtil.getErrorJson("联系地址格式不正确");
+        if (enterprise.getContactAddress() == null || "".equals(enterprise.getContactAddress())) {
+            return GsonUtil.getErrorJson("联系地址不能为空");
         }
         if (enterprise.getContacts() == null || "".equals(enterprise.getContacts())) {
-            return GsonUtil.getErrorJson("联系人格式不正确");
+            return GsonUtil.getErrorJson("联系人不能为空");
         }
 
         //联络人
         member.setContact(enterprise.getContacts());
 
         if (enterprise.getDepartment() == null || "".equals(enterprise.getDepartment())) {
-            return GsonUtil.getErrorJson("所在部门格式不正确");
+            return GsonUtil.getErrorJson("所在部门不能为空");
         }
         if (enterprise.getPost() == null || "".equals(enterprise.getPost())) {
-            return GsonUtil.getErrorJson("职务格式不正确");
+            return GsonUtil.getErrorJson("职务不能为空");
         }
         if (enterprise.getQq() == null || "".equals(enterprise.getQq()) || !enterprise.getQq().matches(Constant.QQ)) {
             return GsonUtil.getErrorJson("qq格式不正确");
         }
-        if (enterprise.getWechat() == null || "".equals(enterprise.getWechat())
-                || !enterprise.getWechat().matches(Constant.USER_WECHAT_REGULAR_EXPRESSION)) {
-            return GsonUtil.getErrorJson("微信格式不正确");
+        if (enterprise.getWechat() == null || "".equals(enterprise.getWechat())) {
+            return GsonUtil.getErrorJson("微信不能为空");
         }
 
         //插入企业信息
@@ -439,9 +431,9 @@ public class UserService {
         member.setMemberMold(Member.MEMBER_MOLD_ENTERPRISE);
         member.setMemberMoldId(enterprise.getId());
         //插入会员信息
-        int memberId =  userDao.insertMember(member);
+        userDao.insertMember(member);
         session.setAttribute("enterpriseId", enterprise.getId());
-        session.setAttribute("memberId",memberId);
+        session.setAttribute("memberId", member.getId());
         return GsonUtil.getSuccessJson("注册成功");
     }
 
@@ -452,19 +444,19 @@ public class UserService {
             return GsonUtil.getErrorJson("服务器错误");
         }
         if (representativeWork.getBrand() == null || "".equals(representativeWork.getBrand())) {
-            return GsonUtil.getErrorJson("品牌格式不正确");
+            return GsonUtil.getErrorJson("品牌不能为空");
         }
         if (representativeWork.getVersion() == null || "".equals(representativeWork.getVersion())) {
-            return GsonUtil.getErrorJson("版本格式不正确");
+            return GsonUtil.getErrorJson("版本不能为空");
         }
         if (representativeWork.getApplicationArea() == null || "".equals(representativeWork.getApplicationArea())) {
-            return GsonUtil.getErrorJson("应用领域格式不正确");
+            return GsonUtil.getErrorJson("应用领域不能为空");
         }
         if (representativeWork.getApplicationIndustry() == null || "".equals(representativeWork.getApplicationIndustry())) {
-            return GsonUtil.getErrorJson("应用行业格式不正确");
+            return GsonUtil.getErrorJson("应用行业不能为空");
         }
         if (representativeWork.getApplicationScenario() == null || "".equals(representativeWork.getApplicationScenario())) {
-            return GsonUtil.getErrorJson("应用场景格式不正确");
+            return GsonUtil.getErrorJson("应用场景不能为空");
         }
         representativeWork.setEnterpriseId(enterpriseId);
         userDao.insertMemberProduct(representativeWork);
@@ -477,16 +469,15 @@ public class UserService {
         if (memberId == null) {
             return GsonUtil.getErrorJson("网络异常");
         }
-        if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
+        if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword())
+                || ValidateUtil.isInvalidString(user.getEmail())) {
             return GsonUtil.getErrorJson("输入不能为空");
         }
-        System.out.println(user.getEmail());
+
         if (!ValidateUtil.isMatchEmail(user.getEmail())) {
             return GsonUtil.getErrorJson("邮箱格式不正确");
         }
-//        if (!user.getPhone().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
-//            return GsonUtil.getErrorJson("手机格式不正确");
-//        }
+
         if (userDao.isExist(user) != 0) {
             return GsonUtil.getErrorJson("用户已存在");
         }

@@ -5,7 +5,6 @@ import com.robot.entity.Enterprise;
 import com.robot.entity.Member;
 import com.robot.entity.RepresentativeWork;
 import com.robot.entity.User;
-
 import com.robot.enums.Role;
 import com.robot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,7 +203,6 @@ public class UserController {
      * @param user
      * @return
      */
-//    @Authority(role = Role.MEMBER)
     @ResponseBody
     @RequestMapping(value = "insertMemberUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String insertMemberUser(User user, HttpSession session) {
