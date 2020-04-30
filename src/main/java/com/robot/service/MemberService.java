@@ -1,8 +1,6 @@
 package com.robot.service;
 
 import com.robot.dao.*;
-import com.robot.entity.Introduction;
-import com.robot.entity.Member;
 import com.robot.util.GsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class MemberService {
@@ -103,19 +100,15 @@ public class MemberService {
     /**
      * 获取会员单位资讯等信息
      *
-     * @param introductionId
+     * @param id
      * @return
      * @author chen
      */
-    public String getMemberInfo(int introductionId) {
-        Introduction introduction = introductionDao.findIntroductionInfo(introductionId);
-        Member member = userDao.selectMemberByName(introduction.getName());
-        if (member == null)
-            return null;
-        List<Integer> userIds = userDao.selectUIds(member.getId());
-        List<Integer> informationIds = null;
-        informationIds = userIds.size() == 0 ? new ArrayList<>():informationDao.selectMemberInformationByUIds(userIds);
-        Map<String,Object> dataMap = new ConcurrentHashMap<>(35);
+    public String getMemberInfo(int id) {
+        Map<String,Object> dataMap = new HashMap<>(25);
+        List<Integer> userIds = userDao.selectUIds(id);
+
+        List<Integer> informationIds = userIds.size() == 0 ? new ArrayList<>() : informationDao.selectMemberInformationByUIds(userIds);
         if (informationIds.size() != 0) {
             dataMap.put("information1", informationDao.selectIndexMemberInformation(InformationEnum.INDUSTRY_INFORMATION.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
             dataMap.put("news", informationDao.selectIndexMemberInformation(InformationEnum.ASSOCIATION_NEWS.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
@@ -132,21 +125,25 @@ public class MemberService {
             dataMap.put("case", informationDao.selectIndexMemberInformation(InformationEnum.CASE.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
             dataMap.put("basic", informationDao.selectIndexMemberInformation(InformationEnum.BASIC_KNOWLEDGE.getId(), informationIds, NumberEnum.INFORMATION_NUMBER.getNumber()));
         }
+
         List<Integer> introductionIds = userIds.size() == 0 ? new ArrayList<>() : introductionDao.selectMemberIntroductionByUIds(userIds);
         if(introductionIds.size() != 0) {
             dataMap.put("school", introductionDao.selectIndexMemberIntroduction(IntroductionEnum.UNIVERSITIES.getId(),introductionIds,IntroductionNumberEnum.UNIVERSITIES.getNumber()));
             dataMap.put("experts", introductionDao.selectIndexMemberIntroduction(IntroductionEnum.EXPERT.getId(),introductionIds,IntroductionNumberEnum.UNIVERSITIES.getNumber()));
             dataMap.put("members",introductionDao.selectIndexMemberIntroduction(IntroductionEnum.MEMBER.getId(),introductionIds,IntroductionNumberEnum.UNIVERSITIES.getNumber()));
         }
+
         List<Integer> productIds = userIds.size() == 0 ? new ArrayList<>() : productDao.selectMemberProductByUIds(userIds);
         if(productIds.size() != 0) {
             dataMap.put("productLibrary",productDao.selectIndexMemberProduct(productIds,NumberEnum.PRODUCT_NUMBER.getNumber()));
         }
+
         List<Integer> conferenceIds = userIds.size() == 0 ? new ArrayList<>() : conferenceDao.selectMemberConferenceByUIds(userIds);
         if(conferenceIds.size() != 0) {
             dataMap.put("conference", conferenceDao.selectIndexMemberConference(Integer.parseInt(ConferenceEnum.CONFERENCE.getType()),conferenceIds,5));
             dataMap.put("meeting",conferenceDao.selectIndexMemberConference(Integer.parseInt(ConferenceEnum.MEETING.getType()),conferenceIds,5));
         }
+
         return GsonUtil.getSuccessJson(dataMap);
     }
 }
