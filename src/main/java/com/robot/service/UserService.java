@@ -210,10 +210,9 @@ public class UserService {
         if(member == null)
             return GsonUtil.getErrorJson("会员单位未注册");
         session.setAttribute("memberId",member.getId());
-        User user1 = new User();
-        user1.setEmail(user.getEmail());
-        if (userDao.find(user1).size() != 0) {
-            return GsonUtil.getErrorJson("邮箱已经注册过");
+
+        if (userDao.isExist(user) != 0) {
+            return GsonUtil.getErrorJson("用户名或邮箱已存在");
         }
         session.setAttribute("registerUser", user);
         String code = CharacterUtil.getRandomString(5);
@@ -479,7 +478,7 @@ public class UserService {
         }
 
         if (userDao.isExist(user) != 0) {
-            return GsonUtil.getErrorJson("用户已存在");
+            return GsonUtil.getErrorJson("用户名或邮箱已存在");
         }
         user.setRole(User.ROLE_MEMBER);
         user.setStatus(User.STATUS_ACCESS);
