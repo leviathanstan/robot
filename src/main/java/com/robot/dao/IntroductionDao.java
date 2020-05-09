@@ -14,6 +14,7 @@ import java.util.Map;
 public interface IntroductionDao {
 
     ArrayList<Introduction> getIndexIntroduction(Map<String,Integer> map);
+    ArrayList<Introduction> getIndexMemberList(Map<String,Integer> map);
     ArrayList<Introduction> getIntroductionList(int categoryId);
     Introduction findIntroductionInfo(int id);
     int delete(List<Integer> ids);

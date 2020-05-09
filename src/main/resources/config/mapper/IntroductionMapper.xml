@@ -12,6 +12,9 @@
     <select id="getIndexIntroduction" parameterType="map" resultMap="introductionMap">
         select id, name from introduction where category_id=#{categoryId} order by post_date limit #{number}
     </select>
+    <select id="getIndexMemberList" parameterType="map" resultMap="introductionMap">
+        select id, member_name as name from member limit #{number}
+    </select>
 
     <select id="getIntroductionList" parameterType="int" resultMap="introductionMap">
         select id, name, content from introduction where category_id=#{categoryId} order by post_date

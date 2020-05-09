@@ -197,9 +197,8 @@ public class IntroductionService {
      */
     public List<Introduction> getIndexMember() {
         Map<String,Integer> map = new HashMap<>();
-        map.put("categoryId", IntroductionEnum.MEMBER.getId());
         map.put("number",NumberEnum.MEMBER.getNumber());
-        return introductionDao.getIndexIntroduction(map);
+        return introductionDao.getIndexMemberList(map);
     }
 
     /**
