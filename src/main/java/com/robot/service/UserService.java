@@ -489,6 +489,168 @@ public class UserService {
         return GsonUtil.getSuccessJson("用户添加成功");
     }
 
+    /**
+     * 获取会员注册信息
+     * @Author  xm
+     * @Date 2020/5/10 19:14
+     * @param session
+     * @return java.lang.String
+     */
+    public String getMemberRegisterInfo(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer memberId = userDao.getMemberIdByUid(user.getId());
+
+        if (memberId == null) {
+            return GsonUtil.getErrorJson("无所属会员单位");
+        }
+
+        Enterprise enterprise = userDao.getEnterprise(memberId);
+
+        if (enterprise == null) {
+            return GsonUtil.getErrorJson("无注册信息");
+        }
+
+        session.setAttribute("updataMemberId", memberId);
+        session.setAttribute("updataEnterpriseId", enterprise.getId());
+
+        return GsonUtil.getSuccessJson(enterprise);
+    }
+
+    /**
+     * 更新会员注册信息
+     * @Author  xm
+     * @Date 2020/5/12 20:25
+     * @param session
+     * @param enterprise
+     * @param authenticationDatas
+     * @param contactInfoDatas
+     * @return java.lang.String
+     */
+    @Transactional
+    public String updateMember(HttpSession session, Enterprise enterprise,
+                                   MultipartFile authenticationDatas,
+                                   MultipartFile contactInfoDatas) {
+
+        Integer memberId = (Integer) session.getAttribute("updataMemberId");
+        Integer enterpriseId = (Integer) session.getAttribute("updataEnterpriseId");
+        if (memberId == null || enterpriseId == null) {
+            return GsonUtil.getErrorJson("违法操作");
+        }
+
+        Member member = new Member();
+        member.setId(memberId);
+        enterprise.setId(enterpriseId);
+
+        if (contactInfoDatas != null) {
+            member.setContactInfo(contactInfoDatas.getOriginalFilename());
+            String realNameOfContactInfo = CommonUtil.uploadMember(contactInfoDatas, Constant.MEMBER_CONTACTINFODATAS_PATH);
+            member.setContactInfoUrl(realNameOfContactInfo);
+        }
+
+        if (authenticationDatas != null) {
+            enterprise.setAuthenticationData(authenticationDatas.getOriginalFilename());
+            String realNameOfAuthenticationDatas = CommonUtil.uploadMember(authenticationDatas,
+                    Constant.MEMBER_AUTHENTICATIONDATA_PATH);
+            enterprise.setAuthenticationDataUrl(realNameOfAuthenticationDatas);
+        }
+
+        if (!ValidateUtil.isNullOrEmpty(enterprise.getEnterpriseType())
+                && !CommonUtil.isContains(enterprise.getEnterpriseType(), Member.ENTERPRISE_TYPE)) {
+            return GsonUtil.getErrorJson("企业类型格式不正确");
+        }
+
+        if (!ValidateUtil.isNullOrEmpty(enterprise.getManagementModel())
+                && !CommonUtil.isContains(enterprise.getManagementModel(), Member.MANAGEMENT_MODEL)) {
+            return GsonUtil.getErrorJson("经营模式格式不正确");
+        }
+        if (!ValidateUtil.isNullOrEmpty(enterprise.getPostalCode())
+                && !enterprise.getPostalCode().matches(Constant.POSTAL_CODE)) {
+            return GsonUtil.getErrorJson("邮政编码格式不正确");
+        }
+        if (!ValidateUtil.isNullOrEmpty(enterprise.getContactNumber())
+                && !enterprise.getContactNumber().matches(Constant.PHONE_REGULAR_EXPRESSION)) {
+            return GsonUtil.getErrorJson("联系电话格式不正确");
+        }
+        if (!ValidateUtil.isNullOrEmpty(enterprise.getFax())
+                && !enterprise.getFax().matches(Constant.FAX)) {
+            return GsonUtil.getErrorJson("传真格式不正确");
+        }
+        if (!ValidateUtil.isNullOrEmpty(enterprise.getEmail())
+                && !enterprise.getEmail().matches(Constant.EMAIL_REGULAR_EXPRESSION)) {
+            return GsonUtil.getErrorJson("电子邮件格式不正确");
+        }
+        if (!ValidateUtil.isNullOrEmpty(enterprise.getQq()) && !enterprise.getQq().matches(Constant.QQ)) {
+            return GsonUtil.getErrorJson("qq格式不正确");
+        }
+
+        //联络人
+        member.setContact(enterprise.getContacts());
+        //会员类型
+        member.setMemberType(enterprise.getEnterpriseType());
+
+        userDao.updateEnterprise(enterprise);
+        userDao.updateMember(member);
+
+        return GsonUtil.getSuccessJson("更新成功");
+    }
+
+    /**
+     * 获取会员填写的代表作品
+     * @Author  xm
+     * @Date 2020/5/14 17:07
+     * @param session
+     * @return java.lang.String
+     */
+    public String getRepresentativeWork(HttpSession session) {
+        Integer enterpriseId = (Integer) session.getAttribute("updataEnterpriseId");
+        if (enterpriseId == null) {
+            return GsonUtil.getErrorJson("违法操作");
+        }
+        return GsonUtil.getSuccessJson(userDao.getRepresentativeWork(enterpriseId));
+    }
+
+    /**
+     * 新增或修改会员代表作品
+     * @Author  xm
+     * @Date 2020/5/14 17:19
+     * @param session
+     * @param representativeWork
+     * @return java.lang.String
+     */
+    public String updateRepresentativeWork(HttpSession session, RepresentativeWork representativeWork) {
+        Integer enterpriseId = (Integer) session.getAttribute("updataEnterpriseId");
+        if (enterpriseId == null) {
+            return GsonUtil.getErrorJson("违法操作");
+        }
+        representativeWork.setEnterpriseId(enterpriseId);
+
+        //如果id不为空则是更新
+        if (representativeWork.getId() != null) {
+            userDao.updateRepresentativeWork(representativeWork);
+            return GsonUtil.getSuccessJson("更新成功");
+        }
+
+        //否则就是新增
+        if (ValidateUtil.isNullOrEmpty(representativeWork.getBrand())) {
+            return GsonUtil.getErrorJson("品牌不能为空");
+        }
+        if (ValidateUtil.isNullOrEmpty(representativeWork.getVersion())) {
+            return GsonUtil.getErrorJson("版本不能为空");
+        }
+        if (ValidateUtil.isNullOrEmpty(representativeWork.getApplicationArea())) {
+            return GsonUtil.getErrorJson("应用领域不能为空");
+        }
+        if (ValidateUtil.isNullOrEmpty(representativeWork.getApplicationIndustry())) {
+            return GsonUtil.getErrorJson("应用行业不能为空");
+        }
+        if (ValidateUtil.isNullOrEmpty(representativeWork.getApplicationScenario())) {
+            return GsonUtil.getErrorJson("应用场景不能为空");
+        }
+
+        userDao.insertMemberProduct(representativeWork);
+        return GsonUtil.getSuccessJson("新增代表作品成功");
+    }
+
     public String getMemberList(String pageNum) {
         int page = CommonUtil.formatPageNum(pageNum);
         PageHelper.startPage(page, PAGE_LENGTH);

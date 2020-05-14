@@ -210,6 +210,68 @@ public class UserController {
     }
 
     /**
+     * 获取会员注册信息
+     * @Author  xm
+     * @Date 2020/5/10 19:08 
+     * @param session	
+     * @return java.lang.String
+     */
+    @Authority(role = Role.MEMBER)
+    @ResponseBody
+    @RequestMapping(value = "member", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getMemberRegisterInfo(HttpSession session) {
+        return userService.getMemberRegisterInfo(session);
+    }
+
+    /**
+     * 更新会员注册信息
+     * @Author  xm
+     * @Date 2020/5/12 21:03
+     * @param session
+     * @param enterprise
+     * @param authenticationDatas
+     * @param contactInfoDatas
+     * @return java.lang.String
+     */
+    @Authority(role = Role.MEMBER)
+    @ResponseBody
+    @RequestMapping(value = "updateMember", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String updateMember(HttpSession session, Enterprise enterprise,
+                               @RequestParam(value = "authenticationDatas", required = false) MultipartFile authenticationDatas,
+                               @RequestParam(value = "contactInfoDatas", required = false) MultipartFile contactInfoDatas) {
+        return userService.updateMember(session, enterprise, authenticationDatas, contactInfoDatas);
+    }
+
+    /**
+     * 获取会员填写的代表作品
+     * @Author  xm
+     * @Date 2020/5/14 16:50
+     * @param session	
+     * @return java.lang.String
+     */
+    @Authority(role = Role.MEMBER)
+    @ResponseBody
+    @RequestMapping(value = "getRepresentativeWork", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getRepresentativeWork(HttpSession session) {
+        return userService.getRepresentativeWork(session);
+    }
+
+    /**
+     * 新增或修改会员代表作品
+     * @Author  xm
+     * @Date 2020/5/14 17:19
+     * @param session
+     * @param representativeWork
+     * @return java.lang.String
+     */
+    @Authority(role = Role.MEMBER)
+    @ResponseBody
+    @RequestMapping(value = "updateRepresentativeWork", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String updateRepresentativeWork(HttpSession session, RepresentativeWork representativeWork) {
+        return userService.updateRepresentativeWork(session, representativeWork);
+    }
+
+    /**
      * 查看会员列表
      *
      * @return

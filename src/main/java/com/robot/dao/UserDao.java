@@ -39,4 +39,10 @@ public interface UserDao {
     Member selectMemberByName(String memberName);
     List<Integer> selectUIds(int memberId);
     User getUser(int id);
+    Integer getMemberIdByUid(int userId);
+    Enterprise getEnterprise(int memberId);
+    int updateEnterprise(Enterprise enterprise);
+    int updateMember(Member member);
+    List<RepresentativeWork> getRepresentativeWork(Integer enterpriseId);
+    int updateRepresentativeWork(RepresentativeWork representativeWork);
 }

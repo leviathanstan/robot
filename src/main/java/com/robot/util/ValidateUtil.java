@@ -16,6 +16,10 @@ public class ValidateUtil {
 
     }
 
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || "".equals(str);
+    }
+
     /**
      * 判断是否符合邮件格式
      * @param str

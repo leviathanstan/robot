@@ -29,6 +29,48 @@
         <result column="username" property="username"/>
     </resultMap>
 
+    <resultMap id="enterprise" type="com.robot.entity.Enterprise">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="enterprise_name" jdbcType="VARCHAR" property="enterpriseName" />
+        <result column="enterprise_nature" jdbcType="VARCHAR" property="enterpriseNature" />
+        <result column="enterprise_type" jdbcType="VARCHAR" property="enterpriseType" />
+        <result column="enterprise_scale" jdbcType="VARCHAR" property="enterpriseScale" />
+        <result column="location" jdbcType="VARCHAR" property="location" />
+        <result column="registered_capital" jdbcType="VARCHAR" property="registeredCapital" />
+        <result column="registered_date" jdbcType="DATE" property="registeredDate" />
+        <result column="authentication_data" jdbcType="VARCHAR" property="authenticationData" />
+        <result column="authentication_data_url" jdbcType="VARCHAR" property="authenticationDataUrl" />
+        <result column="management_model" jdbcType="VARCHAR" property="managementModel" />
+        <result column="management_scope" jdbcType="VARCHAR" property="managementScope" />
+        <result column="main_camp" jdbcType="VARCHAR" property="mainCamp" />
+        <result column="main_application" jdbcType="VARCHAR" property="mainApplication" />
+        <result column="cooperative_partner" jdbcType="VARCHAR" property="cooperativePartner" />
+        <result column="main_customer" jdbcType="VARCHAR" property="mainCustomer" />
+        <result column="postal_code" jdbcType="VARCHAR" property="postalCode" />
+        <result column="contact_number" jdbcType="VARCHAR" property="contactNumber" />
+        <result column="fax" jdbcType="VARCHAR" property="fax" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="contact_address" jdbcType="VARCHAR" property="contactAddress" />
+        <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+        <result column="department" jdbcType="VARCHAR" property="department" />
+        <result column="post" jdbcType="VARCHAR" property="post" />
+        <result column="qq" jdbcType="VARCHAR" property="qq" />
+        <result column="wechat" jdbcType="VARCHAR" property="wechat" />
+    </resultMap>
+    <resultMap extends="enterprise" id="enterpriseWithBLOBs" type="com.robot.entity.Enterprise">
+        <result column="developing" jdbcType="LONGVARCHAR" property="developing" />
+    </resultMap>
+
+    <resultMap id="representativeWork" type="com.robot.entity.RepresentativeWork">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+        <result column="brand" jdbcType="VARCHAR" property="brand" />
+        <result column="version" jdbcType="VARCHAR" property="version" />
+        <result column="application_area" jdbcType="VARCHAR" property="applicationArea" />
+        <result column="application_industry" jdbcType="VARCHAR" property="applicationIndustry" />
+        <result column="application_scenario" jdbcType="VARCHAR" property="applicationScenario" />
+    </resultMap>
+
     <!-- 注册 -->
     <insert id="register" parameterType="com.robot.entity.User">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -192,4 +234,141 @@
     <select id="selectUIds" resultType="java.lang.Integer">
         select user_id from member_user where member_id = #{memberId}
     </select>
+
+    <!--查找用户所属的会员单位id-->
+    <select id="getMemberIdByUid" resultType="java.lang.Integer">
+        select member_id from member_user where user_id = #{userId}
+    </select>
+
+    <!--获取企业注册信息-->
+    <select id="getEnterprise" resultType="int" resultMap="enterpriseWithBLOBs">
+        select e.* from member m, enterprise e where m.id = #{memberId} and e.id = m.member_mold_id
+    </select>
+
+    <update id="updateEnterprise" parameterType="com.robot.entity.Enterprise">
+        update enterprise
+        <set>
+            <if test="enterpriseNature != null and enterpriseNature.trim().length() > 0">
+                enterprise_nature = #{enterpriseNature,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseType != null and enterpriseType.trim().length() > 0">
+                enterprise_type = #{enterpriseType,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseScale != null and enterpriseScale.trim().length() > 0">
+                enterprise_scale = #{enterpriseScale,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null and location.trim().length() > 0">
+                `location` = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="registeredCapital != null and registeredCapital.trim().length() > 0">
+                registered_capital = #{registeredCapital,jdbcType=VARCHAR},
+            </if>
+            <if test="registeredDate != null">
+                registered_date = #{registeredDate,jdbcType=DATE},
+            </if>
+            <if test="authenticationData != null and authenticationData.trim().length() > 0">
+                authentication_data = #{authenticationData,jdbcType=VARCHAR},
+            </if>
+            <if test="authenticationDataUrl != null and authenticationDataUrl.trim().length() > 0">
+                authentication_data_url = #{authenticationDataUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="managementModel != null and managementModel.trim().length() > 0">
+                management_model = #{managementModel,jdbcType=VARCHAR},
+            </if>
+            <if test="managementScope != null and managementScope.trim().length() > 0">
+                management_scope = #{managementScope,jdbcType=VARCHAR},
+            </if>
+            <if test="mainCamp != null and mainCamp.trim().length() > 0">
+                main_camp = #{mainCamp,jdbcType=VARCHAR},
+            </if>
+            <if test="mainApplication != null and mainApplication.trim().length() > 0">
+                main_application = #{mainApplication,jdbcType=VARCHAR},
+            </if>
+            <if test="cooperativePartner != null and cooperativePartner.trim().length() > 0">
+                cooperative_partner = #{cooperativePartner,jdbcType=VARCHAR},
+            </if>
+            <if test="mainCustomer != null and mainCustomer.trim().length() > 0">
+                main_customer = #{mainCustomer,jdbcType=VARCHAR},
+            </if>
+            <if test="postalCode != null and postalCode.trim().length() > 0">
+                postal_code = #{postalCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber != null and contactNumber.trim().length() > 0">
+                contact_number = #{contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null and fax.trim().length() > 0">
+                fax = #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null and email.trim().length() > 0">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="contactAddress != null and contactAddress.trim().length() > 0">
+                contact_address = #{contactAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null and contacts.trim().length() > 0">
+                contacts = #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null and department.trim().length() > 0">
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="post != null and post.trim().length() > 0">
+                post = #{post,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null and qq.trim().length() > 0">
+                qq = #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="wechat != null and wechat.trim().length() > 0">
+                wechat = #{wechat,jdbcType=VARCHAR},
+            </if>
+            <if test="developing != null and developing.trim().length() > 0">
+                developing = #{developing,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateMember" parameterType="com.robot.entity.Member">
+        update member
+        <set>
+            <if test="contactInfo != null and contactInfo.trim().length() > 0">
+                contact_info = #{contactInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="contactInfoUrl != null and contactInfoUrl.trim().length() > 0">
+                contact_info_url = #{contactInfoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="contact != null and contact.trim().length() > 0">
+                contact = #{contact,jdbcType=VARCHAR},
+            </if>
+            <if test="memberType != null and memberType.trim().length() > 0">
+                member_type = #{memberType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--获取会员填写的代表作品-->
+    <select id="getRepresentativeWork" resultMap = "representativeWork">
+        select id, brand, version, application_area, application_industry, application_scenario from product_enterprise where enterprise_id = #{enterpriseId}
+    </select>
+
+    <update id="updateRepresentativeWork" parameterType="com.robot.entity.RepresentativeWork">
+        update product_enterprise
+        <set>
+            <if test="brand != null and brand.trim().length() > 0">
+                brand = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null and version.trim().length() > 0">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationArea != null and applicationArea.trim().length() > 0">
+                application_area = #{applicationArea,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationIndustry != null and applicationIndustry.trim().length() > 0">
+                application_industry = #{applicationIndustry,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationScenario != null and applicationScenario.trim().length() > 0">
+                application_scenario = #{applicationScenario,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and enterprise_id = #{enterpriseId}
+    </update>
 </mapper>

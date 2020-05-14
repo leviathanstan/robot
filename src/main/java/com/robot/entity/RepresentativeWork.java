@@ -1,12 +1,21 @@
 package com.robot.entity;
 
 public class RepresentativeWork {
+    private Integer id;
     private Integer enterpriseId;
     private String brand; //品牌
     private String version; //版本
     private String applicationArea; //应用领域
     private String applicationIndustry; //应用行业
     private String applicationScenario; //应用场景
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public RepresentativeWork() {
     }
