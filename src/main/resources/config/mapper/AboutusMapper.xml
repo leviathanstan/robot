@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robot.dao.AboutusDao">
+    <!--获取关于我们-->
+    <select id="getAboutus"  resultType="java.lang.String">
+        select content from aboutus where id = 1
+    </select>
+    <!--更新关于我们-->
+    <update id="updateAboutus" parameterType="java.lang.String">
+        update aboutus set content = #{content} where id = 1
+    </update>
+</mapper>

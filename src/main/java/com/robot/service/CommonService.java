@@ -35,6 +35,8 @@ public class CommonService {
     ConferenceService conferenceService;
     @Autowired
     MemberService memberService;
+    @Autowired
+    AdService adService;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
@@ -117,6 +119,8 @@ public class CommonService {
             dataMap.put("other",conferenceService.getOther());
             //相关热点
             dataMap.put("relatedHot",informationService.findIndexRelatedHot());
+            //广告
+            dataMap.put("ad", adService.get());
         } finally {
             countDownLatch.countDown();
         }
