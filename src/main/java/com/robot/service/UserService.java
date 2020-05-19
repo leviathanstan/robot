@@ -271,7 +271,7 @@ public class UserService {
     public String forgetPassword(String email, final HttpSession session) {
         User user = new User();
         user.setEmail(email);
-        if (userDao.find(user).size() != 0) {
+        if (userDao.isExist(user) == 0) {
             return GsonUtil.getErrorJson("该邮箱未注册");
         } else {
             String code = CharacterUtil.getRandomString(5);

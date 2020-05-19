@@ -8,3 +8,4 @@ robot.iml
 .factorypath
 /src/main/resources/properties/jdbc.properties
 /src/main/webapp/WEB-INF/dist/
+/src/main/resources/properties/email.properties
