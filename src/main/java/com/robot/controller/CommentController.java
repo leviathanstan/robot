@@ -63,8 +63,7 @@ public class CommentController {
      */
     @ResponseBody
     @RequestMapping(value="/getReply/{commentId}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String getReply(@PathVariable int commentId, HttpSession session) {
-        System.out.println(session.getId());
+    public String getReply(@PathVariable int commentId) throws ParseException {
         return GsonUtil.getSuccessJson(commentService.getReply(commentId));
     }
 
@@ -76,7 +75,7 @@ public class CommentController {
      */
     @ResponseBody
     @RequestMapping(value = "/getComment/{informationId}/{page}",produces = "text/html;charset=UTF-8")
-    public String getCommentByBlog(@PathVariable int informationId, @PathVariable int page) {
+    public String getCommentByBlog(@PathVariable int informationId, @PathVariable int page) throws ParseException {
         return GsonUtil.getSuccessJson(commentService.getCommentWithoutReply(informationId,page));
     }
 

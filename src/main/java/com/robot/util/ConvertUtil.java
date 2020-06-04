@@ -46,15 +46,10 @@ public class ConvertUtil {
      * @param timeMs
      * @return
      */
-    public static String msecToMinutes(String timeMs) {
-        SimpleDateFormat date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-        Date time=null;
-        try {
-            time=date.parse(timeMs);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public static String msecToMinutes(String timeMs) throws ParseException {
+        SimpleDateFormat date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date time;
+        time=date.parse(timeMs);
         SimpleDateFormat date2=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return date2.format(time);
     }

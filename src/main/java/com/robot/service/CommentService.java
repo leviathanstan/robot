@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.HtmlUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -71,7 +72,7 @@ public class CommentService {
 	 * @param commentId
 	 * @return
 	 */
-	public ArrayList<Reply> getReply(int commentId){
+	public ArrayList<Reply> getReply(int commentId) throws ParseException {
 		ArrayList<Reply> replies = commentDao.getReplyByComment(commentId);	//评论下的回复
 		for (int j=0;j<replies.size();j++){
 			replies.get(j).setTime(ConvertUtil.msecToMinutes(replies.get(j).getTime()));	//格式化时间
@@ -85,7 +86,7 @@ public class CommentService {
 	 * @param page
 	 * @return
 	 */
-	public ArrayList<Comment> getComment(int blogId, int page){
+	public ArrayList<Comment> getComment(int blogId, int page) throws ParseException {
 		int begin = page*COMMENT_SIZE;
 		Map<String,Integer> map= new HashMap<>();
 		map.put("informationId",blogId);
@@ -95,11 +96,7 @@ public class CommentService {
 		for(int i=0;i<comments.size();i++){
 			//有无回复
 			Integer replyCount = commentDao.getCommentReplyCount(comments.get(i).getId());
-			if(null != replyCount){
-				comments.get(i).setReplyCount(replyCount);
-			}else{
-				comments.get(i).setReplyCount(0);
-			}
+			comments.get(i).setReplyCount(replyCount);
 			comments.get(i).setTime(ConvertUtil.msecToMinutes(comments.get(i).getTime()));
 		}
 		return comments;
@@ -111,7 +108,7 @@ public class CommentService {
 	 * @param page
 	 * @return
 	 */
-	public ArrayList<Comment> getCommentWithoutReply(int blogId,int page) {
+	public ArrayList<Comment> getCommentWithoutReply(int blogId,int page) throws ParseException {
 		return getComment(blogId,page);
 	}
 
@@ -122,7 +119,7 @@ public class CommentService {
 	 * @return
 	 */
 	@Transactional
-	public String addCommentReply(Integer userId, Reply reply, MultipartFile file) throws Exception{
+	public String addCommentReply(int userId, Reply reply, MultipartFile file) throws Exception{
 		//判断是否为自己回复自己
 		if(reply.getFromReplyId()==0){	//评论的回复
 			if(userId == commentDao.getUserIdFromComment(reply.getCommentId())){
