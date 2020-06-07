@@ -1,5 +1,6 @@
 package com.robot.service;
 
+import com.robot.dao.AdDao;
 import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
@@ -36,7 +37,7 @@ public class CommonService {
     @Autowired
     MemberService memberService;
     @Autowired
-    AdService adService;
+    AdDao adDao;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
@@ -120,7 +121,7 @@ public class CommonService {
             //相关热点
             dataMap.put("relatedHot",informationService.findIndexRelatedHot());
             //广告
-            dataMap.put("ad", adService.get());
+            dataMap.put("ad", adDao.selectByExample(null));
         } finally {
             countDownLatch.countDown();
         }
