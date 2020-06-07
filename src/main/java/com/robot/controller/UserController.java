@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -99,8 +100,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String login(User user, HttpSession session) {
-        return userService.login(user, session);
+    public String login(User user, HttpSession session, HttpServletRequest request) {
+        return userService.login(user, session, request);
     }
 
     /**

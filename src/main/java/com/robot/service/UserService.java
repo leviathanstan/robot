@@ -2,6 +2,7 @@ package com.robot.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.robot.dao.LoginTimeDao;
 import com.robot.dao.UserDao;
 import com.robot.entity.*;
 import com.robot.util.*;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -23,6 +25,8 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private LoginTimeDao loginTimeDao;
 
     private final int PAGE_LENGTH = 8;
 
@@ -161,8 +165,8 @@ public class UserService {
      * @return
      * @function 用户登录
      */
-    public String login(User user, HttpSession session) {
-        User dbUser = null;
+    public String login(User user, HttpSession session, HttpServletRequest request) {
+        User dbUser;
         user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
         if ((dbUser = userDao.login(user)) == null) {
             return GsonUtil.getErrorJson("密码或账号错误");
@@ -190,6 +194,15 @@ public class UserService {
                     session.setAttribute("role", User.ROLE_NORMAL);
                     break;
             }
+
+            //记录用户的登录时间和ip
+            LoginTime loginTime = new LoginTime();
+            loginTime.setUserId(dbUser.getId());
+            loginTime.setUsername(dbUser.getUsername());
+            loginTime.setIp(PostUrlUtil.getIp(request));
+            loginTime.setTime(new Date());
+            loginTimeDao.insertSelective(loginTime);
+
             return GsonUtil.getSuccessJson(dbUser);
         }
     }
@@ -602,6 +615,7 @@ public class UserService {
      * @return java.lang.String
      */
     public String getRepresentativeWork(HttpSession session) {
+        // todo 改成不用先点会员信息
         Integer enterpriseId = (Integer) session.getAttribute("updataEnterpriseId");
         if (enterpriseId == null) {
             return GsonUtil.getErrorJson("违法操作");

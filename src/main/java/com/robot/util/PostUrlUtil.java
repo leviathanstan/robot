@@ -1,11 +1,14 @@
 package com.robot.util;
 
-import org.apache.commons.io.IOExceptionWithCause;
-
-import java.io.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.*;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PostUrlUtil {
 
@@ -118,4 +121,47 @@ public class PostUrlUtil {
         resultData = new String(byteArrayOutputStream.toByteArray(),"utf8");
         return resultData;
     }
+
+    /**
+     * 获取请求的ip地址
+     * @Author  xm
+     * @Date 2020/6/4 20:39
+     * @param request
+     * @return java.lang.String
+     */
+    public static String getIp(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            if("127.0.0.1".equals(ip)){
+                //根据网卡取本机配置的IP
+                InetAddress inet=null;
+                try {
+                    inet = InetAddress.getLocalHost();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                ip= inet.getHostAddress();
+            }
+        }
+        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if(ip != null && ip.length() > 15){
+            if(ip.indexOf(",")>0){
+                ip = ip.substring(0,ip.indexOf(","));
+            }
+        }
+
+        //如果是ipv6地址则返回null
+        if (ip != null && !ip.matches("((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}")) {
+            ip = null;
+        }
+        return ip;
+    }
+
 }
