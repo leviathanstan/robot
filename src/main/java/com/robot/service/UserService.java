@@ -45,11 +45,11 @@ public class UserService {
         User user = (User) session.getAttribute("user");
         Integer role = (Integer) session.getAttribute("role");
         if (user != null) {
-            return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(User.class, "password", "phone", "email", "permissions"), user);
+            return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(User.class, "password", "phone", "permissions"), user);
         } else {
             user = new User();
             user.setRole(0);
-            return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(User.class, "password", "phone", "email", "permissions"), user);
+            return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(User.class, "password", "phone", "permissions"), user);
         }
     }
 
