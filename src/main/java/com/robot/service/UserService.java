@@ -384,6 +384,8 @@ public class UserService {
         }
 
         userDao.editEmail(user.getId(), email);
+        user.setEmail(email);
+        session.setAttribute("user", user);
         return GsonUtil.getSuccessJson("修改或绑定邮箱成功");
     }
 
