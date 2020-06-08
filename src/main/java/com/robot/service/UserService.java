@@ -663,11 +663,22 @@ public class UserService {
      * @Date 2020/5/14 17:07
      */
     public String getRepresentativeWork(HttpSession session) {
-        // todo 改成不用先点会员信息
-        Integer enterpriseId = (Integer) session.getAttribute("updataEnterpriseId");
-        if (enterpriseId == null) {
-            return GsonUtil.getErrorJson("违法操作");
+        User user = (User) session.getAttribute("user");
+        Integer memberId = userDao.getMemberIdByUid(user.getId());
+
+        if (memberId == null) {
+            return GsonUtil.getErrorJson("无所属会员单位");
         }
+
+        Enterprise enterprise = userDao.getEnterprise(memberId);
+
+        if (enterprise == null) {
+            return GsonUtil.getErrorJson("无注册信息");
+        }
+
+        Integer enterpriseId = enterprise.getId();
+        session.setAttribute("updataEnterpriseId", enterpriseId);
+
         return GsonUtil.getSuccessJson(userDao.getRepresentativeWork(enterpriseId));
     }
 
