@@ -78,6 +78,25 @@ public class DemandService {
         return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Demand.class,"content","userId","type"), pageInfo);
     }
 
+    /**
+     * 获取首页的供需
+     * @Author  xm
+     * @Date 2020/6/8 12:05
+     * @param type
+     * @return java.util.List<com.robot.entity.Demand>
+     */
+    public List<Demand> getIndexDemands(int type){
+        DemandExample example = new DemandExample();
+        DemandExample.Criteria criteria = example.createCriteria();
+
+        criteria.andTypeEqualTo(type);
+        example.setOrderByClause("creat_time");
+
+        PageHelper.startPage(1, 10);
+
+        return demandDao.selectByExample(example);
+    }
+
     public String getDemand(int id){
         Demand demand = demandDao.selectByPrimaryKey(id);
         return GsonUtil.getSuccessJson(demand);

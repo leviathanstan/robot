@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +37,8 @@ public class CommonService {
     MemberService memberService;
     @Autowired
     AdDao adDao;
+    @Autowired
+    DemandService demandService;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
@@ -122,6 +123,10 @@ public class CommonService {
             dataMap.put("relatedHot",informationService.findIndexRelatedHot());
             //广告
             dataMap.put("ad", adDao.selectByExample(null));
+            //供应
+            dataMap.put("demand0", demandService.getIndexDemands(0));
+            //需求
+            dataMap.put("demand1", demandService.getIndexDemands(1));
         } finally {
             countDownLatch.countDown();
         }
