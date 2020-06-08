@@ -16,6 +16,7 @@ public interface UserDao {
     Integer register(User user);
     User login(User user);
     int resetPassword(@Param("password") String password, @Param("email") String email);
+    int editEmail(@Param("id") Integer id, @Param("email") String email);
     ArrayList<User> find(User user);
     int addSubscribe(Map<String,Integer> map);
     int deleteSubscribe(Map<String,Integer> map);

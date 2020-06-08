@@ -166,6 +166,36 @@ public class UserController {
         return userService.resetPassword(password, session);
     }
 
+    /**
+     * 发送验证码
+     * @Author  xm
+     * @Date 2020/6/8 11:23 
+     * @param session	
+     * @return java.lang.String
+     */
+    @Authority(role = Role.NORMAL)
+    @ResponseBody
+    @RequestMapping(value = "sendCode", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String sendCode(HttpSession session) {
+        return userService.sendCode(session);
+    }
+
+    /**
+     * 修改或绑定邮箱
+     * @Author  xm
+     * @Date 2020/6/8 11:22 
+     * @param code	
+     * @param email	
+     * @param session	
+     * @return java.lang.String
+     */
+    @Authority(role = Role.NORMAL)
+    @ResponseBody
+    @RequestMapping(value = "editEmail", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String editEmail(@RequestParam (required = false) String code, String email, HttpSession session) {
+        return userService.editEmail(code, email, session);
+    }
+
     @InitBinder
     public void init(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));

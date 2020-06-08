@@ -21,15 +21,13 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserService {
 
+    private final int PAGE_LENGTH = 8;
     @Autowired
     private UserDao userDao;
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
     private LoginTimeDao loginTimeDao;
-
-    private final int PAGE_LENGTH = 8;
-
     /**
      * 定时清除session,可考虑数据库或redis实现
      */
@@ -212,7 +210,7 @@ public class UserService {
      * @return
      * @function 用户注册信息判断
      */
-    public String validate(User user, final HttpSession session,String memberName) {
+    public String validate(User user, final HttpSession session, String memberName) {
         if (ValidateUtil.isInvalidString(user.getUsername()) || ValidateUtil.isInvalidString(user.getPassword()) || ValidateUtil.isInvalidString(user.getEmail())) {
             return GsonUtil.getErrorJson("输入不能为空");
         }
@@ -220,9 +218,9 @@ public class UserService {
             return GsonUtil.getErrorJson("邮箱格式不正确");
         }
         Member member = userDao.selectMemberByName(memberName);
-        if(member == null)
+        if (member == null)
             return GsonUtil.getErrorJson("会员单位未注册");
-        session.setAttribute("memberId",member.getId());
+        session.setAttribute("memberId", member.getId());
 
         if (userDao.isExist(user) != 0) {
             return GsonUtil.getErrorJson("用户名或邮箱已存在");
@@ -259,12 +257,12 @@ public class UserService {
                 return GsonUtil.getErrorJson("验证码错误");
             } else {
                 user.setPassword(Md5Util.GetMD5Code(user.getPassword()));
-                 if(userDao.register(user) != 1)
-                     return GsonUtil.getErrorJson();
+                if (userDao.register(user) != 1)
+                    return GsonUtil.getErrorJson();
                 int userId = user.getId();
                 if (userId != 0) {
                     int memberId = (int) session.getAttribute("memberId");
-                    userDao.insertMemberUser(userId,memberId);
+                    userDao.insertMemberUser(userId, memberId);
                     //两个去除session方案：成功则去除session，不成功过期了也去除
                     session.removeAttribute("emailCode");
                     session.removeAttribute("registerUser");
@@ -340,6 +338,53 @@ public class UserService {
             return GsonUtil.getSuccessJson();
         }
         return GsonUtil.getErrorJson();
+    }
+
+    /**
+     * 发送验证码
+     * @Author  xm
+     * @Date 2020/6/8 11:19
+     * @param session
+     * @return java.lang.String
+     */
+    public String sendCode(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        String email = user.getEmail();
+        String code = CharacterUtil.getRandomString(5);
+        try {
+            EmailUtil.sendEmail(mailSender, email, code);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtil.getErrorJson("邮件发送失败！");
+        }
+        session.setAttribute("editEmailCode", code);
+        return GsonUtil.getSuccessJson("已发送验证码到你的邮箱，请验证");
+    }
+
+    /**
+     * 修改或绑定邮箱
+     * @Author  xm
+     * @Date 2020/6/8 11:17
+     * @param code
+     * @param email
+     * @param session
+     * @return java.lang.String
+     */
+    public String editEmail(String code, String email, HttpSession session) {
+        if (ValidateUtil.isNullOrEmpty(email) || !ValidateUtil.isMatchEmail(email)) {
+            return GsonUtil.getErrorJson("邮箱格式不正确");
+        }
+
+        User user = (User) session.getAttribute("user");
+        //如果用户之前有绑定邮箱则验证code，没有就不验证
+        if (!ValidateUtil.isNullOrEmpty(user.getEmail())) {
+            if (ValidateUtil.isNullOrEmpty(code) || !code.equals(session.getAttribute("editEmailCode"))) {
+                return GsonUtil.getErrorJson("验证码不正确");
+            }
+        }
+
+        userDao.editEmail(user.getId(), email);
+        return GsonUtil.getSuccessJson("修改或绑定邮箱成功");
     }
 
     /**
@@ -504,10 +549,11 @@ public class UserService {
 
     /**
      * 获取会员注册信息
-     * @Author  xm
-     * @Date 2020/5/10 19:14
+     *
      * @param session
      * @return java.lang.String
+     * @Author xm
+     * @Date 2020/5/10 19:14
      */
     public String getMemberRegisterInfo(HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -531,18 +577,19 @@ public class UserService {
 
     /**
      * 更新会员注册信息
-     * @Author  xm
-     * @Date 2020/5/12 20:25
+     *
      * @param session
      * @param enterprise
      * @param authenticationDatas
      * @param contactInfoDatas
      * @return java.lang.String
+     * @Author xm
+     * @Date 2020/5/12 20:25
      */
     @Transactional
     public String updateMember(HttpSession session, Enterprise enterprise,
-                                   MultipartFile authenticationDatas,
-                                   MultipartFile contactInfoDatas) {
+                               MultipartFile authenticationDatas,
+                               MultipartFile contactInfoDatas) {
 
         Integer memberId = (Integer) session.getAttribute("updataMemberId");
         Integer enterpriseId = (Integer) session.getAttribute("updataEnterpriseId");
@@ -609,10 +656,11 @@ public class UserService {
 
     /**
      * 获取会员填写的代表作品
-     * @Author  xm
-     * @Date 2020/5/14 17:07
+     *
      * @param session
      * @return java.lang.String
+     * @Author xm
+     * @Date 2020/5/14 17:07
      */
     public String getRepresentativeWork(HttpSession session) {
         // todo 改成不用先点会员信息
@@ -625,11 +673,12 @@ public class UserService {
 
     /**
      * 新增或修改会员代表作品
-     * @Author  xm
-     * @Date 2020/5/14 17:19
+     *
      * @param session
      * @param representativeWork
      * @return java.lang.String
+     * @Author xm
+     * @Date 2020/5/14 17:19
      */
     public String updateRepresentativeWork(HttpSession session, RepresentativeWork representativeWork) {
         Integer enterpriseId = (Integer) session.getAttribute("updataEnterpriseId");

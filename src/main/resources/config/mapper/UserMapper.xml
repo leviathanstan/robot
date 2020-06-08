@@ -87,6 +87,10 @@
     <update id="resetPassword" parameterType="java.lang.String">
         update user set password=#{password} where email=#{email}
     </update>
+    <!--修改绑定邮箱-->
+    <update id="editEmail">
+        update user set email=#{email} where id=#{id}
+    </update>
     <!--用户搜索-->
     <select id="find" parameterType="com.robot.entity.User" resultType="com.robot.entity.User">
         select username,email from user where 1=1
