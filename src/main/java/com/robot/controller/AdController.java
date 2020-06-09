@@ -34,7 +34,7 @@ public class AdController {
      */
     @ResponseBody
     @Authority(role = Role.MANAGER)
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String add(Ad ad) {
         return adService.add(ad);
     }
@@ -48,7 +48,7 @@ public class AdController {
      */
     @ResponseBody
     @Authority(role = Role.MANAGER)
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String update(Ad ad) {
         return adService.update(ad);
     }
@@ -62,7 +62,7 @@ public class AdController {
      */
     @ResponseBody
     @Authority(role = Role.MANAGER)
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String delete(@RequestParam List<Integer> ids) {
         return adService.delete(ids);
     }
@@ -75,7 +75,7 @@ public class AdController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String get() {
         return adService.get();
     }

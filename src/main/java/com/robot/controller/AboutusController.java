@@ -29,7 +29,7 @@ public class AboutusController {
      * @return java.lang.String
      */
     @ResponseBody
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @RequestMapping(value = "/detail", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getAboutus() {
         return aboutusService.getAboutus();
     }
@@ -43,7 +43,7 @@ public class AboutusController {
      */
     @ResponseBody
     @Authority(role = Role.MANAGER)
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateAboutus(String content) {
         return aboutusService.updateAboutus(content);
     }

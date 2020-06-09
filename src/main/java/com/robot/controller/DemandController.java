@@ -35,7 +35,7 @@ public class DemandController {
      * @param
      * @return
      */
-    @RequestMapping(value = "/getAllDemands", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllDemands", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getAllDemands(int type, int pageNum, String keyword){
         return demandService.getDemands(type, pageNum, keyword, null);
@@ -48,7 +48,7 @@ public class DemandController {
      * @return
      */
     @Authority(role = Role.NORMAL)
-    @RequestMapping(value = "/getUserDemands", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserDemands", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getUserDemands(HttpSession session, int type, int pageNum, String keyword){
         User user = (User) session.getAttribute("user");
@@ -60,7 +60,7 @@ public class DemandController {
      * @param
      * @return
      */
-    @RequestMapping(value = "/getDemand",method = RequestMethod.GET)
+    @RequestMapping(value = "/getDemand",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getDemand(int id){
         return demandService.getDemand(id);
@@ -72,7 +72,7 @@ public class DemandController {
      * @return
      */
     @Authority(role = Role.NORMAL)
-    @RequestMapping(value = "/saveDemand",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveDemand",method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String saveDemand(HttpSession session, Demand demand) {
         User user = (User) session.getAttribute("user");
@@ -91,7 +91,7 @@ public class DemandController {
      * @return java.lang.String
      */
     @Authority(role = Role.NORMAL)
-    @RequestMapping(value = "/bid",method = RequestMethod.POST)
+    @RequestMapping(value = "/bid",method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String bid(HttpSession session, Bidding bidding, @RequestParam MultipartFile attachment) {
         User user = (User) session.getAttribute("user");
@@ -109,7 +109,7 @@ public class DemandController {
      * @return java.lang.String
      */
     @Authority(role = Role.NORMAL)
-    @RequestMapping(value = "/getBid",method = RequestMethod.GET)
+    @RequestMapping(value = "/getBid",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getBid(HttpSession session, Integer pageNum, @RequestParam(required = false) Integer demandId) {
         User user = (User) session.getAttribute("user");
