@@ -235,8 +235,16 @@ public class CommonUtil {
             String regex = "src=\"/static/img/(.*?)\"";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(content.get(0).getContent());
-            if (matcher.find())
-                return Constant.HOST_ADDRESS + "/resources/img/" + matcher.group(1);
+            if (matcher.find()) {
+                return "/resources/img/" + matcher.group(1);
+            } else {
+                regex = "src=\"resources/img/(.*?)\"";
+                pattern = Pattern.compile(regex);
+                matcher = pattern.matcher(content.get(0).getContent());
+                if (matcher.find()) {
+                    return "/resources/img/" + matcher.group(1);
+                }
+            }
         }
         return null;
     }
@@ -252,8 +260,16 @@ public class CommonUtil {
             String regex = "src=\"/static/img/(.*?)\"";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(content);
-            if (matcher.find())
-                return Constant.HOST_ADDRESS + "/resources/img/" + matcher.group(1);
+            if (matcher.find()) {
+                return "/resources/img/" + matcher.group(1);
+            } else {
+                regex = "src=\"resources/img/(.*?)\"";
+                pattern = Pattern.compile(regex);
+                matcher = pattern.matcher(content);
+                if (matcher.find()) {
+                    return "/resources/img/" + matcher.group(1);
+                }
+            }
         }
         return null;
     }

@@ -400,7 +400,9 @@ public class InformationService {
         map.put("categoryId", InformationEnum.INDUSTRY_INFORMATION.getId());
         ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
         for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+            if (ValidateUtil.isNullOrEmpty(robotNews.getImg())) {
+                robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+            }
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -781,7 +783,9 @@ public class InformationService {
         map.put("categoryId", InformationEnum.ASSOCIATION_NEWS.getId());
         ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
         for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+            if (ValidateUtil.isNullOrEmpty(robotNews.getImg())) {
+                robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+            }
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -799,7 +803,9 @@ public class InformationService {
         map.put("categoryId", InformationEnum.NOTICE.getId());
         ArrayList<InformationDto> informations = informationDao.getIndexInformationWithContent(map);
         for (InformationDto robotNews : informations) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+            if (ValidateUtil.isNullOrEmpty(robotNews.getImg())) {
+                robotNews.setImg(CommonUtil.getFirstImgFromContent(robotNews.getContent()));
+            }
         }
         CommonUtil.formateDateTimeToDate(informations);
         return informations;
@@ -973,7 +979,9 @@ public class InformationService {
         map.put("categoryId", InformationEnum.MEMBER_NEWS.getId());
         ArrayList<RobotNews> companyNews = informationDao.getIndexInformation(map);
         for (RobotNews robotNews : companyNews) {
-            robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            if (ValidateUtil.isNullOrEmpty(robotNews.getImg())) {
+                robotNews.setImg(CommonUtil.getFirstImgFromContent(informationDao.findInformationInfo(robotNews.getId()).getContent()));
+            }
         }
         CommonUtil.formateDateTimeToDate(companyNews);
         return companyNews;

@@ -102,9 +102,95 @@
     </select>
     <!--添加招聘-->
     <insert id="addPosition" parameterType="com.robot.entity.Position" useGeneratedKeys="true" keyProperty="id">
-        insert into positions(position_name, company_name, company_size, company_nature, salary, degree_required, work_age, hiring, phone, job_description, company_introduction, create_time, industry_id, position_category_id)
-          values
-          (#{positionName}, #{companyName}, #{companySize}, #{companyNature}, #{salary}, #{degreeRequired}, #{workAge}, #{hiring}, #{phone}, #{jobDescription}, #{companyIntroduction}, #{createTime}, #{industry}, #{position})
+        insert into positions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="positionName!=null and positionName.trim().length()>0">
+                position_name ,
+            </if>
+            <if test="companyName!=null and companyName.trim().length()>0">
+                company_name ,
+            </if>
+            <if test="companySize!=null and companySize.trim().length()>0">
+               company_size ,
+            </if>
+            <if test="companyNature!=null and companyNature.trim().length()>0">
+               company_nature ,
+            </if>
+            <if test="salary!=null and salary.trim().length()>0">
+               salary ,
+            </if>
+            <if test="degreeRequired!=null and degreeRequired.trim().length()>0">
+               degree_required ,
+            </if>
+            <if test="workAge!=null and workAge.trim().length()>0">
+               work_age ,
+            </if>
+            <if test="hiring!=null and hiring.trim().length()>0">
+                hiring ,
+            </if>
+            <if test="phone!= null and phone.trim().length()>0">
+                phone ,
+            </if>
+            <if test="jobDescription!=null and jobDescription.trim().length()>0">
+                job_description ,
+            </if>
+            <if test="companyIntroduction!=null and companyIntroduction.trim().length()>0">
+                company_introduction ,
+            </if>
+            <if test="industry!=null and industry.trim().length()>0">
+                industry_id ,
+            </if>
+            <if test="position!=null and position.trim().length()>0">
+                position_category_id ,
+            </if>
+            <if test="createTime!=null">
+                create_time ,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="positionName!=null and positionName.trim().length()>0">
+                #{positionName},
+            </if>
+            <if test="companyName!=null and companyName.trim().length()>0">
+                #{companyName},
+            </if>
+            <if test="companySize!=null and companySize.trim().length()>0">
+                #{companySize},
+            </if>
+            <if test="companyNature!=null and companyNature.trim().length()>0">
+                #{companyNature},
+            </if>
+            <if test="salary!=null and salary.trim().length()>0">
+                #{salary},
+            </if>
+            <if test="degreeRequired!=null and degreeRequired.trim().length()>0">
+                #{degreeRequired},
+            </if>
+            <if test="workAge!=null and workAge.trim().length()>0">
+                #{workAge},
+            </if>
+            <if test="hiring!=null and hiring.trim().length()>0">
+                #{hiring},
+            </if>
+            <if test="phone!= null and phone.trim().length()>0">
+                #{phone},
+            </if>
+            <if test="jobDescription!=null and jobDescription.trim().length()>0">
+                #{jobDescription},
+            </if>
+            <if test="companyIntroduction!=null and companyIntroduction.trim().length()>0">
+                #{companyIntroduction},
+            </if>
+            <if test="industry!=null and industry.trim().length()>0">
+                #{industry},
+            </if>
+            <if test="position!=null and position.trim().length()>0">
+                #{position},
+            </if>
+            <if test="createTime!=null">
+                #{createTime},
+            </if>
+        </trim>
     </insert>
     <insert id="addPositionRegion" parameterType="map">
         insert into region_relation(region_id,position_id,region_type) values (#{regionId},#{positionId},'0')
@@ -136,7 +222,7 @@
         <if test="hiring!=null and hiring.trim().length()>0">
             , hiring = #{hiring}
         </if>
-        <if test="phone and phone.trim().length()>0">
+        <if test="phone != null and phone.trim().length()>0">
             , phone = #{phone}
         </if>
         <if test="jobDescription!=null and jobDescription.trim().length()>0">

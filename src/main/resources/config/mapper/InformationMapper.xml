@@ -77,7 +77,7 @@
     </select>
     <!--获取资讯中有封面的数据-->
     <select id="getIndexCover" resultMap="informationMap" parameterType="map">
-        select id, title, cover, post_date from information where category_id=#{categoryId} and cover!='' limit #{number}
+        select id, title, cover, post_date from information where category_id=#{categoryId} and cover!='' order by post_date desc limit #{number}
     </select>
     <!--查询正文所有分页-->
     <select id="getContentOfInfo" resultMap="contentMap" parameterType="map">
