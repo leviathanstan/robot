@@ -46,4 +46,5 @@ public interface UserDao {
     int updateMember(Member member);
     List<RepresentativeWork> getRepresentativeWork(Integer enterpriseId);
     int updateRepresentativeWork(RepresentativeWork representativeWork);
+    Integer count();
 }

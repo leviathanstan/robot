@@ -118,4 +118,9 @@
         </foreach>
         order by pro_last_up_time desc limit #{number}
     </select>
+
+    <!--数量-->
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from product_library
+    </select>
 </mapper>

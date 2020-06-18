@@ -28,4 +28,5 @@ public interface ProductDao {
     void deleteMemberProduct(List<Integer> ids);
     List<Integer> selectMemberProductByUIds(List<Integer> userIds);
     List<Product> selectIndexMemberProduct(@Param("list") List<Integer> informationIds,@Param("number") int number);
+    Integer count();
 }

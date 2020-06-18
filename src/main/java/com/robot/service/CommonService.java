@@ -1,6 +1,7 @@
 package com.robot.service;
 
 import com.robot.dao.AdDao;
+import com.robot.dao.UserDao;
 import com.robot.entity.User;
 import com.robot.util.CommonUtil;
 import com.robot.util.GsonUtil;
@@ -39,6 +40,8 @@ public class CommonService {
     AdDao adDao;
     @Autowired
     DemandService demandService;
+    @Autowired
+    UserDao userDao;
 
     private enum SearchEnum {
         INFORMATION(1),PRODUCT(2),INTRODUCTION(3);
@@ -130,6 +133,48 @@ public class CommonService {
         } finally {
             countDownLatch.countDown();
         }
+    }
+    /**
+     * 数据汇总
+     * @Author  xm
+     * @Date 2020/6/17 13:42
+     * @param
+     * @return java.lang.String
+     */
+    @Cacheable("count")
+    public String count() {
+        Map<String, Integer> map = new HashMap<>(5);
+
+        //资讯数量
+        Integer informationCount = informationService.countInformation();
+
+        //行业报告数量
+        Integer reportCount = informationService.countInformation();
+
+        //政策数量
+        Integer policyCount = informationService.countPolicy();
+
+        //产品数量
+        Integer productCount = informationService.countProduct();
+        Integer productLibraryCount = productService.count();
+
+        //技术数量
+        Integer technologyCount = informationService.countTechnology();
+        Integer discuss = informationService.countDiscuss();
+
+        //资讯
+        map.put("information", informationCount + reportCount + policyCount);
+        //政策
+        map.put("policy", policyCount);
+        //产品
+        map.put("product", productCount + productLibraryCount);
+        //技术
+        map.put("technology", technologyCount + discuss);
+
+        //用户数
+        map.put("user", userDao.count());
+
+        return GsonUtil.getSuccessJson(map);
     }
 
     /**

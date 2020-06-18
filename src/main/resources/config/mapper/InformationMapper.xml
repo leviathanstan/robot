@@ -324,4 +324,21 @@
         </foreach>
          order by post_date desc limit #{number}
     </select>
+
+    <!-- 资讯统计 -->
+    <select id="countInformation" resultType="java.lang.Integer">
+        select count(*) from information where category_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--行业报告统计-->
+    <select id="countReport" resultType="java.lang.Integer">
+        select count(*) from industry_report
+    </select>
+    <!--行业报告统计-->
+    <select id="countDiscuss" resultType="java.lang.Integer">
+        select count(*) from technique_discuss
+    </select>
 </mapper>

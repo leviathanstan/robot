@@ -56,4 +56,7 @@ public interface InformationDao {
     void insertMemberInformation(@Param("informationId")int informationId, @Param("userId")int userId);
     List<Integer> selectMemberInformationByUIds(List<Integer> userIds);
     List<RobotNews> selectIndexMemberInformation(@Param("categoryId") int categoryId,@Param("list") List<Integer> informationIds,@Param("number") int number);
+    Integer countInformation(List<Integer> categoryIds);
+    Integer countReport();
+    Integer countDiscuss();
 }

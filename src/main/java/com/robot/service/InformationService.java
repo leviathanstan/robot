@@ -409,6 +409,66 @@ public class InformationService {
     }
 
     /**
+     * 资讯统计
+     * @Author  xm
+     * @Date 2020/6/17 14:34
+     * @param
+     * @return java.lang.Integer
+     */
+    public Integer countInformation() {
+        List<Integer> categoryIds = new ArrayList<>();
+        categoryIds.add(InformationEnum.INDUSTRY_INFORMATION.getId());
+        categoryIds.add(InformationEnum.CONSULTING_FOCUS.getId());
+        return countInformation(categoryIds);
+    }
+
+    public Integer countInformation(List<Integer> categoryIds) {
+        return informationDao.countInformation(categoryIds);
+    }
+
+    /**
+     * 政策统计
+     * @Author  xm
+     * @Date 2020/6/17 14:34
+     * @param
+     * @return java.lang.Integer
+     */
+    public Integer countPolicy() {
+        List<Integer> categoryIds = new ArrayList<>();
+        categoryIds.add(InformationEnum.POLICY_INFORMATION.getId());
+        return countInformation(categoryIds);
+    }
+
+    /**
+     * 产品统计
+     * @Author  xm
+     * @Date 2020/6/17 14:34
+     * @param
+     * @return java.lang.Integer
+     */
+    public Integer countProduct() {
+        List<Integer> categoryIds = new ArrayList<>();
+        categoryIds.add(InformationEnum.PRODUCT_EVALUATE.getId());
+        categoryIds.add(InformationEnum.PRODUCT_NEWS.getId());
+        categoryIds.add(InformationEnum.PRODUCT_RECOMMEND.getId());
+        return countInformation(categoryIds);
+    }
+
+    /**
+     * 技术统计
+     * @Author  xm
+     * @Date 2020/6/17 14:34
+     * @param
+     * @return java.lang.Integer
+     */
+    public Integer countTechnology() {
+        List<Integer> categoryIds = new ArrayList<>();
+        categoryIds.add(InformationEnum.CASE.getId());
+        categoryIds.add(InformationEnum.BASIC_KNOWLEDGE.getId());
+        return countInformation(categoryIds);
+    }
+
+    /**
      * 行业动态列表
      *
      * @param Num
@@ -570,6 +630,17 @@ public class InformationService {
             report.setPostDate(CommonUtil.getDate(report.getPostDate()));
         }
         return reports;
+    }
+    
+    /**
+     * 统计行业报告
+     * @Author  xm
+     * @Date 2020/6/17 20:54
+     * @param 	
+     * @return java.lang.Integer
+     */
+    public Integer countReport() {
+        return informationDao.countReport();
     }
 
     /**
@@ -1323,6 +1394,17 @@ public class InformationService {
     public ArrayList<InformationDto> getIndexDiscuss() {
         ArrayList<InformationDto> discuss = informationDao.getIndexDiscuss();
         return discuss;
+    }
+
+    /**
+     * 技术研讨数量
+     * @Author  xm
+     * @Date 2020/6/17 21:25
+     * @param
+     * @return java.lang.Integer
+     */
+    public Integer countDiscuss() {
+        return informationDao.countDiscuss();
     }
 
     /**

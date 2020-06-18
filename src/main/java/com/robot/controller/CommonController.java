@@ -38,6 +38,19 @@ public class CommonController {
         return commonService.getIndex();
     }
 
+    /**
+     * 数据汇总
+     * @Author  xm
+     * @Date 2020/6/17 13:42
+     * @param
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/count",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+    public String count() {
+        return commonService.count();
+    }
+
     @ResponseBody
     @RequestMapping(value = "/search", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String search(HttpSession session, @RequestParam HashMap args){

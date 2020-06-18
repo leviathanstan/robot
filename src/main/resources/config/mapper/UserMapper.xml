@@ -375,4 +375,9 @@
         </set>
         where id = #{id,jdbcType=INTEGER} and enterprise_id = #{enterpriseId}
     </update>
+
+    <!--获取会员填写的代表作品-->
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from user
+    </select>
 </mapper>

@@ -2,21 +2,16 @@ package com.robot.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
 import com.robot.dao.ProductDao;
 import com.robot.entity.Product;
 import com.robot.entity.User;
-import com.robot.enums.Role;
 import com.robot.util.CommonUtil;
 import com.robot.util.Constant;
 import com.robot.util.GsonUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -149,5 +144,16 @@ public class ProductService {
     public String findHotProduct(){
          ArrayList<Product> products = productDao.findHotProduct();
          return GsonUtil.getSuccessJson(GsonUtil.getFilterJson(Product.class, "price", "brand","introduction","company","load","axis","imgs","effectTime","lastUpdateTime","summary","pattern","type","residence","format","viewCount","img"),products);
+    }
+
+    /**
+     * 产品数量
+     * @Author  xm
+     * @Date 2020/6/17 21:16
+     * @param
+     * @return java.lang.Integer
+     */
+    public Integer count() {
+        return productDao.count();
     }
 }
