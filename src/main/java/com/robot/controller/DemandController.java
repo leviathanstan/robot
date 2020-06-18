@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * create by 聪 on 2018/1/22
@@ -79,6 +80,36 @@ public class DemandController {
         demand.setUserId(user.getId());
         demand.setCreatTime(new Date());
         return demandService.saveDemand(demand);
+    }
+
+    /**
+     * 修改供需
+     * @Author  xm
+     * @Date 2020/6/18 15:56
+     * @param session
+     * @param demand
+     * @return java.lang.String
+     */
+    @Authority(role = Role.NORMAL)
+    @RequestMapping(value = "/updateDemand",method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String updateDemand(HttpSession session, Demand demand) {
+        return demandService.updateDemand(demand, session);
+    }
+
+    /**
+     * 删除供需
+     * @Author  xm
+     * @Date 2020/6/18 15:56
+     * @param session
+     * @param ids
+     * @return java.lang.String
+     */
+    @Authority(role = Role.NORMAL)
+    @RequestMapping(value = "/deleteDemand",method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String deleteDemand(HttpSession session, @RequestParam List<Integer> ids) {
+        return demandService.deleteDemand(session, ids);
     }
 
     /**

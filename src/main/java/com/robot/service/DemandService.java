@@ -4,10 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.robot.dao.BiddingDao;
 import com.robot.dao.DemandDao;
-import com.robot.entity.Bidding;
-import com.robot.entity.BiddingExample;
-import com.robot.entity.Demand;
-import com.robot.entity.DemandExample;
+import com.robot.entity.*;
 import com.robot.util.Constant;
 import com.robot.util.FileUtil;
 import com.robot.util.GsonUtil;
@@ -20,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -126,6 +124,50 @@ public class DemandService {
         }
         demandDao.insertSelective(demand);
         return GsonUtil.getSuccessJson(demand.getId());
+    }
+
+    /**
+     * 修改供需
+     * @Author  xm
+     * @Date 2020/6/18 15:53
+     * @param demand
+     * @param session
+     * @return java.lang.String
+     */
+    public String updateDemand(Demand demand, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        DemandExample example = new DemandExample();
+        example.createCriteria().andIdEqualTo(demand.getId()).andUserIdEqualTo(user.getId());
+
+        demand.setId(null);
+        demand.setUserId(null);
+        demand.setType(null);
+        demand.setCreatTime(null);
+        if (1 == demandDao.updateByExampleSelective(demand, example)) {
+            return GsonUtil.getSuccessJson("修改成功");
+        } else {
+            return GsonUtil.getErrorJson("修改失败");
+        }
+    }
+
+    /**
+     * 删除供需
+     * @Author  xm
+     * @Date 2020/6/18 16:09 
+     * @param session	
+ * @param ids	
+     * @return java.lang.String
+     */
+    public String deleteDemand(HttpSession session, List<Integer> ids) {
+        User user = (User) session.getAttribute("user");
+        for (Integer id : ids) {
+            DemandExample example = new DemandExample();
+            example.createCriteria().andIdEqualTo(id).andUserIdEqualTo(user.getId());
+            if (demandDao.deleteByExample(example) != 1) {
+                return GsonUtil.getErrorJson("删除失败");
+            }
+        }
+        return GsonUtil.getSuccessJson("删除成功");
     }
 
     /**
