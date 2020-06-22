@@ -380,4 +380,8 @@
     <select id="count" resultType="java.lang.Integer">
         select count(*) from user
     </select>
+    <!--分类统计企业数量-->
+    <select id="countEnterpriseType" resultType="java.util.HashMap">
+        select enterprise_nature as type, count(*) as num from enterprise group by enterprise_nature
+    </select>
 </mapper>

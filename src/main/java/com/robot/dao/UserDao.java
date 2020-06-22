@@ -47,4 +47,5 @@ public interface UserDao {
     List<RepresentativeWork> getRepresentativeWork(Integer enterpriseId);
     int updateRepresentativeWork(RepresentativeWork representativeWork);
     Integer count();
+    List<Map> countEnterpriseType();
 }

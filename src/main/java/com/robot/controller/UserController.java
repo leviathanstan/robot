@@ -247,7 +247,7 @@ public class UserController {
      * @param session	
      * @return java.lang.String
      */
-    @Authority(role = Role.MEMBER)
+    @Authority(role = Role.MEMBER_NORMAL)
     @ResponseBody
     @RequestMapping(value = "member", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getMemberRegisterInfo(HttpSession session) {

@@ -143,7 +143,7 @@ public class CommonService {
      */
     @Cacheable("count")
     public String count() {
-        Map<String, Integer> map = new HashMap<>(5);
+        Map map = new HashMap(6);
 
         //资讯数量
         Integer informationCount = informationService.countInformation();
@@ -173,6 +173,9 @@ public class CommonService {
 
         //用户数
         map.put("user", userDao.count());
+
+        //分类统计企业数量
+        map.put("enterprise", userDao.countEnterpriseType());
 
         return GsonUtil.getSuccessJson(map);
     }
