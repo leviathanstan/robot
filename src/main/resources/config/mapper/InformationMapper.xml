@@ -318,7 +318,7 @@
     </select>
 
     <select id="selectIndexMemberInformation" resultType="com.robot.entity.RobotNews">
-         select id,title,post_date,cover from information where category_id=#{categoryId} and id in
+         select id,title,post_date,cover as img from information where category_id=#{categoryId} and id in
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
